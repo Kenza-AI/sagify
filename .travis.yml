@@ -8,13 +8,12 @@ python:
 install:
   - pip install tox-travis
   - pip install codecov
-  - pip install pytest-cov
   - pip install -r requirements.txt
 
 
 script:
-  - flake8
-  - tox
+  - make lint
+  - make test-all
 
 after_success:
   - codecov --token=avm4PQNy8UecTz8q631p
