@@ -3,7 +3,6 @@ from __future__ import print_function, unicode_literals
 
 import click
 
-from sagify.commands.configure import configure
 from sagify.commands.create_endpoint import create_endpoint
 from sagify.commands.initialize import init
 from sagify.commands.train import train
@@ -21,7 +20,6 @@ def cli(verbose):
 
 
 def add_commands(cli):
-    cli.add_command(configure)
     cli.add_command(init)
     cli.add_command(create_endpoint)
     cli.add_command(train)
