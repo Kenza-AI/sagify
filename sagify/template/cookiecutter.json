@@ -1,0 +1,7 @@
+{
+  "project_slug": "{{ cookiecutter.project_slug }}",
+  "module_slug": "{{ cookiecutter.module_slug }}",
+  "aws_profile": "{{ cookiecutter.aws_profile }}",
+  "aws_region": "{{ cookiecutter.aws_region }}",
+  "python_version": "{{ cookiecutter.python_version }}"
+}
