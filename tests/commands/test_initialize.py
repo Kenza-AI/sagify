@@ -9,6 +9,7 @@ from sagify.main import cli
 
 def test_init_happy_case():
     runner = CliRunner()
+    
     with patch(
             'sagify.commands.initialize._get_local_aws_profiles',
             return_value=['default', 'sagemaker']
