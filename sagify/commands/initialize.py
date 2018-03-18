@@ -40,7 +40,7 @@ def ask_for_python_version():
         value_proc=lambda x: _validate_python_option(x)
     )
 
-    return 'python3.6' if chosen_python_index == 1 else 'python2.7'
+    return '3.6' if chosen_python_index == 1 else '2.7'
 
 
 def ask_for_aws_details():
