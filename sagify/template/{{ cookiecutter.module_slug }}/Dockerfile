@@ -28,7 +28,9 @@ ENV PYTHONUNBUFFERED=TRUE
 ENV PYTHONDONTWRITEBYTECODE=TRUE
 ENV PATH="/opt/program:${PATH}"
 
+ARG sagify_path
+
 # Set up the program in the image
-COPY . /opt/program
+COPY $sagify_path /opt/program
 WORKDIR /opt/program
 
