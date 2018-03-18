@@ -2,6 +2,7 @@
 from __future__ import print_function, unicode_literals
 
 import os
+import sys
 
 import boto3
 import click
@@ -91,22 +92,13 @@ def ask_for_aws_details():
 
 def template_creation(app_name, aws_profile, aws_region, python_version, output_dir):
     sagify_module_name = 'sagify'
-    overwrite_sagify = False
 
     sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
     if sagify_exists:
-        overwrite_sagify = click.confirm(
-            text="There is a '{}' directory/module already. Is it okay to overwrite it?".format(
-                sagify_module_name
-            ),
-            default=False
-        )
-
-        if not overwrite_sagify:
-            sagify_module_name = click.prompt(
-                text="How do you want to rename the 'sagify' module?",
-                type=str
-            )
+        logger.info("There is a sagify directory/module already. "
+                    "Please, rename it in order to use sagify."
+                    )
+        sys.exit(-1)
 
     cookiecutter(
         template=os.path.join(_FILE_DIR_PATH, '../template/'),
