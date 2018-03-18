@@ -8,6 +8,7 @@ import boto3
 import click
 from click import BadParameter
 from cookiecutter.main import cookiecutter
+from sagify.commands import ASCII_LOGO
 
 from sagify.log import logger
 
@@ -103,7 +104,6 @@ def template_creation(app_name, aws_profile, aws_region, python_version, output_
     cookiecutter(
         template=os.path.join(_FILE_DIR_PATH, '../template/'),
         output_dir=output_dir,
-        overwrite_if_exists=overwrite_sagify,
         no_input=True,
         extra_context={
             "project_slug": app_name,
@@ -118,14 +118,10 @@ def template_creation(app_name, aws_profile, aws_region, python_version, output_
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.')
 def init(dir):
-    logger.info("""
-     ____              _  __
-    / ___|  __ _  __ _(_)/ _|_   _
-    \___ \ / _` |/ _` | | |_| | | |
-     ___) | (_| | (_| | |  _| |_| |
-    |____/ \__,_|\__, |_|_|  \__, |
-                 |___/       |___/
-       """)
+    """
+    Command to initialize SageMaker template
+    """
+    logger.info(ASCII_LOGO)
 
     sagify_app_name = ask_for_app_name()
 
