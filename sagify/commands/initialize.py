@@ -2,11 +2,13 @@
 from __future__ import print_function, unicode_literals
 
 import os
+import sys
 
 import boto3
 import click
 from click import BadParameter
 from cookiecutter.main import cookiecutter
+from sagify.commands import ASCII_LOGO
 
 from sagify.log import logger
 
@@ -40,7 +42,7 @@ def ask_for_python_version():
         value_proc=lambda x: _validate_python_option(x)
     )
 
-    return 'python3.6' if chosen_python_index == 1 else 'python2.7'
+    return '3.6' if chosen_python_index == 1 else '2.7'
 
 
 def ask_for_aws_details():
@@ -91,27 +93,17 @@ def ask_for_aws_details():
 
 def template_creation(app_name, aws_profile, aws_region, python_version, output_dir):
     sagify_module_name = 'sagify'
-    overwrite_sagify = False
 
     sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
     if sagify_exists:
-        overwrite_sagify = click.confirm(
-            text="There is a '{}' directory/module already. Is it okay to overwrite it?".format(
-                sagify_module_name
-            ),
-            default=False
-        )
-
-        if not overwrite_sagify:
-            sagify_module_name = click.prompt(
-                text="How do you want to rename the 'sagify' module?",
-                type=str
-            )
+        logger.info("There is a sagify directory/module already. "
+                    "Please, rename it in order to use sagify."
+                    )
+        sys.exit(-1)
 
     cookiecutter(
         template=os.path.join(_FILE_DIR_PATH, '../template/'),
         output_dir=output_dir,
-        overwrite_if_exists=overwrite_sagify,
         no_input=True,
         extra_context={
             "project_slug": app_name,
@@ -126,14 +118,10 @@ def template_creation(app_name, aws_profile, aws_region, python_version, output_
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.')
 def init(dir):
-    logger.info("""
-     ____              _  __
-    / ___|  __ _  __ _(_)/ _|_   _
-    \___ \ / _` |/ _` | | |_| | | |
-     ___) | (_| | (_| | |  _| |_| |
-    |____/ \__,_|\__, |_|_|  \__, |
-                 |___/       |___/
-       """)
+    """
+    Command to initialize SageMaker template
+    """
+    logger.info(ASCII_LOGO)
 
     sagify_app_name = ask_for_app_name()
 

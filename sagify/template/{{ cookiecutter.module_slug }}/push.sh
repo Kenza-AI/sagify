@@ -7,15 +7,6 @@
 # machine and combined with the account and region to form the repository name for ECR.
 image={{ cookiecutter.project_slug }}-img
 
-img_id=$(docker images ${image} -q)
-if [ "$img_id" != "" ]
-then
-    docker rmi -f ${img_id}
-fi
-
-chmod +x training/train
-chmod +x prediction/serve
-
 profile={{ cookiecutter.aws_profile }}
 region={{ cookiecutter.aws_region }}
 
@@ -42,10 +33,8 @@ fi
 # Get the login command from ECR and execute it directly
 $(aws ecr get-login --profile ${profile} --region ${region} --no-include-email)
 
-# Build the docker image locally with the image name and then push it to ECR
-# with the full name.
+# Push Docker image to ECR with the full name.
 
-docker build  -t ${image} .
 docker tag ${image} ${fullname}
 
 docker push ${fullname}
