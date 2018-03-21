@@ -14,14 +14,15 @@ from sagify.log import logger
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.')
-def build(dir):
+@click.option(u"-r", u"--requirements-dir", required=True)
+def build(dir, requirements_dir):
     """
     Command to build SageMaker app
     """
     logger.info(ASCII_LOGO)
     logger.info("Started building SageMaker Docker image. It will take some minutes...\n")
 
-    sagify_module_path = os.path.join(dir, 'sagify')
+    sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
 
     build_script_path = os.path.join(sagify_module_path, 'build.sh')
     dockerfile_path = os.path.join(sagify_module_path, 'Dockerfile')
@@ -42,7 +43,8 @@ def build(dir):
             [
                 "{}".format(build_script_path),
                 "{}".format(sagify_module_path),
-                "{}".format(dockerfile_path)
+                "{}".format(dockerfile_path),
+                "{}".format(os.path.relpath(requirements_dir))
             ]
         )
 

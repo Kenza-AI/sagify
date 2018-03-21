@@ -34,6 +34,11 @@ def test_init_happy_case():
             assert os.path.isfile('sagify/prediction/predictor.py')
             assert os.path.isfile('sagify/prediction/wsgi.py')
             assert os.path.isfile('sagify/prediction/serve')
+            assert os.path.isfile('sagify/local_test/train_local.sh')
+            assert os.path.isdir('sagify/local_test/test_dir/input/data/training')
+            assert os.path.isfile('sagify/local_test/test_dir/input/config/hyperparameters.json')
+            assert os.path.isdir('sagify/local_test/test_dir/model')
+            assert os.path.isdir('sagify/local_test/test_dir/output')
 
     assert result.exit_code == 0
 
@@ -72,6 +77,18 @@ def test_init_with_dir_arg_happy_case(test_input_args):
             assert os.path.isfile(os.path.join(root_dir, 'sagify/prediction/predictor.py'))
             assert os.path.isfile(os.path.join(root_dir, 'sagify/prediction/wsgi.py'))
             assert os.path.isfile(os.path.join(root_dir, 'sagify/prediction/serve'))
+            assert os.path.isfile(os.path.join(root_dir, 'sagify/local_test/train_local.sh'))
+            assert os.path.isdir(
+                os.path.join(root_dir, 'sagify/local_test/test_dir/input/data/training')
+            )
+            assert os.path.isfile(
+                os.path.join(
+                    root_dir,
+                    'sagify/local_test/test_dir/input/config/hyperparameters.json'
+                )
+            )
+            assert os.path.isdir(os.path.join(root_dir, 'sagify/local_test/test_dir/model'))
+            assert os.path.isdir(os.path.join(root_dir, 'sagify/local_test/test_dir/output'))
 
     assert result.exit_code == 0
 
