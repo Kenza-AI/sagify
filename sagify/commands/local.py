@@ -63,4 +63,34 @@ def train(dir):
         return
 
 
+@click.command()
+@click.option(u"-d", u"--dir", required=False, default='.')
+def deploy(dir):
+    """
+    Command to deploy ML model(s) locally
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Started local deployment at localhost:8080 ...\n")
+
+    sagify_module_path = os.path.join(dir, 'sagify')
+    local_deploy_script_path = os.path.join(sagify_module_path, 'local_test', 'deploy_local.sh')
+    test_path = os.path.join(sagify_module_path, 'local_test', 'test_dir')
+
+    if not os.path.isdir(test_path):
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
+
+    try:
+        subprocess.check_output(
+            [
+                "{}".format(local_deploy_script_path),
+                "{}".format(os.path.abspath(test_path))
+            ]
+        )
+    except Exception as e:
+        logger.info("{}".format(e))
+        return
+
+
 local.add_command(train)
+local.add_command(deploy)
