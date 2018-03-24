@@ -7,6 +7,7 @@ from sagify.commands.build import build
 from sagify.commands.create_endpoint import create_endpoint
 from sagify.commands.initialize import init
 from sagify.commands.local import local
+from sagify.commands.push import push
 from sagify.commands.train import train
 from sagify.commands.upload_data import upload_data
 from sagify.log import configure_logger
@@ -25,6 +26,7 @@ def add_commands(cli):
     cli.add_command(init)
     cli.add_command(build)
     cli.add_command(local)
+    cli.add_command(push)
     cli.add_command(create_endpoint)
     cli.add_command(train)
     cli.add_command(upload_data)
