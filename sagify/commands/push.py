@@ -19,7 +19,9 @@ def push(dir):
     Command to push Docker image to AWS ECS
     """
     logger.info(ASCII_LOGO)
-    logger.info("Started pushing Docker image to AWS ECS. It will take some minutes...\n")
+    logger.info(
+        "Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n"
+    )
 
     sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
 

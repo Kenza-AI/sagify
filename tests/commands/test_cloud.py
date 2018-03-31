@@ -147,7 +147,7 @@ class TestTrain(object):
                             ]
                         )
 
-                        assert instance.train.assert_called_once
+                        assert instance.train.call_count == 1
 
         assert result.exit_code == 0
 
@@ -185,7 +185,7 @@ class TestTrain(object):
                             ]
                         )
 
-                        assert instance.train.assert_called_once
+                        assert instance.train.call_count == 1
 
         assert result.exit_code == 0
 
