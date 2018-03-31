@@ -37,23 +37,11 @@ def train(dir):
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)
 
-    sage_maker_base_path = '/opt/ml'
-    input_data_path = os.path.join(sage_maker_base_path, 'input', 'data', 'training')
-    hyperparam_file_path = os.path.join(
-        sage_maker_base_path, 'input', 'config', 'hyperparameters.json'
-    )
-    model_save_path = os.path.join(sage_maker_base_path, 'model')
-    failure_path = os.path.join(sage_maker_base_path, 'output')
-
     try:
         subprocess.check_output(
             [
                 "{}".format(local_train_script_path),
-                "{}".format(os.path.abspath(test_path)),
-                "{}".format(input_data_path),
-                "{}".format(hyperparam_file_path),
-                "{}".format(model_save_path),
-                "{}".format(failure_path)
+                "{}".format(os.path.abspath(test_path))
             ]
         )
 

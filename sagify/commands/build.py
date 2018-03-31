@@ -29,6 +29,7 @@ def build(dir, requirements_dir):
 
     train_file_path = os.path.join(sagify_module_path, 'training', 'train')
     serve_file_path = os.path.join(sagify_module_path, 'prediction', 'serve')
+    executor_file_path = os.path.join(sagify_module_path, 'executor.sh')
 
     if not os.path.isfile(build_script_path) or not os.path.isfile(train_file_path) or not \
             os.path.isfile(serve_file_path):
@@ -37,6 +38,7 @@ def build(dir, requirements_dir):
 
     os.chmod(train_file_path, 0o777)
     os.chmod(serve_file_path, 0o777)
+    os.chmod(executor_file_path, 0o777)
 
     try:
         subprocess.check_output(

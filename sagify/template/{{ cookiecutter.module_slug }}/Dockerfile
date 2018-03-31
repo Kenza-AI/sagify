@@ -31,3 +31,5 @@ WORKDIR /opt/program
 # Here we get all python packages.
 RUN pip install flask gevent gunicorn
 RUN pip install -r requirements.txt && rm -rf /root/.cache
+
+ENTRYPOINT ["executor.sh"]

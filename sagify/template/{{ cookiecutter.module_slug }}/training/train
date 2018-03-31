@@ -8,6 +8,11 @@ import sys
 import traceback
 
 
+# The default path arguments values are used when training happens in SageMaker
+# Arguments are provided if you want to run/test this script as a normal python script locally.
+_DEFAULT_PREFIX_PATH = '/opt/ml/'
+
+
 def _parse_args():
     parser = argparse.ArgumentParser()
 
@@ -18,27 +23,27 @@ def _parse_args():
         help='input directory path where all the training file(s) reside in',
         type=str,
         dest='input_data_path',
-        required=True
+        default=os.path.join(_DEFAULT_PREFIX_PATH, 'input/data/training')
     )
     required.add_argument(
         '-m', '--model-save-dir',
         help='directory path to save your model(s)',
         type=str,
         dest='model_save_path',
-        required=True
+        default=os.path.join(_DEFAULT_PREFIX_PATH, 'model')
     )
     parser.add_argument(
         '-p', '--hyperparams-json-file',
         help='input path to hyperparams json file',
-        default=None,
         type=str,
+        default=os.path.join(_DEFAULT_PREFIX_PATH, 'input/config/hyperparameters.json'),
         dest='hyperparams_path'
     )
     parser.add_argument(
         '-f', '--failure-dir',
         help='output directory path to save your failure(s) files',
-        default=None,
         type=str,
+        default=os.path.join(_DEFAULT_PREFIX_PATH, 'model'),
         dest='failure_output'
     )
 

@@ -3,7 +3,8 @@ from collections import OrderedDict
 
 
 class Config(object):
-    def __init__(self, aws_profile, aws_region):
+    def __init__(self, image_name, aws_profile, aws_region):
+        self.image_name = image_name
         self.aws_profile = aws_profile
         self.aws_region = aws_region
 
@@ -13,6 +14,7 @@ class Config(object):
     @classmethod
     def from_dict(cls, input_dict):
         return Config(
+            image_name=input_dict['image_name'],
             aws_profile=input_dict['aws_profile'],
             aws_region=input_dict['aws_region']
         )
