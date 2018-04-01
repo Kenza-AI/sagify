@@ -45,6 +45,20 @@ class SageMakerClient(object):
             region=region,
             image=image_name
         )
+        """
+        Train model on SageMaker
+        :param image_name: [str], name of Docker image
+        :param input_s3_data_location: [str], S3 location to input data
+        :param train_instance_count: [str], number of ec2 instances
+        :param train_instance_type: [str], ec2 instance type
+        :param train_volume_size: [str], size in GB of the EBS volume to use for storing input data
+        :param train_max_run: [str], Timeout in seconds for training
+        :param output_path: [str], S3 location for saving the training
+        result (model artifacts and output files)
+        :param hyperparameters: [dict], Dictionary containing the hyperparameters to initialize
+        this estimator with
+        :return: [str], the model location in S3
+        """
 
         estimator = sagemaker.estimator.Estimator(
         estimator = sage.estimator.Estimator(
@@ -62,6 +76,7 @@ class SageMakerClient(object):
 
         estimator.fit(input_s3_data_location)
 
+        return estimator.model_data
     @staticmethod
     def _get_s3_bucket(s3_dir):
         """

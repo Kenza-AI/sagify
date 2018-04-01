@@ -79,7 +79,7 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
     hyperparams_dict = _read_hyperparams_config(hyperparams_file) if hyperparams_file else None
 
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
-    sage_maker_client.train(
+    s3_model_location = sage_maker_client.train(
         image_name=config.image_name,
         input_s3_data_location=input_s3_dir,
         train_instance_count=1,
@@ -91,6 +91,7 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
     )
 
     logger.info("Training on SageMaker succeeded")
+    logger.info("Model S3 location: {}".format(s3_model_location))
 
 
 @click.command()
