@@ -40,6 +40,7 @@ class TestUploadData(object):
                                 '-s', 's3://path-to-data'
                             ]
                         )
+                    instance.upload_data.assert_called_with('input_data/', 's3://path-to-data')
 
         assert result.exit_code == 0
 
@@ -76,6 +77,7 @@ class TestUploadData(object):
                                 '-s', 's3://path-to-data'
                             ]
                         )
+                    instance.upload_data.assert_called_with('input_data/', 's3://path-to-data')
 
         assert result.exit_code == 0
 
@@ -112,6 +114,7 @@ class TestUploadData(object):
                                 '-s', 's3://path-to-data'
                             ]
                         )
+                    assert instance.upload_data.call_count == 0
 
         assert result.exit_code == -1
 
