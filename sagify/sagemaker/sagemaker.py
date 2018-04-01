@@ -2,16 +2,16 @@ from __future__ import absolute_import
 
 import os
 
+import sagemaker as sage
 from six.moves.urllib.parse import urlparse
 
 import boto3
-import sagemaker
 
 
 class SageMakerClient(object):
     def __init__(self, aws_profile, aws_region):
         self.boto_session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
-        self.sagemaker_session = sagemaker.Session(boto_session=self.boto_session)
+        self.sagemaker_session = sage.Session(boto_session=self.boto_session)
 
     def upload_data(self, input_dir, s3_dir):
         """
@@ -47,6 +47,7 @@ class SageMakerClient(object):
         )
 
         estimator = sagemaker.estimator.Estimator(
+        estimator = sage.estimator.Estimator(
             image_name=image,
             role=role,
             train_instance_count=train_instance_count,
