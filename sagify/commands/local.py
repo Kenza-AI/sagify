@@ -11,6 +11,8 @@ import click
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
+click.disable_unicode_literals_warning = True
+
 
 @click.group()
 def local():

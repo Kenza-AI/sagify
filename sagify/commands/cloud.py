@@ -12,6 +12,8 @@ from sagify.config.config import ConfigManager
 from sagify.log import logger
 from sagify.sagemaker import sagemaker
 
+click.disable_unicode_literals_warning = True
+
 
 def _read_config(input_dir):
     config_file_path = os.path.join(input_dir, 'sagify', 'config.json')

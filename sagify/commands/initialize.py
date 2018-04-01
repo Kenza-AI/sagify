@@ -8,9 +8,11 @@ import boto3
 import click
 from click import BadParameter
 from cookiecutter.main import cookiecutter
-from sagify.commands import ASCII_LOGO
 
+from sagify.commands import ASCII_LOGO
 from sagify.log import logger
+
+click.disable_unicode_literals_warning = True
 
 
 _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
