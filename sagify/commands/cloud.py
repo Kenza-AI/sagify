@@ -96,14 +96,28 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.')
-@click.option(u"-n", u"--num-instances", required=True)
+@click.option(u"-m", u"--s3-model-location", required=True)
+@click.option(u"-n", u"--num-instances", required=True, type=int)
 @click.option(u"-e", u"--ec2-type", required=True)
-def deploy(dir, num_instances, ec2_type):
+def deploy(dir, s3_model_location, num_instances, ec2_type):
     """
     Command to deploy ML model(s) on SageMaker
     """
     logger.info(ASCII_LOGO)
     logger.info("Started deployment on SageMaker ...\n")
+
+    config = _read_config(dir)
+
+    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
+    endpoint_name = sage_maker_client.deploy(
+        image_name=config.image_name,
+        s3_model_location=s3_model_location,
+        train_instance_count=num_instances,
+        train_instance_type=ec2_type
+    )
+
+    logger.info("Model deployed to SageMaker successfully")
+    logger.info("Endpoint name: {}".format(endpoint_name))
 
 
 cloud.add_command(upload_data)

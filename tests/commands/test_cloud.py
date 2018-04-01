@@ -249,3 +249,127 @@ class TestTrain(object):
                         assert not instance.train.called
 
         assert result.exit_code == -1
+
+
+class TestDeploy(object):
+    def test_train_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'deploy',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge'
+                            ]
+                        )
+
+                        assert instance.deploy.call_count == 1
+                        instance.deploy.assert_called_with(
+                            image_name='sagemaker-img',
+                            s3_model_location='s3://bucket/model/location/model.tar.gz',
+                            train_instance_count=2,
+                            train_instance_type='ml.c4.2xlarge'
+                        )
+
+        assert result.exit_code == 0
+
+    def test_train_with_dir_arg_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(
+                            cli=cli, args=['init', '-d', 'src/'], input='my_app\n1\n2\nus-east-1\n'
+                        )
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'deploy',
+                                '-d',
+                                'src/',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge'
+                            ]
+                        )
+
+                        assert instance.deploy.call_count == 1
+                        instance.deploy.assert_called_with(
+                            image_name='sagemaker-img',
+                            s3_model_location='s3://bucket/model/location/model.tar.gz',
+                            train_instance_count=2,
+                            train_instance_type='ml.c4.2xlarge'
+                        )
+
+        assert result.exit_code == 0
+
+    def test_train_with_invalid_dir_arg_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(
+                            cli=cli, args=['init', '-d', 'src/'], input='my_app\n1\n2\nus-east-1\n'
+                        )
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'deploy',
+                                '-d',
+                                'invalid_dir/',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge'
+                            ]
+                        )
+
+                        assert not instance.deploy.called
+
+        assert result.exit_code == -1
