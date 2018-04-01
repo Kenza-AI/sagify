@@ -151,6 +151,16 @@ class TestTrain(object):
                         )
 
                         assert instance.train.call_count == 1
+                        instance.train.assert_called_with(
+                            image_name='sagemaker-img',
+                            input_s3_data_location='s3://bucket/input',
+                            train_instance_count=1,
+                            train_instance_type='ml.c4.2xlarge',
+                            train_volume_size=30,
+                            train_max_run=24 * 60 * 60,
+                            output_path='s3://bucket/output',
+                            hyperparameters=None
+                        )
 
         assert result.exit_code == 0
 
@@ -189,6 +199,16 @@ class TestTrain(object):
                         )
 
                         assert instance.train.call_count == 1
+                        instance.train.assert_called_with(
+                            image_name='sagemaker-img',
+                            input_s3_data_location='s3://bucket/input',
+                            train_instance_count=1,
+                            train_instance_type='ml.c4.2xlarge',
+                            train_volume_size=30,
+                            train_max_run=24 * 60 * 60,
+                            output_path='s3://bucket/output',
+                            hyperparameters=None
+                        )
 
         assert result.exit_code == 0
 
