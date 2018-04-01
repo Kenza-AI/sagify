@@ -11,10 +11,12 @@ import click
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
+click.disable_unicode_literals_warning = True
+
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.')
-@click.option(u"-r", u"--requirements-dir", required=True)
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
+@click.option(u"-r", u"--requirements-dir", required=True, help="Path to requirements.txt file")
 def build(dir, requirements_dir):
     """
     Command to build SageMaker app

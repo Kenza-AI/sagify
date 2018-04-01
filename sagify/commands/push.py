@@ -11,9 +11,11 @@ import click
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
+click.disable_unicode_literals_warning = True
+
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.')
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 def push(dir):
     """
     Command to push Docker image to AWS ECS

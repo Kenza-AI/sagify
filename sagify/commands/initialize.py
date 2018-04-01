@@ -8,9 +8,11 @@ import boto3
 import click
 from click import BadParameter
 from cookiecutter.main import cookiecutter
-from sagify.commands import ASCII_LOGO
 
+from sagify.commands import ASCII_LOGO
 from sagify.log import logger
+
+click.disable_unicode_literals_warning = True
 
 
 _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
@@ -116,7 +118,7 @@ def template_creation(app_name, aws_profile, aws_region, python_version, output_
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.')
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to create sagify module")
 def init(dir):
     """
     Command to initialize SageMaker template

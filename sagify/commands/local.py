@@ -11,6 +11,8 @@ import click
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
+click.disable_unicode_literals_warning = True
+
 
 @click.group()
 def local():
@@ -21,7 +23,7 @@ def local():
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.')
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 def train(dir):
     """
     Command to train ML model(s) locally
@@ -52,7 +54,7 @@ def train(dir):
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.')
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 def deploy(dir):
     """
     Command to deploy ML model(s) locally
