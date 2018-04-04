@@ -44,7 +44,12 @@ def cloud():
 @click.command(name='upload-data')
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(u"-i", u"--input-dir", required=True, help="Path to data input directory")
-@click.option(u"-s", u"--s3-dir", required=True, help="s3 location to upload data")
+@click.option(
+    u"-s", u"--s3-dir",
+    required=True,
+    help="s3 location to upload data",
+    type=click.Path()
+)
 def upload_data(dir, input_dir, s3_dir):
     """
     Command to upload data to S3
@@ -62,11 +67,24 @@ def upload_data(dir, input_dir, s3_dir):
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
-@click.option(u"-i", u"--input-s3-dir", required=True, help="s3 location to input data")
 @click.option(
-    u"-o", u"--output-s3-dir", required=True, help="s3 location to save output (models, etc"
+    u"-i", u"--input-s3-dir",
+    required=True,
+    help="s3 location to input data",
+    type=click.Path()
 )
-@click.option(u"-h", u"--hyperparams-file", required=False, help="Path to hyperparams file")
+@click.option(
+    u"-o", u"--output-s3-dir",
+    required=True,
+    help="s3 location to save output (models, etc)",
+    type=click.Path()
+)
+@click.option(
+    u"-h", u"--hyperparams-file",
+    required=False,
+    help="Path to hyperparams file",
+    type=click.Path(resolve_path=True)
+)
 @click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
 @click.option(
     u"-v", u"--volume-size",
@@ -89,7 +107,6 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
 
     config = _read_config(dir)
     hyperparams_dict = _read_hyperparams_config(hyperparams_file) if hyperparams_file else None
-
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
     s3_model_location = sage_maker_client.train(
         image_name=config.image_name,
@@ -108,7 +125,12 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
-@click.option(u"-m", u"--s3-model-location", required=True, help="s3 location to model tar.gz")
+@click.option(
+    u"-m", u"--s3-model-location",
+    required=True,
+    help="s3 location to model tar.gz",
+    type=click.Path()
+)
 @click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
 @click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
 def deploy(dir, s3_model_location, num_instances, ec2_type):
