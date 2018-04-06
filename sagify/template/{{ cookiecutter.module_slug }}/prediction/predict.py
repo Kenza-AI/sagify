@@ -1,4 +1,8 @@
+from __future__ import absolute_import
+
 import os
+# Do not remove the following line
+import sys;sys.path.append("..")  # NOQA
 
 
 _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
