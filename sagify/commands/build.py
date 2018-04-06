@@ -42,11 +42,14 @@ def build(dir, requirements_dir):
     os.chmod(serve_file_path, 0o777)
     os.chmod(executor_file_path, 0o777)
 
+    target_dir_name = os.path.basename(os.path.normpath(dir))
+
     try:
         subprocess.check_output(
             [
                 "{}".format(build_script_path),
-                "{}".format(sagify_module_path),
+                "{}".format(os.path.relpath(dir)),
+                "{}".format(os.path.relpath(target_dir_name)),
                 "{}".format(dockerfile_path),
                 "{}".format(os.path.relpath(requirements_dir))
             ]

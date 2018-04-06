@@ -22,14 +22,15 @@ ENV PYTHONDONTWRITEBYTECODE=TRUE
 ENV PATH="/opt/program:${PATH}"
 
 ARG requirements_file_path
-ARG sagify_module_path
+ARG module_path
+ARG target_dir_name
 
-COPY ${requirements_file_path} /opt/program/requirements.txt
-COPY ${sagify_module_path} /opt/program
-WORKDIR /opt/program
+COPY ${requirements_file_path} /opt/program/sagify-requirements.txt
+COPY ${module_path} /opt/program/${target_dir_name}
+WORKDIR /opt/program/${target_dir_name}
 
 # Here we get all python packages.
 RUN pip install flask gevent gunicorn
-RUN pip install -r requirements.txt && rm -rf /root/.cache
+RUN pip install -r ../sagify-requirements.txt && rm -rf /root/.cache
 
-ENTRYPOINT ["executor.sh"]
+ENTRYPOINT ["sagify/executor.sh"]

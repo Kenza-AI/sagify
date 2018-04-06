@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 if [ $1 = "train" ]; then
-    python ./training/train
+    python ./sagify/training/train
 else
-    python ./prediction/serve
+    python ./sagify/prediction/serve
 fi

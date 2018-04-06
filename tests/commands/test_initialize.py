@@ -20,6 +20,7 @@ def test_init_happy_case():
         with runner.isolated_filesystem():
             result = runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
 
+            assert os.path.isfile('__init__.py')
             assert os.path.isdir('sagify')
             assert os.path.isdir('sagify/training')
             assert os.path.isdir('sagify/prediction')
@@ -63,6 +64,7 @@ def test_init_with_dir_arg_happy_case(test_input_args):
 
             root_dir = test_input_args[2]
 
+            assert os.path.isfile(os.path.join(root_dir, '__init__.py'))
             assert os.path.isdir(os.path.join(root_dir, 'sagify'))
             assert os.path.isdir(os.path.join(root_dir, 'sagify/training'))
             assert os.path.isdir(os.path.join(root_dir, 'sagify/prediction'))

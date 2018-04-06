@@ -2,6 +2,10 @@
 from __future__ import print_function, unicode_literals
 
 import os
+try:
+    from pathlib import Path
+except ImportError:
+    from pathlib2 import Path
 import sys
 
 import boto3
@@ -102,6 +106,9 @@ def template_creation(app_name, aws_profile, aws_region, python_version, output_
                     "Please, rename it in order to use sagify."
                     )
         sys.exit(-1)
+
+    Path(output_dir).mkdir(exist_ok=True)
+    Path(os.path.join(output_dir, '__init__.py')).touch()
 
     cookiecutter(
         template=os.path.join(_FILE_DIR_PATH, '../template/'),
