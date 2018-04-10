@@ -2,7 +2,7 @@
 # This is an image that uses the nginx, gunicorn, flask stack
 # for serving inferences in a stable way.
 
-FROM python:{{ cookiecutter.python_version }}
+FROM python:{{ cookiecutter.python_version }}-slim-stretch
 
 MAINTAINER Amazon AI <support@kenza.ai>
 
