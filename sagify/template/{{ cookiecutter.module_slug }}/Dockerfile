@@ -30,7 +30,7 @@ COPY ${module_path} /opt/program/${target_dir_name}
 WORKDIR /opt/program/${target_dir_name}
 
 # Here we get all python packages.
-RUN pip install flask gevent gunicorn
+RUN pip install flask gevent gunicorn future
 RUN pip install -r ../sagify-requirements.txt && rm -rf /root/.cache
 
 ENTRYPOINT ["sagify/executor.sh"]
