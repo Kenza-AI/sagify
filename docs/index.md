@@ -1,12 +1,6 @@
-**Build Status**
-
-master: 
-[![Build Status](https://travis-ci.com/Kenza-AI/sagify.svg?token=avm4PQNy8UecTz8q631p&branch=master)](https://travis-ci.com/Kenza-AI/sagify)
-develop: [![Build Status](https://travis-ci.com/Kenza-AI/sagify.svg?token=avm4PQNy8UecTz8q631p&branch=develop)](https://travis-ci.com/Kenza-AI/sagify)
-
 # sagify
 
-![Sagify](./docs/sagify@2x.png)
+![Sagify](sagify@2x.png)
 
 A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
 
@@ -202,41 +196,41 @@ Voila! That's a proof that this Deep Learning model is going to be trained and d
 - Select `Roles` from the list in the left-hand side, and click on *Create role*
 - Then, select *SageMaker* as the image shows:
 
-![Create Role 1st Step](./docs/create_role_1st_step.png)
+![Create Role 1st Step](create_role_1st_step.png)
 
 - Click *Next: Review* on the following page:
 
-![Create Role 2nd Step](./docs/create_role_2nd_step.png)
+![Create Role 2nd Step](create_role_2nd_step.png)
 
 - Type a name for the SageMaker role, and click on *Create role*:
 
-![Create Role 3rd Step](./docs/create_role_3rd_step.png)
+![Create Role 3rd Step](create_role_3rd_step.png)
 
 - Click on the created role:
 
-![Successful Role Creation](./docs/created_role_page.png)
+![Successful Role Creation](created_role_page.png)
 
 - Click on *Attach policy* and search for `AmazonEC2ContainerRegistryFullAccess`. Attach the corresponding policy:
 
-![Attach Policy](./docs/attach_policy_step_1.png)
+![Attach Policy](attach_policy_step_1.png)
 
 - Do the same to attach the `AmazonS3FullAccess` policy, and end up with the following:
 
-![Policies](./docs/policies.png)
+![Policies](policies.png)
 
 - Now, go to Users page by clicking on *Users* on the left-hand side.
 
 - Click on your IAM user that you want to use for AWS SageMaker:
 
-![Users](./docs/iam_users.png)
+![Users](iam_users.png)
 
 - Copy the ARN of that user:
 
-![ARN](./docs/user_arn.png)
+![ARN](user_arn.png)
 
 - Then, go back the page of the Role you created and click on the *Trust relationships* tab:
 
-![Trust Relationship](./docs/trust_relationship_step_1.png)
+![Trust Relationship](trust_relationship_step_1.png)
 
 - Click on *Edit trust relationship* and add the following:
 
