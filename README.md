@@ -10,6 +10,8 @@ develop: [![Build Status](https://travis-ci.com/Kenza-AI/sagify.svg?token=avm4PQ
 
 A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
 
+![gif](./docs/end2end.gif)
+
 ## Installation
 
 ### Prerequisites

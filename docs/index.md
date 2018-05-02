@@ -4,6 +4,8 @@
 
 A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
 
+![gif](end2end.gif)
+
 ## Installation
 
 ### Prerequisites
