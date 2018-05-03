@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="None">
+  
+  <link rel="shortcut icon" href="./img/favicon.ico">
+  <title>sagify - sagify</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
+  
+  <script>
+    // Current page data
+    var mkdocs_page_name = "sagify";
+    var mkdocs_page_input_path = "index.md";
+    var mkdocs_page_url = "/";
+  </script>
+  
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+      <div class="wy-side-nav-search">
+        <a href="." class="icon icon-home"> sagify</a>
+        <div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+	<ul class="current">
+	  
+          
+            <li class="toctree-l1 current">
+		
+    <a class="current" href=".">sagify</a>
+    <ul class="subnav">
+            
+    <li class="toctree-l2"><a href="#sagify">sagify</a></li>
+    
+        <ul>
+        
+            <li><a class="toctree-l3" href="#installation">Installation</a></li>
+        
+            <li><a class="toctree-l3" href="#getting-started">Getting started</a></li>
+        
+            <li><a class="toctree-l3" href="#usage">Usage</a></li>
+        
+            <li><a class="toctree-l3" href="#commands">Commands</a></li>
+        
+        </ul>
+    
+
+    </ul>
+	    </li>
+          
+        </ul>
+      </div>
+      &nbsp;
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href=".">sagify</a>
+      </nav>
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".">Docs</a> &raquo;</li>
+    
+      
+    
+    <li>sagify</li>
+    <li class="wy-breadcrumbs-aside">
+      
+        <a href="https://github.com/Kenza-AI/sagify/edit/master/docs/index.md"
+          class="icon icon-github"> Edit on GitHub</a>
+      
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main">
+            <div class="section">
+              
+                <h1 id="sagify">sagify</h1>
+<p><img alt="Sagify" src="./sagify@2x.png" /></p>
+<p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
+<p><img alt="gif" src="./end2end.gif" /></p>
+<h2 id="installation">Installation</h2>
+<h3 id="prerequisites">Prerequisites</h3>
+<p>sagify requires the following:</p>
+<ol>
+<li>Python (2.7, 3.5, 3.6)</li>
+<li><a href="https://www.docker.com/">Docker</a> installed and running</li>
+<li>Configured <a href="https://pypi.python.org/pypi/awscli">awscli</a></li>
+</ol>
+<h3 id="install-sagify">Install sagify</h3>
+<p>At the command line:</p>
+<pre><code>pip install sagify
+</code></pre>
+<h2 id="getting-started">Getting started</h2>
+<h3 id="step-1-clone-deep-learning-calculator-repository">Step 1: Clone Deep Learning Calculator repository</h3>
+<p>You're going to clone and train a Deep Learning codebase to evaluate arithmetic additions on up to 3 digit integers.</p>
+<p>Clone repository:</p>
+<pre><code>git clone https://github.com/Kenza-AI/deep-learning-addition.git
+</code></pre>
+<p>Optionally, if you want to use Python 2.7 replace the value of <code>REQUIRED_PYTHON</code> and <code>PYTHON_INTERPRETER</code> in <code>test_environment.py</code> and <code>Makefile</code>, respectively, to <code>python2</code>. </p>
+<p>Create environment:</p>
+<pre><code>make create_environment
+</code></pre>
+<p>Don't forget to activate the virtualenv after the creation of environment by executing <code>workon deep-learning-addition</code>.</p>
+<p>Install dependencies:</p>
+<pre><code>make requirements
+</code></pre>
+<p>Generate training and validation data:</p>
+<pre><code>make data
+</code></pre>
+<h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
+<pre><code>sagify init -d src
+</code></pre>
+<p>Type in <code>deep-learning-addition</code> for SageMaker app name and make sure to choose your preferred Python version, AWS profile and region. </p>
+<p>A module called <code>sagify</code> is created under <code>src/</code>. The structure is:</p>
+<pre><code>sagify/
+    local_test/
+        test_dir/
+            input/
+                config/
+                    hyperparameters.json
+                data/
+                    training/
+            model/
+            output/
+        deploy_local.sh
+        train_local.sh
+    prediction/
+        __init__.py
+        nginx.conf
+        predict.py
+        predictor.py
+        serve
+        wsgi.py
+    training/
+        __init__.py
+        train
+    __init__.py
+    build.sh
+    config.json
+    Dockerfile
+    executor.sh
+    push.sh
+</code></pre>
+<h3 id="step-3-integrate-sagify">Step 3: Integrate sagify</h3>
+<p>As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:</p>
+<ol>
+<li>Copy a subset of training data under <code>sagify/local_test/test_dir/input/data/training/</code> to test that training works locally</li>
+<li>Implement <code>train(...)</code> function in <code>sagify/training/train</code></li>
+<li>Implement <code>predict(...)</code> function in <code>sagify/prediction/predict.py</code></li>
+<li>Optionally, specify hyperparameters in <code>sagify/local_test/test_dir/input/config/hyperparameters.json</code> </li>
+</ol>
+<p>Hence,</p>
+<ol>
+<li>
+<p>Copy <code>.npy</code> files from <code>data/processed/</code> to <code>sagify/local_test/test_dir/input/data/training/</code></p>
+</li>
+<li>
+<p>Replace the <code>TODOs</code> in the <code>try..except</code> of <code>train(...)</code> function in <code>sagify/training/train</code> file with:</p>
+<pre><code>train_model.train(input_path=input_data_path, output_path=model_save_path)
+</code></pre>
+<p>and after the <code>import traceback</code> at the top of the file, add:</p>
+<pre><code>from src.models import train_model
+</code></pre>
+<p>The body of <code>try..except</code> should look like:</p>
+<pre><code>try:
+    train_model.train(input_path=input_data_path, output_path=model_save_path)
+    print('Training complete.')
+except Exception as e:
+</code></pre>
+</li>
+<li>
+<p>Replace the body of <code>predict(...)</code> function in <code>sagify/prediction/predict.py</code> with:</p>
+<pre><code>def _format_addition(input_str):
+    def _format(input_str_num, part_one):
+        required_spaces_num = 3 - len(input_str_num)
+        spaces = ''
+        for _ in range(required_spaces_num):
+            spaces += ' '
+
+        return spaces + input_str_num if part_one else input_str_num + spaces
+
+    two_parts = input_str.split('+')
+    formatted_part_one = _format(two_parts[0], True)
+    formatted_part_two = _format(two_parts[1], False)
+
+    return '{}+{}'.format(formatted_part_one, formatted_part_two)
+
+addition_str = _format_addition(json_input['addition'])
+
+from src.encoding_utils import decode_prediction, encode_query
+input_model = encode_query(addition_str)
+
+prediction = ModelService.predict(input_model)
+
+result = {
+    'result': decode_prediction(prediction)
+}
+
+return result
+</code></pre>
+<p>and replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
+<pre><code>if cls.model is None:
+    import keras
+    cls.model = keras.models.load_model(os.path.join(_MODEL_PATH, 'model.h5'))
+return cls.model
+</code></pre>
+</li>
+</ol>
+<h3 id="step-4-build-docker-image">Step 4: Build Docker image</h3>
+<p>It's time to build the Docker image that will contain the Deep Learning Addition codebase:</p>
+<pre><code>sagify build -d src -r requirements.txt
+</code></pre>
+<p>The path to <code>requirements.txt</code> is necessary to be specified so that all the required dependencies are installed in Docker image.</p>
+<p>If you run <code>docker images | grep deep-learning-addition-img</code> in your terminal, you'll see the created Deep Learning Addition image.</p>
+<h3 id="step-5-train-deep-learning-model">Step 5: Train Deep Learning model</h3>
+<p>Time to train the Deep Learning model in the newly built Docker image:</p>
+<pre><code>sagify local train -d src
+</code></pre>
+<p>This step takes ~5 minutes in a MacBook Pro Early 2015 3.1 GHz Intel Core i7.</p>
+<h3 id="step-6-deploy-deep-learning-model">Step 6: Deploy Deep Learning model</h3>
+<p>Finally, serve the model as a REST Service:</p>
+<pre><code>sagify local deploy -d src
+</code></pre>
+<p>Run the following curl command on your terminal to verify that the REST Service works:</p>
+<pre><code>curl -X POST \
+http://localhost:8080/invocations \
+-H 'Cache-Control: no-cache' \
+-H 'Content-Type: application/json' \
+-d '{
+    "addition": "943+604"
+ }'
+</code></pre>
+<p>It will be slow in the first couple of calls as it loads the model in a lazy manner.</p>
+<p>Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the following section to see how to configure your AWS account in order to train and deploy your Deep Learning model on AWS SageMaker using sagify. Don't worry, the configuration is a one time thing that can be done by your Platform team, too. </p>
+<h2 id="usage">Usage</h2>
+<h3 id="configure-aws-account">Configure AWS Account</h3>
+<ul>
+<li>Sign in to the AWS Management Console as an IAM user and open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></li>
+<li>Select <code>Roles</code> from the list in the left-hand side, and click on <em>Create role</em></li>
+<li>Then, select <em>SageMaker</em> as the image shows:</li>
+</ul>
+<p><img alt="Create Role 1st Step" src="./create_role_1st_step.png" /></p>
+<ul>
+<li>Click <em>Next: Review</em> on the following page:</li>
+</ul>
+<p><img alt="Create Role 2nd Step" src="./create_role_2nd_step.png" /></p>
+<ul>
+<li>Type a name for the SageMaker role, and click on <em>Create role</em>:</li>
+</ul>
+<p><img alt="Create Role 3rd Step" src="./create_role_3rd_step.png" /></p>
+<ul>
+<li>Click on the created role:</li>
+</ul>
+<p><img alt="Successful Role Creation" src="./created_role_page.png" /></p>
+<ul>
+<li>Click on <em>Attach policy</em> and search for <code>AmazonEC2ContainerRegistryFullAccess</code>. Attach the corresponding policy:</li>
+</ul>
+<p><img alt="Attach Policy" src="./attach_policy_step_1.png" /></p>
+<ul>
+<li>Do the same to attach the <code>AmazonS3FullAccess</code> policy, and end up with the following:</li>
+</ul>
+<p><img alt="Policies" src="./policies.png" /></p>
+<ul>
+<li>
+<p>Now, go to Users page by clicking on <em>Users</em> on the left-hand side.</p>
+</li>
+<li>
+<p>Click on your IAM user that you want to use for AWS SageMaker:</p>
+</li>
+</ul>
+<p><img alt="Users" src="./iam_users.png" /></p>
+<ul>
+<li>Copy the ARN of that user:</li>
+</ul>
+<p><img alt="ARN" src="./user_arn.png" /></p>
+<ul>
+<li>Then, go back the page of the Role you created and click on the <em>Trust relationships</em> tab:</li>
+</ul>
+<p><img alt="Trust Relationship" src="./trust_relationship_step_1.png" /></p>
+<ul>
+<li>
+<p>Click on <em>Edit trust relationship</em> and add the following:</p>
+<pre><code>{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Sid": "",
+            "Effect": "Allow",
+            "Principal": {
+                "AWS": "PASTE_THE_ARN_YOU_COPIED_EARLIER",
+                "Service": "sagemaker.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+</code></pre>
+</li>
+<li>
+<p>You're almost there! Make sure that you have added the IAM user in your <code>~/.aws/credentials</code> file. For example:</p>
+<pre><code>[test-sagemaker]
+aws_access_key_id = ...
+aws_secret_access_key = ...
+</code></pre>
+</li>
+<li>
+<p>And, finally, add the following in the <code>~/.aws/config</code> file:</p>
+<pre><code>[profile test-sagemaker]
+region = us-east-1 &lt;-- USE YOUR PREFERRED REGION
+role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
+source_profile = test-sagemaker
+</code></pre>
+</li>
+<li>
+<p>That's it! From now on, choose the created AWS profile when initializing sagify.</p>
+</li>
+<li>
+<p>You can change the AWS profile in an already initialized sagify module by changing the value of <code>aws_profile</code> and <code>profile</code> in <code>sagify/config.json</code> and <code>sagify/push.sh</code>, respectively.</p>
+</li>
+</ul>
+<h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
+<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push -d src</code> to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.</p>
+<h3 id="create-s3-bucket">Create S3 Bucket</h3>
+<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>my-dl-addition</code></p>
+<h3 id="upload-training-data">Upload Training Data</h3>
+<p>Execute <code>sagify cloud upload-data -d src -i data/processed/ -s s3://my-dl-addition/training-data</code> to upload training data to S3</p>
+<h3 id="train-on-aws-sagemaker">Train on AWS SageMaker</h3>
+<p>Execute <code>sagify cloud train -d src/ -i s3://my-dl-addition/training-data/ -o s3://my-dl-addition/output/ -e ml.m4.xlarge</code> to train the Deep Learning model on SageMaker. This command will use the pushed Docker image.</p>
+<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://my-dl-addition/output/deep-learning-addition-img-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
+<h3 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h3>
+<p>Execute <code>sagify cloud deploy -d src -m s3://my-dl-addition/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
+<h3 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h3>
+<p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
+<p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
+<pre><code>    {
+        "addition": "112+143"
+    }
+</code></pre>
+<h2 id="commands">Commands</h2>
+<h3 id="initialize">Initialize</h3>
+<h4 id="name">Name</h4>
+<p>Initializes a sagify module</p>
+<h4 id="synopsis">Synopsis</h4>
+<pre><code>sagify init [--dir SRC_DIR]
+</code></pre>
+<h4 id="description">Description</h4>
+<p>This command initializes a sagify module in the current working directory or under <code>SRC_DIR</code>, if optional flag <code>--dir</code> is specified.</p>
+<h4 id="optional-flags">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory to create sagify module</p>
+<h3 id="example">Example</h3>
+<pre><code>sagify init -d src/
+</code></pre>
+<h3 id="build">Build</h3>
+<h4 id="name_1">Name</h4>
+<p>Builds a Docker image</p>
+<h4 id="synopsis_1">Synopsis</h4>
+<pre><code>sagify build --requirements-dir REQUIREMENTS_FILE [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_1">Description</h4>
+<p>This command builds a Docker image from code under the current working directory or under <code>SRC_DIR</code>, if optional flag <code>--dir</code> is specified. A <code>REQUIREMENTS_FILE</code> needs to be specified in order to install all required dependencies in Docker image.</p>
+<h4 id="required-flags">Required Flags</h4>
+<p><code>--requirements-dir REQUIREMENTS_FILE</code> or <code>-r REQUIREMENTS_FILE</code>: Path to <code>REQUIREMENTS_FILE</code> </p>
+<h4 id="optional-flags_1">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_1">Example</h4>
+<pre><code>sagify build -d src/ -r requirements.txt
+</code></pre>
+<h3 id="local-train">Local Train</h3>
+<h4 id="name_2">Name</h4>
+<p>Executes a Docker image in train mode</p>
+<h4 id="synopsis_2">Synopsis</h4>
+<pre><code>sagify local train [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_2">Description</h4>
+<p>This command executes a Docker image in train mode. More specifically, it executes the <code>train(...)</code> function in <code>sagify/training/train</code> inside an already built Docker image (see Build command section).</p>
+<h4 id="optional-flags_2">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_2">Example</h4>
+<pre><code>sagify local train -d src/
+</code></pre>
+<h3 id="local-deploy">Local Deploy</h3>
+<h4 id="name_3">Name</h4>
+<p>Executes a Docker image in serve mode</p>
+<h4 id="synopsis_3">Synopsis</h4>
+<pre><code>sagify local deploy [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_3">Description</h4>
+<p>This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to <code>/invocations</code> endpoint. Then, the <code>/invocations</code> endpoint calls the <code>predict(...)</code> function in <code>sagify/prediction/predict.py</code> (see Build command section on how to build a Docker image).</p>
+<h4 id="optional-flags_3">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_3">Example</h4>
+<pre><code>sagify local deploy -d src/
+</code></pre>
+<h3 id="push">Push</h3>
+<h4 id="name_4">Name</h4>
+<p>Pushes a Docker image to AWS Elastic Container Service</p>
+<h4 id="synopsis_4">Synopsis</h4>
+<pre><code>sagify push [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_4">Description</h4>
+<p>This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.</p>
+<h4 id="optional-flags_4">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_4">Example</h4>
+<pre><code>sagify push -d src/
+</code></pre>
+<h3 id="cloud-upload-data">Cloud Upload Data</h3>
+<h4 id="name_5">Name</h4>
+<p>Uploads data to AWS S3</p>
+<h4 id="synopsis_5">Synopsis</h4>
+<pre><code>sagify cloud upload-data --input-dir LOCAL_INPUT_DATA_DIR --s3-dir S3_TARGET_DATA_LOCATION [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_5">Description</h4>
+<p>This command uploads content under <code>LOCAL_INPUT_DATA_DIR</code> to S3 under <code>S3_TARGET_DATA_LOCATION</code></p>
+<h4 id="required-flags_1">Required Flags</h4>
+<p><code>--input-dir</code> or <code>-i</code>: Local input directory</p>
+<p><code>--s3-dir</code> or <code>-s</code>: S3 target location</p>
+<h4 id="optional-flags_5">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_5">Example</h4>
+<pre><code>sagify cloud upload-data -d src/ -i ./training_data/ -s s3://my-bucket/training-data/
+</code></pre>
+<h3 id="cloud-train">Cloud Train</h3>
+<h4 id="name_6">Name</h4>
+<p>Executes a Docker image in train mode on AWS SageMaker</p>
+<h4 id="synopsis_6">Synopsis</h4>
+<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS]
+</code></pre>
+<h4 id="description_6">Description</h4>
+<p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
+<h4 id="required-flags_2">Required Flags</h4>
+<p><code>--input-s3-dir</code> or <code>-i</code>: S3 location to input data</p>
+<p><code>--output-s3-dir</code> or <code>o</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
+<p><code>--ec2-type</code> or <code>e</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
+<h4 id="optional-flags_6">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<p><code>--hyperparams-file</code> or <code>-h</code>: Path to hyperparams JSON file</p>
+<p><code>--volume-size</code> or <code>-v</code>: Size in GB of the EBS volume (default: 30)</p>
+<p><code>--time-out</code> or <code>-t</code>: Time-out in seconds (default: 24 * 60 * 60)</p>
+<h4 id="example_6">Example</h4>
+<pre><code>sagify cloud train -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
+</code></pre>
+<h3 id="cloud-deploy">Cloud Deploy</h3>
+<h4 id="name_7">Name</h4>
+<p>Executes a Docker image in serve mode on AWS SageMaker</p>
+<h4 id="synopsis_7">Synopsis</h4>
+<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR]
+</code></pre>
+<h4 id="description_7">Description</h4>
+<p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode</p>
+<h4 id="required-flags_3">Required Flags</h4>
+<p><code>--s3-model-location</code> or <code>-m</code>: S3 location to to model tar.gz</p>
+<p><code>--num-instances</code> or <code>n</code>: Number of ec2 instances</p>
+<p><code>--ec2-type</code> or <code>e</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
+<h4 id="optional-flags_7">Optional Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<h4 id="example_7">Example</h4>
+<pre><code>sagify cloud deploy -d src/ -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
+</code></pre>
+              
+            </div>
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+    
+  </div>
+
+  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+      
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" style="cursor: pointer">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      
+          <a href="https://github.com/Kenza-AI/sagify/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
+      
+      
+      
+    </span>
+</div>
+    <script>var base_url = '.';</script>
+    <script src="./js/theme.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script>
+
+</body>
+</html>
+
+<!--
+MkDocs version : 0.17.3
+Build Date UTC : 2018-05-03 09:43:35
+-->
