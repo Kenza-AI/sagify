@@ -1,9 +1,15 @@
 from setuptools import find_packages, setup
 
+with open('README.md') as f:
+    long_description = f.read()
+
 setup(
     setup_cfg=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
     packages=find_packages(where='.'),
+    long_description=long_description,
+    long_description_content_type='text/markdown',
+    setup_requires=['setuptools>=39.1.0'],
     package_data={
         'sagify': [
             'template/cookiecutter.json',
