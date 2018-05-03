@@ -1,0 +1,5 @@
+{
+  "image_name": "{{ cookiecutter.project_slug }}-img",
+  "aws_profile": "{{ cookiecutter.aws_profile }}",
+  "aws_region": "{{ cookiecutter.aws_region }}"
+}
