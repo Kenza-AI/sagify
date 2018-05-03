@@ -5,11 +5,11 @@ develop: [![Build Status](https://travis-ci.com/Kenza-AI/sagify.svg?token=avm4PQ
 
 # sagify
 
-![Sagify](./docs/sagify@2x.png)
+![Sagify](https://s3.amazonaws.com/sagify/sagify%402x.png)
 
 A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
 
-![gif](./docs/end2end.gif)
+For detailed reference to Sagify commands please go to: [Read the Docs](https://Kenza-AI.github.io/sagify/)
 
 ## Installation
 
@@ -193,118 +193,7 @@ Run the following curl command on your terminal to verify that the REST Service 
 
 It will be slow in the first couple of calls as it loads the model in a lazy manner.
 
-Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the following section to see how to configure your AWS account in order to train and deploy your Deep Learning model on AWS SageMaker using sagify. Don't worry, the configuration is a one time thing that can be done by your Platform team, too. 
-
-## Usage
-
-### Configure AWS Account
-
-- Sign in to the AWS Management Console as an IAM user and open the IAM console at <https://console.aws.amazon.com/iam/>
-- Select `Roles` from the list in the left-hand side, and click on *Create role*
-- Then, select *SageMaker* as the image shows:
-
-![Create Role 1st Step](./docs/create_role_1st_step.png)
-
-- Click *Next: Review* on the following page:
-
-![Create Role 2nd Step](./docs/create_role_2nd_step.png)
-
-- Type a name for the SageMaker role, and click on *Create role*:
-
-![Create Role 3rd Step](./docs/create_role_3rd_step.png)
-
-- Click on the created role:
-
-![Successful Role Creation](./docs/created_role_page.png)
-
-- Click on *Attach policy* and search for `AmazonEC2ContainerRegistryFullAccess`. Attach the corresponding policy:
-
-![Attach Policy](./docs/attach_policy_step_1.png)
-
-- Do the same to attach the `AmazonS3FullAccess` policy, and end up with the following:
-
-![Policies](./docs/policies.png)
-
-- Now, go to Users page by clicking on *Users* on the left-hand side.
-
-- Click on your IAM user that you want to use for AWS SageMaker:
-
-![Users](./docs/iam_users.png)
-
-- Copy the ARN of that user:
-
-![ARN](./docs/user_arn.png)
-
-- Then, go back the page of the Role you created and click on the *Trust relationships* tab:
-
-![Trust Relationship](./docs/trust_relationship_step_1.png)
-
-- Click on *Edit trust relationship* and add the following:
-
-        {
-            "Version": "2012-10-17",
-            "Statement": [
-                {
-                    "Sid": "",
-                    "Effect": "Allow",
-                    "Principal": {
-                        "AWS": "PASTE_THE_ARN_YOU_COPIED_EARLIER",
-                        "Service": "sagemaker.amazonaws.com"
-                    },
-                    "Action": "sts:AssumeRole"
-                }
-            ]
-        }
-        
-- You're almost there! Make sure that you have added the IAM user in your `~/.aws/credentials` file. For example:
-    
-        [test-sagemaker]
-        aws_access_key_id = ...
-        aws_secret_access_key = ...
-
- - And, finally, add the following in the `~/.aws/config` file:
- 
-        [profile test-sagemaker]
-        region = us-east-1 <-- USE YOUR PREFERRED REGION
-        role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
-        source_profile = test-sagemaker
-
-- That's it! From now on, choose the created AWS profile when initializing sagify.
-
-- You can change the AWS profile in an already initialized sagify module by changing the value of `aws_profile` and `profile` in `sagify/config.json` and `sagify/push.sh`, respectively.
-
-### Push Docker Image to AWS ECS
-
-If you have followed all the steps of *Getting Started*, run `sagify push -d src` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
-
-### Create S3 Bucket
-
-Make sure to create an S3 bucket with a name of your choice, for example: `my-dl-addition`
-
-### Upload Training Data
-
-Execute `sagify cloud upload-data -d src -i data/processed/ -s s3://my-dl-addition/training-data` to upload training data to S3
-
-### Train on AWS SageMaker
-
-Execute `sagify cloud train -d src/ -i s3://my-dl-addition/training-data/ -o s3://my-dl-addition/output/ -e ml.m4.xlarge` to train the Deep Learning model on SageMaker. This command will use the pushed Docker image.
-
-Copy the displayed Model S3 location after the command is executed (example: `s3://my-dl-addition/output/deep-learning-addition-img-2018-04-29-15-04-14-483/output/model.tar.gz`)
-
-### Deploy on AWS SageMaker
-
-Execute `sagify cloud deploy -d src -m s3://my-dl-addition/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
-
-### Call SageMaker REST Endpoint
-
-Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to <https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html> on how to call it from Postman as authorization is required.
- 
-Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
-
-        {
-        	"addition": "112+143"
-        }
-
+Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Deep Learning model to AWS SageMaker!
 
 ## Commands
 
