@@ -1,6 +1,6 @@
 from setuptools import find_packages, setup
 
-with open('README.md') as f:
+with open('PYPI_DESCRIPTION.md') as f:
     long_description = f.read()
 
 setup(
