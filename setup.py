@@ -10,6 +10,7 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     setup_requires=['setuptools>=39.1.0'],
+    url='https://github.com/Kenza-AI/sagify',
     package_data={
         'sagify': [
             'template/cookiecutter.json',
