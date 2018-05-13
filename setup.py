@@ -45,7 +45,7 @@ setup(
     zip_safe=True,
     entry_points={
         'console_scripts': [
-            'sagify=sagify.main:cli',
+            'sagify=sagify.__main__:cli',
         ],
     }
 )

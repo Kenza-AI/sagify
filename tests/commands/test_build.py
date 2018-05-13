@@ -5,7 +5,7 @@ except ImportError:
 
 from click.testing import CliRunner
 
-from sagify.main import cli
+from sagify.__main__ import cli
 
 
 def test_build_happy_case():
