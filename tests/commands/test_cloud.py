@@ -7,7 +7,7 @@ from click.testing import CliRunner
 
 import sagify
 from sagify.config.config import Config
-from sagify.main import cli
+from sagify.__main__ import cli
 
 
 class TestUploadData(object):

@@ -7,7 +7,7 @@ except ImportError:
 import pytest
 from click.testing import CliRunner
 
-from sagify.main import cli
+from sagify.__main__ import cli
 
 
 def test_init_happy_case():
