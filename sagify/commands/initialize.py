@@ -2,17 +2,13 @@
 from __future__ import print_function, unicode_literals
 
 import os
-try:
-    from pathlib import Path
-except ImportError:
-    from pathlib2 import Path
 import sys
 
 import boto3
 import click
 from click import BadParameter
-from cookiecutter.main import cookiecutter
 
+from sagify.api import initialize as api_initialize
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
@@ -97,33 +93,6 @@ def ask_for_aws_details():
     return chosen_profile, chosen_region
 
 
-def template_creation(app_name, aws_profile, aws_region, python_version, output_dir):
-    sagify_module_name = 'sagify'
-
-    sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
-    if sagify_exists:
-        logger.info("There is a sagify directory/module already. "
-                    "Please, rename it in order to use sagify."
-                    )
-        sys.exit(-1)
-
-    Path(output_dir).mkdir(exist_ok=True)
-    Path(os.path.join(output_dir, '__init__.py')).touch()
-
-    cookiecutter(
-        template=os.path.join(_FILE_DIR_PATH, '../template/'),
-        output_dir=output_dir,
-        no_input=True,
-        extra_context={
-            "project_slug": app_name,
-            "module_slug": sagify_module_name,
-            "aws_profile": aws_profile,
-            "aws_region": aws_region,
-            "python_version": python_version
-        }
-    )
-
-
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to create sagify module")
 def init(dir):
@@ -138,12 +107,16 @@ def init(dir):
 
     aws_profile, aws_region = ask_for_aws_details()
 
-    template_creation(
-        app_name=sagify_app_name,
-        aws_profile=aws_profile,
-        aws_region=aws_region,
-        python_version=python_version,
-        output_dir=dir
-    )
+    try:
+        api_initialize.init(
+            dir=dir,
+            sagify_app_name=sagify_app_name,
+            aws_profile=aws_profile,
+            aws_region=aws_region,
+            python_version=python_version
+        )
 
-    logger.info("\nsagify module is created! ヽ(´▽`)/")
+        logger.info("\nsagify module is created! ヽ(´▽`)/")
+    except ValueError as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)

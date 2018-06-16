@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-import os
 import sys
-
-from future.moves import subprocess
 
 import click
 
+from sagify.api import local as api_local
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
@@ -31,23 +29,13 @@ def train(dir):
     logger.info(ASCII_LOGO)
     logger.info("Started local training...\n")
 
-    sagify_module_path = os.path.join(dir, 'sagify')
-    local_train_script_path = os.path.join(sagify_module_path, 'local_test', 'train_local.sh')
-    test_path = os.path.join(sagify_module_path, 'local_test', 'test_dir')
-
-    if not os.path.isdir(test_path):
-        logger.info("This is not a sagify directory: {}".format(dir))
-        sys.exit(-1)
-
     try:
-        subprocess.check_output(
-            [
-                "{}".format(local_train_script_path),
-                "{}".format(os.path.abspath(test_path))
-            ]
-        )
+        api_local.train(dir=dir)
 
         logger.info("Local training completed successfully!")
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
     except Exception as e:
         logger.info("{}".format(e))
         return
@@ -62,21 +50,11 @@ def deploy(dir):
     logger.info(ASCII_LOGO)
     logger.info("Started local deployment at localhost:8080 ...\n")
 
-    sagify_module_path = os.path.join(dir, 'sagify')
-    local_deploy_script_path = os.path.join(sagify_module_path, 'local_test', 'deploy_local.sh')
-    test_path = os.path.join(sagify_module_path, 'local_test', 'test_dir')
-
-    if not os.path.isdir(test_path):
+    try:
+        api_local.deploy(dir=dir)
+    except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)
-
-    try:
-        subprocess.check_output(
-            [
-                "{}".format(local_deploy_script_path),
-                "{}".format(os.path.abspath(test_path))
-            ]
-        )
     except Exception as e:
         logger.info("{}".format(e))
         return
