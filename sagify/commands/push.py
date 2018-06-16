@@ -1,13 +1,11 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-import os
 import sys
-
-from future.moves import subprocess
 
 import click
 
+from sagify.api import push as api_push
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 
@@ -25,18 +23,13 @@ def push(dir):
         "Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n"
     )
 
-    sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
-
-    push_script_path = os.path.join(sagify_module_path, 'push.sh')
-
-    if not os.path.isfile(push_script_path):
-        logger.info("This is not a sagify directory: {}".format(dir))
-        sys.exit(-1)
-
     try:
-        subprocess.check_output(["{}".format(push_script_path)])
+        api_push.push(dir=dir)
 
         logger.info("Docker image pushed to ECS successfully!")
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
     except Exception as e:
         logger.info("{}".format(e))
         return
