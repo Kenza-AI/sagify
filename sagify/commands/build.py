@@ -8,6 +8,7 @@ import click
 from sagify.api import build as api_build
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
+from future.moves import subprocess
 
 click.disable_unicode_literals_warning = True
 
@@ -29,6 +30,9 @@ def build(dir, requirements_dir):
     except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)
+    except subprocess.CalledProcessError as e:
+        logger.debug(e.output)
+        raise
     except Exception as e:
         logger.info("{}".format(e))
         return
