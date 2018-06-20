@@ -32,13 +32,13 @@ setup(
         ]
     },
     install_requires=[
-        'boto3==1.6.3, <1.6.99',
+        'boto3==1.7.41, <1.7.99',
         'cookiecutter>=1.6.0, <1.6.99',
         'click>=6.7, <6.7.99',
         'docker==3.1.0, <3.1.99',
         'flask>=0.12.2, <0.12.99',
         'pathlib2>=2.3.0, <2.3.99',
-        'sagemaker>=1.1.3, <1.1.99',
+        'sagemaker>=1.4.2, <1.4.99',
         'six>=1.10, <1.11.99'
     ],
     test_suite='tests',
