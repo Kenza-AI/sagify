@@ -10,6 +10,7 @@ MAINTAINER Amazon AI <support@kenza.ai>
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
          nginx \
          ca-certificates \
+         g++ \
     && rm -rf /var/lib/apt/lists/*
 
 # Set some environment variables. PYTHONUNBUFFERED keeps Python from buffering our standard
