@@ -42,7 +42,16 @@ def upload_data(dir, input_dir, s3_dir):
     return sage_maker_client.upload_data(input_dir, s3_dir)
 
 
-def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_size, time_out):
+def train(
+        dir,
+        input_s3_dir,
+        output_s3_dir,
+        hyperparams_file,
+        ec2_type,
+        volume_size,
+        time_out,
+        tags=None
+):
     """
     Trains ML model(s) on SageMaker
 
@@ -54,6 +63,20 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
     https://aws.amazon.com/sagemaker/pricing/instance-types/
     :param volume_size: [int], size in GB of the EBS volume
     :param time_out: [int], time-out in seconds
+    :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
 
     :return: [str], S3 model location
     """
@@ -69,11 +92,12 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
         train_volume_size=volume_size,
         train_max_run=time_out,
         output_path=output_s3_dir,
-        hyperparameters=hyperparams_dict
+        hyperparameters=hyperparams_dict,
+        tags=tags
     )
 
 
-def deploy(dir, s3_model_location, num_instances, ec2_type):
+def deploy(dir, s3_model_location, num_instances, ec2_type, tags=None):
     """
     Deploys ML model(s) on SageMaker
 
@@ -82,6 +106,20 @@ def deploy(dir, s3_model_location, num_instances, ec2_type):
     :param num_instances: [int], number of ec2 instances
     :param ec2_type: [str], ec2 instance type. Refere to:
     https://aws.amazon.com/sagemaker/pricing/instance-types/
+    :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
 
     :return: [str], endpoint name
     """
@@ -92,5 +130,6 @@ def deploy(dir, s3_model_location, num_instances, ec2_type):
         image_name=config.image_name,
         s3_model_location=s3_model_location,
         train_instance_count=num_instances,
-        train_instance_type=ec2_type
+        train_instance_type=ec2_type,
+        tags=tags
     )

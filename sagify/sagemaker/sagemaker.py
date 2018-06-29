@@ -36,7 +36,8 @@ class SageMakerClient(object):
             train_volume_size,
             train_max_run,
             output_path,
-            hyperparameters
+            hyperparameters,
+            tags=None
     ):
         """
         Train model on SageMaker
@@ -50,6 +51,21 @@ class SageMakerClient(object):
         result (model artifacts and output files)
         :param hyperparameters: [dict], Dictionary containing the hyperparameters to initialize
         this estimator with
+        :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+
         :return: [str], the model location in S3
         """
         image = self._construct_image_location(image_name)
@@ -66,21 +82,51 @@ class SageMakerClient(object):
             hyperparameters=hyperparameters,
             sagemaker_session=self.sagemaker_session
         )
+        if tags:
+            estimator.tags = []
 
         estimator.fit(input_s3_data_location)
 
         return estimator.model_data
 
-    def deploy(self, image_name, s3_model_location, train_instance_count, train_instance_type):
+    def deploy(
+            self,
+            image_name,
+            s3_model_location,
+            train_instance_count,
+            train_instance_type,
+            tags=None
+    ):
         """
         Deploy model to SageMaker
         :param image_name: [str], name of Docker image
         :param s3_model_location: [str], model location in S3
         :param train_instance_count: [str],  number of ec2 instances
         :param train_instance_type: [str], ec2 instance type
+        :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
         :return: [str], endpoint name
         """
         image = self._construct_image_location(image_name)
+
+        self.sagemaker_session.endpoint_from_model_data(
+            model_s3_location=s3_model_location,
+            deployment_image=image,
+            initial_instance_count=train_instance_count,
+            instance_type=train_instance_type,
+        )
 
         model = sage.Model(
             model_data=s3_model_location,
@@ -89,7 +135,11 @@ class SageMakerClient(object):
             sagemaker_session=self.sagemaker_session
         )
 
-        model.deploy(train_instance_count, train_instance_type)
+        model.deploy(
+            initial_instance_count=train_instance_count,
+            instance_type=train_instance_type,
+            tags=tags
+        )
 
         return model.endpoint_name
 
