@@ -309,7 +309,7 @@ class TestTrain(object):
 
 
 class TestDeploy(object):
-    def test_train_happy_case(self):
+    def test_deploy_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -350,7 +350,7 @@ class TestDeploy(object):
 
         assert result.exit_code == 0
 
-    def test_train_with_dir_arg_happy_case(self):
+    def test_deploy_with_dir_arg_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -395,7 +395,7 @@ class TestDeploy(object):
 
         assert result.exit_code == 0
 
-    def test_train_with_tags_arg_happy_case(self):
+    def test_deploy_with_tags_arg_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -446,7 +446,7 @@ class TestDeploy(object):
 
         assert result.exit_code == 0
 
-    def test_train_with_invalid_dir_arg_happy_case(self):
+    def test_deploy_with_invalid_dir_arg_happy_case(self):
         runner = CliRunner()
 
         with patch(

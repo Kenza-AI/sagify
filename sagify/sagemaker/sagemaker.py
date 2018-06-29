@@ -83,7 +83,7 @@ class SageMakerClient(object):
             sagemaker_session=self.sagemaker_session
         )
         if tags:
-            estimator.tags = []
+            estimator.tags = tags
 
         estimator.fit(input_s3_data_location)
 
@@ -120,13 +120,6 @@ class SageMakerClient(object):
         :return: [str], endpoint name
         """
         image = self._construct_image_location(image_name)
-
-        self.sagemaker_session.endpoint_from_model_data(
-            model_s3_location=s3_model_location,
-            deployment_image=image,
-            initial_instance_count=train_instance_count,
-            instance_type=train_instance_type,
-        )
 
         model = sage.Model(
             model_data=s3_model_location,
