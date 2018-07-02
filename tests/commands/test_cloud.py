@@ -159,7 +159,63 @@ class TestTrain(object):
                             train_volume_size=30,
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
-                            hyperparameters=None
+                            hyperparameters=None,
+                            tags=None
+                        )
+
+        assert result.exit_code == 0
+
+    def test_train_with_tags_arg_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'train',
+                                '-i', 's3://bucket/input',
+                                '-o', 's3://bucket/output',
+                                '-e', 'ml.c4.2xlarge',
+                                '-t', 'key1=value1;key2=2'
+                            ]
+                        )
+
+                        assert instance.train.call_count == 1
+                        instance.train.assert_called_with(
+                            image_name='sagemaker-img',
+                            input_s3_data_location='s3://bucket/input',
+                            train_instance_count=1,
+                            train_instance_type='ml.c4.2xlarge',
+                            train_volume_size=30,
+                            train_max_run=24 * 60 * 60,
+                            output_path='s3://bucket/output',
+                            hyperparameters=None,
+                            tags=[
+                                {
+                                    'Key': 'key1',
+                                    'Value': 'value1',
+                                },
+                                {
+                                    'Key': 'key2',
+                                    'Value': '2',
+                                },
+                            ]
                         )
 
         assert result.exit_code == 0
@@ -207,7 +263,8 @@ class TestTrain(object):
                             train_volume_size=30,
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
-                            hyperparameters=None
+                            hyperparameters=None,
+                            tags=None
                         )
 
         assert result.exit_code == 0
@@ -252,7 +309,7 @@ class TestTrain(object):
 
 
 class TestDeploy(object):
-    def test_train_happy_case(self):
+    def test_deploy_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -287,12 +344,13 @@ class TestDeploy(object):
                             image_name='sagemaker-img',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
-                            train_instance_type='ml.c4.2xlarge'
+                            train_instance_type='ml.c4.2xlarge',
+                            tags=None
                         )
 
         assert result.exit_code == 0
 
-    def test_train_with_dir_arg_happy_case(self):
+    def test_deploy_with_dir_arg_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -331,12 +389,64 @@ class TestDeploy(object):
                             image_name='sagemaker-img',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
-                            train_instance_type='ml.c4.2xlarge'
+                            train_instance_type='ml.c4.2xlarge',
+                            tags=None
                         )
 
         assert result.exit_code == 0
 
-    def test_train_with_invalid_dir_arg_happy_case(self):
+    def test_deploy_with_tags_arg_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'deploy',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge',
+                                '-t', 'key1=value1;key2=2'
+                            ]
+                        )
+
+                        assert instance.deploy.call_count == 1
+                        instance.deploy.assert_called_with(
+                            image_name='sagemaker-img',
+                            s3_model_location='s3://bucket/model/location/model.tar.gz',
+                            train_instance_count=2,
+                            train_instance_type='ml.c4.2xlarge',
+                            tags=[
+                                {
+                                    'Key': 'key1',
+                                    'Value': 'value1',
+                                },
+                                {
+                                    'Key': 'key2',
+                                    'Value': '2',
+                                },
+                            ]
+                        )
+
+        assert result.exit_code == 0
+
+    def test_deploy_with_invalid_dir_arg_happy_case(self):
         runner = CliRunner()
 
         with patch(

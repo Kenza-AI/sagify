@@ -142,5 +142,62 @@ def test_deploy_happy_case():
                         sagemaker_model_instance = mocked_sagemaker_model.return_value
                         assert sagemaker_model_instance.deploy.call_count == 1
                         sagemaker_model_instance.deploy.assert_called_with(
-                            1, 'm1.xlarge'
+                            initial_instance_count=1,
+                            instance_type='m1.xlarge',
+                            tags=None
+                        )
+
+
+def test_deploy_with_tags():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.Model'
+                ) as mocked_sagemaker_model:
+                    with patch(
+                            'sagify.sagemaker.sagemaker.SageMakerClient._construct_image_location',
+                            return_value='image-full-name'
+                    ):
+                        sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+
+                        tags = [
+                            {
+                                'Key': 'key_name_1',
+                                'Value': 1,
+                            },
+                            {
+                                'Key': 'key_name_2',
+                                'Value': '2',
+                            },
+                        ]
+
+                        sage_maker_client.deploy(
+                            image_name='image',
+                            s3_model_location='s3://bucket/model_input/model.tar.gz',
+                            train_instance_count=1,
+                            train_instance_type='m1.xlarge',
+                            tags=tags
+                        )
+                        mocked_sagemaker_model.assert_called_with(
+                            model_data='s3://bucket/model_input/model.tar.gz',
+                            image='image-full-name',
+                            role='arn_role',
+                            sagemaker_session=sagemaker_session_instance
+                        )
+                        sagemaker_model_instance = mocked_sagemaker_model.return_value
+                        assert sagemaker_model_instance.deploy.call_count == 1
+                        sagemaker_model_instance.deploy.assert_called_with(
+                            initial_instance_count=1,
+                            instance_type='m1.xlarge',
+                            tags=tags
                         )

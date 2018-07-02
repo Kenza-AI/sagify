@@ -438,9 +438,9 @@ This command uploads content under `LOCAL_INPUT_DATA_DIR` to S3 under `S3_TARGET
 
 #### Required Flags
 
-`--input-dir` or `-i`: Local input directory
+`--input-dir LOCAL_INPUT_DATA_DIR` or `-i LOCAL_INPUT_DATA_DIR`: Local input directory
 
-`--s3-dir` or `-s`: S3 target location
+`--s3-dir S3_TARGET_DATA_LOCATION` or `-s S3_TARGET_DATA_LOCATION`: S3 target location
 
 #### Optional Flags
 
@@ -459,7 +459,7 @@ Executes a Docker image in train mode on AWS SageMaker
 
 #### Synopsis
 
-    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS]
+    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--tags TAGS]
 
 #### Description
 
@@ -467,21 +467,23 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 #### Required Flags
 
-`--input-s3-dir` or `-i`: S3 location to input data
+`--input-s3-dir INPUT_DATA_S3_LOCATION` or `-i INPUT_DATA_S3_LOCATION`: S3 location to input data
 
-`--output-s3-dir` or `o`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
+`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
 
-`--ec2-type` or `e`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
+`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
 
 #### Optional Flags
 
 `--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
 
-`--hyperparams-file` or `-h`: Path to hyperparams JSON file
+`--hyperparams-file HYPERPARAMS_JSON_FILE` or `-h HYPERPARAMS_JSON_FILE`: Path to hyperparams JSON file
  
-`--volume-size` or `-v`: Size in GB of the EBS volume (default: 30)
+`--volume-size EBS_SIZE_IN_GB` or `-v EBS_SIZE_IN_GB`: Size in GB of the EBS volume (default: 30)
 
-`--time-out` or `-t`: Time-out in seconds (default: 24 * 60 * 60)
+`--time-out TIME_OUT_IN_SECS` or `-s TIME_OUT_IN_SECS`: Time-out in seconds (default: 24 * 60 * 60)
+
+`--tags TAGS` or `-t TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
 
 #### Example
 
@@ -496,7 +498,7 @@ Executes a Docker image in serve mode on AWS SageMaker
 
 #### Synopsis
 
-    sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR]
+    sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR] [--tags TAGS]
 
 #### Description
 
@@ -504,15 +506,17 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 #### Required Flags
 
-`--s3-model-location` or `-m`: S3 location to to model tar.gz
+`--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: S3 location to to model tar.gz
 
-`--num-instances` or `n`: Number of ec2 instances
+`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
 
-`--ec2-type` or `e`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
 
 #### Optional Flags
 
 `--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
+
+`--tags TAGS` or `-t TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
 
 #### Example
 
