@@ -42,4 +42,7 @@ def validate_tags(ctx, param, value):
 
         tags_dict[key] = value
 
-    return [{'Key': k, 'Value': v} for k, v in tags_dict.items()]
+    sorted_keys = list(tags_dict.keys())
+    sorted_keys.sort()
+
+    return [{'Key': k, 'Value': tags_dict[k]} for k in sorted_keys]
