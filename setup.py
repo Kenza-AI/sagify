@@ -38,7 +38,7 @@ setup(
         'docker==3.1.0, <3.1.99',
         'flask>=0.12.2, <0.12.99',
         'pathlib2>=2.3.0, <2.3.99',
-        'sagemaker>=1.4.2, <1.4.99',
+        'sagemaker>=1.5.1, <1.5.99',
         'six>=1.10, <1.11.99'
     ],
     test_suite='tests',

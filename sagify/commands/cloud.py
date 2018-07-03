@@ -7,6 +7,7 @@ import click
 
 from sagify.api import cloud as api_cloud
 from sagify.commands import ASCII_LOGO
+from sagify.commands.custom_validators.validators import validate_tags
 from sagify.log import logger
 
 click.disable_unicode_literals_warning = True
@@ -77,12 +78,29 @@ def upload_data(dir, input_dir, s3_dir):
     help="size in GB of the EBS volume (default: 30)"
 )
 @click.option(
-    u"-t", u"--time-out",
+    u"-s", u"--time-out",
     required=False,
     default=24 * 60 * 60,
     help="time-out in seconds (default: 24 * 60 * 60)"
 )
-def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_size, time_out):
+@click.option(
+    u"-t", u"--tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+def train(
+        dir,
+        input_s3_dir,
+        output_s3_dir,
+        hyperparams_file,
+        ec2_type,
+        volume_size,
+        time_out,
+        tags
+):
     """
     Command to train ML model(s) on SageMaker
     """
@@ -97,7 +115,8 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
             hyperparams_file=hyperparams_file,
             ec2_type=ec2_type,
             volume_size=volume_size,
-            time_out=time_out
+            time_out=time_out,
+            tags=tags
         )
 
         logger.info("Training on SageMaker succeeded")
@@ -117,7 +136,15 @@ def train(dir, input_s3_dir, output_s3_dir, hyperparams_file, ec2_type, volume_s
 )
 @click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
 @click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
-def deploy(dir, s3_model_location, num_instances, ec2_type):
+@click.option(
+    u"-t", u"--tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+def deploy(dir, s3_model_location, num_instances, ec2_type, tags):
     """
     Command to deploy ML model(s) on SageMaker
     """
@@ -129,7 +156,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type):
             dir=dir,
             s3_model_location=s3_model_location,
             num_instances=num_instances,
-            ec2_type=ec2_type
+            ec2_type=ec2_type,
+            tags=tags
         )
 
         logger.info("Model deployed to SageMaker successfully")
