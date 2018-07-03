@@ -444,8 +444,8 @@ source_profile = test-sagemaker
 <h4 id="description_5">Description</h4>
 <p>This command uploads content under <code>LOCAL_INPUT_DATA_DIR</code> to S3 under <code>S3_TARGET_DATA_LOCATION</code></p>
 <h4 id="required-flags_1">Required Flags</h4>
-<p><code>--input-dir</code> or <code>-i</code>: Local input directory</p>
-<p><code>--s3-dir</code> or <code>-s</code>: S3 target location</p>
+<p><code>--input-dir LOCAL_INPUT_DATA_DIR</code> or <code>-i LOCAL_INPUT_DATA_DIR</code>: Local input directory</p>
+<p><code>--s3-dir S3_TARGET_DATA_LOCATION</code> or <code>-s S3_TARGET_DATA_LOCATION</code>: S3 target location</p>
 <h4 id="optional-flags_5">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <h4 id="example_5">Example</h4>
@@ -455,19 +455,20 @@ source_profile = test-sagemaker
 <h4 id="name_6">Name</h4>
 <p>Executes a Docker image in train mode on AWS SageMaker</p>
 <h4 id="synopsis_6">Synopsis</h4>
-<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS]
+<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--tags TAGS]
 </code></pre>
 <h4 id="description_6">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
 <h4 id="required-flags_2">Required Flags</h4>
-<p><code>--input-s3-dir</code> or <code>-i</code>: S3 location to input data</p>
-<p><code>--output-s3-dir</code> or <code>o</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
-<p><code>--ec2-type</code> or <code>e</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
+<p><code>--input-s3-dir INPUT_DATA_S3_LOCATION</code> or <code>-i INPUT_DATA_S3_LOCATION</code>: S3 location to input data</p>
+<p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
+<p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
 <h4 id="optional-flags_6">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
-<p><code>--hyperparams-file</code> or <code>-h</code>: Path to hyperparams JSON file</p>
-<p><code>--volume-size</code> or <code>-v</code>: Size in GB of the EBS volume (default: 30)</p>
-<p><code>--time-out</code> or <code>-t</code>: Time-out in seconds (default: 24 * 60 * 60)</p>
+<p><code>--hyperparams-file HYPERPARAMS_JSON_FILE</code> or <code>-h HYPERPARAMS_JSON_FILE</code>: Path to hyperparams JSON file</p>
+<p><code>--volume-size EBS_SIZE_IN_GB</code> or <code>-v EBS_SIZE_IN_GB</code>: Size in GB of the EBS volume (default: 30)</p>
+<p><code>--time-out TIME_OUT_IN_SECS</code> or <code>-s TIME_OUT_IN_SECS</code>: Time-out in seconds (default: 24 * 60 * 60)</p>
+<p><code>--tags TAGS</code> or <code>-t TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <h4 id="example_6">Example</h4>
 <pre><code>sagify cloud train -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
 </code></pre>
@@ -475,16 +476,17 @@ source_profile = test-sagemaker
 <h4 id="name_7">Name</h4>
 <p>Executes a Docker image in serve mode on AWS SageMaker</p>
 <h4 id="synopsis_7">Synopsis</h4>
-<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR]
+<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR] [--tags TAGS]
 </code></pre>
 <h4 id="description_7">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode</p>
 <h4 id="required-flags_3">Required Flags</h4>
-<p><code>--s3-model-location</code> or <code>-m</code>: S3 location to to model tar.gz</p>
-<p><code>--num-instances</code> or <code>n</code>: Number of ec2 instances</p>
-<p><code>--ec2-type</code> or <code>e</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
+<p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
+<p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
+<p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
 <h4 id="optional-flags_7">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<p><code>--tags TAGS</code> or <code>-t TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <h4 id="example_7">Example</h4>
 <pre><code>sagify cloud deploy -d src/ -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
 </code></pre>
@@ -529,6 +531,6 @@ source_profile = test-sagemaker
 </html>
 
 <!--
-MkDocs version : 0.17.3
-Build Date UTC : 2018-05-13 16:45:59
+MkDocs version : 0.17.4
+Build Date UTC : 2018-07-03 06:58:23
 -->
