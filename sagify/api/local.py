@@ -5,6 +5,8 @@ import os
 
 from future.moves import subprocess
 
+from sagify.log import logger
+
 
 def train(dir):
     """
@@ -19,12 +21,13 @@ def train(dir):
     if not os.path.isdir(test_path):
         raise ValueError("This is not a sagify directory: {}".format(dir))
 
-    subprocess.check_output(
+    output = subprocess.check_output(
         [
             "{}".format(local_train_script_path),
             "{}".format(os.path.abspath(test_path))
         ]
     )
+    logger.debug(output)
 
 
 def deploy(dir):
@@ -40,9 +43,10 @@ def deploy(dir):
     if not os.path.isdir(test_path):
         raise ValueError("This is not a sagify directory: {}".format(dir))
 
-    subprocess.check_output(
+    output = subprocess.check_output(
         [
             "{}".format(local_deploy_script_path),
             "{}".format(os.path.abspath(test_path))
         ]
     )
+    logger.debug(output)
