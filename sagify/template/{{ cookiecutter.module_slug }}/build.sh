@@ -9,11 +9,11 @@ requirements_file_path=$4
 
 image={{ cookiecutter.project_slug }}-img
 
-img_id=$(docker images ${image} -q)
-if [ "$img_id" != "" ]
-then
-    docker rmi -f ${img_id}
-fi
+# img_id=$(docker images ${image} -q)
+# if [ "$img_id" != "" ]
+# then
+#     docker rmi -f ${img_id}
+# fi
 
 # Build the docker image
 
