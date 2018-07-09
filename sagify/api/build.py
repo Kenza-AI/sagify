@@ -5,6 +5,8 @@ import os
 
 from future.moves import subprocess
 
+from sagify.log import logger
+
 
 def build(dir, requirements_dir):
     """
@@ -34,7 +36,7 @@ def build(dir, requirements_dir):
 
     target_dir_name = os.path.basename(os.path.normpath(dir))
 
-    subprocess.check_output(
+    output = subprocess.check_output(
         [
             "{}".format(build_script_path),
             "{}".format(os.path.relpath(dir)),
@@ -43,3 +45,4 @@ def build(dir, requirements_dir):
             "{}".format(os.path.relpath(requirements_dir))
         ]
     )
+    logger.debug(output)
