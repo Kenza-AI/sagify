@@ -84,7 +84,7 @@ def upload_data(dir, input_dir, s3_dir):
     help="time-out in seconds (default: 24 * 60 * 60)"
 )
 @click.option(
-    u"-t", u"--tags",
+    u"-t", u"--aws-tags",
     callback=validate_tags,
     required=False,
     default=None,
@@ -137,7 +137,7 @@ def train(
 @click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
 @click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
 @click.option(
-    u"-t", u"--tags",
+    u"-t", u"--aws-tags",
     callback=validate_tags,
     required=False,
     default=None,
