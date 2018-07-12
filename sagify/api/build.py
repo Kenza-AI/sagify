@@ -8,7 +8,7 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def build(dir, requirements_dir):
+def build(dir, requirements_dir, docker_tag):
     """
     Builds a Docker image that contains code under the given source root directory.
 
@@ -42,7 +42,8 @@ def build(dir, requirements_dir):
             "{}".format(os.path.relpath(dir)),
             "{}".format(os.path.relpath(target_dir_name)),
             "{}".format(dockerfile_path),
-            "{}".format(os.path.relpath(requirements_dir))
+            "{}".format(os.path.relpath(requirements_dir)),
+            docker_tag
         ]
     )
     logger.debug(output)
