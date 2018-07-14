@@ -6,6 +6,7 @@
 # The argument to this script is the image name. This will be used as the image on the local
 # machine and combined with the account and region to form the repository name for ECR.
 image={{ cookiecutter.project_slug }}-img
+tag=$1
 
 profile={{ cookiecutter.aws_profile }}
 region={{ cookiecutter.aws_region }}
@@ -19,7 +20,7 @@ then
 fi
 
 
-fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:latest"
+fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:${tag}"
 
 # If the repository doesn't exist in ECR, create it.
 
@@ -35,6 +36,6 @@ $(aws ecr get-login --profile ${profile} --region ${region} --no-include-email)
 
 # Push Docker image to ECR with the full name.
 
-docker tag ${image} ${fullname}
+docker tag ${image}:${tag} ${fullname}
 
 docker push ${fullname}
