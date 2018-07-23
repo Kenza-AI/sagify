@@ -192,7 +192,7 @@ class TestTrain(object):
                                 '-i', 's3://bucket/input',
                                 '-o', 's3://bucket/output',
                                 '-e', 'ml.c4.2xlarge',
-                                '-t', 'key1=value1;key2=2'
+                                '-a', 'key1=value1;key2=2'
                             ]
                         )
 
@@ -422,7 +422,7 @@ class TestDeploy(object):
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-n', '2',
                                 '-e', 'ml.c4.2xlarge',
-                                '-t', 'key1=value1;key2=2'
+                                '-a', 'key1=value1;key2=2'
                             ]
                         )
 

@@ -377,7 +377,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--time-out TIME_OUT_IN_SECS` or `-s TIME_OUT_IN_SECS`: Time-out in seconds (default: 24 * 60 * 60)
 
-`--aws-tags TAGS` or `-t TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
 
 #### Example
 
@@ -410,7 +410,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
 
-`--aws-tags TAGS` or `-t TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
 
 #### Example
 
