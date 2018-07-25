@@ -8,7 +8,7 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def train(dir):
+def train(dir, docker_tag):
     """
     Trains ML model(s) locally
 
@@ -24,13 +24,14 @@ def train(dir):
     output = subprocess.check_output(
         [
             "{}".format(local_train_script_path),
-            "{}".format(os.path.abspath(test_path))
+            "{}".format(os.path.abspath(test_path)),
+            docker_tag
         ]
     )
     logger.debug(output)
 
 
-def deploy(dir):
+def deploy(dir, docker_tag):
     """
     Deploys ML models(s) locally
 
@@ -46,7 +47,8 @@ def deploy(dir):
     output = subprocess.check_output(
         [
             "{}".format(local_deploy_script_path),
-            "{}".format(os.path.abspath(test_path))
+            "{}".format(os.path.abspath(test_path)),
+            docker_tag
         ]
     )
     logger.debug(output)

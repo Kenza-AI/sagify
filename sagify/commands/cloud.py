@@ -84,14 +84,16 @@ def upload_data(dir, input_dir, s3_dir):
     help="time-out in seconds (default: 24 * 60 * 60)"
 )
 @click.option(
-    u"-t", u"--tags",
+    u"-a", u"--aws-tags",
     callback=validate_tags,
     required=False,
     default=None,
     help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
          'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
 )
+@click.pass_obj
 def train(
+        obj,
         dir,
         input_s3_dir,
         output_s3_dir,
@@ -99,7 +101,7 @@ def train(
         ec2_type,
         volume_size,
         time_out,
-        tags
+        aws_tags
 ):
     """
     Command to train ML model(s) on SageMaker
@@ -116,7 +118,8 @@ def train(
             ec2_type=ec2_type,
             volume_size=volume_size,
             time_out=time_out,
-            tags=tags
+            docker_tag=obj['docker_tag'],
+            tags=aws_tags
         )
 
         logger.info("Training on SageMaker succeeded")
@@ -137,14 +140,15 @@ def train(
 @click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
 @click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
 @click.option(
-    u"-t", u"--tags",
+    u"-a", u"--aws-tags",
     callback=validate_tags,
     required=False,
     default=None,
     help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
          'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
 )
-def deploy(dir, s3_model_location, num_instances, ec2_type, tags):
+@click.pass_obj
+def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags):
     """
     Command to deploy ML model(s) on SageMaker
     """
@@ -157,7 +161,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, tags):
             s3_model_location=s3_model_location,
             num_instances=num_instances,
             ec2_type=ec2_type,
-            tags=tags
+            docker_tag=obj['docker_tag'],
+            tags=aws_tags
         )
 
         logger.info("Model deployed to SageMaker successfully")

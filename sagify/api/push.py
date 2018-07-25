@@ -8,7 +8,7 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def push(dir):
+def push(dir, docker_tag):
     """
     Push Docker image to AWS ECS
 
@@ -21,5 +21,5 @@ def push(dir):
     if not os.path.isfile(push_script_path):
         raise ValueError("This is not a sagify directory: {}".format(dir))
 
-    output = subprocess.check_output(["{}".format(push_script_path)])
+    output = subprocess.check_output(["{}".format(push_script_path), docker_tag])
     logger.debug(output)

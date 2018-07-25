@@ -152,7 +152,7 @@ class TestTrain(object):
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
                             train_instance_type='ml.c4.2xlarge',
@@ -192,13 +192,13 @@ class TestTrain(object):
                                 '-i', 's3://bucket/input',
                                 '-o', 's3://bucket/output',
                                 '-e', 'ml.c4.2xlarge',
-                                '-t', 'key1=value1;key2=2'
+                                '-a', 'key1=value1;key2=2'
                             ]
                         )
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
                             train_instance_type='ml.c4.2xlarge',
@@ -256,7 +256,7 @@ class TestTrain(object):
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
                             train_instance_type='ml.c4.2xlarge',
@@ -341,7 +341,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
                             train_instance_type='ml.c4.2xlarge',
@@ -386,7 +386,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
                             train_instance_type='ml.c4.2xlarge',
@@ -422,13 +422,13 @@ class TestDeploy(object):
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-n', '2',
                                 '-e', 'ml.c4.2xlarge',
-                                '-t', 'key1=value1;key2=2'
+                                '-a', 'key1=value1;key2=2'
                             ]
                         )
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            image_name='sagemaker-img',
+                            image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
                             train_instance_type='ml.c4.2xlarge',

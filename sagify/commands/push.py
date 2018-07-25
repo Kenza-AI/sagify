@@ -15,7 +15,8 @@ click.disable_unicode_literals_warning = True
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
-def push(dir):
+@click.pass_obj
+def push(obj, dir):
     """
     Command to push Docker image to AWS ECS
     """
@@ -25,7 +26,7 @@ def push(dir):
     )
 
     try:
-        api_push.push(dir=dir)
+        api_push.push(dir=dir, docker_tag=obj['docker_tag'])
 
         logger.info("Docker image pushed to ECS successfully!")
     except ValueError:
