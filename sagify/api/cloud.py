@@ -50,6 +50,7 @@ def train(
         ec2_type,
         volume_size,
         time_out,
+        docker_tag,
         tags=None
 ):
     """
@@ -84,8 +85,10 @@ def train(
     hyperparams_dict = _read_hyperparams_config(hyperparams_file) if hyperparams_file else None
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
 
+    image_name = config.image_name+':'+docker_tag
+
     return sage_maker_client.train(
-        image_name=config.image_name,
+        image_name=image_name,
         input_s3_data_location=input_s3_dir,
         train_instance_count=1,
         train_instance_type=ec2_type,
@@ -97,7 +100,7 @@ def train(
     )
 
 
-def deploy(dir, s3_model_location, num_instances, ec2_type, tags=None):
+def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=None):
     """
     Deploys ML model(s) on SageMaker
 
@@ -124,10 +127,11 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, tags=None):
     :return: [str], endpoint name
     """
     config = _read_config(dir)
+    image_name = config.image_name+':'+docker_tag
 
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
     return sage_maker_client.deploy(
-        image_name=config.image_name,
+        image_name=image_name,
         s3_model_location=s3_model_location,
         train_instance_count=num_instances,
         train_instance_type=ec2_type,

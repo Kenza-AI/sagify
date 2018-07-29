@@ -13,11 +13,14 @@ from sagify.log import configure_logger
 
 @click.group()
 @click.option(u"-v", u"--verbose", count=True, help=u"Turn on debug logging")
-def cli(verbose):
+@click.option(u"-t", u"--docker-tag", default=u"latest", help=u"Specify tag for Docker image")
+@click.pass_context
+def cli(ctx, verbose, docker_tag):
     """
     Sagify enables training and deploying machine learning models on AWS SageMaker in a few minutes!
     """
     configure_logger(verbose)
+    ctx.obj = {'docker_tag': docker_tag}
 
 
 def add_commands(cli):
