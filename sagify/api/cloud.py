@@ -86,8 +86,10 @@ def train(
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
 
     image_name = config.image_name+':'+docker_tag
+    repository_name = config.repository_name
 
     return sage_maker_client.train(
+        repository_name=repository_name,
         image_name=image_name,
         input_s3_data_location=input_s3_dir,
         train_instance_count=1,
