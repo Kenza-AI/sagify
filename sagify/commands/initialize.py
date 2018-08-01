@@ -90,7 +90,13 @@ def ask_for_aws_details():
         type=str
     )
 
-    return chosen_profile, chosen_region
+    chosen_ecr_repository_name = click.prompt(
+        text="Type in ECR your repository name",
+        default='sagify-images',
+        type=str
+    )
+
+    return chosen_profile, chosen_region, chosen_ecr_repository_name
 
 
 @click.command()
@@ -105,7 +111,7 @@ def init(dir):
 
     python_version = ask_for_python_version()
 
-    aws_profile, aws_region = ask_for_aws_details()
+    aws_profile, aws_region, ecr_repository_name = ask_for_aws_details()
 
     try:
         api_initialize.init(
@@ -113,7 +119,8 @@ def init(dir):
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
-            python_version=python_version
+            python_version=python_version,
+            ecr_repository_name=ecr_repository_name
         )
 
         logger.info("\nsagify module is created! ヽ(´▽`)/")

@@ -1,0 +1,22 @@
+{
+  "tests/commands/test_build.py::test_build_happy_case": true,
+  "tests/commands/test_build.py::test_build_with_dir_arg_happy_case": true,
+  "tests/commands/test_cloud.py::TestDeploy::()::test_deploy_happy_case": true,
+  "tests/commands/test_cloud.py::TestDeploy::()::test_deploy_with_dir_arg_happy_case": true,
+  "tests/commands/test_cloud.py::TestDeploy::()::test_deploy_with_tags_arg_happy_case": true,
+  "tests/commands/test_cloud.py::TestTrain::()::test_train_happy_case": true,
+  "tests/commands/test_cloud.py::TestTrain::()::test_train_with_dir_arg_happy_case": true,
+  "tests/commands/test_cloud.py::TestTrain::()::test_train_with_tags_arg_happy_case": true,
+  "tests/commands/test_cloud.py::TestUploadData::()::test_upload_data_happy_case": true,
+  "tests/commands/test_cloud.py::TestUploadData::()::test_upload_data_with_dir_arg_happy_case": true,
+  "tests/commands/test_initialize.py::test_init_happy_case": true,
+  "tests/commands/test_initialize.py::test_init_with_dir_arg_happy_case[test_input_args0]": true,
+  "tests/commands/test_initialize.py::test_init_with_dir_arg_happy_case[test_input_args1]": true,
+  "tests/commands/test_local.py::TestDeploy::()::test_deploy_happy_case": true,
+  "tests/commands/test_local.py::TestDeploy::()::test_deploy_with_dir_arg_happy_case": true,
+  "tests/commands/test_local.py::TestTrain::()::test_train_happy_case": true,
+  "tests/commands/test_local.py::TestTrain::()::test_train_with_dir_arg_happy_case": true,
+  "tests/commands/test_push.py::test_push_happy_case": true,
+  "tests/commands/test_push.py::test_push_with_dir_arg_happy_case": true,
+  "tests/sagemaker/test_sagemaker.py::test_train_happy_case": true
+}

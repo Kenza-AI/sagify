@@ -22,7 +22,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -55,7 +55,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -92,7 +92,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -131,7 +131,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -152,7 +152,7 @@ class TestTrain(object):
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            repository_name='ecr-repository',
+                            ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
@@ -177,7 +177,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -199,7 +199,7 @@ class TestTrain(object):
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            repository_name='ecr-repository',
+                            ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
@@ -233,7 +233,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -258,7 +258,7 @@ class TestTrain(object):
 
                         assert instance.train.call_count == 1
                         instance.train.assert_called_with(
-                            repository_name='ecr-repository',
+                            ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
@@ -283,7 +283,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -323,7 +323,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -344,7 +344,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            repository_name='ecr-repository',
+                           ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
@@ -365,7 +365,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -390,7 +390,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            repository_name='ecr-repository',
+                           ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
@@ -411,7 +411,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -433,7 +433,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                            repository_name='ecr-repository',
+                           ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
@@ -463,7 +463,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
                     )
             ):
                 with patch(

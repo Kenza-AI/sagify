@@ -10,6 +10,7 @@ tag=$1
 
 profile={{ cookiecutter.aws_profile }}
 region={{ cookiecutter.aws_region }}
+repository={{ cookiecutter.ecr_repository_name }}
 
 # Get the account number associated with the current IAM credentials
 account=$(aws sts get-caller-identity --profile ${profile} --query Account --output text)

@@ -86,10 +86,10 @@ def train(
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
 
     image_name = config.image_name+':'+docker_tag
-    repository_name = config.repository_name
+    ecr_repository_name = config.repository_name
 
     return sage_maker_client.train(
-        repository_name=repository_name,
+        ecr_repository_name=ecr_repository_name,
         image_name=image_name,
         input_s3_data_location=input_s3_dir,
         train_instance_count=1,
@@ -129,9 +129,11 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=Non
     :return: [str], endpoint name
     """
     config = _read_config(dir)
-    image_name = config.image_name+':'+docker_tag
+    image_name = config.repository_name+'/'+ config.image_name+':'+docker_tag
+    ecr_repository_name = config.repository_name
 
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
+
     return sage_maker_client.deploy(
         image_name=image_name,
         s3_model_location=s3_model_location,

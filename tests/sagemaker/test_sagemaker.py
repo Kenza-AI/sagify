@@ -80,7 +80,7 @@ def test_train_happy_case():
                     ):
                         sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
                         sage_maker_client.train(
-                            repository_name='repository',
+                            ecr_repository_name='repository',
                             image_name='image',
                             input_s3_data_location='s3://bucket/input',
                             train_instance_count=1,
@@ -91,7 +91,7 @@ def test_train_happy_case():
                             hyperparameters={'n_estimator': 3}
                         )
                         mocked_sagemaker_estimator.assert_called_with(
-                            repository_name='repository',
+                            ecr_repository_name='repository',
                             image_name='image-full-name',
                             role='arn_role',
                             train_instance_count=1,
@@ -130,7 +130,7 @@ def test_deploy_happy_case():
                     ):
                         sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
                         sage_maker_client.deploy(
-                            repository_name='repository',
+                           ecr_repository_name='repository',
                             image_name='image',
                             s3_model_location='s3://bucket/model_input/model.tar.gz',
                             train_instance_count=1,
@@ -185,7 +185,7 @@ def test_deploy_with_tags():
                         ]
 
                         sage_maker_client.deploy(
-                            repository_name='repository',
+                           ecr_repository_name='repository',
                             image_name='image',
                             s3_model_location='s3://bucket/model_input/model.tar.gz',
                             train_instance_count=1,
