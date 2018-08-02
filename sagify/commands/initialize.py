@@ -22,6 +22,10 @@ def _get_local_aws_profiles():
     return boto3.Session().available_profiles
 
 
+def ask_for_ecr_repository_name():
+    return click.prompt(text="Type in ECR your repository name", default='local', type=str)
+
+
 def ask_for_app_name():
     return click.prompt(text="Type in a name for your SageMaker app", type=str)
 
@@ -101,6 +105,8 @@ def init(dir):
     """
     logger.info(ASCII_LOGO)
 
+    ecr_repository_name = ask_for_ecr_repository_name()
+
     sagify_app_name = ask_for_app_name()
 
     python_version = ask_for_python_version()
@@ -110,6 +116,7 @@ def init(dir):
     try:
         api_initialize.init(
             dir=dir,
+            ecr_repository_name=ecr_repository_name,
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,

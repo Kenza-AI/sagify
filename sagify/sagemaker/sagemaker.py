@@ -29,6 +29,7 @@ class SageMakerClient(object):
 
     def train(
             self,
+            ecr_repository_name,
             image_name,
             input_s3_data_location,
             train_instance_count,
@@ -42,6 +43,7 @@ class SageMakerClient(object):
         """
         Train model on SageMaker
         :param image_name: [str], name of Docker image
+        :param ecr_repository_name: [str], name of the ecr repository
         :param input_s3_data_location: [str], S3 location to input data
         :param train_instance_count: [str], number of ec2 instances
         :param train_instance_type: [str], ec2 instance type
@@ -68,10 +70,11 @@ class SageMakerClient(object):
 
         :return: [str], the model location in S3
         """
-        image = self._construct_image_location(image_name)
+        image = self._construct_image_location(ecr_repository_name, image_name)
 
         estimator = sage.estimator.Estimator(
             image_name=image,
+            ecr_repository_name=ecr_repository_name,
             role=self.role,
             train_instance_count=train_instance_count,
             train_instance_type=train_instance_type,
@@ -91,6 +94,7 @@ class SageMakerClient(object):
 
     def deploy(
             self,
+            ecr_repository_name,
             image_name,
             s3_model_location,
             train_instance_count,
@@ -100,6 +104,7 @@ class SageMakerClient(object):
         """
         Deploy model to SageMaker
         :param image_name: [str], name of Docker image
+        :param ecr_repository_name: [str], name of the ecr repository
         :param s3_model_location: [str], model location in S3
         :param train_instance_count: [str],  number of ec2 instances
         :param train_instance_type: [str], ec2 instance type
@@ -119,7 +124,7 @@ class SageMakerClient(object):
         ]
         :return: [str], endpoint name
         """
-        image = self._construct_image_location(image_name)
+        image = self._construct_image_location(ecr_repository_name, image_name)
 
         model = sage.Model(
             model_data=s3_model_location,
@@ -154,12 +159,13 @@ class SageMakerClient(object):
         """
         return urlparse(s3_dir).path.lstrip('/').rstrip('/')
 
-    def _construct_image_location(self, image_name):
+    def _construct_image_location(self, ecr_repository_name, image_name):
         account = self.boto_session.client('sts').get_caller_identity()['Account']
         region = self.boto_session.region_name
 
-        return '{account}.dkr.ecr.{region}.amazonaws.com/{image}:latest'.format(
+        return '{account}.dkr.ecr.{region}.amazonaws.com/{repository}/{image}:latest'.format(
             account=account,
             region=region,
+            repository=ecr_repository_name,
             image=image_name
         )
