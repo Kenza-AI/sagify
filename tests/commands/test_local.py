@@ -39,7 +39,9 @@ class TestTrain(object):
             ):
                 with runner.isolated_filesystem():
                     runner.invoke(
-                        cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
+                        cli=cli,
+                        args=['init', '-d', 'src/'],
+                        input='repo\nmy_app\n1\n2\nus-east-1\n'
                     )
                     result = runner.invoke(cli=cli, args=['local', 'train', '-d', 'src/'])
 
@@ -96,7 +98,9 @@ class TestDeploy(object):
             ):
                 with runner.isolated_filesystem():
                     runner.invoke(
-                        cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
+                        cli=cli,
+                        args=['init', '-d', 'src/'],
+                        input='repo\nmy_app\n1\n2\nus-east-1\n'
                     )
                     result = runner.invoke(cli=cli, args=['local', 'deploy', '-d', 'src/'])
 
@@ -115,7 +119,9 @@ class TestDeploy(object):
             ):
                 with runner.isolated_filesystem():
                     runner.invoke(
-                        cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
+                        cli=cli,
+                        args=['init', '-d', 'src/'],
+                        input='repo\nmy_app\n1\n2\nus-east-1\n'
                     )
                     result = runner.invoke(cli=cli, args=['local', 'deploy', '-d', 'invalid_dir/'])
 

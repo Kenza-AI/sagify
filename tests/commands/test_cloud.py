@@ -22,7 +22,10 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1'
                     )
             ):
                 with patch(
@@ -31,7 +34,10 @@ class TestUploadData(object):
                     instance = mocked_sage_maker_client.return_value
                     instance.upload_data.return_value = 's3://path-to-data/data/'
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
+                        runner.invoke(
+                            cli=cli,
+                            args=['init'],
+                            input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -55,8 +61,10 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -65,8 +73,8 @@ class TestUploadData(object):
                     instance.upload_data.return_value = 's3://path-to-data/data/'
                     with runner.isolated_filesystem():
                         runner.invoke(
-                            cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
-                        )
+                            cli=cli, args=['init', '-d', 'src/'],
+                            input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -92,8 +100,10 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -131,15 +141,19 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='repo', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='repo',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli,
+                                      args=['init'],
+                                      input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -177,15 +191,18 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'],
+                                      input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -233,8 +250,10 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -242,8 +261,8 @@ class TestTrain(object):
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
                         runner.invoke(
-                            cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
-                        )
+                            cli=cli, args=['init', '-d', 'src/'],
+                            input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -283,8 +302,10 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -292,8 +313,8 @@ class TestTrain(object):
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
                         runner.invoke(
-                            cli=cli, args=['init', '-d', 'src/'], input='my_app\n1\n2\nus-east-1\n'
-                        )
+                            cli=cli, args=['init', '-d', 'src/'],
+                            input='my_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -323,15 +344,18 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='repo', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='repo',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'],
+                                      input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -341,10 +365,9 @@ class TestDeploy(object):
                                 '-e', 'ml.c4.2xlarge'
                             ]
                         )
-
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                           ecr_repository_name='repo',
+                            ecr_repository_name='repo',
                             image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
@@ -365,8 +388,10 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -374,8 +399,8 @@ class TestDeploy(object):
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
                         runner.invoke(
-                            cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
-                        )
+                            cli=cli, args=['init', '-d', 'src/'],
+                            input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -411,15 +436,18 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img',
+                        aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'],
+                                      input='repo\nmy_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -433,7 +461,7 @@ class TestDeploy(object):
 
                         assert instance.deploy.call_count == 1
                         instance.deploy.assert_called_with(
-                           ecr_repository_name='ecr-repository',
+                            ecr_repository_name='ecr-repository',
                             image_name='sagemaker-img:latest',
                             s3_model_location='s3://bucket/model/location/model.tar.gz',
                             train_instance_count=2,
@@ -463,8 +491,9 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                       ecr_repository_name='ecr-repository', image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
-                    )
+                        ecr_repository_name='ecr-repository',
+                        image_name='sagemaker-img', aws_profile='sagify',
+                        aws_region='us-east-1')
             ):
                 with patch(
                         'sagify.sagemaker.sagemaker.SageMakerClient'
@@ -472,8 +501,8 @@ class TestDeploy(object):
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
                         runner.invoke(
-                            cli=cli, args=['init', '-d', 'src/'], input='my_app\n1\n2\nus-east-1\n'
-                        )
+                            cli=cli, args=['init', '-d', 'src/'],
+                            input='my_app\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
