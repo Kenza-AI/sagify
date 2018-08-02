@@ -22,6 +22,10 @@ def _get_local_aws_profiles():
     return boto3.Session().available_profiles
 
 
+def ask_for_ecr_repository_name():
+    return click.prompt(text="Type in ECR your repository name", type=str)
+
+
 def ask_for_app_name():
     return click.prompt(text="Type in a name for your SageMaker app", type=str)
 
@@ -90,13 +94,7 @@ def ask_for_aws_details():
         type=str
     )
 
-    chosen_ecr_repository_name = click.prompt(
-        text="Type in ECR your repository name",
-        default='sagify-images',
-        type=str
-    )
-
-    return chosen_profile, chosen_region, chosen_ecr_repository_name
+    return chosen_profile, chosen_region
 
 
 @click.command()
@@ -107,20 +105,22 @@ def init(dir):
     """
     logger.info(ASCII_LOGO)
 
+    ecr_repository_name = ask_for_ecr_repository_name()
+
     sagify_app_name = ask_for_app_name()
 
     python_version = ask_for_python_version()
 
-    aws_profile, aws_region, ecr_repository_name = ask_for_aws_details()
+    aws_profile, aws_region = ask_for_aws_details()
 
     try:
         api_initialize.init(
             dir=dir,
+            ecr_repository_name=ecr_repository_name,
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
-            python_version=python_version,
-            ecr_repository_name=ecr_repository_name
+            python_version=python_version
         )
 
         logger.info("\nsagify module is created! ヽ(´▽`)/")

@@ -4,7 +4,7 @@ from collections import OrderedDict
 
 class Config(object):
     def __init__(self, ecr_repository_name, image_name, aws_profile, aws_region):
-        self.ecr_repository_name = ecr_repository_name,
+        self.ecr_repository_name = ecr_repository_name
         self.image_name = image_name
         self.aws_profile = aws_profile
         self.aws_region = aws_region

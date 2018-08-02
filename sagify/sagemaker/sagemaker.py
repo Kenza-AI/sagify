@@ -42,8 +42,8 @@ class SageMakerClient(object):
     ):
         """
         Train model on SageMaker
-        :param ecr_repository_name: [str], name of the ecr repository
         :param image_name: [str], name of Docker image
+        :param ecr_repository_name: [str], name of the ecr repository
         :param input_s3_data_location: [str], S3 location to input data
         :param train_instance_count: [str], number of ec2 instances
         :param train_instance_type: [str], ec2 instance type
@@ -74,6 +74,7 @@ class SageMakerClient(object):
 
         estimator = sage.estimator.Estimator(
             image_name=image,
+            ecr_repository_name=ecr_repository_name,
             role=self.role,
             train_instance_count=train_instance_count,
             train_instance_type=train_instance_type,
@@ -102,8 +103,8 @@ class SageMakerClient(object):
     ):
         """
         Deploy model to SageMaker
-        :param ecr_repository_name: [str], name of the ecr repository
         :param image_name: [str], name of Docker image
+        :param ecr_repository_name: [str], name of the ecr repository
         :param s3_model_location: [str], model location in S3
         :param train_instance_count: [str],  number of ec2 instances
         :param train_instance_type: [str], ec2 instance type

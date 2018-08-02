@@ -18,7 +18,7 @@ def test_init_happy_case():
             return_value=['default', 'sagemaker']
     ):
         with runner.isolated_filesystem():
-            result = runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+            result = runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
 
             assert os.path.isfile('__init__.py')
             assert os.path.isdir('sagify')
@@ -59,7 +59,7 @@ def test_init_with_dir_arg_happy_case(test_input_args):
             result = runner.invoke(
                 cli=cli,
                 args=test_input_args,
-                input='my_app\n1\n2\nus-east-1\n'
+                input='repo\nmy_app\n1\n2\nus-east-1\n'
             )
 
             root_dir = test_input_args[2]
