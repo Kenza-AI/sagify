@@ -23,7 +23,7 @@ def _get_local_aws_profiles():
 
 
 def ask_for_ecr_repository_name():
-    return click.prompt(text="Type in ECR your repository name", type=str)
+    return click.prompt(text="Type in ECR your repository name", default='local', type=str)
 
 
 def ask_for_app_name():
