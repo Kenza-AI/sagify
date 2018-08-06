@@ -1,6 +1,5 @@
 #!/bin/sh
 
-reos
 image={{ cookiecutter.project_slug }}-img
 test_path=$1
 tag=$2
