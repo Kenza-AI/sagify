@@ -20,7 +20,7 @@ def test_build_happy_case():
                 return_value=None
         ):
             with runner.isolated_filesystem():
-                runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                runner.invoke(cli=cli, args=['init'], input='repo\nmy_app\n1\n2\nus-east-1\n')
                 result = runner.invoke(cli=cli, args=['build', '-r', 'requirements.txt'])
 
     assert result.exit_code == 0
@@ -39,7 +39,7 @@ def test_build_with_dir_arg_happy_case():
         ):
             with runner.isolated_filesystem():
                 runner.invoke(
-                    cli=cli, args=['init', '-d', 'src/'], input='my_app\n1\n2\nus-east-1\n'
+                    cli=cli, args=['init', '-d', 'src/'], input='repo\nmy_app\n1\n2\nus-east-1\n'
                 )
                 result = runner.invoke(
                     cli=cli, args=['build', '-d', 'src/', '-r', 'requirements.txt']

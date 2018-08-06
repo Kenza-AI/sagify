@@ -3,5 +3,6 @@
   "module_slug": "{{ cookiecutter.module_slug }}",
   "aws_profile": "{{ cookiecutter.aws_profile }}",
   "aws_region": "{{ cookiecutter.aws_region }}",
-  "python_version": "{{ cookiecutter.python_version }}"
+  "python_version": "{{ cookiecutter.python_version }}",
+  "ecr_repository_name": "{{ cookiecutter.ecr_repository_name }}"
 }

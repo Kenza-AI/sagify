@@ -12,7 +12,13 @@ from cookiecutter.main import cookiecutter
 _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-def _template_creation(app_name, aws_profile, aws_region, python_version, output_dir):
+def _template_creation(
+        app_name,
+        aws_profile,
+        aws_region,
+        python_version,
+        output_dir,
+        ecr_repository_name):
     sagify_module_name = 'sagify'
 
     sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
@@ -34,17 +40,19 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
             "module_slug": sagify_module_name,
             "aws_profile": aws_profile,
             "aws_region": aws_region,
-            "python_version": python_version
+            "python_version": python_version,
+            "ecr_repository_name": ecr_repository_name
         }
     )
 
 
-def init(dir, sagify_app_name, aws_profile, aws_region, python_version):
+def init(dir, sagify_app_name, ecr_repository_name, aws_profile, aws_region, python_version):
     """
     Initializes a SageMaker template
 
     :param dir: [str], source root directory
     :param sagify_app_name: [str], name for sagify app
+    :param ecr_repository_name: [str], name of the ecr repository
     :param aws_profile: [str], preferred aws profile name on current host
     :param aws_region: [str], preferred aws region. Example: 'us-east-1'
     :param python_version: [str], preferred Python version. Options: 3.6 or 2.7.
@@ -57,5 +65,6 @@ def init(dir, sagify_app_name, aws_profile, aws_region, python_version):
         aws_profile=aws_profile,
         aws_region=aws_region,
         python_version=python_version,
-        output_dir=dir
+        output_dir=dir,
+        ecr_repository_name=ecr_repository_name
     )
