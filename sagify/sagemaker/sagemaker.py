@@ -158,7 +158,7 @@ class SageMakerClient(object):
         account = self.boto_session.client('sts').get_caller_identity()['Account']
         region = self.boto_session.region_name
 
-        return '{account}.dkr.ecr.{region}.amazonaws.com/{image}:latest'.format(
+        return '{account}.dkr.ecr.{region}.amazonaws.com/{image}'.format(
             account=account,
             region=region,
             image=image_name
