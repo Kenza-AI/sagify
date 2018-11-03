@@ -13,6 +13,7 @@ def push(dir, docker_tag):
     Push Docker image to AWS ECS
 
     :param dir: [str], source root directory
+    :param docker_tag: [str], the Docker tag for the image
     """
     sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
 
