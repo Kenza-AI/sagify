@@ -216,7 +216,7 @@ Voila! That's a proof that this Deep Learning model is going to be trained and d
 
 ![Attach Policy](attach_policy_step_1.png)
 
-- Do the same to attach the `AmazonS3FullAccess` policy, and end up with the following:
+- Do the same to attach the `AmazonS3FullAccess` and `IAMReadOnlyAccess` policies, and end up with the following:
 
 ![Policies](policies.png)
 
