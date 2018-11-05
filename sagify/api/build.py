@@ -16,6 +16,7 @@ def build(dir, requirements_dir, docker_tag):
 
     :param dir: [str], source root directory
     :param requirements_dir: [str], path to requirements.txt
+    :param docker_tag: [str], the Docker tag for the image
     """
     sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
 
