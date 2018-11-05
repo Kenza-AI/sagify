@@ -60,10 +60,11 @@ def train(
     :param input_s3_dir: [str], S3 location to input data
     :param output_s3_dir: [str], S3 location to save output (models, etc)
     :param hyperparams_file: [str], path to hyperparams json file
-    :param ec2_type: [str], ec2 instance type. Refere to:
+    :param ec2_type: [str], ec2 instance type. Refer to:
     https://aws.amazon.com/sagemaker/pricing/instance-types/
     :param volume_size: [int], size in GB of the EBS volume
     :param time_out: [int], time-out in seconds
+    :param docker_tag: [str], the Docker tag for the image
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -107,8 +108,9 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=Non
     :param dir: [str], source root directory
     :param s3_model_location: [str], S3 model location
     :param num_instances: [int], number of ec2 instances
-    :param ec2_type: [str], ec2 instance type. Refere to:
+    :param ec2_type: [str], ec2 instance type. Refer to:
     https://aws.amazon.com/sagemaker/pricing/instance-types/
+    :param docker_tag: [str], the Docker tag for the image
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
