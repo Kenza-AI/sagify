@@ -43,7 +43,7 @@ def _parse_args():
         '-f', '--failure-dir',
         help='output directory path to save your failure(s) files',
         type=str,
-        default=os.path.join(_DEFAULT_PREFIX_PATH, 'model'),
+        default=os.path.join(_DEFAULT_PREFIX_PATH, 'failure'),
         dest='failure_output'
     )
 
