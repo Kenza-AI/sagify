@@ -1,48 +1,44 @@
 #!/usr/bin/env bash
 
-# This script shows how to build the Docker image and push it to ECR to be ready for use
-# by SageMaker.
-
-# The argument to this script is the image name. This will be used as the image on the local
-# machine and combined with the account and region to form the repository name for ECR.
 image={{ cookiecutter.project_slug }}-img
 tag=$1
 region=$2
-profile=$3
+role=$3
+profile=$4
 
-if [-z "$profile"]; then 
+if [[ ! -z "$role" ]]; then 
+    aws configure set profile.${role}.role_arn ${role}
+    aws configure set profile.${role}.external_id SomeExternalID
+    aws configure set profile.${role}.source_profile default
+    profile=${role}
+elif [ -z "$profile" ]; then 
     profile={{ cookiecutter.aws_profile }}
 fi 
 
-if [-z "$region"]; then 
+if [ -z "$region" ]; then 
     region={{ cookiecutter.aws_region }}
 fi 
 
 # Get the account number associated with the current IAM credentials
 account=$(aws sts get-caller-identity --profile ${profile} --query Account --output text)
-
-if [ $? -ne 0 ]
-then
+if [ $? -ne 0 ]; then
     exit 255
 fi
 
-
-fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:${tag}"
-
 # If the repository doesn't exist in ECR, create it.
-
+fullname="${account}.dkr.ecr.${region}.amazonaws.com/${image}:${tag}"
 aws ecr describe-repositories --profile ${profile} --region ${region} --repository-names "${image}" > /dev/null 2>&1
 
-if [ $? -ne 0 ]
-then
+if [ $? -ne 0 ]; then
+    echo "Creating ECR repository"
     aws ecr create-repository --profile ${profile} --region ${region} --repository-name "${image}" > /dev/null
+else 
+    echo "ECR repository already exists, will push there."
 fi
 
 # Get the login command from ECR and execute it directly
 $(aws ecr get-login --profile ${profile} --region ${region} --no-include-email)
 
-# Push Docker image to ECR with the full name.
-
+# Push Docker image to ECR
 docker tag ${image}:${tag} ${fullname}
-
 docker push ${fullname}
