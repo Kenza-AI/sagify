@@ -15,8 +15,10 @@ click.disable_unicode_literals_warning = True
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
+@click.option(u"-r", u"--aws-region", required=False, help="The AWS region to push the image to")
+@click.option(u"-p", u"--aws-profile", required=False, help="The AWS profile to use for the push command")
 @click.pass_obj
-def push(obj, dir):
+def push(obj, dir, aws_region, aws_profile):
     """
     Command to push Docker image to AWS ECS
     """
@@ -26,7 +28,7 @@ def push(obj, dir):
     )
 
     try:
-        api_push.push(dir=dir, docker_tag=obj['docker_tag'])
+        api_push.push(dir=dir, docker_tag=obj['docker_tag'], aws_region=aws_region, aws_profile=aws_profile)
 
         logger.info("Docker image pushed to ECS successfully!")
     except ValueError:
