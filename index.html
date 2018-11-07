@@ -426,12 +426,14 @@ source_profile = test-sagemaker
 <h4 id="name_4">Name</h4>
 <p>Pushes a Docker image to AWS Elastic Container Service</p>
 <h4 id="synopsis_4">Synopsis</h4>
-<pre><code>sagify push [--dir SRC_DIR]
+<pre><code>sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION]
 </code></pre>
 <h4 id="description_4">Description</h4>
 <p>This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.</p>
 <h4 id="optional-flags_4">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<p><code>--aws-region AWS_REGION</code> or <code>-r AWS_REGION</code>: The AWS region to push the image to</p>
+<p><code>--aws-profile PROFILE_NAME</code> or <code>-p PROFILE_NAME</code>: AWS profile to use for pushing to ECR</p>
 <h4 id="example_4">Example</h4>
 <pre><code>sagify push -d src/
 </code></pre>
@@ -532,5 +534,5 @@ source_profile = test-sagemaker
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-11-05 22:17:43
+Build Date UTC : 2018-11-07 20:25:15
 -->
