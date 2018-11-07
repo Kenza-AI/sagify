@@ -15,7 +15,7 @@ click.disable_unicode_literals_warning = True
 
 @click.command()
 @click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
-@click.option(u"-p", u"--aws-profile", required=True, help="The AWS profile to use for the push command")
+@click.option(u"-p", u"--aws-profile", required=False, help="The AWS profile to use for the push command")
 @click.pass_obj
 def push(obj, dir, aws_profile):
     """

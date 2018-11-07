@@ -21,6 +21,13 @@ class PushCommandTests(TestCase):
             push_command=['push', '-p', 'some-profile']
             ).exit_code == 0
         self.command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-profile'])
+    
+    def test_push_with_default_profile_happy_case(self):
+        assert self.runCommands(
+            init_command=['init'],
+            push_command=['push']
+            ).exit_code == 0
+        self.command_line.assert_called_once_with(['sagify/push.sh', 'latest', None])
 
     def test_push_with_dir_arg_happy_case(self):
         assert self.runCommands(
