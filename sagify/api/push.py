@@ -14,7 +14,7 @@ def push(dir, docker_tag, aws_region, aws_profile):
 
     :param dir: [str], source root directory
     :param docker_tag: [str], the Docker tag for the image
-    :param docker_tag: [str], the AWS region to push the image to
+    :param aws_region: [str], the AWS region to push the image to
     :param aws_profile: [str], the AWS profile used to push the image to ECR
     """
     sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
