@@ -7,12 +7,16 @@
 # machine and combined with the account and region to form the repository name for ECR.
 image={{ cookiecutter.project_slug }}-img
 tag=$1
-profile=$2
+region=$2
+profile=$3
 
 if [-z "$profile"]; then 
     profile={{ cookiecutter.aws_profile }}
 fi 
-region={{ cookiecutter.aws_region }}
+
+if [-z "$region"]; then 
+    region={{ cookiecutter.aws_region }}
+fi 
 
 # Get the account number associated with the current IAM credentials
 account=$(aws sts get-caller-identity --profile ${profile} --query Account --output text)
