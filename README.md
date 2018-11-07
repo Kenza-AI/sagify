@@ -301,8 +301,8 @@ Pushes a Docker image to AWS Elastic Container Service
 
 #### Synopsis
 
-    sagify push [--dir SRC_DIR]
-    
+    sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME]
+
 #### Description
 
 This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.
@@ -310,6 +310,8 @@ This command pushes an already built Docker image to AWS Elastic Container Servi
 #### Optional Flags
 
 `--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
+
+`--aws-profile PROFILE_NAME` or `-p PROFILE_NAME`: AWS profile to use for pushing to ECR
 
 #### Example
 
