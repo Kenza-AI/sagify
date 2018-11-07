@@ -15,19 +15,19 @@ Case = namedtuple('Case', 'description, init_cmd, push_cmd, expected_exit_code, 
 t1 = Case('default profile and region', ['init'], ['push'], 0,
           lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', None, None]))
 
-t2 = Case('custom profile — default region', ['init'], ['push', '-p', 'some-profile'], 0,
+t2 = Case('custom profile - default region', ['init'], ['push', '-p', 'some-profile'], 0,
           lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', None, 'some-profile']))
 
-t3 = Case('default profile – custom region', ['init'], ['push', '-r', 'some-region'], 0,
+t3 = Case('default profile - custom region', ['init'], ['push', '-r', 'some-region'], 0,
           lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', None]))
 
-t4 = Case('custom profile — custom region', ['init'], ['push', '-r', 'some-region', '-p', 'some-profile'], 0,
+t4 = Case('custom profile - custom region', ['init'], ['push', '-r', 'some-region', '-p', 'some-profile'], 0,
           lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', 'some-profile']))
 
-t5 = Case('custom dir — default profile and region', ['init', '-d', 'src/'], ['push', '-d', 'src/'], 0,
+t5 = Case('custom dir - default profile and region', ['init', '-d', 'src/'], ['push', '-d', 'src/'], 0,
           lambda command_line: command_line.assert_called_once_with(['src/sagify/push.sh', 'latest', None, None]))
 
-t6 = Case('custom invalid dir — default profile and region', ['init', '-d', 'src/'], ['push', '-d', 'invalid_dir/'], -1,
+t6 = Case('custom invalid dir - default profile and region', ['init', '-d', 'src/'], ['push', '-d', 'invalid_dir/'], -1,
           lambda command_line: command_line.assert_not_called())
 
 test_cases = [t1, t2, t3, t4, t5, t6]
