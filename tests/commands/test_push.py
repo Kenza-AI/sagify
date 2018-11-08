@@ -13,25 +13,25 @@ from sagify.__main__ import cli
 Case = namedtuple('Case', 'description, init_cmd, push_cmd, expected_exit_code, expected_cli_call')
 
 t1 = Case('sagify push', ['init'], ['push'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', None, None, None]))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', '', '']))
 
 t2 = Case('sagify push -p profile', ['init'], ['push', '-p', 'some-profile'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', None, None, 'some-profile']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', '', 'some-profile']))
 
 t3 = Case('sagify push -r region', ['init'], ['push', '-r', 'some-region'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', None, None]))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', '']))
 
 t4 = Case('sagify push -r region -p profile', ['init'], ['push', '-r', 'some-region', '-p', 'prof'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', None, 'prof']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', 'prof']))
 
 t5 = Case('sagify push -d dir/', ['init', '-d', 'src/'], ['push', '-d', 'src/'], 0,
-          lambda command_line: command_line.assert_called_once_with(['src/sagify/push.sh', 'latest', None, None, None]))
+          lambda command_line: command_line.assert_called_once_with(['src/sagify/push.sh', 'latest', '', '', '']))
 
 t6 = Case('sagify push -d invalid_dir/', ['init', '-d', 'src/'], ['push', '-d', 'invalid_dir/'], -1,
           lambda command_line: command_line.assert_not_called())
 
 t7 = Case('sagify push -i aws-role', ['init'], ['push', '-i', 'some-role-arn'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', None, 'some-role-arn', None]))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', 'some-role-arn', '']))
 
 t8 = Case('sagify -p profile -i aws-role', ['init'], ['push', '-i', 'some-role-arn', '-p', 'some-profile'], 2,
           lambda command_line: command_line.assert_not_called())

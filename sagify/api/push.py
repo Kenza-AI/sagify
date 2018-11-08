@@ -25,5 +25,8 @@ def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile):
     if not os.path.isfile(push_script_path):
         raise ValueError("This is not a sagify directory: {}".format(dir))
 
+    aws_region = "" if aws_region is None else aws_region
+    aws_profile = "" if aws_profile is None else aws_profile
+    iam_role_arn = "" if iam_role_arn is None else iam_role_arn
     output = subprocess.check_output(["{}".format(push_script_path), docker_tag, aws_region, iam_role_arn, aws_profile])
     logger.debug(output)
