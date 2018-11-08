@@ -5,10 +5,13 @@ tag=$1
 region=$2
 role=$3
 profile=$4
+external_id=$5
 
 if [[ ! -z "$role" ]]; then 
     aws configure set profile.${role}.role_arn ${role}
-    aws configure set profile.${role}.external_id SomeExternalID
+    if [[ ! -z "$external_id" ]]; then 
+        aws configure set profile.${role}.external_id ${external_id}
+    fi
     aws configure set profile.${role}.source_profile default
     profile=${role}
 elif [ -z "$profile" ]; then 

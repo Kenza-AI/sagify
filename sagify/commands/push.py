@@ -18,8 +18,9 @@ click.disable_unicode_literals_warning = True
 @click.option(u"-r", u"--aws-region", required=False, help="The AWS region to push the image to")
 @click.option(u"-i", u"--iam-role-arn", required=False, help="The AWS role to use for the push command")
 @click.option(u"-p", u"--aws-profile", required=False, help="The AWS profile to use for the push command")
+@click.option(u"-e", u"--external-id", required=False, help="Optional external id used when using an IAM role")
 @click.pass_obj
-def push(obj, dir, aws_region, iam_role_arn, aws_profile):
+def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
     """
     Command to push Docker image to AWS ECS
     """
@@ -38,7 +39,8 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile):
             docker_tag=obj['docker_tag'],
             aws_region=aws_region,
             iam_role_arn=iam_role_arn,
-            aws_profile=aws_profile)
+            aws_profile=aws_profile,
+            external_id=external_id)
 
         logger.info("Docker image pushed to ECS successfully!")
     except ValueError:
