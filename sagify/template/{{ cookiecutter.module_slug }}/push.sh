@@ -10,11 +10,11 @@ tag=$1
 region=$2
 profile=$3
 
-if [-z "$profile"]; then 
+if [ -z "$profile" ]; then
     profile={{ cookiecutter.aws_profile }}
 fi 
 
-if [-z "$region"]; then 
+if [ -z "$region" ]; then
     region={{ cookiecutter.aws_region }}
 fi 
 
