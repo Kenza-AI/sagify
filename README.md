@@ -301,19 +301,25 @@ Pushes a Docker image to AWS Elastic Container Service
 
 #### Synopsis
 
-    sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION]
+    sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 
 #### Description
 
 This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.
 
+> Only one of _iam-role-arn_ and _aws_profile_ can be provided. _external-id_ is ignored when no _iam-role-arn_ is provided.
+
 #### Optional Flags
 
 `--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
 
+`--iam-role-arn IAM_ROLE` or `-i IAM_ROLE`: AWS IAM role to use for pushing to ECR
+
 `--aws-region AWS_REGION` or `-r AWS_REGION`: The AWS region to push the image to
 
 `--aws-profile PROFILE_NAME` or `-p PROFILE_NAME`: AWS profile to use for pushing to ECR
+
+`--external-id EXTERNAL_ID` or `-e EXTERNAL_ID`: Optional external id used when using an IAM role
 
 #### Example
 
