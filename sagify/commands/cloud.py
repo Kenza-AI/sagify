@@ -98,7 +98,7 @@ def upload_data(dir, input_dir, s3_dir):
     help="The AWS role to use for the push command"
 )
 @click.option(
-    u"-e",
+    u"-x",
     u"--external-id",
     required=False,
     help="Optional external id used when using an IAM role"
