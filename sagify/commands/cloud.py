@@ -92,7 +92,7 @@ def upload_data(dir, input_dir, s3_dir):
          'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
 )
 @click.option(
-    u"-i",
+    u"-r",
     u"--iam-role-arn",
     required=False,
     help="The AWS role to use for the push command"
