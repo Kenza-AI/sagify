@@ -114,7 +114,7 @@ def train(
         volume_size,
         time_out,
         aws_tags,
-        aws_role,
+        iam_role_arn,
         external_id
 ):
     """
@@ -134,7 +134,7 @@ def train(
             time_out=time_out,
             docker_tag=obj['docker_tag'],
             tags=aws_tags,
-            aws_role=aws_role,
+            aws_role=iam_role_arn,
             external_id=external_id
         )
 
