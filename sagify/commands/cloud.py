@@ -91,6 +91,18 @@ def upload_data(dir, input_dir, s3_dir):
     help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
          'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
 )
+@click.option(
+    u"-i",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-e",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
 @click.pass_obj
 def train(
         obj,
@@ -101,7 +113,9 @@ def train(
         ec2_type,
         volume_size,
         time_out,
-        aws_tags
+        aws_tags,
+        aws_role,
+        external_id
 ):
     """
     Command to train ML model(s) on SageMaker
@@ -119,7 +133,9 @@ def train(
             volume_size=volume_size,
             time_out=time_out,
             docker_tag=obj['docker_tag'],
-            tags=aws_tags
+            tags=aws_tags,
+            aws_role=aws_role,
+            external_id=external_id
         )
 
         logger.info("Training on SageMaker succeeded")
