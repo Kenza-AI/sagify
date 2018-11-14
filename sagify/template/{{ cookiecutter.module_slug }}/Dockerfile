@@ -1,22 +1,17 @@
-# Build an image that can do training and inference in SageMaker
-# This is an image that uses the nginx, gunicorn, flask stack
-# for serving inferences in a stable way.
-
 FROM python:{{ cookiecutter.python_version }}-slim-stretch
 
-MAINTAINER Amazon AI <support@kenza.ai>
-
+MAINTAINER Kenza AI <support@kenza.ai>
 
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
          nginx \
          ca-certificates \
          g++ \
+         git \
     && rm -rf /var/lib/apt/lists/*
 
-# Set some environment variables. PYTHONUNBUFFERED keeps Python from buffering our standard
-# output stream, which means that logs can be delivered to the user quickly. PYTHONDONTWRITEBYTECODE
-# keeps Python from writing the .pyc files which are unnecessary in this case. We also update
-# PATH so that the train and serve programs are found when the container is invoked.
+# PYTHONUNBUFFERED keeps Python from buffering the standard
+# output stream, which means that logs can be delivered to the user quickly. 
+# PYTHONDONTWRITEBYTECODE keeps Python from writing the .pyc files which are unnecessary in this case. 
 
 ENV PYTHONUNBUFFERED=TRUE
 ENV PYTHONDONTWRITEBYTECODE=TRUE
@@ -32,6 +27,7 @@ WORKDIR /opt/program/${target_dir_name}
 # Here we get all python packages.
 RUN pip install flask gevent gunicorn future
 RUN pip install -r ../sagify-requirements.txt && rm -rf /root/.cache
+RUN sudo apt-get purge --auto-remove git
 
 COPY ${module_path} /opt/program/${target_dir_name}
 
