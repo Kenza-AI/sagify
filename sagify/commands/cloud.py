@@ -182,7 +182,7 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_r
     """
     logger.info(ASCII_LOGO)
     logger.info("Started deployment on SageMaker ...\n")
-    
+
     try:
         endpoint_name = api_cloud.deploy(
             dir=dir,

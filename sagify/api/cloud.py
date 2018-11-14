@@ -135,7 +135,7 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
     """
     config = _read_config(dir)
     image_name = config.image_name+':'+docker_tag
-    
+
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
     return sage_maker_client.deploy(
         image_name=image_name,
