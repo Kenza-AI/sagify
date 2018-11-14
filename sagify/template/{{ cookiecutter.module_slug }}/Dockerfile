@@ -27,7 +27,7 @@ WORKDIR /opt/program/${target_dir_name}
 # Here we get all python packages.
 RUN pip install flask gevent gunicorn future
 RUN pip install -r ../sagify-requirements.txt && rm -rf /root/.cache
-RUN sudo apt-get purge --auto-remove git
+RUN apt-get purge --auto-remove git
 
 COPY ${module_path} /opt/program/${target_dir_name}
 
