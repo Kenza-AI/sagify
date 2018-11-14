@@ -481,7 +481,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
 
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
+`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
 
 #### Optional Flags
 
@@ -524,7 +524,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
 
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
 
 #### Optional Flags
 
