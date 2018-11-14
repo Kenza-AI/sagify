@@ -104,7 +104,7 @@ def train(
     )
 
 
-def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=None):
+def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role=None, external_id=None, tags=None):
     """
     Deploys ML model(s) on SageMaker
 
@@ -114,6 +114,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=Non
     :param ec2_type: [str], ec2 instance type. Refer to:
     https://aws.amazon.com/sagemaker/pricing/instance-types/
     :param docker_tag: [str], the Docker tag for the image
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -133,8 +135,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, tags=Non
     """
     config = _read_config(dir)
     image_name = config.image_name+':'+docker_tag
-
-    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
+    
+    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
     return sage_maker_client.deploy(
         image_name=image_name,
         s3_model_location=s3_model_location,

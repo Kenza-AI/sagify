@@ -163,14 +163,26 @@ def train(
     help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
          'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
 )
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
 @click.pass_obj
-def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags):
+def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_arn, external_id):
     """
     Command to deploy ML model(s) on SageMaker
     """
     logger.info(ASCII_LOGO)
     logger.info("Started deployment on SageMaker ...\n")
-
+    
     try:
         endpoint_name = api_cloud.deploy(
             dir=dir,
@@ -178,6 +190,8 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags):
             num_instances=num_instances,
             ec2_type=ec2_type,
             docker_tag=obj['docker_tag'],
+            aws_role=iam_role_arn,
+            external_id=external_id,
             tags=aws_tags
         )
 
