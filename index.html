@@ -426,14 +426,19 @@ source_profile = test-sagemaker
 <h4 id="name_4">Name</h4>
 <p>Pushes a Docker image to AWS Elastic Container Service</p>
 <h4 id="synopsis_4">Synopsis</h4>
-<pre><code>sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION]
+<pre><code>sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
 <h4 id="description_4">Description</h4>
 <p>This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.</p>
+<blockquote>
+<p>Only one of <em>iam-role-arn</em> and <em>aws_profile</em> can be provided. <em>external-id</em> is ignored when no <em>iam-role-arn</em> is provided.</p>
+</blockquote>
 <h4 id="optional-flags_4">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-i IAM_ROLE</code>: AWS IAM role to use for pushing to ECR</p>
 <p><code>--aws-region AWS_REGION</code> or <code>-r AWS_REGION</code>: The AWS region to push the image to</p>
 <p><code>--aws-profile PROFILE_NAME</code> or <code>-p PROFILE_NAME</code>: AWS profile to use for pushing to ECR</p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-e EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <h4 id="example_4">Example</h4>
 <pre><code>sagify push -d src/
 </code></pre>
@@ -457,7 +462,7 @@ source_profile = test-sagemaker
 <h4 id="name_6">Name</h4>
 <p>Executes a Docker image in train mode on AWS SageMaker</p>
 <h4 id="synopsis_6">Synopsis</h4>
-<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS]
+<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME]
 </code></pre>
 <h4 id="description_6">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
@@ -471,6 +476,9 @@ source_profile = test-sagemaker
 <p><code>--volume-size EBS_SIZE_IN_GB</code> or <code>-v EBS_SIZE_IN_GB</code>: Size in GB of the EBS volume (default: 30)</p>
 <p><code>--time-out TIME_OUT_IN_SECS</code> or <code>-s TIME_OUT_IN_SECS</code>: Time-out in seconds (default: 24 * 60 * 60)</p>
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for training with <em>SageMaker</em></p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<p><code>--base-job-name BASE_JOB_NAME</code> or <code>-n BASE_JOB_NAME</code>: Optional prefix for the SageMaker training job</p>
 <h4 id="example_6">Example</h4>
 <pre><code>sagify cloud train -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
 </code></pre>
@@ -534,5 +542,5 @@ source_profile = test-sagemaker
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2018-11-07 20:25:15
+Build Date UTC : 2018-11-15 21:52:21
 -->
