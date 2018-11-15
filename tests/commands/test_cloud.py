@@ -160,12 +160,13 @@ class TestTrain(object):
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
                             hyperparameters=None,
+                            base_job_name=None,
                             tags=None
                         )
 
         assert result.exit_code == 0
 
-    def test_train_with_role_and_external_id_happy_case(self):
+    def test_train_with_job_name_and_role_and_external_id_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -193,7 +194,8 @@ class TestTrain(object):
                                 '-o', 's3://bucket/output',
                                 '-e', 'ml.c4.2xlarge',
                                 '-r', 'some iam role',
-                                '-x', 'some external id'
+                                '-x', 'some external id',
+                                '-n', 'some job name prefix'
                             ]
                         )
 
@@ -207,6 +209,7 @@ class TestTrain(object):
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
                             hyperparameters=None,
+                            base_job_name='some job name prefix',
                             tags=None
                         )
 
@@ -253,6 +256,7 @@ class TestTrain(object):
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
                             hyperparameters=None,
+                            base_job_name=None,
                             tags=[
                                 {
                                     'Key': 'key1',
@@ -308,6 +312,7 @@ class TestTrain(object):
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
                             hyperparameters=None,
+                            base_job_name=None,
                             tags=None
                         )
 
@@ -357,6 +362,7 @@ class TestTrain(object):
                             train_max_run=24 * 60 * 60,
                             output_path='s3://bucket/output',
                             hyperparameters=None,
+                            base_job_name=None,
                             tags=None
                         )
 
