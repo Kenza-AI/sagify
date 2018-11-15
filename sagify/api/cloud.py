@@ -51,6 +51,8 @@ def train(
         volume_size,
         time_out,
         docker_tag,
+        aws_role,
+        external_id,
         tags=None
 ):
     """
@@ -65,6 +67,8 @@ def train(
     :param volume_size: [int], size in GB of the EBS volume
     :param time_out: [int], time-out in seconds
     :param docker_tag: [str], the Docker tag for the image
+    :param aws_role: [str], the AWS role assumed by SageMaker while training
+    :param external_id: [str], Optional external id used when using an IAM role
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -79,12 +83,11 @@ def train(
             },
             ...
         ]
-
     :return: [str], S3 model location
     """
     config = _read_config(dir)
     hyperparams_dict = _read_hyperparams_config(hyperparams_file) if hyperparams_file else None
-    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region)
+    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
 
     image_name = config.image_name+':'+docker_tag
 
