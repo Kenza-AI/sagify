@@ -7,12 +7,35 @@ from six.moves.urllib.parse import urlparse
 
 import boto3
 
+from sagify.log import logger
+
 
 class SageMakerClient(object):
-    def __init__(self, aws_profile, aws_region):
-        self.boto_session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
+    def __init__(self, aws_profile, aws_region, aws_role=None, external_id=None):
+
+        if aws_role and external_id:
+            logger.info("An IAM role and corresponding external id were provided. Attempting to assume that role...")
+
+            sts_client = boto3.client('sts')
+            assumedRoleObject = sts_client.assume_role(
+                RoleArn=aws_role,
+                RoleSessionName="SagifySession",
+                ExternalId=external_id
+            )
+
+            credentials = assumedRoleObject['Credentials']
+            self.boto_session = boto3.Session(
+                aws_access_key_id=credentials['AccessKeyId'],
+                aws_secret_access_key=credentials['SecretAccessKey'],
+                aws_session_token=credentials['SessionToken'],
+                region_name=aws_region
+            )
+        else:
+            logger.info("No IAM role provided. Using profile {} instead.".format(aws_profile))
+            self.boto_session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
+
         self.sagemaker_session = sage.Session(boto_session=self.boto_session)
-        self.role = sage.get_execution_role(self.sagemaker_session)
+        self.role = sage.get_execution_role(self.sagemaker_session) if aws_role is None else aws_role
 
     def upload_data(self, input_dir, s3_dir):
         """
@@ -37,6 +60,7 @@ class SageMakerClient(object):
             train_max_run,
             output_path,
             hyperparameters,
+            base_job_name,
             tags=None
     ):
         """
@@ -51,6 +75,7 @@ class SageMakerClient(object):
         result (model artifacts and output files)
         :param hyperparameters: [dict], Dictionary containing the hyperparameters to initialize
         this estimator with
+        :param base_job_name: [str], Optional prefix for the SageMaker training job.
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -80,6 +105,7 @@ class SageMakerClient(object):
             input_mode='File',
             output_path=output_path,
             hyperparameters=hyperparameters,
+            base_job_name=base_job_name,
             sagemaker_session=self.sagemaker_session
         )
         if tags:
