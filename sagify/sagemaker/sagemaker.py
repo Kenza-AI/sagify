@@ -60,6 +60,7 @@ class SageMakerClient(object):
             train_max_run,
             output_path,
             hyperparameters,
+            base_job_name,
             tags=None
     ):
         """
@@ -74,6 +75,7 @@ class SageMakerClient(object):
         result (model artifacts and output files)
         :param hyperparameters: [dict], Dictionary containing the hyperparameters to initialize
         this estimator with
+        :param base_job_name: [str], Optional prefix for the SageMaker training job.
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -103,6 +105,7 @@ class SageMakerClient(object):
             input_mode='File',
             output_path=output_path,
             hyperparameters=hyperparameters,
+            base_job_name=base_job_name,
             sagemaker_session=self.sagemaker_session
         )
         if tags:
