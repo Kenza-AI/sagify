@@ -53,6 +53,7 @@ def train(
         docker_tag,
         aws_role,
         external_id,
+        base_job_name,
         tags=None
 ):
     """
@@ -69,6 +70,7 @@ def train(
     :param docker_tag: [str], the Docker tag for the image
     :param aws_role: [str], the AWS role assumed by SageMaker while training
     :param external_id: [str], Optional external id used when using an IAM role
+    :param base_job_name: [str], Optional prefix for the SageMaker training job
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -100,6 +102,7 @@ def train(
         train_max_run=time_out,
         output_path=output_s3_dir,
         hyperparameters=hyperparams_dict,
+        base_job_name=base_job_name,
         tags=tags
     )
 

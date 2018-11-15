@@ -87,7 +87,8 @@ def test_train_happy_case():
                             train_volume_size=30,
                             train_max_run=60,
                             output_path='s3://bucket/output',
-                            hyperparameters={'n_estimator': 3}
+                            hyperparameters={'n_estimator': 3},
+                            base_job_name="Some-job-name-prefix",
                         )
                         mocked_sagemaker_estimator.assert_called_with(
                             image_name='image-full-name',
@@ -97,6 +98,7 @@ def test_train_happy_case():
                             train_volume_size=30,
                             train_max_run=60,
                             input_mode='File',
+                            base_job_name="Some-job-name-prefix",
                             output_path='s3://bucket/output',
                             hyperparameters={'n_estimator': 3},
                             sagemaker_session=sagemaker_session_instance
