@@ -449,6 +449,49 @@ class TestDeploy(object):
 
         assert result.exit_code == 0
 
+    def test_deploy_with_role_and_external_id_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'deploy',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge',
+                                '-r', 'some iam role',
+                                '-x', 'some external id'
+                            ]
+                        )
+
+                        assert instance.deploy.call_count == 1
+                        instance.deploy.assert_called_with(
+                            image_name='sagemaker-img:latest',
+                            s3_model_location='s3://bucket/model/location/model.tar.gz',
+                            train_instance_count=2,
+                            train_instance_type='ml.c4.2xlarge',
+                            tags=None
+                        )
+
+        assert result.exit_code == 0
+
     def test_deploy_with_dir_arg_happy_case(self):
         runner = CliRunner()
 
