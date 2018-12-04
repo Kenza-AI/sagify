@@ -9,6 +9,8 @@ from sagify.api import build as api_build
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 from future.moves import subprocess
+from sagify.config.config import ConfigManager
+import os
 
 click.disable_unicode_literals_warning = True
 
@@ -25,7 +27,8 @@ def build(obj, dir, requirements_dir):
     logger.info("Started building SageMaker Docker image. It will take some minutes...\n")
 
     try:
-        api_build.build(dir=dir, requirements_dir=requirements_dir, docker_tag=obj['docker_tag'])
+        config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
+        api_build.build(dir=dir, requirements_dir=requirements_dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
 
         logger.info("Docker image built successfully!")
     except ValueError:
