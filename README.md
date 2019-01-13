@@ -451,6 +451,21 @@ Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batc
 
 This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.
 
+Things to do:
+- You should implement the predict function that expects a JSON containing the required feature values. It's the same predict function used for deploying the model as a REST service. Example of a JSON:
+```
+{
+    "features": [5.1,3.5,1.4,0.2]
+}
+```
+- The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:
+```
+{"features": [5.1,3.5,1.4,0.2]}
+{"features": [4.9,3.0,1.4,0.2]}
+{"features": [4.7,3.2,1.3,0.2]}
+{"features": [4.6,3.1,1.5,0.2]}
+```
+
 #### Required Flags
 
 `--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: S3 location to to model tar.gz
