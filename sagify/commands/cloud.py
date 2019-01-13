@@ -211,6 +211,88 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_r
         sys.exit(-1)
 
 
+@click.command()
+@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
+@click.option(
+    u"-m", u"--s3-model-location",
+    required=True,
+    help="s3 location to model tar.gz",
+    type=click.Path()
+)
+@click.option(
+    u"-i", u"--s3-input-location",
+    required=True,
+    help="s3 input data location",
+    type=click.Path()
+)
+@click.option(
+    u"-o", u"--s3-output-location",
+    required=True,
+    help="s3 location to save predictions",
+    type=click.Path()
+)
+@click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
+@click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
+@click.option(
+    u"-a", u"--aws-tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+@click.pass_obj
+def batch_transform(
+        obj,
+        dir,
+        s3_model_location,
+        s3_input_location,
+        s3_output_location,
+        num_instances,
+        ec2_type,
+        aws_tags,
+        iam_role_arn,
+        external_id
+):
+    """
+    Command to execute a batch transform job given a trained ML model on SageMaker
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Started configuration of batch transform on SageMaker ...\n")
+
+    try:
+        api_cloud.batch_transform(
+            dir=dir,
+            s3_model_location=s3_model_location,
+            s3_input_location=s3_input_location,
+            s3_output_location=s3_output_location,
+            num_instances=num_instances,
+            ec2_type=ec2_type,
+            docker_tag=obj['docker_tag'],
+            aws_role=iam_role_arn,
+            external_id=external_id,
+            tags=aws_tags
+        )
+
+        logger.info("Started batch transform on SageMaker successfully")
+    except ValueError as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
 cloud.add_command(upload_data)
 cloud.add_command(train)
 cloud.add_command(deploy)
+cloud.add_command(batch_transform)
