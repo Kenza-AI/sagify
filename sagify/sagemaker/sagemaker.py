@@ -162,6 +162,63 @@ class SageMakerClient(object):
 
         return model.endpoint_name
 
+    def batch_transform(
+            self,
+            image_name,
+            s3_model_location,
+            s3_input_location,
+            s3_output_location,
+            transform_instance_count,
+            transform_instance_type,
+            tags=None
+    ):
+        """
+        Execute batch transform on a trained model to SageMaker
+        :param image_name: [str], name of Docker image
+        :param s3_model_location: [str], model location in S3
+        :param s3_input_location: [str], S3 input data location
+        :param s3_output_location: [str], S3 output data location
+        :param transform_instance_count: [str],  number of ec2 instances
+        :param transform_instance_type: [str], ec2 instance type
+        :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+        :return: [str], endpoint name
+        """
+        image = self._construct_image_location(image_name)
+
+        model = sage.Model(
+            model_data=s3_model_location,
+            image=image,
+            role=self.role,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        content_type = "application/json"
+
+        transformer = model.transformer(
+            instance_type=transform_instance_type,
+            instance_count=transform_instance_count,
+            assemble_with='Line',
+            output_path=s3_output_location,
+            tags=tags,
+            accept=content_type,
+            strategy="SingleRecord"
+        )
+
+        transformer.transform(data=s3_input_location, split_type='Line', content_type=content_type)
+
     @staticmethod
     def _get_s3_bucket(s3_dir):
         """
