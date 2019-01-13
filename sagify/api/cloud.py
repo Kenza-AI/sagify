@@ -147,3 +147,58 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
         train_instance_type=ec2_type,
         tags=tags
     )
+
+
+def batch_transform(
+        dir,
+        s3_model_location,
+        s3_input_location,
+        s3_output_location,
+        num_instances,
+        ec2_type,
+        docker_tag,
+        aws_role=None,
+        external_id=None,
+        tags=None
+):
+    """
+    Executes a batch transform job given a trained ML model on SageMaker
+
+    :param dir: [str], source root directory
+    :param s3_model_location: [str], S3 model location
+    :param s3_input_location: [str], S3 input data location
+    :param s3_output_location: [str], S3 location to save predictions
+    :param num_instances: [int], number of ec2 instances
+    :param ec2_type: [str], ec2 instance type. Refer to:
+    https://aws.amazon.com/sagemaker/pricing/instance-types/
+    :param docker_tag: [str], the Docker tag for the image
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
+    :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+    """
+    config = _read_config(dir)
+    image_name = config.image_name + ':' + docker_tag
+
+    sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
+    sage_maker_client.batch_transform(
+        image_name=image_name,
+        s3_model_location=s3_model_location,
+        s3_input_location=s3_input_location,
+        s3_output_location=s3_output_location,
+        transform_instance_count=num_instances,
+        transform_instance_type=ec2_type,
+        tags=tags
+    )
