@@ -395,7 +395,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
 
-`--job-name JOB_NAME`: Optional name for the SageMaker training job
+`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored. 
 
 #### Example
 
