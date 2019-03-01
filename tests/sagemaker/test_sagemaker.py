@@ -108,6 +108,7 @@ def test_train_happy_case():
                         assert sagemaker_estimator_instance.fit.call_count == 1
                         sagemaker_estimator_instance.fit.assert_called_with('s3://bucket/input', job_name='some job name')
 
+
 def test_deploy_happy_case():
     with patch(
             'boto3.Session'
