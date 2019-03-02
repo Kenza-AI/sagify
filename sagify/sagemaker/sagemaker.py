@@ -61,6 +61,7 @@ class SageMakerClient(object):
             output_path,
             hyperparameters,
             base_job_name,
+            job_name,
             tags=None
     ):
         """
@@ -75,7 +76,8 @@ class SageMakerClient(object):
         result (model artifacts and output files)
         :param hyperparameters: [dict], Dictionary containing the hyperparameters to initialize
         this estimator with
-        :param base_job_name: [str], Optional prefix for the SageMaker training job.
+        :param base_job_name: [str], Optional prefix for the SageMaker training job
+        :param job_name: [str], Optional name for the SageMaker training job. Overrides `base_job_name`
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -111,7 +113,7 @@ class SageMakerClient(object):
         if tags:
             estimator.tags = tags
 
-        estimator.fit(input_s3_data_location)
+        estimator.fit(input_s3_data_location, job_name=job_name)
 
         return estimator.model_data
 

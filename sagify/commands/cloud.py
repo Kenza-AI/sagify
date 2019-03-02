@@ -110,6 +110,12 @@ def upload_data(dir, input_dir, s3_dir):
     help="Optional prefix for the SageMaker training job."
     "If not specified, the estimator generates a default job name, based on the training image name and current timestamp."
 )
+@click.option(
+    u"--job-name",
+    required=False,
+    help="Optional name for the SageMaker training job."
+    "NOTE: if a `--base-job-name` is passed along with this option, it will be ignored."
+)
 @click.pass_obj
 def train(
         obj,
@@ -123,7 +129,8 @@ def train(
         aws_tags,
         iam_role_arn,
         external_id,
-        base_job_name
+        base_job_name,
+        job_name
 ):
     """
     Command to train ML model(s) on SageMaker
@@ -144,7 +151,8 @@ def train(
             tags=aws_tags,
             aws_role=iam_role_arn,
             external_id=external_id,
-            base_job_name=base_job_name
+            base_job_name=base_job_name,
+            job_name=job_name
         )
 
         logger.info("Training on SageMaker succeeded")
