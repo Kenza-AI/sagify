@@ -161,12 +161,13 @@ class TestTrain(object):
                             output_path='s3://bucket/output',
                             hyperparameters=None,
                             base_job_name=None,
+                            job_name=None,
                             tags=None
                         )
 
         assert result.exit_code == 0
 
-    def test_train_with_job_name_and_role_and_external_id_happy_case(self):
+    def test_train_with_base_job_name_and_role_and_external_id_happy_case(self):
         runner = CliRunner()
 
         with patch(
@@ -210,6 +211,58 @@ class TestTrain(object):
                             output_path='s3://bucket/output',
                             hyperparameters=None,
                             base_job_name='some job name prefix',
+                            job_name=None,
+                            tags=None
+                        )
+
+        assert result.exit_code == 0
+
+    def test_train_with_job_name_and_base_job_name_and_role_and_external_id_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'train',
+                                '-i', 's3://bucket/input',
+                                '-o', 's3://bucket/output',
+                                '-e', 'ml.c4.2xlarge',
+                                '-r', 'some iam role',
+                                '-x', 'some external id',
+                                '-n', 'some job name prefix',
+                                '--job-name', 'some job name'
+                            ]
+                        )
+
+                        assert instance.train.call_count == 1
+                        instance.train.assert_called_with(
+                            image_name='sagemaker-img:latest',
+                            input_s3_data_location='s3://bucket/input',
+                            train_instance_count=1,
+                            train_instance_type='ml.c4.2xlarge',
+                            train_volume_size=30,
+                            train_max_run=24 * 60 * 60,
+                            output_path='s3://bucket/output',
+                            hyperparameters=None,
+                            base_job_name='some job name prefix',
+                            job_name='some job name',
                             tags=None
                         )
 
@@ -257,6 +310,7 @@ class TestTrain(object):
                             output_path='s3://bucket/output',
                             hyperparameters=None,
                             base_job_name=None,
+                            job_name=None,
                             tags=[
                                 {
                                     'Key': 'key1',
@@ -313,6 +367,7 @@ class TestTrain(object):
                             output_path='s3://bucket/output',
                             hyperparameters=None,
                             base_job_name=None,
+                            job_name=None,
                             tags=None
                         )
 
@@ -363,6 +418,7 @@ class TestTrain(object):
                             output_path='s3://bucket/output',
                             hyperparameters=None,
                             base_job_name=None,
+                            job_name=None,
                             tags=None
                         )
 

@@ -89,6 +89,7 @@ def test_train_happy_case():
                             output_path='s3://bucket/output',
                             hyperparameters={'n_estimator': 3},
                             base_job_name="Some-job-name-prefix",
+                            job_name="some job name"
                         )
                         mocked_sagemaker_estimator.assert_called_with(
                             image_name='image-full-name',
@@ -105,7 +106,7 @@ def test_train_happy_case():
                         )
                         sagemaker_estimator_instance = mocked_sagemaker_estimator.return_value
                         assert sagemaker_estimator_instance.fit.call_count == 1
-                        sagemaker_estimator_instance.fit.assert_called_with('s3://bucket/input')
+                        sagemaker_estimator_instance.fit.assert_called_with('s3://bucket/input', job_name='some job name')
 
 
 def test_deploy_happy_case():
