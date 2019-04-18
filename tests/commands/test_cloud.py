@@ -1007,3 +1007,74 @@ class TestBatchTransform(object):
                         assert not instance.deploy.called
 
         assert result.exit_code == -1
+
+
+class TestHyperparameterOptimization(object):
+    def test_hyperparameter_optimization_happy_case(self):
+        hyperparams_ranges = """
+        {
+            "ParameterRanges": {
+                "CategoricalParameterRanges": [
+                    {
+                        "Name": "kernel",
+                        "Values": ["linear", "rbf"]
+                    }
+                ],
+                "ContinuousParameterRanges": [
+                {
+                  "MinValue": 0.001,
+                  "MaxValue": 10,
+                  "Name": "gamma"
+                }
+                ],
+                "IntegerParameterRanges": [
+                    {
+                        "Name": "C",
+                        "MinValue": 1,
+                        "MaxValue": 10
+                    }
+                ]
+            },
+            "ObjectiveMetric": {
+                "Name": "Precision",
+                "Type": "Maximize"
+            }
+        }
+        """
+
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        with open('hyperparams_ranges.json', 'w') as f:
+                            f.write(hyperparams_ranges)
+
+                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'hyperparameter_optimization',
+                                '-i', 's3://bucket/input',
+                                '-o', 's3://bucket/output',
+                                '-e', 'ml.c4.2xlarge',
+                                '-h', 'hyperparams_ranges.json'
+                            ]
+                        )
+
+                        assert instance.hyperparameter_optimization.call_count == 1
+
+        assert result.exit_code == 0
