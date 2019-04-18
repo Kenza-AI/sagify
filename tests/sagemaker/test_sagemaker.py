@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from sagemaker.parameter import ContinuousParameter, CategoricalParameter
 
 try:
