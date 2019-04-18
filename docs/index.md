@@ -385,7 +385,7 @@ Replace the `TODOs` in the `try..except` of `train(...)` function in `sagify/tra
         
 ### Step 3: Build and Push Docker image
 
-1. `sagify build -d src -r requirements.txt`
+1. `sagify build -d src -r requirements.txt` Make sure sagify is in your `requirements.txt` file.
 2. `sagify push -d src`
 
 ### Step 4: Call The CLI Command
