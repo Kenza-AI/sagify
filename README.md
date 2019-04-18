@@ -195,6 +195,106 @@ It will be slow in the first couple of calls as it loads the model in a lazy man
 Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Deep Learning model to AWS SageMaker!
 
 
+## Hyperparameter Optimization
+
+Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.
+
+### Step 1: Define Hyperparameter Configuration File
+
+Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. `Maximize` or `Minimize`). For example:
+
+```
+{
+	"ParameterRanges": {
+		"CategoricalParameterRanges": [
+			{
+				"Name": "kernel",
+				"Values": ["linear", "rbf"]
+			}
+		],
+		"ContinuousParameterRanges": [
+		{
+		  "MinValue": 0.001,
+		  "MaxValue": 10,
+		  "Name": "gamma"
+		}
+		],
+		"IntegerParameterRanges": [
+			{
+				"Name": "C",
+				"MinValue": 1,
+				"MaxValue": 10
+			}
+		]
+    },
+    "ObjectiveMetric": {
+    	"Name": "Precision",
+        "Type": "Maximize"
+    }
+}
+```
+
+### Step 2: Implement Train function
+
+Replace the `TODOs` in the `try..except` of `train(...)` function in `sagify/training/train` file with your logic. For example:
+
+        from sklearn import datasets
+        iris = datasets.load_iris()
+
+        # Read the hyperparameter config json file
+        import json
+        with open(hyperparams_path) as _in_file:
+            hyperparams_dict = json.load(_in_file)
+
+        from sklearn import svm
+        clf = svm.SVC(
+            gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
+            C=float(hyperparams_dict['C']),
+            kernel=hyperparams_dict['kernel']
+        )
+
+        from sklearn.model_selection import train_test_split
+        X_train, X_test, y_train, y_test = train_test_split(
+            iris.data, iris.target, test_size=0.3, random_state=42)
+
+        clf.fit(X_train, y_train)
+
+        from sklearn.metrics import precision_score
+
+        predictions = clf.predict(X_test)
+
+        precision = precision_score(y_test, predictions, average='weighted')
+        
+        # Log the objective metric name with its calculated value. In tis example is Precision.
+        # The objective name should be exactly the same with the one specified in the hyperparams congig json file.
+        # The value must be a numeric (float or int).
+        from sagify.api.hyperparameter_tuning import log_metric
+        name = "Precision"
+        log_metric(name, precision)
+
+        from joblib import dump
+        dump(clf, os.path.join(model_save_path, 'model.pkl'))
+
+        print('Training complete.')
+        
+### Step 3: Build and Push Docker image
+
+1. `sagify build -d src -r requirements.txt` Make sure sagify is in your `requirements.txt` file.
+2. `sagify push -d src`
+
+### Step 4: Call The CLI Command
+
+And, finally, call the hyperparameter-optimization CLI command. For example:
+
+     sagify cloud hyperparameter_optimization -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
+    
+### Step 5: Monitor Progress
+
+You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:
+
+![Hyperparameter Optimization Results](docs/hyperparam_monitor.png)
+
+
 ## Commands
 
 ### Initialize
@@ -373,9 +473,9 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--input-s3-dir INPUT_DATA_S3_LOCATION` or `-i INPUT_DATA_S3_LOCATION`: S3 location to input data
 
-`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
+`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `-o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
 
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
+`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
 
 #### Optional Flags
 
@@ -400,6 +500,89 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 #### Example
 
     sagify cloud train -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
+    
+    
+### Cloud Hyperparameter Optimization
+
+#### Name
+
+Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker
+
+#### Synopsis
+
+    sagify cloud hyperparameter_optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED]
+
+#### Description
+
+This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode
+
+#### Required Flags
+
+`--input-s3-dir INPUT_DATA_S3_LOCATION` or `-i INPUT_DATA_S3_LOCATION`: S3 location to input data
+
+`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `-o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
+
+`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
+
+`--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE` or `-h HYPERPARAM_RANGES_JSON_FILE`: Local path to hyperparameters configuration file. Example:
+```
+{
+	"ParameterRanges": {
+		"CategoricalParameterRanges": [
+			{
+				"Name": "kernel",
+				"Values": ["linear", "rbf"]
+			}
+		],
+		"ContinuousParameterRanges": [
+		{
+		  "MinValue": 0.001,
+		  "MaxValue": 10,
+		  "Name": "gamma"
+		}
+		],
+		"IntegerParameterRanges": [
+			{
+				"Name": "C",
+				"MinValue": 1,
+				"MaxValue": 10
+			}
+		]
+    },
+    "ObjectiveMetric": {
+    	"Name": "Precision",
+        "Type": "Maximize"
+    }
+}
+```
+
+#### Optional Flags
+
+`--dir SRC_DIR` or `-d SRC_DIR`: Directory where sagify module resides
+
+`--max-jobs MAX_NUMBER_OF_TRAINING_JOBS` or `-m MAX_NUMBER_OF_TRAINING_JOBS`: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)
+
+`--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS` or `-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS`: Maximum number of parallel training jobs to start (default: 1)
+ 
+`--volume-size EBS_SIZE_IN_GB` or `-v EBS_SIZE_IN_GB`: Size in GB of the EBS volume (default: 30)
+
+`--time-out TIME_OUT_IN_SECS` or `-s TIME_OUT_IN_SECS`: Time-out in seconds (default: 24 * 60 * 60)
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for training with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+`--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
+
+`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored. 
+
+`--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED` or `-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED`: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait) 
+
+#### Example
+
+    sagify cloud hyperparameter_optimization -d src/ -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
 
 
 ### Cloud Deploy

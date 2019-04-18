@@ -12,7 +12,12 @@ if [[ ! -z "$role" ]]; then
     if [[ ! -z "$external_id" ]]; then 
         aws configure set profile.${role}.external_id ${external_id}
     fi
-    aws configure set profile.${role}.source_profile default
+    
+    if [[ -z "$profile" ]]; then
+        aws configure set profile.${role}.credential_source Ec2InstanceMetadata
+    else
+        aws configure set profile.${role}.source_profile default
+    fi
     profile=${role}
 elif [ -z "$profile" ]; then 
     profile={{ cookiecutter.aws_profile }}

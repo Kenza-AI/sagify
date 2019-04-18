@@ -1,3 +1,6 @@
+# -*- coding: utf-8 -*-
+from sagemaker.parameter import ContinuousParameter, CategoricalParameter
+
 try:
     from unittest.mock import patch
 except ImportError:
@@ -329,3 +332,65 @@ def test_batch_transform_with_tags():
                             split_type='Line',
                             content_type='application/json'
                         )
+
+
+def test_hyperparameter_optimization_happy_case():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.estimator.Estimator'
+                ) as mocked_sagemaker_estimator:
+                    with patch(
+                            'sagify.sagemaker.sagemaker.SageMakerClient._construct_image_location',
+                            return_value='image-full-name'
+                    ):
+                        with patch(
+                                'sagemaker.tuner.HyperparameterTuner'
+                        ) as mocked_sagemaker_tuner:
+                            sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+                            sage_maker_client.hyperparameter_optimization(
+                                image_name='image',
+                                input_s3_data_location='s3://bucket/input',
+                                instance_count=1,
+                                instance_type='m1.xlarge',
+                                volume_size=30,
+                                max_run=60,
+                                max_jobs=3,
+                                max_parallel_jobs=2,
+                                output_path='s3://bucket/output',
+                                objective_type='Maximize',
+                                objective_metric_name='Precision',
+                                hyperparams_ranges_dict={
+                                    'lr': ContinuousParameter(0.001, 0.1),
+                                    'batch-size': CategoricalParameter([32, 64, 128, 256, 512])
+                                },
+                                base_job_name="Some-job-name-prefix",
+                                job_name="some job name"
+                            )
+                            mocked_sagemaker_estimator.assert_called_with(
+                                image_name='image-full-name',
+                                role='arn_role',
+                                train_instance_count=1,
+                                train_instance_type='m1.xlarge',
+                                train_volume_size=30,
+                                train_max_run=60,
+                                input_mode='File',
+                                output_path='s3://bucket/output',
+                                sagemaker_session=sagemaker_session_instance
+                            )
+
+                            mocked_sagemaker_tuner_instance = mocked_sagemaker_tuner.return_value
+                            assert mocked_sagemaker_tuner_instance.fit.call_count == 1
+                            mocked_sagemaker_tuner_instance.fit.assert_called_with(
+                                's3://bucket/input', job_name='some job name'
+                            )
