@@ -1,4 +1,5 @@
-FROM python:{{ cookiecutter.python_version }}-slim-stretch
+ARG python_version
+FROM python:$python_version-slim-stretch
 
 LABEL maintainer="Kenza AI <support@kenza.ai>"
 

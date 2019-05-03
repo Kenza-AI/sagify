@@ -28,7 +28,12 @@ def build(obj, dir, requirements_dir):
 
     try:
         config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
-        api_build.build(dir=dir, requirements_dir=requirements_dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
+        api_build.build(
+            dir=dir,
+            requirements_dir=requirements_dir,
+            docker_tag=obj['docker_tag'],
+            image_name=config.image_name,
+            python_version=config.python_version)
 
         logger.info("Docker image built successfully!")
     except ValueError:
@@ -39,4 +44,4 @@ def build(obj, dir, requirements_dir):
         raise
     except Exception as e:
         logger.info("{}".format(e))
-        return
+        sys.exit(-1)

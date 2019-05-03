@@ -61,7 +61,7 @@ def test_build_with_invalid_dir_arg():
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
         ):
             with runner.isolated_filesystem():
