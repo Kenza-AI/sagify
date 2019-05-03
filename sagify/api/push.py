@@ -8,7 +8,7 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id):
+def push(dir, docker_tag, aws_region='', iam_role_arn="", aws_profile='', external_id='', image_name=''):
     """
     Push Docker image to AWS ECS
 
@@ -18,6 +18,7 @@ def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id):
     :param iam_role_arn: [str], the AWS role used to push the image to ECR
     :param aws_profile: [str], the AWS profile used to push the image to ECR
     :param external_id: [str], Optional external id used when using an IAM role
+    :param image_name: [str], The name of the Docker image
     """
 
     sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
@@ -26,16 +27,12 @@ def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id):
     if not os.path.isfile(push_script_path):
         raise ValueError("This is not a sagify directory: {}".format(dir))
 
-    aws_region = "" if aws_region is None else aws_region
-    aws_profile = "" if aws_profile is None else aws_profile
-    external_id = "" if external_id is None else external_id
-    iam_role_arn = "" if iam_role_arn is None else iam_role_arn
-
     output = subprocess.check_output([
                                      "{}".format(push_script_path),
                                      docker_tag,
                                      aws_region,
                                      iam_role_arn,
                                      aws_profile,
-                                     external_id])
+                                     external_id,
+                                     image_name])
     logger.debug(output)

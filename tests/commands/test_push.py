@@ -13,32 +13,32 @@ from sagify.__main__ import cli
 Case = namedtuple('Case', 'description, init_cmd, push_cmd, expected_exit_code, expected_cli_call')
 
 t1 = Case('t1: sagify push', ['init'], ['push'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', '', '', '']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'us-east-1', '', 'sagemaker', '', 'my_app']))
 
 t2 = Case('t2: sagify push -p profile', ['init'], ['push', '-p', 'some-profile'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', '', 'some-profile', '']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'us-east-1', '', 'some-profile', '', 'my_app']))
 
 t3 = Case('t3: sagify push -r region', ['init'], ['push', '-r', 'some-region'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', '', '']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', 'sagemaker', '', 'my_app']))
 
 t4 = Case('t4: sagify push -r region -p profile', ['init'], ['push', '-r', 'some-region', '-p', 'prof'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', 'prof', '']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'some-region', '', 'prof', '', 'my_app']))
 
 t5 = Case('t5: sagify push -d dir/', ['init', '-d', 'src/'], ['push', '-d', 'src/'], 0,
-          lambda command_line: command_line.assert_called_once_with(['src/sagify/push.sh', 'latest', '', '', '', '']))
+          lambda command_line: command_line.assert_called_once_with(['src/sagify/push.sh', 'latest', 'us-east-1', '', 'sagemaker', '', 'my_app']))
 
 t6 = Case('t6: sagify push -d invalid_dir/', ['init', '-d', 'src/'], ['push', '-d', 'invalid_dir/'], -1,
           lambda command_line: command_line.assert_not_called())
 
 t7 = Case('t7: sagify push -i aws-role', ['init'], ['push', '-i', 'some-role-arn'], 0,
-          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', 'some-role-arn', '', '']))
+          lambda command_line: command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'us-east-1', 'some-role-arn', '', '', 'my_app']))
 
 t8 = Case('t8: sagify -p profile -i aws-role', ['init'], ['push', '-i', 'some-role-arn', '-p', 'some-profile'], 2,
           lambda command_line: command_line.assert_not_called())
 
 t9 = Case('t9: sagify push -i aws-role -e some-id', ['init'], ['push', '-i', 'some-role-arn', '-e', 'some-id'], 0,
           lambda command_line:
-          command_line.assert_called_once_with(['sagify/push.sh', 'latest', '', 'some-role-arn', '', 'some-id']))
+          command_line.assert_called_once_with(['sagify/push.sh', 'latest', 'us-east-1', 'some-role-arn', '', 'some-id', 'my_app']))
 
 test_cases = [t1, t2, t3, t4, t5, t6, t7, t8, t9]
 

@@ -56,7 +56,7 @@ def test_build_with_invalid_dir_arg():
     with patch(
             'sagify.commands.initialize._get_local_aws_profiles',
             return_value=['default', 'sagemaker']
-    ):  
+    ):
         with patch.object(
                     sagify.config.config.ConfigManager,
                     'get_config',

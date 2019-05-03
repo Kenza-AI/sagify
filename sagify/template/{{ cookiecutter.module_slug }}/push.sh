@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-image={{ cookiecutter.project_slug }}-img
 tag=$1
 region=$2
 role=$3
 profile=$4
 external_id=$5
+image=$6
 
 if [[ ! -z "$role" ]]; then 
     aws configure set profile.${role}.role_arn ${role}
@@ -16,15 +16,9 @@ if [[ ! -z "$role" ]]; then
     if [[ -z "$profile" ]]; then
         aws configure set profile.${role}.credential_source Ec2InstanceMetadata
     else
-        aws configure set profile.${role}.source_profile default
+        aws configure set profile.${role}.source_profile ${profile}
     fi
     profile=${role}
-elif [ -z "$profile" ]; then 
-    profile={{ cookiecutter.aws_profile }}
-fi 
-
-if [ -z "$region" ]; then 
-    region={{ cookiecutter.aws_region }}
 fi 
 
 # Get the account number associated with the current IAM credentials
