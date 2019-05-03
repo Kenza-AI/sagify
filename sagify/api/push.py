@@ -8,7 +8,7 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def push(dir, docker_tag, aws_region='', iam_role_arn="", aws_profile='', external_id='', image_name=''):
+def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id, image_name):
     """
     Push Docker image to AWS ECS
 
