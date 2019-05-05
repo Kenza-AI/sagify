@@ -3,15 +3,11 @@ from sagify.config.config import ConfigManager, Config
 import os
 import tempfile
 
-try:
-    from unittest import TestCase
-    from unittest.mock import patch
-except ImportError:
-    from mock import patch
-    
+from unittest import TestCase
+
 try:
     from pathlib2 import Path
-except:
+except ImportError:
     from pathlib import Path
 
 from sagify.commands.configure import _configure
@@ -38,6 +34,7 @@ t6 = Case('t6: Configure EVERYTHING', 'some-other-image-name', 'us-east-1', 'som
 
 test_cases = [t1, t2, t3, t4, t5, t6]
 
+
 class ConfigureCommandTests(TestCase):
 
     def tests(self):
@@ -48,11 +45,12 @@ class ConfigureCommandTests(TestCase):
                 try:
                     updateConfig(tmpdir, case.image_name, case.aws_region, case.aws_profile, case.python_version)
                     config = ConfigManager(os.path.join(tmpdir, 'sagify', 'config.json')).get_config()
-                    assert config.to_dict() == case.expected_config.to_dict()  
-                    
+                    assert config.to_dict() == case.expected_config.to_dict()
+
                 except AssertionError as e:
                     e.args = ('Test Case: {}'.format(case.description), e.args)
                     raise
+
 
 def updateConfig(tmpdir, image_name, aws_region, aws_profile, python_version):
     _configure(tmpdir, image_name, aws_region, aws_profile, python_version)

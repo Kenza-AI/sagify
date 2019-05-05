@@ -1,14 +1,15 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
+import os
 import sys
-
 import click
 
 from sagify.api import local as api_local
 from sagify.commands import ASCII_LOGO
 from sagify.log import logger
 from future.moves import subprocess
+from sagify.config.config import ConfigManager
 
 click.disable_unicode_literals_warning = True
 
@@ -59,7 +60,7 @@ def deploy(obj, dir):
 
     try:
         config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
-        api_local.deploy(dir=dir, docker_tag=obj['docker_tag'], image_name=image_name)
+        api_local.deploy(dir=dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
     except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)

@@ -24,7 +24,7 @@ def configure(dir, image_name, aws_region, aws_profile, python_version):
     """
     logger.info(ASCII_LOGO)
     configure(dir, image_name, aws_region, aws_profile, python_version)
-    
+
 
 def _configure(dir, image_name, aws_region, aws_profile, python_version):
     try:
