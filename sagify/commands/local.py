@@ -45,7 +45,7 @@ def train(obj, dir):
         raise
     except Exception as e:
         logger.info("{}".format(e))
-        return
+        sys.exit(-1)
 
 
 @click.command()
@@ -69,7 +69,7 @@ def deploy(obj, dir):
         raise
     except Exception as e:
         logger.info("{}".format(e))
-        return
+        sys.exit(-1)
 
 
 local.add_command(train)
