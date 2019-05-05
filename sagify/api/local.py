@@ -8,12 +8,13 @@ from future.moves import subprocess
 from sagify.log import logger
 
 
-def train(dir, docker_tag):
+def train(dir, docker_tag, image_name):
     """
     Trains ML model(s) locally
 
     :param dir: [str], source root directory
     :param docker_tag: [str], the Docker tag for the image
+    :param image_name: [str], The name of the Docker image
     """
     sagify_module_path = os.path.join(dir, 'sagify')
     local_train_script_path = os.path.join(sagify_module_path, 'local_test', 'train_local.sh')
@@ -26,7 +27,8 @@ def train(dir, docker_tag):
         [
             "{}".format(local_train_script_path),
             "{}".format(os.path.abspath(test_path)),
-            docker_tag
+            docker_tag,
+            image_name
         ]
     )
     logger.debug(output)

@@ -32,7 +32,8 @@ def train(obj, dir):
     logger.info("Started local training...\n")
 
     try:
-        api_local.train(dir=dir, docker_tag=obj['docker_tag'])
+        config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
+        api_local.train(dir=dir, docker_tag=obj['docker_tag'], image_name = config.image_name)
 
         logger.info("Local training completed successfully!")
     except ValueError:
