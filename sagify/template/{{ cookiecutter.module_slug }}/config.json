@@ -1,6 +1,0 @@
-{
-  "image_name": "{{ cookiecutter.image_name }}",
-  "aws_profile": "{{ cookiecutter.aws_profile }}",
-  "aws_region": "{{ cookiecutter.aws_region }}",
-  "python_version": "{{ cookiecutter.python_version }}"
-}

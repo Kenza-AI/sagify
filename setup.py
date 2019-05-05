@@ -15,27 +15,25 @@ setup(
     url='https://github.com/Kenza-AI/sagify',
     package_data={
         'sagify': [
-            'template/cookiecutter.json',
-            'template/{{ cookiecutter.module_slug }}/config.json',
-            'template/{{ cookiecutter.module_slug }}/*.sh',
-            'template/{{ cookiecutter.module_slug }}/Dockerfile',
-            'template/{{ cookiecutter.module_slug }}/__init__.py',
-            'template/{{ cookiecutter.module_slug }}/training/__init__.py',
-            'template/{{ cookiecutter.module_slug }}/training/train',
-            'template/{{ cookiecutter.module_slug }}/prediction/*.py',
-            'template/{{ cookiecutter.module_slug }}/prediction/serve',
-            'template/{{ cookiecutter.module_slug }}/prediction/nginx.conf',
-            'template/{{ cookiecutter.module_slug }}/local_test/*.sh',
-            'template/{{ cookiecutter.module_slug }}/local_test/test_dir/output/.gitkeep',
-            'template/{{ cookiecutter.module_slug }}/local_test/test_dir/model/.gitkeep',
-            'template/{{ cookiecutter.module_slug }}/local_test/test_dir/input/config/*.json',
-            'template/{{ cookiecutter.module_slug }}/local_test/test_dir/input/data/training/'
+            'template/sagify/config.json',
+            'template/sagify/*.sh',
+            'template/sagify/Dockerfile',
+            'template/sagify/__init__.py',
+            'template/sagify/training/__init__.py',
+            'template/sagify/training/train',
+            'template/sagify/prediction/*.py',
+            'template/sagify/prediction/serve',
+            'template/sagify/prediction/nginx.conf',
+            'template/sagify/local_test/*.sh',
+            'template/sagify/local_test/test_dir/output/.gitkeep',
+            'template/sagify/local_test/test_dir/model/.gitkeep',
+            'template/sagify/local_test/test_dir/input/config/*.json',
+            'template/sagify/local_test/test_dir/input/data/training/'
             '.gitkeep'
         ]
     },
     install_requires=[
         'boto3==1.9.64, <1.9.99',
-        'cookiecutter>=1.6.0, <1.6.99',
         'click>=6.7, <6.7.99',
         'docker>=3.7.0, <3.7.99',
         'flask>=0.12.2, <0.12.99',
