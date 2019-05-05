@@ -33,7 +33,7 @@ def train(obj, dir):
 
     try:
         config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
-        api_local.train(dir=dir, docker_tag=obj['docker_tag'], image_name = config.image_name)
+        api_local.train(dir=dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
 
         logger.info("Local training completed successfully!")
     except ValueError:
@@ -58,7 +58,8 @@ def deploy(obj, dir):
     logger.info("Started local deployment at localhost:8080 ...\n")
 
     try:
-        api_local.deploy(dir=dir, docker_tag=obj['docker_tag'])
+        config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
+        api_local.deploy(dir=dir, docker_tag=obj['docker_tag'], image_name=image_name)
     except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)

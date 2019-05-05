@@ -34,12 +34,13 @@ def train(dir, docker_tag, image_name):
     logger.debug(output)
 
 
-def deploy(dir, docker_tag):
+def deploy(dir, docker_tag, image_name):
     """
     Deploys ML models(s) locally
 
     :param dir: [str], source root directory
     :param docker_tag: [str], the Docker tag for the image
+    :param image_name: [str], The name of the Docker image
     """
     sagify_module_path = os.path.join(dir, 'sagify')
     local_deploy_script_path = os.path.join(sagify_module_path, 'local_test', 'deploy_local.sh')
@@ -52,7 +53,8 @@ def deploy(dir, docker_tag):
         [
             "{}".format(local_deploy_script_path),
             "{}".format(os.path.abspath(test_path)),
-            docker_tag
+            docker_tag,
+            image_name
         ]
     )
     logger.debug(output)
