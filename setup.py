@@ -41,7 +41,8 @@ setup(
         'pathlib2>=2.3.0, <2.3.99',
         'requests>=2.20.0, <2.20.99',
         'sagemaker>=1.17.0, <1.17.99',
-        'six>=1.10, <1.11.99'
+        'six>=1.10, <1.11.99',
+        'future>=0.17.1, <0.17.99'
     ],
     test_suite='tests',
     zip_safe=True,
