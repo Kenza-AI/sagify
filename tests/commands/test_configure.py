@@ -1,7 +1,7 @@
 from collections import namedtuple
 from sagify.config.config import ConfigManager, Config
 import os
-import tempfile
+from backports import tempfile
 
 from unittest import TestCase
 
