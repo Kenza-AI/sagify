@@ -27,9 +27,6 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
     Command to push Docker image to AWS ECS
     """
     logger.info(ASCII_LOGO)
-    logger.info(
-        "Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n"
-    )
 
     if iam_role_arn is not None and aws_profile is not None:
         logger.error('Only one of iam-role-arn and aws-profile can be used.')
@@ -38,14 +35,20 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
     if iam_role_arn is not None:
         aws_profile = ''
 
-    config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
-    image_name = config.image_name
-    aws_region = config.aws_region if aws_region is None else aws_region
-    aws_profile = config.aws_profile if (aws_profile is None and iam_role_arn is None) else aws_profile
-    external_id = "" if external_id is None else external_id
-    iam_role_arn = "" if iam_role_arn is None else iam_role_arn
-
     try:
+        config_file_path = os.path.join(dir, 'sagify', 'config.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+
+        config = ConfigManager(config_file_path).get_config()
+        image_name = config.image_name
+        aws_region = config.aws_region if aws_region is None else aws_region
+        aws_profile = config.aws_profile if (aws_profile is None and iam_role_arn is None) else aws_profile
+        external_id = "" if external_id is None else external_id
+        iam_role_arn = "" if iam_role_arn is None else iam_role_arn
+        
+        logger.info("Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n")
+
         api_push.push(
             dir=dir,
             docker_tag=obj['docker_tag'],

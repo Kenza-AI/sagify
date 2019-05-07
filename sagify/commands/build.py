@@ -26,8 +26,13 @@ def build(obj, dir, requirements_dir):
     logger.info(ASCII_LOGO)
     logger.info("Started building SageMaker Docker image. It will take some minutes...\n")
 
+
     try:
-        config = ConfigManager(os.path.join(dir, 'sagify', 'config.json')).get_config()
+        config_file_path = os.path.join(dir, 'sagify', 'config.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+        
+        config = ConfigManager(config_file_path).get_config()
         api_build.build(
             dir=dir,
             requirements_dir=requirements_dir,
