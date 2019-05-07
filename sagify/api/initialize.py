@@ -25,6 +25,8 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
 
     Path(output_dir).mkdir(exist_ok=True)
     Path(os.path.join(output_dir, '__init__.py')).touch()
+
+    # Set 'sagify module' directory up
     copy_tree(os.path.join(_FILE_DIR_PATH, '../template'), output_dir)
 
     # Set configuration file up
