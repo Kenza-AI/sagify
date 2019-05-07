@@ -45,7 +45,7 @@ def _configure(dir, image_name, aws_region, aws_profile, python_version):
 
         config_manager.set_config(config)
 
-        logger.info("\nConfiguration succeeded!")
+        logger.info("\nConfiguration updated successfully!\n")
     except ValueError as e:
         logger.info("{}".format(e))
         sys.exit(-1)
