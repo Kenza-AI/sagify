@@ -46,7 +46,7 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
         aws_profile = config.aws_profile if (aws_profile is None and iam_role_arn is None) else aws_profile
         external_id = "" if external_id is None else external_id
         iam_role_arn = "" if iam_role_arn is None else iam_role_arn
-        
+
         logger.info("Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n")
 
         api_push.push(
