@@ -23,7 +23,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -56,7 +56,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -93,7 +93,7 @@ class TestUploadData(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -132,7 +132,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -179,7 +179,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -229,7 +229,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -280,7 +280,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -337,7 +337,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -385,7 +385,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -436,7 +436,7 @@ class TestTrain(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -476,7 +476,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -517,7 +517,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -560,7 +560,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -605,7 +605,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -656,7 +656,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -698,7 +698,7 @@ class TestDeploy(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -738,7 +738,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -783,7 +783,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -830,7 +830,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -879,7 +879,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -934,7 +934,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -980,7 +980,7 @@ class TestBatchTransform(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
@@ -1053,7 +1053,7 @@ class TestHyperparameterOptimization(object):
                     sagify.config.config.ConfigManager,
                     'get_config',
                     lambda _: Config(
-                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1'
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6'
                     )
             ):
                 with patch(
