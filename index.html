@@ -471,17 +471,30 @@ source_profile = test-sagemaker
 <h3 id="example">Example</h3>
 <pre><code>sagify init -d src/
 </code></pre>
+<h3 id="configure">Configure</h3>
+<h4 id="description_1">Description</h4>
+<p>Updates an existing configuration value e.g. <code>python version</code> or <code>AWS region</code>.</p>
+<h4 id="synopsis_1">Synopsis</h4>
+<pre><code>sagify configure --dir SRC_DIR [--aws-region AWS_REGION] [--aws-profile AWS_PROFILE] [--image-name IMAGE_NAME] [--python-version PYTHON_VERSION]
+</code></pre>
+<h4 id="required-flags">Required Flags</h4>
+<p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Path to <code>Sagify module</code></p>
+<h4 id="optional-flags_1">Optional Flags</h4>
+<p><code>--aws-region AWS_REGION</code>: <em>AWS</em> region where <em>Docker</em> images are pushed and <em>SageMaker</em> operations (<em>train</em>, <em>deploy</em>) are performed.</p>
+<p><code>--aws-profile AWS_PROFILE</code>: <em>AWS</em> profile to use when interacting with <em>AWS</em>.</p>
+<p><code>--image-name IMAGE_NAME</code>: <em>Docker</em> image name used when building for use with <em>SageMaker</em>. This shows up as an <em>AWS ECR</em> repository on your <em>AWS</em> account.</p>
+<p><code>--python-version PYTHON_VERSION</code>: <em>Python</em> version used when building <em>SageMaker's</em> <em>Docker</em> images. Curently supported versions: <code>2.7</code> , <code>3.6</code>.</p>
 <h3 id="build">Build</h3>
 <h4 id="name_1">Name</h4>
 <p>Builds a Docker image</p>
-<h4 id="synopsis_1">Synopsis</h4>
+<h4 id="synopsis_2">Synopsis</h4>
 <pre><code>sagify build --requirements-dir REQUIREMENTS_FILE [--dir SRC_DIR]
 </code></pre>
-<h4 id="description_1">Description</h4>
+<h4 id="description_2">Description</h4>
 <p>This command builds a Docker image from code under the current working directory or under <code>SRC_DIR</code>, if optional flag <code>--dir</code> is specified. A <code>REQUIREMENTS_FILE</code> needs to be specified in order to install all required dependencies in Docker image.</p>
-<h4 id="required-flags">Required Flags</h4>
+<h4 id="required-flags_1">Required Flags</h4>
 <p><code>--requirements-dir REQUIREMENTS_FILE</code> or <code>-r REQUIREMENTS_FILE</code>: Path to <code>REQUIREMENTS_FILE</code> </p>
-<h4 id="optional-flags_1">Optional Flags</h4>
+<h4 id="optional-flags_2">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <h4 id="example_1">Example</h4>
 <pre><code>sagify build -d src/ -r requirements.txt
@@ -489,12 +502,12 @@ source_profile = test-sagemaker
 <h3 id="local-train">Local Train</h3>
 <h4 id="name_2">Name</h4>
 <p>Executes a Docker image in train mode</p>
-<h4 id="synopsis_2">Synopsis</h4>
+<h4 id="synopsis_3">Synopsis</h4>
 <pre><code>sagify local train [--dir SRC_DIR]
 </code></pre>
-<h4 id="description_2">Description</h4>
+<h4 id="description_3">Description</h4>
 <p>This command executes a Docker image in train mode. More specifically, it executes the <code>train(...)</code> function in <code>sagify/training/train</code> inside an already built Docker image (see Build command section).</p>
-<h4 id="optional-flags_2">Optional Flags</h4>
+<h4 id="optional-flags_3">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <h4 id="example_2">Example</h4>
 <pre><code>sagify local train -d src/
@@ -502,12 +515,12 @@ source_profile = test-sagemaker
 <h3 id="local-deploy">Local Deploy</h3>
 <h4 id="name_3">Name</h4>
 <p>Executes a Docker image in serve mode</p>
-<h4 id="synopsis_3">Synopsis</h4>
+<h4 id="synopsis_4">Synopsis</h4>
 <pre><code>sagify local deploy [--dir SRC_DIR]
 </code></pre>
-<h4 id="description_3">Description</h4>
+<h4 id="description_4">Description</h4>
 <p>This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to <code>/invocations</code> endpoint. Then, the <code>/invocations</code> endpoint calls the <code>predict(...)</code> function in <code>sagify/prediction/predict.py</code> (see Build command section on how to build a Docker image).</p>
-<h4 id="optional-flags_3">Optional Flags</h4>
+<h4 id="optional-flags_4">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <h4 id="example_3">Example</h4>
 <pre><code>sagify local deploy -d src/
@@ -515,15 +528,15 @@ source_profile = test-sagemaker
 <h3 id="push">Push</h3>
 <h4 id="name_4">Name</h4>
 <p>Pushes a Docker image to AWS Elastic Container Service</p>
-<h4 id="synopsis_4">Synopsis</h4>
+<h4 id="synopsis_5">Synopsis</h4>
 <pre><code>sagify push [--dir SRC_DIR] [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
-<h4 id="description_4">Description</h4>
+<h4 id="description_5">Description</h4>
 <p>This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.</p>
 <blockquote>
 <p>Only one of <em>iam-role-arn</em> and <em>aws_profile</em> can be provided. <em>external-id</em> is ignored when no <em>iam-role-arn</em> is provided.</p>
 </blockquote>
-<h4 id="optional-flags_4">Optional Flags</h4>
+<h4 id="optional-flags_5">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-i IAM_ROLE</code>: AWS IAM role to use for pushing to ECR</p>
 <p><code>--aws-region AWS_REGION</code> or <code>-r AWS_REGION</code>: The AWS region to push the image to</p>
@@ -535,15 +548,15 @@ source_profile = test-sagemaker
 <h3 id="cloud-upload-data">Cloud Upload Data</h3>
 <h4 id="name_5">Name</h4>
 <p>Uploads data to AWS S3</p>
-<h4 id="synopsis_5">Synopsis</h4>
+<h4 id="synopsis_6">Synopsis</h4>
 <pre><code>sagify cloud upload-data --input-dir LOCAL_INPUT_DATA_DIR --s3-dir S3_TARGET_DATA_LOCATION [--dir SRC_DIR]
 </code></pre>
-<h4 id="description_5">Description</h4>
+<h4 id="description_6">Description</h4>
 <p>This command uploads content under <code>LOCAL_INPUT_DATA_DIR</code> to S3 under <code>S3_TARGET_DATA_LOCATION</code></p>
-<h4 id="required-flags_1">Required Flags</h4>
+<h4 id="required-flags_2">Required Flags</h4>
 <p><code>--input-dir LOCAL_INPUT_DATA_DIR</code> or <code>-i LOCAL_INPUT_DATA_DIR</code>: Local input directory</p>
 <p><code>--s3-dir S3_TARGET_DATA_LOCATION</code> or <code>-s S3_TARGET_DATA_LOCATION</code>: S3 target location</p>
-<h4 id="optional-flags_5">Optional Flags</h4>
+<h4 id="optional-flags_6">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <h4 id="example_5">Example</h4>
 <pre><code>sagify cloud upload-data -d src/ -i ./training_data/ -s s3://my-bucket/training-data/
@@ -551,16 +564,16 @@ source_profile = test-sagemaker
 <h3 id="cloud-train">Cloud Train</h3>
 <h4 id="name_6">Name</h4>
 <p>Executes a Docker image in train mode on AWS SageMaker</p>
-<h4 id="synopsis_6">Synopsis</h4>
+<h4 id="synopsis_7">Synopsis</h4>
 <pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME]
 </code></pre>
-<h4 id="description_6">Description</h4>
+<h4 id="description_7">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
-<h4 id="required-flags_2">Required Flags</h4>
+<h4 id="required-flags_3">Required Flags</h4>
 <p><code>--input-s3-dir INPUT_DATA_S3_LOCATION</code> or <code>-i INPUT_DATA_S3_LOCATION</code>: S3 location to input data</p>
 <p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
-<h4 id="optional-flags_6">Optional Flags</h4>
+<h4 id="optional-flags_7">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <p><code>--hyperparams-file HYPERPARAMS_JSON_FILE</code> or <code>-h HYPERPARAMS_JSON_FILE</code>: Path to hyperparams JSON file</p>
 <p><code>--volume-size EBS_SIZE_IN_GB</code> or <code>-v EBS_SIZE_IN_GB</code>: Size in GB of the EBS volume (default: 30)</p>
@@ -576,12 +589,12 @@ source_profile = test-sagemaker
 <h3 id="cloud-hyperparameter-optimization">Cloud Hyperparameter Optimization</h3>
 <h4 id="name_7">Name</h4>
 <p>Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker</p>
-<h4 id="synopsis_7">Synopsis</h4>
+<h4 id="synopsis_8">Synopsis</h4>
 <pre><code>sagify cloud hyperparameter_optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--dir SRC_DIR] [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED]
 </code></pre>
-<h4 id="description_7">Description</h4>
+<h4 id="description_8">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode</p>
-<h4 id="required-flags_3">Required Flags</h4>
+<h4 id="required-flags_4">Required Flags</h4>
 <p><code>--input-s3-dir INPUT_DATA_S3_LOCATION</code> or <code>-i INPUT_DATA_S3_LOCATION</code>: S3 location to input data</p>
 <p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>-o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
@@ -616,7 +629,7 @@ source_profile = test-sagemaker
 }
 </code></pre>
 
-<h4 id="optional-flags_7">Optional Flags</h4>
+<h4 id="optional-flags_8">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <p><code>--max-jobs MAX_NUMBER_OF_TRAINING_JOBS</code> or <code>-m MAX_NUMBER_OF_TRAINING_JOBS</code>: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)</p>
 <p><code>--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code> or <code>-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code>: Maximum number of parallel training jobs to start (default: 1)</p>
@@ -634,16 +647,16 @@ source_profile = test-sagemaker
 <h3 id="cloud-deploy">Cloud Deploy</h3>
 <h4 id="name_8">Name</h4>
 <p>Executes a Docker image in serve mode on AWS SageMaker</p>
-<h4 id="synopsis_8">Synopsis</h4>
+<h4 id="synopsis_9">Synopsis</h4>
 <pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
-<h4 id="description_8">Description</h4>
+<h4 id="description_9">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode</p>
-<h4 id="required-flags_4">Required Flags</h4>
+<h4 id="required-flags_5">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
-<h4 id="optional-flags_8">Optional Flags</h4>
+<h4 id="optional-flags_9">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
@@ -654,10 +667,10 @@ source_profile = test-sagemaker
 <h3 id="cloud-batch-transform">Cloud Batch Transform</h3>
 <h4 id="name_9">Name</h4>
 <p>Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batch predictions on user defined S3 data</p>
-<h4 id="synopsis_9">Synopsis</h4>
+<h4 id="synopsis_10">Synopsis</h4>
 <pre><code>sagify cloud batch_transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--dir SRC_DIR] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
-<h4 id="description_9">Description</h4>
+<h4 id="description_10">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.</p>
 <p>Things to do:
 - You should implement the predict function that expects a JSON containing the required feature values. It's the same predict function used for deploying the model as a REST service. Example of a JSON:</p>
@@ -675,13 +688,13 @@ source_profile = test-sagemaker
 {&quot;features&quot;: [4.6,3.1,1.5,0.2]}
 </code></pre>
 
-<h4 id="required-flags_5">Required Flags</h4>
+<h4 id="required-flags_6">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--s3-input-location S3_INPUT_LOCATION</code> or <code>-i S3_INPUT_LOCATION</code>: s3 input data location</p>
 <p><code>--s3-output-location S3_OUTPUT_LOCATION</code> or <code>-o S3_OUTPUT_LOCATION</code>: s3 location to save predictions</p>
 <p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
-<h4 id="optional-flags_9">Optional Flags</h4>
+<h4 id="optional-flags_10">Optional Flags</h4>
 <p><code>--dir SRC_DIR</code> or <code>-d SRC_DIR</code>: Directory where sagify module resides</p>
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
@@ -730,5 +743,5 @@ source_profile = test-sagemaker
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-04-18 17:29:26
+Build Date UTC : 2019-05-12 17:47:05
 -->
