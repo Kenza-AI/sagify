@@ -16,13 +16,12 @@ click.disable_unicode_literals_warning = True
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(u"-r", u"--aws-region", required=False, help="The AWS region to push the image to")
 @click.option(u"-i", u"--iam-role-arn", required=False, help="The AWS role to use for the push command")
 @click.option(u"-p", u"--aws-profile", required=False, help="The AWS profile to use for the push command")
 @click.option(u"-e", u"--external-id", required=False, help="Optional external id used when using an IAM role")
 @click.pass_obj
-def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
+def push(obj, aws_region, iam_role_arn, aws_profile, external_id):
     """
     Command to push Docker image to AWS ECS
     """
@@ -36,7 +35,7 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
         aws_profile = ''
 
     try:
-        config_file_path = os.path.join(dir, 'sagify', 'config.json')
+        config_file_path = os.path.join('.sagify.json')
         if not os.path.isfile(config_file_path):
             raise ValueError()
 
@@ -50,7 +49,7 @@ def push(obj, dir, aws_region, iam_role_arn, aws_profile, external_id):
         logger.info("Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n")
 
         api_push.push(
-            dir=dir,
+            dir=config.sagify_module_dir,
             docker_tag=obj['docker_tag'],
             aws_region=aws_region,
             iam_role_arn=iam_role_arn,

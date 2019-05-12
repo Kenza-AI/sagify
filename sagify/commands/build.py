@@ -16,10 +16,9 @@ click.disable_unicode_literals_warning = True
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(u"-r", u"--requirements-dir", required=True, help="Path to requirements.txt file")
 @click.pass_obj
-def build(obj, dir, requirements_dir):
+def build(obj, requirements_dir):
     """
     Command to build SageMaker app
     """
@@ -27,13 +26,13 @@ def build(obj, dir, requirements_dir):
     logger.info("Started building SageMaker Docker image. It will take some minutes...\n")
 
     try:
-        config_file_path = os.path.join(dir, 'sagify', 'config.json')
+        config_file_path = os.path.join('.sagify.json')
         if not os.path.isfile(config_file_path):
             raise ValueError()
 
         config = ConfigManager(config_file_path).get_config()
         api_build.build(
-            dir=dir,
+            dir=config.sagify_module_dir,
             requirements_dir=requirements_dir,
             docker_tag=obj['docker_tag'],
             image_name=config.image_name,
