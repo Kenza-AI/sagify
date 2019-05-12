@@ -36,11 +36,12 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
     config.image_name = app_name
     config.aws_region = aws_region
     config.aws_profile = aws_profile
+    config.sagify_module_dir = app_name
     config.python_version = python_version
     config_manager.set_config(config)
 
 
-def init(dir, sagify_app_name, aws_profile, aws_region, python_version):
+def init(sagify_app_name, aws_profile, aws_region, python_version):
     """
     Initializes a SageMaker template
 
@@ -58,5 +59,5 @@ def init(dir, sagify_app_name, aws_profile, aws_region, python_version):
         aws_profile=aws_profile,
         aws_region=aws_region,
         python_version=python_version,
-        output_dir=dir
+        output_dir=sagify_app_name
     )

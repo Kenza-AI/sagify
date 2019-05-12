@@ -23,7 +23,9 @@ def _get_local_aws_profiles():
 
 
 def ask_for_app_name():
-    return click.prompt(text="Type in a name for your SageMaker app", type=str)
+    return click.prompt(text="Type in a name for your SageMaker app.\n\n" \
+                             "A folder with that name will be created\n" \
+                             "in the directory you ran `init` from)", type=str)
 
 
 def ask_for_python_version():
@@ -94,8 +96,7 @@ def ask_for_aws_details():
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to create sagify module")
-def init(dir):
+def init():
     """
     Command to initialize SageMaker template
     """
@@ -109,7 +110,6 @@ def init(dir):
 
     try:
         api_initialize.init(
-            dir=dir,
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
