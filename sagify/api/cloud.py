@@ -11,7 +11,7 @@ from sagify.sagemaker import sagemaker
 
 
 def _read_config(input_dir):
-    config_file_path = os.path.join(input_dir, 'sagify', 'config.json')
+    config_file_path = os.path.join('.sagify.json')
     if not os.path.isfile(config_file_path):
         raise ValueError("This is not a sagify directory: {}".format(input_dir))
 

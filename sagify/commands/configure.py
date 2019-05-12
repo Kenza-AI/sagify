@@ -28,7 +28,7 @@ def configure(dir, image_name, aws_region, aws_profile, python_version):
 
 def _configure(dir, image_name, aws_region, aws_profile, python_version):
     try:
-        config_manager = ConfigManager(os.path.join(dir, 'sagify', 'config.json'))
+        config_manager = ConfigManager(os.path.join('.sagify.json'))
         config = config_manager.get_config()
 
         if image_name is not None:
