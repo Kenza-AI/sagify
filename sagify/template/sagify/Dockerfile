@@ -1,6 +1,7 @@
-FROM python:{{ cookiecutter.python_version }}-slim-stretch
+ARG python_version
+FROM python:$python_version-slim-stretch
 
-MAINTAINER Kenza AI <support@kenza.ai>
+LABEL maintainer="Kenza AI <support@kenza.ai>"
 
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
          nginx \

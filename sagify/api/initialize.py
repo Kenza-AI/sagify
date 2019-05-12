@@ -7,7 +7,8 @@ try:
 except ImportError:
     from pathlib2 import Path
 
-from cookiecutter.main import cookiecutter
+from sagify.config.config import ConfigManager
+from distutils.dir_util import copy_tree
 
 _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
@@ -25,18 +26,18 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
     Path(output_dir).mkdir(exist_ok=True)
     Path(os.path.join(output_dir, '__init__.py')).touch()
 
-    cookiecutter(
-        template=os.path.join(_FILE_DIR_PATH, '../template/'),
-        output_dir=output_dir,
-        no_input=True,
-        extra_context={
-            "project_slug": app_name,
-            "module_slug": sagify_module_name,
-            "aws_profile": aws_profile,
-            "aws_region": aws_region,
-            "python_version": python_version
-        }
-    )
+    # Set 'sagify module' directory up
+    copy_tree(os.path.join(_FILE_DIR_PATH, '../template'), output_dir)
+
+    # Set configuration file up
+    config_manager = ConfigManager(os.path.join(output_dir, sagify_module_name, 'config.json'))
+    config = config_manager.get_config()
+
+    config.image_name = app_name
+    config.aws_region = aws_region
+    config.aws_profile = aws_profile
+    config.python_version = python_version
+    config_manager.set_config(config)
 
 
 def init(dir, sagify_app_name, aws_profile, aws_region, python_version):

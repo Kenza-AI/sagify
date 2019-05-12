@@ -8,6 +8,7 @@ from sagify.commands.cloud import cloud
 from sagify.commands.initialize import init
 from sagify.commands.local import local
 from sagify.commands.push import push
+from sagify.commands.configure import configure
 from sagify.log import configure_logger
 
 
@@ -29,6 +30,7 @@ def add_commands(cli):
     cli.add_command(local)
     cli.add_command(push)
     cli.add_command(cloud)
+    cli.add_command(configure)
 
 
 add_commands(cli)

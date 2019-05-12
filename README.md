@@ -320,6 +320,36 @@ This command initializes a sagify module in the current working directory or und
     sagify init -d src/
 
 
+### Configure
+
+#### Description
+
+Updates an existing configuration value e.g. `python version` or `AWS region`.
+
+#### Synopsis
+
+    sagify configure --dir SRC_DIR [--aws-region AWS_REGION] [--aws-profile AWS_PROFILE] [--image-name IMAGE_NAME] [--python-version PYTHON_VERSION]  
+
+#### Required Flags
+
+`--dir SRC_DIR` or `-d SRC_DIR`: Path to `Sagify module`
+
+#### Optional Flags
+
+`--aws-region AWS_REGION`: _AWS_ region where _Docker_ images are pushed and _SageMaker_ operations (_train_, _deploy_) are performed.
+
+`--aws-profile AWS_PROFILE`: _AWS_ profile to use when interacting with _AWS_.
+
+`--image-name IMAGE_NAME`: _Docker_ image name used when building for use with _SageMaker_. This shows up as an _AWS ECR_ repository on your _AWS_ account.
+
+`--python-version PYTHON_VERSION`: _Python_ version used when building _SageMaker's_ _Docker_ images. Curently supported versions: `2.7` , `3.6`.
+
+
+### Example
+
+    sagify configure --dir src/ --aws-region us-east-2 --aws-profile default --image-name sage-docker-image-name --python-version 3.6
+
+
 ### Build
 
 #### Name
