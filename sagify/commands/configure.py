@@ -17,22 +17,18 @@ click.disable_unicode_literals_warning = True
 @click.option(u"--aws-region", required=False, help="AWS Region to use in operations")
 @click.option(u"--aws-profile", required=False, help="AWS Profile to use in operations")
 @click.option(u"--python-version", required=False, help="Python version used when building")
-@click.option(u"-d", u"--dir", required=False, help="Sagify directory")
-def configure(image_name, aws_region, aws_profile, python_version, sagify_module_dir):
+def configure(image_name, aws_region, aws_profile, python_version):
     """
     Command to configure SageMaker template
     """
     logger.info(ASCII_LOGO)
-    _configure('.', image_name, aws_region, aws_profile, python_version, sagify_module_dir)
+    _configure('.', image_name, aws_region, aws_profile, python_version)
 
 
-def _configure(config_dir, image_name, aws_region, aws_profile, python_version, sagify_module_dir):
+def _configure(config_dir, image_name, aws_region, aws_profile, python_version):
     try:
         config_manager = ConfigManager(os.path.join(config_dir, '.sagify.json'))
         config = config_manager.get_config()
-
-        if sagify_module_dir is not None:
-            config.sagify_module_dir = sagify_module_dir
 
         if image_name is not None:
             config.image_name = image_name

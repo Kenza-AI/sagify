@@ -37,7 +37,7 @@ class ConfigureCommandTests(TestCase):
         with tempfile.TemporaryDirectory() as tmpdir:
             for case in test_cases:
                 try:
-                    updateConfig(tmpdir, case.image_name, case.aws_region, case.aws_profile, case.python_version, case.sagify_module_dir)
+                    updateConfig(tmpdir, case.image_name, case.aws_region, case.aws_profile, case.python_version)
                     config = ConfigManager(os.path.join(tmpdir, '.sagify.json')).get_config()
                     assert config.to_dict() == case.expected_config.to_dict()
 
@@ -46,5 +46,5 @@ class ConfigureCommandTests(TestCase):
                     raise
 
 
-def updateConfig(config_dir, image_name, aws_region, aws_profile, python_version, sagify_module_dir):
-    _configure(config_dir, image_name, aws_region, aws_profile, python_version, sagify_module_dir)
+def updateConfig(config_dir, image_name, aws_region, aws_profile, python_version):
+    _configure(config_dir, image_name, aws_region, aws_profile, python_version)
