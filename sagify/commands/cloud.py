@@ -9,15 +9,12 @@ from sagify.api import cloud as api_cloud
 from sagify.commands import ASCII_LOGO
 from sagify.commands.custom_validators.validators import validate_tags
 from sagify.log import logger
+from sagify.config.config import ConfigManager
 
 click.disable_unicode_literals_warning = True
 
 def _config():
-    config_file_path = os.path.join('.sagify.json')
-    if not os.path.isfile(config_file_path):
-        raise ValueError("This is not a sagify directory: {}".format(input_dir))
-
-    return ConfigManager(config_file_path).get_config()
+    return ConfigManager('.sagify.json').get_config()
 
 @click.group()
 def cloud():
@@ -44,7 +41,7 @@ def upload_data(input_dir, s3_dir):
 
     try:
         s3_path = api_cloud.upload_data(
-            dir=_config.sagify_module_dir,
+            dir=_config().sagify_module_dir,
             input_dir=input_dir,
             s3_dir=s3_dir
         )
@@ -143,7 +140,7 @@ def train(
 
     try:
         s3_model_location = api_cloud.train(
-            dir=_config.sagify_module_dir,
+            dir=_config().sagify_module_dir,
             input_s3_dir=input_s3_dir,
             output_s3_dir=output_s3_dir,
             hyperparams_file=hyperparams_file,
@@ -277,7 +274,7 @@ def hyperparameter_optimization(
 
     try:
         best_job_name = api_cloud.hyperparameter_optimization(
-            dir=_config.sagify_module_dir,
+            dir=_config().sagify_module_dir,
             input_s3_dir=input_s3_dir,
             output_s3_dir=output_s3_dir,
             hyperparams_config_file=hyperparams_config_file,
@@ -347,7 +344,7 @@ def deploy(obj, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_a
 
     try:
         endpoint_name = api_cloud.deploy(
-            dir=_config.sagify_module_dir,
+            dir=_config().sagify_module_dir,
             s3_model_location=s3_model_location,
             num_instances=num_instances,
             ec2_type=ec2_type,
@@ -425,7 +422,7 @@ def batch_transform(
 
     try:
         api_cloud.batch_transform(
-            dir=_config.sagify_module_dir,
+            dir=_config().sagify_module_dir,
             s3_model_location=s3_model_location,
             s3_input_location=s3_input_location,
             s3_output_location=s3_output_location,

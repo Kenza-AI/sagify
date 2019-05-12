@@ -31,9 +31,9 @@ def train(obj):
     logger.info(ASCII_LOGO)
     logger.info("Started local training...\n")
 
-    try:
+    try:    
         config = ConfigManager(os.path.join('.sagify.json')).get_config()
-        api_local.train(dir=dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
+        api_local.train(dir=config.sagify_module_dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
 
         logger.info("Local training completed successfully!")
     except ValueError:
@@ -48,9 +48,8 @@ def train(obj):
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.pass_obj
-def deploy(obj, dir):
+def deploy(obj):
     """
     Command to deploy ML model(s) locally
     """
@@ -59,7 +58,7 @@ def deploy(obj, dir):
 
     try:
         config = ConfigManager(os.path.join('.sagify.json')).get_config()
-        api_local.deploy(dir=dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
+        api_local.deploy(dir=config.sagify_module_dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
     except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)
