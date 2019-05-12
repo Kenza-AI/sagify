@@ -45,6 +45,7 @@ class TestUploadData(object):
 
         assert result.exit_code == 0
 
+
 class TestTrain(object):
     def test_train_happy_case(self):
         runner = CliRunner()
@@ -478,7 +479,7 @@ class TestDeploy(object):
 
         assert result.exit_code == 0
 
-    
+
 class TestBatchTransform(object):
     def test_batch_transform_happy_case(self):
         runner = CliRunner()
@@ -572,7 +573,6 @@ class TestBatchTransform(object):
 
         assert result.exit_code == 0
 
-    
     def test_batch_transform_with_tags_arg_happy_case(self):
         runner = CliRunner()
 
@@ -674,7 +674,7 @@ class TestBatchTransform(object):
 
         assert result.exit_code == 0
 
-    
+
 class TestHyperparameterOptimization(object):
     def test_hyperparameter_optimization_happy_case(self):
         hyperparams_ranges = """

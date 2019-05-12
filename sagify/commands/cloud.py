@@ -13,8 +13,10 @@ from sagify.config.config import ConfigManager
 
 click.disable_unicode_literals_warning = True
 
+
 def _config():
     return ConfigManager('.sagify.json').get_config()
+
 
 @click.group()
 def cloud():

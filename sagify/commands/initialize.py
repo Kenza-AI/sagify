@@ -23,8 +23,8 @@ def _get_local_aws_profiles():
 
 
 def ask_for_app_name():
-    return click.prompt(text="Type in a name for your SageMaker app.\n\n" \
-                             "A folder with that name will be created\n" \
+    return click.prompt(text="Type in a name for your SageMaker app.\n\n"
+                             "A folder with that name will be created\n"
                              "in the directory you ran `init` from)", type=str)
 
 

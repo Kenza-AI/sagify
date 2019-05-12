@@ -31,7 +31,7 @@ def train(obj):
     logger.info(ASCII_LOGO)
     logger.info("Started local training...\n")
 
-    try:    
+    try:
         config = ConfigManager(os.path.join('.sagify.json')).get_config()
         api_local.train(dir=config.sagify_module_dir, docker_tag=obj['docker_tag'], image_name=config.image_name)
 

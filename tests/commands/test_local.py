@@ -26,6 +26,7 @@ class TestTrain(object):
 
         assert result.exit_code == 0
 
+
 class TestDeploy(object):
     def test_deploy_happy_case(self):
         runner = CliRunner()

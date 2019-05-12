@@ -4,7 +4,6 @@ try:
 except ImportError:
     from mock import patch
 
-import pytest
 from click.testing import CliRunner
 
 from sagify.__main__ import cli
@@ -42,6 +41,7 @@ def test_init_happy_case():
             assert os.path.isdir('my_app/sagify/local_test/test_dir/output')
 
     assert result.exit_code == 0
+
 
 def test_init_when_directory_already_exists():
     runner = CliRunner()

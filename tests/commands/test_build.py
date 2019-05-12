@@ -5,8 +5,6 @@ except ImportError:
 
 from click.testing import CliRunner
 
-import sagify
-from sagify.config.config import Config
 from sagify.__main__ import cli
 
 
@@ -26,4 +24,3 @@ def test_build_happy_case():
                 result = runner.invoke(cli=cli, args=['build', '-r', 'requirements.txt'])
 
     assert result.exit_code == 0
-    
