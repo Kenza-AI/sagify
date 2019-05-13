@@ -462,11 +462,11 @@ This command uploads content under `LOCAL_INPUT_DATA_DIR` to S3 under `S3_TARGET
 
 #### Name
 
-Executes a Docker image in train mode on AWS SageMaker
+Trains your ML/DL model using a Docker image on AWS SageMaker with input from S3
 
 #### Synopsis
 
-    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME]
+    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] --metric-names COMMA_SEPARATED_METRIC_NAMES
 
 #### Description
 
@@ -496,11 +496,25 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
 
-`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored. 
+`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored.
+
+`--metric-names COMMA_SEPARATED_METRIC_NAMES`: Optional comma-separated metric names for tracking performance of training jobs. Example: `Precision,Recall,AUC`. Then, make sure you to log these metric values using the `log_metric` function in the `train` function:
+
+    ```
+    ...
+    from sagify.api.hyperparameter_tuning import log_metric
+    log_metric("Precision:, precision)
+    log_metric("Accuracy", accuracy)
+    ...
+    ```
+    
+   When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:
+   
+   ![Algorithm Metrics](docs/cloud_watch_metrics.png)
 
 #### Example
 
-    sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
+    sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
     
     
 ### Cloud Hyperparameter Optimization

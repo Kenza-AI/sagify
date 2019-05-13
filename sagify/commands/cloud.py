@@ -119,6 +119,12 @@ def upload_data(input_dir, s3_dir):
     help="Optional name for the SageMaker training job."
     "NOTE: if a `--base-job-name` is passed along with this option, it will be ignored."
 )
+@click.option(
+    u"--metric-names",
+    required=False,
+    default=None,
+    help='Optional comma-separated metric names for tracking performance of training jobs. Example: Precision,Recall,AUC '
+)
 @click.pass_obj
 def train(
         obj,
@@ -132,7 +138,8 @@ def train(
         iam_role_arn,
         external_id,
         base_job_name,
-        job_name
+        job_name,
+        metric_names
 ):
     """
     Command to train ML model(s) on SageMaker
@@ -154,7 +161,8 @@ def train(
             aws_role=iam_role_arn,
             external_id=external_id,
             base_job_name=base_job_name,
-            job_name=job_name
+            job_name=job_name,
+            metric_names=[_val.strip() for _val in metric_names.split(',')]
         )
 
         logger.info("Training on SageMaker succeeded")
