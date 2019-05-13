@@ -162,7 +162,7 @@ def train(
             external_id=external_id,
             base_job_name=base_job_name,
             job_name=job_name,
-            metric_names=[_val.strip() for _val in metric_names.split(',')]
+            metric_names=[_val.strip() for _val in metric_names.split(',')] if metric_names else None
         )
 
         logger.info("Training on SageMaker succeeded")
