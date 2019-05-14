@@ -9,8 +9,13 @@ from sagify.api import cloud as api_cloud
 from sagify.commands import ASCII_LOGO
 from sagify.commands.custom_validators.validators import validate_tags
 from sagify.log import logger
+from sagify.config.config import ConfigManager
 
 click.disable_unicode_literals_warning = True
+
+
+def _config():
+    return ConfigManager('.sagify.json').get_config()
 
 
 @click.group()
@@ -22,7 +27,6 @@ def cloud():
 
 
 @click.command(name='upload-data')
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(u"-i", u"--input-dir", required=True, help="Path to data input directory")
 @click.option(
     u"-s", u"--s3-dir",
@@ -30,7 +34,7 @@ def cloud():
     help="s3 location to upload data",
     type=click.Path()
 )
-def upload_data(dir, input_dir, s3_dir):
+def upload_data(input_dir, s3_dir):
     """
     Command to upload data to S3
     """
@@ -39,7 +43,7 @@ def upload_data(dir, input_dir, s3_dir):
 
     try:
         s3_path = api_cloud.upload_data(
-            dir=dir,
+            dir=_config().sagify_module_dir,
             input_dir=input_dir,
             s3_dir=s3_dir
         )
@@ -51,7 +55,6 @@ def upload_data(dir, input_dir, s3_dir):
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(
     u"-i", u"--input-s3-dir",
     required=True,
@@ -116,10 +119,15 @@ def upload_data(dir, input_dir, s3_dir):
     help="Optional name for the SageMaker training job."
     "NOTE: if a `--base-job-name` is passed along with this option, it will be ignored."
 )
+@click.option(
+    u"--metric-names",
+    required=False,
+    default=None,
+    help='Optional comma-separated metric names for tracking performance of training jobs. Example: Precision,Recall,AUC '
+)
 @click.pass_obj
 def train(
         obj,
-        dir,
         input_s3_dir,
         output_s3_dir,
         hyperparams_file,
@@ -130,7 +138,8 @@ def train(
         iam_role_arn,
         external_id,
         base_job_name,
-        job_name
+        job_name,
+        metric_names
 ):
     """
     Command to train ML model(s) on SageMaker
@@ -140,7 +149,7 @@ def train(
 
     try:
         s3_model_location = api_cloud.train(
-            dir=dir,
+            dir=_config().sagify_module_dir,
             input_s3_dir=input_s3_dir,
             output_s3_dir=output_s3_dir,
             hyperparams_file=hyperparams_file,
@@ -152,7 +161,8 @@ def train(
             aws_role=iam_role_arn,
             external_id=external_id,
             base_job_name=base_job_name,
-            job_name=job_name
+            job_name=job_name,
+            metric_names=[_val.strip() for _val in metric_names.split(',')] if metric_names else None
         )
 
         logger.info("Training on SageMaker succeeded")
@@ -163,7 +173,6 @@ def train(
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(
     u"-i", u"--input-s3-dir",
     required=True,
@@ -252,7 +261,6 @@ def train(
 @click.pass_obj
 def hyperparameter_optimization(
         obj,
-        dir,
         input_s3_dir,
         output_s3_dir,
         hyperparams_config_file,
@@ -276,7 +284,7 @@ def hyperparameter_optimization(
 
     try:
         best_job_name = api_cloud.hyperparameter_optimization(
-            dir=dir,
+            dir=_config().sagify_module_dir,
             input_s3_dir=input_s3_dir,
             output_s3_dir=output_s3_dir,
             hyperparams_config_file=hyperparams_config_file,
@@ -308,7 +316,6 @@ def hyperparameter_optimization(
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(
     u"-m", u"--s3-model-location",
     required=True,
@@ -338,7 +345,7 @@ def hyperparameter_optimization(
     help="Optional external id used when using an IAM role"
 )
 @click.pass_obj
-def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_arn, external_id):
+def deploy(obj, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_arn, external_id):
     """
     Command to deploy ML model(s) on SageMaker
     """
@@ -347,7 +354,7 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_r
 
     try:
         endpoint_name = api_cloud.deploy(
-            dir=dir,
+            dir=_config().sagify_module_dir,
             s3_model_location=s3_model_location,
             num_instances=num_instances,
             ec2_type=ec2_type,
@@ -365,7 +372,6 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_r
 
 
 @click.command()
-@click.option(u"-d", u"--dir", required=False, default='.', help="Path to sagify module")
 @click.option(
     u"-m", u"--s3-model-location",
     required=True,
@@ -409,7 +415,6 @@ def deploy(obj, dir, s3_model_location, num_instances, ec2_type, aws_tags, iam_r
 @click.pass_obj
 def batch_transform(
         obj,
-        dir,
         s3_model_location,
         s3_input_location,
         s3_output_location,
@@ -427,7 +432,7 @@ def batch_transform(
 
     try:
         api_cloud.batch_transform(
-            dir=dir,
+            dir=_config().sagify_module_dir,
             s3_model_location=s3_model_location,
             s3_input_location=s3_input_location,
             s3_output_location=s3_output_location,

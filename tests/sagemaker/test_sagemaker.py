@@ -105,7 +105,8 @@ def test_train_happy_case():
                             base_job_name="Some-job-name-prefix",
                             output_path='s3://bucket/output',
                             hyperparameters={'n_estimator': 3},
-                            sagemaker_session=sagemaker_session_instance
+                            sagemaker_session=sagemaker_session_instance,
+                            metric_definitions=None
                         )
                         sagemaker_estimator_instance = mocked_sagemaker_estimator.return_value
                         assert sagemaker_estimator_instance.fit.call_count == 1

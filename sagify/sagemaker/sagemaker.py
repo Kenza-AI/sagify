@@ -12,6 +12,9 @@ import boto3
 from sagify.log import logger
 
 
+_METRIC_REGEX = "([0-9\\.]+)"
+
+
 class SageMakerClient(object):
     def __init__(self, aws_profile, aws_region, aws_role=None, external_id=None):
 
@@ -64,6 +67,7 @@ class SageMakerClient(object):
             hyperparameters,
             base_job_name,
             job_name,
+            metric_names=None,
             tags=None
     ):
         """
@@ -80,6 +84,7 @@ class SageMakerClient(object):
         this estimator with
         :param base_job_name: [str], Optional prefix for the SageMaker training job
         :param job_name: [str], Optional name for the SageMaker training job. Overrides `base_job_name`
+        :param metric_names: [list[str], default=None], Optional list of string metric names
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -97,7 +102,13 @@ class SageMakerClient(object):
 
         :return: [str], the model location in S3
         """
+        if metric_names is None:
+            metric_names = []
         image = self._construct_image_location(image_name)
+
+        metric_definitions = [
+            {'Name': _name, 'Regex': '{}: {}'.format(_name, _METRIC_REGEX)} for _name in metric_names
+        ] if metric_names else None
 
         estimator = sage.estimator.Estimator(
             image_name=image,
@@ -110,7 +121,8 @@ class SageMakerClient(object):
             output_path=output_path,
             hyperparameters=hyperparameters,
             base_job_name=base_job_name,
-            sagemaker_session=self.sagemaker_session
+            sagemaker_session=self.sagemaker_session,
+            metric_definitions=metric_definitions
         )
         if tags:
             estimator.tags = tags
@@ -191,7 +203,7 @@ class SageMakerClient(object):
         metric_definitions = [
             {
                 'Name': objective_metric_name,
-                'Regex': '{}: ([0-9\\.]+)'.format(objective_metric_name)
+                'Regex': '{}: {}'.format(objective_metric_name, _METRIC_REGEX)
             }
         ]
 

@@ -4,11 +4,12 @@ from collections import OrderedDict
 
 
 class Config(object):
-    def __init__(self, image_name, aws_profile, aws_region, python_version):
+    def __init__(self, image_name, aws_profile, aws_region, python_version, sagify_module_dir):
         self.image_name = image_name
         self.aws_profile = aws_profile
         self.aws_region = aws_region
         self.python_version = python_version
+        self.sagify_module_dir = image_name
 
     def to_dict(self):
         return OrderedDict(self.__dict__.items())
@@ -19,7 +20,8 @@ class Config(object):
             image_name=input_dict['image_name'],
             aws_profile=input_dict['aws_profile'],
             aws_region=input_dict['aws_region'],
-            python_version=input_dict['python_version']
+            python_version=input_dict['python_version'],
+            sagify_module_dir=input_dict['sagify_module_dir']
         )
 
 
@@ -32,7 +34,8 @@ class ConfigManager(object):
                 image_name='',
                 aws_profile='',
                 aws_region='',
-                python_version=''
+                python_version='',
+                sagify_module_dir=''
             ))
 
     def get_config(self):
