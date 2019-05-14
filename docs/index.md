@@ -190,6 +190,117 @@ It will be slow in the first couple of calls as it loads the model in a lazy man
 Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Deep Learning model to AWS SageMaker!
 
 
+## Usage
+
+### Configure AWS Account
+
+- Sign in to the AWS Management Console as an IAM user and open the IAM console at <https://console.aws.amazon.com/iam/>
+- Select `Roles` from the list in the left-hand side, and click on *Create role*
+- Then, select *SageMaker* as the image shows:
+
+![Create Role 1st Step](create_role_1st_step.png)
+
+- Click *Next: Review* on the following page:
+
+![Create Role 2nd Step](create_role_2nd_step.png)
+
+- Type a name for the SageMaker role, and click on *Create role*:
+
+![Create Role 3rd Step](create_role_3rd_step.png)
+
+- Click on the created role:
+
+![Successful Role Creation](created_role_page.png)
+
+- Click on *Attach policy* and search for `AmazonEC2ContainerRegistryFullAccess`. Attach the corresponding policy:
+
+![Attach Policy](attach_policy_step_1.png)
+
+- Do the same to attach the `AmazonS3FullAccess` and `IAMReadOnlyAccess` policies, and end up with the following:
+
+![Policies](policies.png)
+
+- Now, go to Users page by clicking on *Users* on the left-hand side.
+
+- Click on your IAM user that you want to use for AWS SageMaker:
+
+![Users](iam_users.png)
+
+- Copy the ARN of that user:
+
+![ARN](user_arn.png)
+
+- Then, go back the page of the Role you created and click on the *Trust relationships* tab:
+
+![Trust Relationship](trust_relationship_step_1.png)
+
+- Click on *Edit trust relationship* and add the following:
+
+        {
+            "Version": "2012-10-17",
+            "Statement": [
+                {
+                    "Sid": "",
+                    "Effect": "Allow",
+                    "Principal": {
+                        "AWS": "PASTE_THE_ARN_YOU_COPIED_EARLIER",
+                        "Service": "sagemaker.amazonaws.com"
+                    },
+                    "Action": "sts:AssumeRole"
+                }
+            ]
+        }
+        
+- You're almost there! Make sure that you have added the IAM user in your `~/.aws/credentials` file. For example:
+    
+        [test-sagemaker]
+        aws_access_key_id = ...
+        aws_secret_access_key = ...
+
+ - And, finally, add the following in the `~/.aws/config` file:
+ 
+        [profile test-sagemaker]
+        region = us-east-1 <-- USE YOUR PREFERRED REGION
+        role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
+        source_profile = test-sagemaker
+
+- That's it! From now on, choose the created AWS profile when initializing sagify.
+
+- You can change the AWS profile in an already initialized sagify module by changing the value of `aws_profile` and `profile` in `sagify/config.json` and `sagify/push.sh`, respectively.
+
+### Push Docker Image to AWS ECS
+
+If you have followed all the steps of *Getting Started*, run `sagify push src` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
+
+### Create S3 Bucket
+
+Make sure to create an S3 bucket with a name of your choice, for example: `my-dl-addition`
+
+### Upload Training Data
+
+Execute `sagify cloud upload-data -i data/processed/ -s s3://my-dl-addition/training-data` to upload training data to S3
+
+### Train on AWS SageMaker
+
+Execute `sagify cloud train -i s3://my-dl-addition/training-data/ -o s3://my-dl-addition/output/ -e ml.m4.xlarge` to train the Deep Learning model on SageMaker. This command will use the pushed Docker image.
+
+Copy the displayed Model S3 location after the command is executed (example: `s3://my-dl-addition/output/deep-learning-addition-img-2018-04-29-15-04-14-483/output/model.tar.gz`)
+
+### Deploy on AWS SageMaker
+
+Execute `sagify cloud deploy -m s3://my-dl-addition/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
+
+### Call SageMaker REST Endpoint
+
+Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to <https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html> on how to call it from Postman as authorization is required.
+ 
+Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
+
+        {
+        	"addition": "112+143"
+        }
+
+
 ## Hyperparameter Optimization
 
 Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.
@@ -458,11 +569,11 @@ This command uploads content under `LOCAL_INPUT_DATA_DIR` to S3 under `S3_TARGET
 
 #### Name
 
-Executes a Docker image in train mode on AWS SageMaker
+Trains your ML/DL model using a Docker image on AWS SageMaker with input from S3
 
 #### Synopsis
 
-    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME]
+    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES]
 
 #### Description
 
@@ -492,13 +603,27 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
 
-`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored. 
+`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored.
+
+`--metric-names COMMA_SEPARATED_METRIC_NAMES`: Optional comma-separated metric names for tracking performance of training jobs. Example: `Precision,Recall,AUC`. Then, make sure you log these metric values using the `log_metric` function in the `train` function:
+
+    ```
+    ...
+    from sagify.api.hyperparameter_tuning import log_metric
+    log_metric("Precision:, precision)
+    log_metric("Accuracy", accuracy)
+    ...
+    ```
+    
+   When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:
+   
+   ![Algorithm Metrics](cloud_watch_metrics.png)
 
 #### Example
 
-    sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400
-    
-    
+    sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
+
+        
 ### Cloud Hyperparameter Optimization
 
 #### Name

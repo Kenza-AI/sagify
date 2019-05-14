@@ -89,6 +89,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            metric_names=None,
                             tags=None
                         )
 
@@ -139,6 +140,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name='some job name prefix',
                             job_name=None,
+                            metric_names=None,
                             tags=None
                         )
 
@@ -190,6 +192,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name='some job name prefix',
                             job_name='some job name',
+                            metric_names=None,
                             tags=None
                         )
 
@@ -238,6 +241,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            metric_names=None,
                             tags=[
                                 {
                                     'Key': 'key1',
@@ -295,6 +299,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            metric_names=None,
                             tags=None
                         )
 
