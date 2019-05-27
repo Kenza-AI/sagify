@@ -32,7 +32,7 @@ class TestUploadData(object):
                     instance = mocked_sage_maker_client.return_value
                     instance.upload_data.return_value = 's3://path-to-data/data/'
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -66,7 +66,7 @@ class TestTrain(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -114,7 +114,7 @@ class TestTrain(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -165,7 +165,7 @@ class TestTrain(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -217,7 +217,7 @@ class TestTrain(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -275,7 +275,7 @@ class TestTrain(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -326,7 +326,7 @@ class TestDeploy(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -367,7 +367,7 @@ class TestDeploy(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -410,7 +410,7 @@ class TestDeploy(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -461,7 +461,7 @@ class TestDeploy(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -505,7 +505,7 @@ class TestBatchTransform(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -550,7 +550,7 @@ class TestBatchTransform(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -597,7 +597,7 @@ class TestBatchTransform(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -652,7 +652,7 @@ class TestBatchTransform(object):
                 ) as mocked_sage_maker_client:
                     instance = mocked_sage_maker_client.return_value
                     with runner.isolated_filesystem():
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[
@@ -734,7 +734,7 @@ class TestHyperparameterOptimization(object):
                         with open('hyperparams_ranges.json', 'w') as f:
                             f.write(hyperparams_ranges)
 
-                        runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                         result = runner.invoke(
                             cli=cli,
                             args=[

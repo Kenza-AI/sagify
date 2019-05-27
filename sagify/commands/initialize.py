@@ -23,9 +23,15 @@ def _get_local_aws_profiles():
 
 
 def ask_for_app_name():
-    return click.prompt(text="Type in a name for your SageMaker app.\n\n"
-                             "A folder with that name will be created\n"
-                             "in the directory you ran `init` from)", type=str)
+    return click.prompt(text="Type in a name for your SageMaker app", type=str)
+
+
+def ask_if_existing_project_exists():
+    return click.confirm(text="Are you starting a new project?")
+
+
+def ask_for_root_dir():
+    return click.prompt(text="Type in the directory where your code lives. Example: src", type=str).strip('/')
 
 
 def ask_for_python_version():
@@ -104,6 +110,12 @@ def init():
 
     sagify_app_name = ask_for_app_name()
 
+    is_new_project = ask_if_existing_project_exists()
+
+    root_dir = None
+    if not is_new_project:
+        root_dir = ask_for_root_dir()
+
     python_version = ask_for_python_version()
 
     aws_profile, aws_region = ask_for_aws_details()
@@ -113,7 +125,8 @@ def init():
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
-            python_version=python_version
+            python_version=python_version,
+            root_dir=root_dir if root_dir else 'src'
         )
 
         logger.info("\nsagify module is created! ヽ(´▽`)/")
