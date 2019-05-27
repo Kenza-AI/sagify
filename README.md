@@ -57,7 +57,7 @@ Generate training and validation data:
 
     sagify init
 
-Type in `src` for root directory, `deep-learning-addition` for SageMaker app name and make sure to choose your preferred Python version, AWS profile and region. 
+Type in `deep-learning-addition` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. 
 
 A module called `sagify` is created under the directory you provided. The structure is:
  

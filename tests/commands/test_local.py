@@ -21,7 +21,7 @@ class TestTrain(object):
                     return_value=None
             ):
                 with runner.isolated_filesystem():
-                    runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                    runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                     result = runner.invoke(cli=cli, args=['local', 'train'])
 
         assert result.exit_code == 0
@@ -40,7 +40,7 @@ class TestDeploy(object):
                     return_value=None
             ):
                 with runner.isolated_filesystem():
-                    runner.invoke(cli=cli, args=['init'], input='my_app\n1\n2\nus-east-1\n')
+                    runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
                     result = runner.invoke(cli=cli, args=['local', 'deploy'])
 
         assert result.exit_code == 0

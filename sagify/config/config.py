@@ -9,7 +9,7 @@ class Config(object):
         self.aws_profile = aws_profile
         self.aws_region = aws_region
         self.python_version = python_version
-        self.sagify_module_dir = image_name
+        self.sagify_module_dir = sagify_module_dir
 
     def to_dict(self):
         return OrderedDict(self.__dict__.items())
