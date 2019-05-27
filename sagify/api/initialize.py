@@ -36,12 +36,12 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
     config.image_name = app_name
     config.aws_region = aws_region
     config.aws_profile = aws_profile
-    config.sagify_module_dir = app_name
+    config.sagify_module_dir = output_dir
     config.python_version = python_version
     config_manager.set_config(config)
 
 
-def init(sagify_app_name, aws_profile, aws_region, python_version):
+def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir):
     """
     Initializes a SageMaker template
 
@@ -50,6 +50,7 @@ def init(sagify_app_name, aws_profile, aws_region, python_version):
     :param aws_profile: [str], preferred aws profile name on current host
     :param aws_region: [str], preferred aws region. Example: 'us-east-1'
     :param python_version: [str], preferred Python version. Options: 3.6 or 2.7.
+    :param root_dir: [str], root source directory.
     """
     if python_version not in {'2.7', '3.6'}:
         raise ValueError("Invalid Python version. Valid options: 2.7 or 3.6")
@@ -59,5 +60,5 @@ def init(sagify_app_name, aws_profile, aws_region, python_version):
         aws_profile=aws_profile,
         aws_region=aws_region,
         python_version=python_version,
-        output_dir=sagify_app_name
+        output_dir=root_dir
     )

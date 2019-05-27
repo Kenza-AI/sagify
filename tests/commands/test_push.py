@@ -12,7 +12,7 @@ from sagify.__main__ import cli
 
 Case = namedtuple('Case', 'description, init_cmd, push_cmd, expected_exit_code, expected_cli_call')
 
-push_script_path = 'my_app/sagify/push.sh'
+push_script_path = 'src/sagify/push.sh'
 
 t1 = Case('t1: sagify push', ['init'], ['push'], 0,
           lambda command_line: command_line.assert_called_once_with([push_script_path, 'latest', 'us-east-1', '', 'sagemaker', '', 'my_app']))
@@ -62,5 +62,5 @@ class PushCommandTests(TestCase):
 def runCommands(init_command, push_command):
     runner = CliRunner()
     with runner.isolated_filesystem():
-        runner.invoke(cli=cli, args=init_command, input='my_app\n1\n2\nus-east-1\n')
+        runner.invoke(cli=cli, args=init_command, input='my_app\ny\n1\n2\nus-east-1\n')
         return runner.invoke(cli=cli, args=push_command)
