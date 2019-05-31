@@ -101,6 +101,10 @@ def ask_for_aws_details():
     return chosen_profile, chosen_region
 
 
+def ask_for_requirements_dir():
+    return click.prompt(text="Type in the path to requirements.txt. Example: requirements.txt", type=str).strip('/')
+
+
 @click.command()
 def init():
     """
@@ -120,13 +124,16 @@ def init():
 
     aws_profile, aws_region = ask_for_aws_details()
 
+    requirements_dir = ask_for_requirements_dir()
+
     try:
         api_initialize.init(
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
             python_version=python_version,
-            root_dir=root_dir if root_dir else 'src'
+            root_dir=root_dir if root_dir else 'src',
+            requirements_dir=requirements_dir
         )
 
         logger.info("\nsagify module is created! ヽ(´▽`)/")

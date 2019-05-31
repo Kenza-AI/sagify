@@ -17,7 +17,7 @@ def test_init_happy_case():
             return_value=['default', 'sagemaker']
     ):
         with runner.isolated_filesystem():
-            result = runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
+            result = runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\nrequirements.txt\n')
 
             assert os.path.isfile('src/__init__.py')
             assert os.path.isdir('src/sagify')
@@ -55,7 +55,7 @@ def test_init_when_directory_already_exists():
             result = runner.invoke(
                 cli=cli,
                 args=['init'],
-                input='my_app\nN\nmy_app\n1\n2\nus-east-1\n'
+                input='my_app\nN\nmy_app\n1\n2\nus-east-1\nrequirements.txt\n'
             )
 
     assert result.exit_code == -1
@@ -68,6 +68,6 @@ def test_init_when_aws_cli_is_not_configure_locally():
             return_value=[]
     ):
         with runner.isolated_filesystem():
-            result = runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\n')
+            result = runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nrequirements.txt\n')
 
     assert result.exit_code == -1
