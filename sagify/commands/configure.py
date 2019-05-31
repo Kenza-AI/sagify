@@ -25,7 +25,7 @@ def configure(image_name, aws_region, aws_profile, python_version):
     _configure('.', image_name, aws_region, aws_profile, python_version)
 
 
-def _configure(config_dir, image_name, aws_region, aws_profile, python_version):
+def _configure(config_dir, image_name, aws_region, aws_profile, python_version, requirements_dir):
     try:
         config_manager = ConfigManager(os.path.join(config_dir, '.sagify.json'))
         config = config_manager.get_config()
@@ -41,6 +41,9 @@ def _configure(config_dir, image_name, aws_region, aws_profile, python_version):
 
         if python_version is not None:
             config.python_version = python_version
+
+        if requirements_dir is not None:
+            config.requirements_dir = requirements_dir
 
         config_manager.set_config(config)
 
