@@ -16,9 +16,8 @@ click.disable_unicode_literals_warning = True
 
 
 @click.command()
-@click.option(u"-r", u"--requirements-dir", required=True, help="Path to requirements.txt file")
 @click.pass_obj
-def build(obj, requirements_dir):
+def build(obj):
     """
     Command to build SageMaker app
     """
@@ -33,7 +32,7 @@ def build(obj, requirements_dir):
         config = ConfigManager(config_file_path).get_config()
         api_build.build(
             dir=config.sagify_module_dir,
-            requirements_dir=requirements_dir,
+            requirements_dir=config.requirements_dir,
             docker_tag=obj['docker_tag'],
             image_name=config.image_name,
             python_version=config.python_version)

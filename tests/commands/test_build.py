@@ -20,7 +20,7 @@ def test_build_happy_case():
                 return_value=None
         ):
             with runner.isolated_filesystem():
-                runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\n')
-                result = runner.invoke(cli=cli, args=['build', '-r', 'requirements.txt'])
+                runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\nrequirements.txt\n')
+                result = runner.invoke(cli=cli, args=['build'])
 
     assert result.exit_code == 0

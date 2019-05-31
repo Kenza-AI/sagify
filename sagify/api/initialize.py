@@ -13,7 +13,7 @@ from distutils.dir_util import copy_tree
 _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
-def _template_creation(app_name, aws_profile, aws_region, python_version, output_dir):
+def _template_creation(app_name, aws_profile, aws_region, python_version, output_dir, requirements_dir):
     sagify_module_name = 'sagify'
 
     sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
@@ -38,10 +38,11 @@ def _template_creation(app_name, aws_profile, aws_region, python_version, output
     config.aws_profile = aws_profile
     config.sagify_module_dir = output_dir
     config.python_version = python_version
+    config.requirements_dir = requirements_dir
     config_manager.set_config(config)
 
 
-def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir):
+def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir, requirements_dir):
     """
     Initializes a SageMaker template
 
@@ -51,6 +52,7 @@ def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir):
     :param aws_region: [str], preferred aws region. Example: 'us-east-1'
     :param python_version: [str], preferred Python version. Options: 3.6 or 2.7.
     :param root_dir: [str], root source directory.
+    :param root_dir: [str], Path to requirements.txt.
     """
     if python_version not in {'2.7', '3.6'}:
         raise ValueError("Invalid Python version. Valid options: 2.7 or 3.6")
@@ -60,5 +62,6 @@ def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir):
         aws_profile=aws_profile,
         aws_region=aws_region,
         python_version=python_version,
-        output_dir=root_dir
+        output_dir=root_dir,
+        requirements_dir=requirements_dir
     )
