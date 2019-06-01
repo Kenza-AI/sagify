@@ -57,7 +57,7 @@ Generate training and validation data:
 
     sagify init
 
-Type in `deep-learning-addition` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. 
+Type in `deep-learning-addition` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile, AWS region and path to `requirements.txt`. 
 
 A module called `sagify` is created under the directory you provided. The structure is:
  
@@ -88,6 +88,8 @@ A module called `sagify` is created under the directory you provided. The struct
         Dockerfile
         executor.sh
         push.sh
+
+A `.sagify.json` file is also created in the directory you ran the `sagify init` command from holding the values you provided for the project name etc.
 
 ### Step 3: Integrate sagify
 
@@ -159,9 +161,7 @@ Hence,
 
 It's time to build the Docker image that will contain the Deep Learning Addition codebase:
 
-    sagify build -r requirements.txt
-    
-The path to `requirements.txt` is necessary to be specified so that all the required dependencies are installed in Docker image.
+    sagify build
 
 If you run `docker images | grep deep-learning-addition-img` in your terminal, you'll see the created Deep Learning Addition image.
 
@@ -278,7 +278,7 @@ Replace the `TODOs` in the `try..except` of `train(...)` function in `sagify/tra
         
 ### Step 3: Build and Push Docker image
 
-1. `sagify build -r requirements.txt` Make sure sagify is in your `requirements.txt` file.
+1. `sagify build` Make sure sagify is in your `requirements.txt` file.
 2. `sagify push`
 
 ### Step 4: Call The CLI Command
@@ -349,19 +349,15 @@ Builds a Docker image
 
 #### Synopsis
 
-    sagify build --requirements-dir REQUIREMENTS_FILE
+    sagify build
     
 #### Description
 
-This command builds a Docker image from code under the directory sagify is installed in. A `REQUIREMENTS_FILE` needs to be specified in order to install all required dependencies in the Docker image.
-  
-#### Required Flags
-
-`--requirements-dir REQUIREMENTS_FILE` or `-r REQUIREMENTS_FILE`: Path to `REQUIREMENTS_FILE` 
+This command builds a Docker image from code under the directory sagify is installed in. A `REQUIREMENTS_FILE` needs to be specified during `sagify init` or later via `sagify configure --requirements-dir` for all required dependencies to be installed in the Docker image.
 
 #### Example
 
-    sagify build -r requirements.txt
+    sagify build
 
 
 ### Local Train
