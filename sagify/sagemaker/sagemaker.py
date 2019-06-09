@@ -285,7 +285,8 @@ class SageMakerClient(object):
             s3_output_location,
             transform_instance_count,
             transform_instance_type,
-            tags=None
+            tags=None,
+            wait=False
     ):
         """
         Execute batch transform on a trained model to SageMaker
@@ -309,6 +310,8 @@ class SageMakerClient(object):
             },
             ...
         ]
+        :param wait: [bool, default=False], wait or not for the batch transform to finish
+
         :return: [str], endpoint name
         """
         image = self._construct_image_location(image_name)
@@ -333,6 +336,9 @@ class SageMakerClient(object):
         )
 
         transformer.transform(data=s3_input_location, split_type='Line', content_type=content_type)
+
+        if wait:
+            transformer.wait()
 
     @staticmethod
     def _get_s3_bucket(s3_dir):

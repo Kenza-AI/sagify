@@ -537,7 +537,56 @@ class TestBatchTransform(object):
                             s3_output_location='s3://bucket/output',
                             transform_instance_count=2,
                             transform_instance_type='ml.c4.2xlarge',
-                            tags=None
+                            tags=None,
+                            wait=False
+                        )
+
+        assert result.exit_code == 0
+
+    def test_batch_transform_wait_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch.object(
+                    sagify.config.config.ConfigManager,
+                    'get_config',
+                    lambda _: Config(
+                        image_name='sagemaker-img', aws_profile='sagify', aws_region='us-east-1', python_version='3.6', sagify_module_dir='sage',
+                        requirements_dir='requirements.txt'
+                    )
+            ):
+                with patch(
+                        'sagify.sagemaker.sagemaker.SageMakerClient'
+                ) as mocked_sage_maker_client:
+                    instance = mocked_sage_maker_client.return_value
+                    with runner.isolated_filesystem():
+                        runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nus-east-1\nrequirements.txt\n')
+                        result = runner.invoke(
+                            cli=cli,
+                            args=[
+                                'cloud', 'batch_transform',
+                                '-m', 's3://bucket/model/location/model.tar.gz',
+                                '-i', 's3://bucket/input_data',
+                                '-o', 's3://bucket/output',
+                                '-n', '2',
+                                '-e', 'ml.c4.2xlarge',
+                                '--wait'
+                            ]
+                        )
+
+                        assert instance.batch_transform.call_count == 1
+                        instance.batch_transform.assert_called_with(
+                            image_name='sagemaker-img:latest',
+                            s3_model_location='s3://bucket/model/location/model.tar.gz',
+                            s3_input_location='s3://bucket/input_data',
+                            s3_output_location='s3://bucket/output',
+                            transform_instance_count=2,
+                            transform_instance_type='ml.c4.2xlarge',
+                            tags=None,
+                            wait=True
                         )
 
         assert result.exit_code == 0
@@ -585,7 +634,8 @@ class TestBatchTransform(object):
                             s3_output_location='s3://bucket/output',
                             transform_instance_count=2,
                             transform_instance_type='ml.c4.2xlarge',
-                            tags=None
+                            tags=None,
+                            wait=False
                         )
 
         assert result.exit_code == 0
@@ -641,7 +691,8 @@ class TestBatchTransform(object):
                                     'Key': 'key2',
                                     'Value': '2',
                                 },
-                            ]
+                            ],
+                            wait=False
                         )
 
         assert result.exit_code == 0
@@ -688,7 +739,8 @@ class TestBatchTransform(object):
                             s3_output_location='s3://bucket/output',
                             transform_instance_count=2,
                             transform_instance_type='ml.c4.2xlarge',
-                            tags=None
+                            tags=None,
+                            wait=False
                         )
 
         assert result.exit_code == 0
