@@ -144,7 +144,7 @@
 <h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
 <pre><code>sagify init
 </code></pre>
-<p>Type in <code>deep-learning-addition</code> for SageMaker app name and make sure to choose your preferred Python version, AWS profile and region. </p>
+<p>Type in <code>deep-learning-addition</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. </p>
 <p>A module called <code>sagify</code> is created under the directory you provided. The structure is:</p>
 <pre><code>sagify/
     local_test/
@@ -241,9 +241,8 @@ return cls.model
 </ol>
 <h3 id="step-4-build-docker-image">Step 4: Build Docker image</h3>
 <p>It's time to build the Docker image that will contain the Deep Learning Addition codebase:</p>
-<pre><code>sagify build -r requirements.txt
+<pre><code>sagify build
 </code></pre>
-<p>The path to <code>requirements.txt</code> is necessary to be specified so that all the required dependencies are installed in Docker image.</p>
 <p>If you run <code>docker images | grep deep-learning-addition-img</code> in your terminal, you'll see the created Deep Learning Addition image.</p>
 <h3 id="step-5-train-deep-learning-model">Step 5: Train Deep Learning model</h3>
 <p>Time to train the Deep Learning model in the newly built Docker image:</p>
@@ -446,7 +445,7 @@ source_profile = test-sagemaker
 </code></pre>
 <h3 id="step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</h3>
 <ol>
-<li><code>sagify build -r requirements.txt</code> Make sure sagify is in your <code>requirements.txt</code> file.</li>
+<li><code>sagify build</code> Make sure sagify is in your <code>requirements.txt</code> file.</li>
 <li><code>sagify push</code></li>
 </ol>
 <h3 id="step-4-call-the-cli-command">Step 4: Call The CLI Command</h3>
@@ -486,14 +485,12 @@ source_profile = test-sagemaker
 <h4 id="name_1">Name</h4>
 <p>Builds a Docker image</p>
 <h4 id="synopsis_2">Synopsis</h4>
-<pre><code>sagify build --requirements-dir REQUIREMENTS_FILE
+<pre><code>sagify build
 </code></pre>
 <h4 id="description_2">Description</h4>
-<p>This command builds a Docker image from code under the directory sagify is installed in. A <code>REQUIREMENTS_FILE</code> needs to be specified in order to install all required dependencies in the Docker image.</p>
-<h4 id="required-flags">Required Flags</h4>
-<p><code>--requirements-dir REQUIREMENTS_FILE</code> or <code>-r REQUIREMENTS_FILE</code>: Path to <code>REQUIREMENTS_FILE</code> </p>
+<p>This command builds a Docker image from code under the directory sagify is installed in. A <code>REQUIREMENTS_FILE</code> needs to be specified during <code>sagify init</code> or later via <code>sagify configure --requirements-dir</code> for all required dependencies to be installed in the Docker image. </p>
 <h4 id="example_2">Example</h4>
-<pre><code>sagify build -r requirements.txt
+<pre><code>sagify build
 </code></pre>
 <h3 id="local-train">Local Train</h3>
 <h4 id="name_2">Name</h4>
@@ -544,7 +541,7 @@ source_profile = test-sagemaker
 </code></pre>
 <h4 id="description_6">Description</h4>
 <p>This command uploads content under <code>LOCAL_INPUT_DATA_DIR</code> to S3 under <code>S3_TARGET_DATA_LOCATION</code></p>
-<h4 id="required-flags_1">Required Flags</h4>
+<h4 id="required-flags">Required Flags</h4>
 <p><code>--input-dir LOCAL_INPUT_DATA_DIR</code> or <code>-i LOCAL_INPUT_DATA_DIR</code>: Local input directory</p>
 <p><code>--s3-dir S3_TARGET_DATA_LOCATION</code> or <code>-s S3_TARGET_DATA_LOCATION</code>: S3 target location</p>
 <h4 id="example_6">Example</h4>
@@ -558,7 +555,7 @@ source_profile = test-sagemaker
 </code></pre>
 <h4 id="description_7">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
-<h4 id="required-flags_2">Required Flags</h4>
+<h4 id="required-flags_1">Required Flags</h4>
 <p><code>--input-s3-dir INPUT_DATA_S3_LOCATION</code> or <code>-i INPUT_DATA_S3_LOCATION</code>: S3 location to input data</p>
 <p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>-o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
@@ -593,7 +590,7 @@ log_metric("Accuracy", accuracy)
 </code></pre>
 <h4 id="description_8">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode</p>
-<h4 id="required-flags_3">Required Flags</h4>
+<h4 id="required-flags_2">Required Flags</h4>
 <p><code>--input-s3-dir INPUT_DATA_S3_LOCATION</code> or <code>-i INPUT_DATA_S3_LOCATION</code>: S3 location to input data</p>
 <p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>-o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
@@ -650,7 +647,7 @@ log_metric("Accuracy", accuracy)
 </code></pre>
 <h4 id="description_9">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode</p>
-<h4 id="required-flags_4">Required Flags</h4>
+<h4 id="required-flags_3">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
@@ -665,7 +662,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_9">Name</h4>
 <p>Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batch predictions on user defined S3 data</p>
 <h4 id="synopsis_10">Synopsis</h4>
-<pre><code>sagify cloud batch_transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+<pre><code>sagify cloud batch_transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
 </code></pre>
 <h4 id="description_10">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.</p>
@@ -685,7 +682,7 @@ log_metric("Accuracy", accuracy)
 {&quot;features&quot;: [4.6,3.1,1.5,0.2]}
 </code></pre>
 
-<h4 id="required-flags_5">Required Flags</h4>
+<h4 id="required-flags_4">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--s3-input-location S3_INPUT_LOCATION</code> or <code>-i S3_INPUT_LOCATION</code>: s3 input data location</p>
 <p><code>--s3-output-location S3_OUTPUT_LOCATION</code> or <code>-o S3_OUTPUT_LOCATION</code>: s3 location to save predictions</p>
@@ -695,6 +692,8 @@ log_metric("Accuracy", accuracy)
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<p><code>--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code>: Optional flag to wait until Batch Transform is finished. (default: don't wait)</p>
+<p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker batch transform job</p>
 <h4 id="example_10">Example</h4>
 <pre><code>sagify cloud batch_transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
 </code></pre>
@@ -739,5 +738,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-05-14 08:58:34
+Build Date UTC : 2019-06-12 20:43:01
 -->
