@@ -23,7 +23,10 @@ def _get_local_aws_profiles():
 
 
 def ask_for_app_name():
-    return click.prompt(text="Type in a name for your SageMaker app (Only chars, numbers and - are allowed))", type=str)
+    return click.prompt(
+        text="Type in a name for your SageMaker app (Only alphanumeric characters and - are allowed))",
+        type=str
+    )
 
 
 def ask_if_existing_project_exists():
