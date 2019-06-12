@@ -286,7 +286,8 @@ class SageMakerClient(object):
             transform_instance_count,
             transform_instance_type,
             tags=None,
-            wait=False
+            wait=False,
+            job_name=None
     ):
         """
         Execute batch transform on a trained model to SageMaker
@@ -311,6 +312,7 @@ class SageMakerClient(object):
             ...
         ]
         :param wait: [bool, default=False], wait or not for the batch transform to finish
+        :param job_name: [str, default=None], name for the SageMaker batch transform job
 
         :return: [str], endpoint name
         """
@@ -335,7 +337,7 @@ class SageMakerClient(object):
             strategy="SingleRecord"
         )
 
-        transformer.transform(data=s3_input_location, split_type='Line', content_type=content_type)
+        transformer.transform(data=s3_input_location, split_type='Line', content_type=content_type, job_name=job_name)
 
         if wait:
             transformer.wait()
