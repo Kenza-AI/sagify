@@ -288,7 +288,9 @@ def batch_transform(
         docker_tag,
         aws_role=None,
         external_id=None,
-        tags=None
+        tags=None,
+        wait=False,
+        job_name=None
 ):
     """
     Executes a batch transform job given a trained ML model on SageMaker
@@ -317,6 +319,8 @@ def batch_transform(
             },
             ...
         ]
+    :param wait: [bool, default=False], wait or not for the batch transform to finish
+    :param job_name: [str, default=None], name for the SageMaker batch transform job
     """
     config = _read_config(dir)
     image_name = config.image_name + ':' + docker_tag
@@ -329,5 +333,7 @@ def batch_transform(
         s3_output_location=s3_output_location,
         transform_instance_count=num_instances,
         transform_instance_type=ec2_type,
-        tags=tags
+        tags=tags,
+        wait=wait,
+        job_name=job_name
     )

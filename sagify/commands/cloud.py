@@ -412,6 +412,20 @@ def deploy(obj, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_a
     required=False,
     help="Optional external id used when using an IAM role"
 )
+@click.option(
+    u"-w",
+    u"--wait",
+    default=False,
+    is_flag=True,
+    help="Wait until Batch Transform is finished. "
+         "Default: don't wait"
+)
+@click.option(
+    u"--job-name",
+    required=False,
+    default=None,
+    help="Optional name for the SageMaker batch transform job."
+)
 @click.pass_obj
 def batch_transform(
         obj,
@@ -422,7 +436,9 @@ def batch_transform(
         ec2_type,
         aws_tags,
         iam_role_arn,
-        external_id
+        external_id,
+        wait,
+        job_name
 ):
     """
     Command to execute a batch transform job given a trained ML model on SageMaker
@@ -441,10 +457,16 @@ def batch_transform(
             docker_tag=obj['docker_tag'],
             aws_role=iam_role_arn,
             external_id=external_id,
-            tags=aws_tags
+            tags=aws_tags,
+            wait=wait,
+            job_name=job_name
         )
 
-        logger.info("Started batch transform on SageMaker successfully")
+        if wait:
+            logger.info("Started batch transform on SageMaker finished")
+        else:
+            logger.info("Started batch transform on SageMaker successfully")
+
     except ValueError as e:
         logger.info("{}".format(e))
         sys.exit(-1)
