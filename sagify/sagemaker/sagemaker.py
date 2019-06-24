@@ -345,6 +345,7 @@ class SageMakerClient(object):
             try:
                 transformer.wait()
             except:
+                # If there is an error, wait() throws an exception and we're not able to return a Failed status
                 pass
             finally:
                 job_name = transformer.latest_transform_job.job_name
