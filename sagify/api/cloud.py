@@ -321,12 +321,15 @@ def batch_transform(
         ]
     :param wait: [bool, default=False], wait or not for the batch transform to finish
     :param job_name: [str, default=None], name for the SageMaker batch transform job
+
+    :return: [str], transform job status if wait=True.
+    Valid values: 'InProgress'|'Completed'|'Failed'|'Stopping'|'Stopped'
     """
     config = _read_config(dir)
     image_name = config.image_name + ':' + docker_tag
 
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
-    sage_maker_client.batch_transform(
+    return sage_maker_client.batch_transform(
         image_name=image_name,
         s3_model_location=s3_model_location,
         s3_input_location=s3_input_location,
