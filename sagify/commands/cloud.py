@@ -447,7 +447,7 @@ def batch_transform(
     logger.info("Started configuration of batch transform on SageMaker ...\n")
 
     try:
-        api_cloud.batch_transform(
+        status = api_cloud.batch_transform(
             dir=_config().sagify_module_dir,
             s3_model_location=s3_model_location,
             s3_input_location=s3_input_location,
@@ -463,7 +463,7 @@ def batch_transform(
         )
 
         if wait:
-            logger.info("Started batch transform on SageMaker finished")
+            logger.info("Batch transform on SageMaker finished with status: {}".format(status))
         else:
             logger.info("Started batch transform on SageMaker successfully")
 

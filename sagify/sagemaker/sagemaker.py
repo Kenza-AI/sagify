@@ -39,6 +39,7 @@ class SageMakerClient(object):
             logger.info("No IAM role provided. Using profile {} instead.".format(aws_profile))
             self.boto_session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
 
+        self.sagemaker_client = self.boto_session.client('sagemaker')
         self.sagemaker_session = sage.Session(boto_session=self.boto_session)
         self.role = sage.get_execution_role(self.sagemaker_session) if aws_role is None else aws_role
 
@@ -314,7 +315,8 @@ class SageMakerClient(object):
         :param wait: [bool, default=False], wait or not for the batch transform to finish
         :param job_name: [str, default=None], name for the SageMaker batch transform job
 
-        :return: [str], endpoint name
+        :return: [str], transform job status if wait=True.
+        Valid values: 'InProgress'|'Completed'|'Failed'|'Stopping'|'Stopped'
         """
         image = self._construct_image_location(image_name)
 
@@ -340,7 +342,16 @@ class SageMakerClient(object):
         transformer.transform(data=s3_input_location, split_type='Line', content_type=content_type, job_name=job_name)
 
         if wait:
-            transformer.wait()
+            try:
+                transformer.wait()
+            except Exception:
+                # If there is an error, wait() throws an exception and we're not able to return a Failed status
+                pass
+            finally:
+                job_name = transformer.latest_transform_job.job_name
+                job_description = self.sagemaker_client.describe_transform_job(TransformJobName=job_name)
+
+            return job_description['TransformJobStatus']
 
     @staticmethod
     def _get_s3_bucket(s3_dir):
