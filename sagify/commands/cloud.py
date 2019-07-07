@@ -344,8 +344,23 @@ def hyperparameter_optimization(
     required=False,
     help="Optional external id used when using an IAM role"
 )
+@click.option(
+    u"--endpoint-name",
+    required=False,
+    default=None,
+    help="Optional name for the SageMaker endpoint"
+)
 @click.pass_obj
-def deploy(obj, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_arn, external_id):
+def deploy(
+        obj,
+        s3_model_location,
+        num_instances,
+        ec2_type,
+        aws_tags,
+        iam_role_arn,
+        external_id,
+        endpoint_name
+):
     """
     Command to deploy ML model(s) on SageMaker
     """
@@ -361,7 +376,8 @@ def deploy(obj, s3_model_location, num_instances, ec2_type, aws_tags, iam_role_a
             docker_tag=obj['docker_tag'],
             aws_role=iam_role_arn,
             external_id=external_id,
-            tags=aws_tags
+            tags=aws_tags,
+            endpoint_name=endpoint_name
         )
 
         logger.info("Model deployed to SageMaker successfully")

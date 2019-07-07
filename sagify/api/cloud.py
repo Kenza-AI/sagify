@@ -236,7 +236,17 @@ def hyperparameter_optimization(
     )
 
 
-def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role=None, external_id=None, tags=None):
+def deploy(
+        dir,
+        s3_model_location,
+        num_instances,
+        ec2_type,
+        docker_tag,
+        aws_role=None,
+        external_id=None,
+        tags=None,
+        endpoint_name=None
+):
     """
     Deploys ML model(s) on SageMaker
 
@@ -262,6 +272,7 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
             },
             ...
         ]
+    :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
 
     :return: [str], endpoint name
     """
@@ -274,7 +285,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
         s3_model_location=s3_model_location,
         train_instance_count=num_instances,
         train_instance_type=ec2_type,
-        tags=tags
+        tags=tags,
+        endpoint_name=endpoint_name
     )
 
 
