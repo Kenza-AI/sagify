@@ -237,7 +237,8 @@ class SageMakerClient(object):
             s3_model_location,
             train_instance_count,
             train_instance_type,
-            tags=None
+            tags=None,
+            endpoint_name=None,
     ):
         """
         Deploy model to SageMaker
@@ -259,6 +260,8 @@ class SageMakerClient(object):
             },
             ...
         ]
+        :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
+
         :return: [str], endpoint name
         """
         image = self._construct_image_location(image_name)
@@ -273,7 +276,8 @@ class SageMakerClient(object):
         model.deploy(
             initial_instance_count=train_instance_count,
             instance_type=train_instance_type,
-            tags=tags
+            tags=tags,
+            endpoint_name=endpoint_name
         )
 
         return model.endpoint_name
