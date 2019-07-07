@@ -348,7 +348,7 @@ def hyperparameter_optimization(
     u"--endpoint-name",
     required=False,
     default=None,
-    help="Optional name for the SageMaker endpoint."
+    help="Optional name for the SageMaker endpoint"
 )
 @click.pass_obj
 def deploy(
