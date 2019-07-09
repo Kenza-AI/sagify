@@ -236,7 +236,17 @@ def hyperparameter_optimization(
     )
 
 
-def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role=None, external_id=None, tags=None):
+def deploy(
+        dir,
+        s3_model_location,
+        num_instances,
+        ec2_type,
+        docker_tag,
+        aws_role=None,
+        external_id=None,
+        tags=None,
+        endpoint_name=None
+):
     """
     Deploys ML model(s) on SageMaker
 
@@ -262,6 +272,7 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
             },
             ...
         ]
+    :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
 
     :return: [str], endpoint name
     """
@@ -274,7 +285,8 @@ def deploy(dir, s3_model_location, num_instances, ec2_type, docker_tag, aws_role
         s3_model_location=s3_model_location,
         train_instance_count=num_instances,
         train_instance_type=ec2_type,
-        tags=tags
+        tags=tags,
+        endpoint_name=endpoint_name
     )
 
 
@@ -321,12 +333,15 @@ def batch_transform(
         ]
     :param wait: [bool, default=False], wait or not for the batch transform to finish
     :param job_name: [str, default=None], name for the SageMaker batch transform job
+
+    :return: [str], transform job status if wait=True.
+    Valid values: 'InProgress'|'Completed'|'Failed'|'Stopping'|'Stopped'
     """
     config = _read_config(dir)
     image_name = config.image_name + ':' + docker_tag
 
     sage_maker_client = sagemaker.SageMakerClient(config.aws_profile, config.aws_region, aws_role, external_id)
-    sage_maker_client.batch_transform(
+    return sage_maker_client.batch_transform(
         image_name=image_name,
         s3_model_location=s3_model_location,
         s3_input_location=s3_input_location,
