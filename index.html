@@ -7,25 +7,24 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="None">
   
-  <link rel="shortcut icon" href="img/favicon.ico">
+  <link rel="shortcut icon" href="./img/favicon.ico">
   <title>sagify - sagify</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="./css/highlight.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "sagify";
     var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = null;
+    var mkdocs_page_url = "/";
   </script>
   
-  <script src="js/jquery-2.1.1.min.js" defer></script>
-  <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
+  <script src="./js/jquery-2.1.1.min.js"></script>
+  <script src="./js/modernizr-2.8.3.min.js"></script>
+  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
   
 </head>
 
@@ -39,7 +38,7 @@
         <a href="." class="icon icon-home"> sagify</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+    <input type="text" name="q" placeholder="Search docs" />
   </form>
 </div>
       </div>
@@ -109,9 +108,9 @@
             <div class="section">
               
                 <h1 id="sagify">sagify</h1>
-<p><img alt="Sagify" src="sagify@2x.png" /></p>
+<p><img alt="Sagify" src="./sagify@2x.png" /></p>
 <p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
-<p><img alt="gif" src="end2end.gif" /></p>
+<p><img alt="gif" src="./end2end.gif" /></p>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
@@ -271,27 +270,27 @@ http://localhost:8080/invocations \
 <li>Select <code>Roles</code> from the list in the left-hand side, and click on <em>Create role</em></li>
 <li>Then, select <em>SageMaker</em> as the image shows:</li>
 </ul>
-<p><img alt="Create Role 1st Step" src="create_role_1st_step.png" /></p>
+<p><img alt="Create Role 1st Step" src="./create_role_1st_step.png" /></p>
 <ul>
 <li>Click <em>Next: Review</em> on the following page:</li>
 </ul>
-<p><img alt="Create Role 2nd Step" src="create_role_2nd_step.png" /></p>
+<p><img alt="Create Role 2nd Step" src="./create_role_2nd_step.png" /></p>
 <ul>
 <li>Type a name for the SageMaker role, and click on <em>Create role</em>:</li>
 </ul>
-<p><img alt="Create Role 3rd Step" src="create_role_3rd_step.png" /></p>
+<p><img alt="Create Role 3rd Step" src="./create_role_3rd_step.png" /></p>
 <ul>
 <li>Click on the created role:</li>
 </ul>
-<p><img alt="Successful Role Creation" src="created_role_page.png" /></p>
+<p><img alt="Successful Role Creation" src="./created_role_page.png" /></p>
 <ul>
 <li>Click on <em>Attach policy</em> and search for <code>AmazonEC2ContainerRegistryFullAccess</code>. Attach the corresponding policy:</li>
 </ul>
-<p><img alt="Attach Policy" src="attach_policy_step_1.png" /></p>
+<p><img alt="Attach Policy" src="./attach_policy_step_1.png" /></p>
 <ul>
 <li>Do the same to attach the <code>AmazonS3FullAccess</code> and <code>IAMReadOnlyAccess</code> policies, and end up with the following:</li>
 </ul>
-<p><img alt="Policies" src="policies.png" /></p>
+<p><img alt="Policies" src="./policies.png" /></p>
 <ul>
 <li>
 <p>Now, go to Users page by clicking on <em>Users</em> on the left-hand side.</p>
@@ -300,15 +299,15 @@ http://localhost:8080/invocations \
 <p>Click on your IAM user that you want to use for AWS SageMaker:</p>
 </li>
 </ul>
-<p><img alt="Users" src="iam_users.png" /></p>
+<p><img alt="Users" src="./iam_users.png" /></p>
 <ul>
 <li>Copy the ARN of that user:</li>
 </ul>
-<p><img alt="ARN" src="user_arn.png" /></p>
+<p><img alt="ARN" src="./user_arn.png" /></p>
 <ul>
 <li>Then, go back the page of the Role you created and click on the <em>Trust relationships</em> tab:</li>
 </ul>
-<p><img alt="Trust Relationship" src="trust_relationship_step_1.png" /></p>
+<p><img alt="Trust Relationship" src="./trust_relationship_step_1.png" /></p>
 <ul>
 <li>
 <p>Click on <em>Edit trust relationship</em> and add the following:</p>
@@ -454,7 +453,7 @@ source_profile = test-sagemaker
 </code></pre>
 <h3 id="step-5-monitor-progress">Step 5: Monitor Progress</h3>
 <p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
-<p><img alt="Hyperparameter Optimization Results" src="docs/hyperparam_monitor.png" /></p>
+<p><img alt="Hyperparameter Optimization Results" src="./docs/hyperparam_monitor.png" /></p>
 <h2 id="commands">Commands</h2>
 <h3 id="initialize">Initialize</h3>
 <h4 id="name">Name</h4>
@@ -578,7 +577,7 @@ log_metric("Accuracy", accuracy)
 ```
 </code></pre>
 <p>When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:</p>
-<p><img alt="Algorithm Metrics" src="cloud_watch_metrics.png" /></p>
+<p><img alt="Algorithm Metrics" src="./cloud_watch_metrics.png" /></p>
 <h4 id="example_7">Example</h4>
 <pre><code>sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
 </code></pre>
@@ -643,7 +642,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_8">Name</h4>
 <p>Executes a Docker image in serve mode on AWS SageMaker</p>
 <h4 id="synopsis_9">Synopsis</h4>
-<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
 </code></pre>
 <h4 id="description_9">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode</p>
@@ -655,6 +654,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
 <h4 id="example_9">Example</h4>
 <pre><code>sagify cloud deploy -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
 </code></pre>
@@ -730,13 +730,14 @@ log_metric("Accuracy", accuracy)
     </span>
 </div>
     <script>var base_url = '.';</script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
+    <script src="./js/theme.js"></script>
+      <script src="./search/require.js"></script>
+      <script src="./search/search.js"></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 1.0.4
-Build Date UTC : 2019-06-12 20:43:01
+MkDocs version : 0.17.4
+Build Date UTC : 2019-07-09 13:34:11
 -->
