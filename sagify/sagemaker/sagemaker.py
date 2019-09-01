@@ -273,12 +273,22 @@ class SageMakerClient(object):
             sagemaker_session=self.sagemaker_session
         )
 
-        model.deploy(
-            initial_instance_count=train_instance_count,
-            instance_type=train_instance_type,
-            tags=tags,
-            endpoint_name=endpoint_name
-        )
+        try:
+            model.deploy(
+                initial_instance_count=train_instance_count,
+                instance_type=train_instance_type,
+                tags=tags,
+                endpoint_name=endpoint_name,
+                update_endpoint=True
+            )
+        except ValueError:
+            # ValueError raised if there is no endpoint already
+            model.deploy(
+                initial_instance_count=train_instance_count,
+                instance_type=train_instance_type,
+                tags=tags,
+                endpoint_name=endpoint_name
+            )
 
         return model.endpoint_name
 
