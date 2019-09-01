@@ -152,7 +152,8 @@ def test_deploy_happy_case():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=None,
-                            endpoint_name=None
+                            endpoint_name=None,
+                            update_endpoint=True
                         )
 
 
@@ -208,7 +209,8 @@ def test_deploy_with_tags():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=tags,
-                            endpoint_name=None
+                            endpoint_name=None,
+                            update_endpoint=True
                         )
 
 
@@ -252,7 +254,8 @@ def test_deploy_with_custom_endpoint_name():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=None,
-                            endpoint_name='my-endpoint'
+                            endpoint_name='my-endpoint',
+                            update_endpoint=True
                         )
 
 

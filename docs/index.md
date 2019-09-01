@@ -711,7 +711,7 @@ Executes a Docker image in serve mode on AWS SageMaker
 
 #### Description
 
-This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode
+This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode. You can update an endpoint (model or number of instances) by specifying the endpoint-name.
 
 #### Required Flags
 
