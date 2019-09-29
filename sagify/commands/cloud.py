@@ -480,6 +480,8 @@ def batch_transform(
 
         if wait:
             logger.info("Batch transform on SageMaker finished with status: {}".format(status))
+            if status == "Failed":
+                sys.exit(1)
         else:
             logger.info("Started batch transform on SageMaker successfully")
 
