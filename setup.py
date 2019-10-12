@@ -21,6 +21,7 @@ setup(
             'template/sagify/__init__.py',
             'template/sagify/training/__init__.py',
             'template/sagify/training/train',
+            'template/sagify/training/*.py',
             'template/sagify/prediction/*.py',
             'template/sagify/prediction/serve',
             'template/sagify/prediction/nginx.conf',
