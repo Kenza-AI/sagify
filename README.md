@@ -29,13 +29,13 @@ At the command line:
 
 ## Getting started
 
-### Step 1: Clone Deep Learning Calculator repository
+### Step 1: Clone Machine Learning demo repository
 
-You're going to clone and train a Deep Learning codebase to evaluate arithmetic additions on up to 3 digit integers.
+You're going to clone and train a Machine Learning codebase to train a classifer for the Iris data set.
 
 Clone repository:
 
-    git clone https://github.com/Kenza-AI/deep-learning-addition.git
+    git clone https://github.com/Kenza-AI/sagify-demo.git
 
 Optionally, if you want to use Python 2.7 replace the value of `REQUIRED_PYTHON` and `PYTHON_INTERPRETER` in `test_environment.py` and `Makefile`, respectively, to `python2`. 
     
@@ -43,21 +43,18 @@ Create environment:
     
     make create_environment
 
-Don't forget to activate the virtualenv after the creation of environment by executing `workon deep-learning-addition`.
+Don't forget to activate the virtualenv after the creation of environment by executing `workon sagify-demo`.
 
 Install dependencies:
 
     make requirements
-    
-Generate training and validation data:
 
-    make data
 
 ### Step 2: Initialize sagify
 
     sagify init
 
-Type in `deep-learning-addition` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile, AWS region and path to `requirements.txt`. 
+Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
 
 A module called `sagify` is created under the directory you provided. The structure is:
  
@@ -77,19 +74,19 @@ A module called `sagify` is created under the directory you provided. The struct
             __init__.py
             nginx.conf
             predict.py
+            prediction.py
             predictor.py
             serve
             wsgi.py
         training/
             __init__.py
             train
+            training.py
         __init__.py
         build.sh
         Dockerfile
         executor.sh
         push.sh
-
-A `.sagify.json` file is also created in the directory you ran the `sagify init` command from holding the values you provided for the project name etc.
 
 ### Step 3: Integrate sagify
 
@@ -102,76 +99,62 @@ As a Data Scientist, you only need to conduct a few actions. Sagify takes care o
 
 Hence,
 
-1. Copy `.npy` files from `data/processed/` to `sagify/local_test/test_dir/input/data/training/`
+1. Copy `iris.data` files from `data` to `sagify/local_test/test_dir/input/data/training/`
 
 2. Replace the `TODOs` in the `train(...)` function in `sagify/training/training.py` file with:
 
-        train_model.train(input_path=input_data_path, output_path=model_save_path)
-    
+            input_file_path = os.path.join(input_data_path, 'iris.data')
+            clf, accuracy = training_logic(input_file_path=input_file_path)
+            
+            output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+            joblib.dump(clf, output_model_file_path)
+            
+            accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+            with open(accuracy_report_file_path, 'w') as _out:
+                _out.write(str(accuracy))
+                
     and at the top of the file, add:
      
-        from src.models import train_model
+        import os
         
-     The body of `train(...)` function should look like:
-     
-        train_model.train(input_path=input_data_path, output_path=model_save_path)
-        print('Training complete.')
+        from sklearn.externals import joblib
+        
+        from iris_training import train as training_logic
 
 3. Replace the body of `predict(...)` function in `sagify/prediction/prediction.py` with:
 
-        def _format_addition(input_str):
-            def _format(input_str_num, part_one):
-                required_spaces_num = 3 - len(input_str_num)
-                spaces = ''
-                for _ in range(required_spaces_num):
-                    spaces += ' '
-
-                return spaces + input_str_num if part_one else input_str_num + spaces
-
-            two_parts = input_str.split('+')
-            formatted_part_one = _format(two_parts[0], True)
-            formatted_part_two = _format(two_parts[1], False)
-
-            return '{}+{}'.format(formatted_part_one, formatted_part_two)
-            
-        addition_str = _format_addition(json_input['addition'])
-        
-        from src.encoding_utils import decode_prediction, encode_query
-        input_model = encode_query(addition_str)
-        
-        prediction = ModelService.predict(input_model)
-        
-        result = {
-            'result': decode_prediction(prediction)
+        model_input = json_input['features']
+        prediction = ModelService.predict(model_input)
+    
+        return {
+            "prediction": prediction.item()
         }
-        
-        return result
         
     and replace the body of `get_model()` function in `ModelService` class in the same file with:
     
         if cls.model is None:
-            import keras
-            cls.model = keras.models.load_model(os.path.join(_MODEL_PATH, 'model.h5'))
+            from sklearn.externals import joblib
+            cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
         return cls.model
     
 
 ### Step 4: Build Docker image
 
-It's time to build the Docker image that will contain the Deep Learning Addition codebase:
+It's time to build the Docker image that will contain the Machine Learning codebase:
 
     sagify build
 
-If you run `docker images | grep deep-learning-addition-img` in your terminal, you'll see the created Deep Learning Addition image.
+If you run `docker images | grep sagify-demo` in your terminal, you'll see the created Sagify-Demo image.
 
-### Step 5: Train Deep Learning model
+### Step 5: Train model
 
-Time to train the Deep Learning model in the newly built Docker image:
+Time to train the model for the Iris data set in the newly built Docker image:
 
     sagify local train
 
-This step takes ~5 minutes in a MacBook Pro Early 2015 3.1 GHz Intel Core i7.
+Model file `model.pkl` and report file `report.txt` are now under `sagify/local_test/test_dir/model/`
 
-### Step 6: Deploy Deep Learning model
+### Step 6: Deploy model
 
 Finally, serve the model as a REST Service:
 
@@ -183,13 +166,14 @@ Run the following curl command on your terminal to verify that the REST Service 
     http://localhost:8080/invocations \
     -H 'Cache-Control: no-cache' \
     -H 'Content-Type: application/json' \
+    -H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
     -d '{
-        "addition": "943+604"
-     }'
+	    "features":[[0.34, 0.45, 0.45, 0.3]]
+    }'
 
 It will be slow in the first couple of calls as it loads the model in a lazy manner.
 
-Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Deep Learning model to AWS SageMaker!
+Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Machine Learning model to AWS SageMaker!
 
 
 ## Hyperparameter Optimization
