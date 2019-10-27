@@ -260,13 +260,13 @@ Make sure to create an S3 bucket with a name of your choice, for example: `sagif
 
 ### Upload Training Data
 
-Execute `sagify cloud upload-data -i data/processed/ -s s3://sagify-demo/training-data` to upload training data to S3
+Execute `sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data` to upload training data to S3
 
 ### Train on AWS SageMaker
 
 Execute `sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
 
-Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/deep-learning-addition-img-2018-04-29-15-04-14-483/output/model.tar.gz`)
+Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz`)
 
 ### Deploy on AWS SageMaker
 
