@@ -4,7 +4,7 @@ from __future__ import print_function, absolute_import
 
 import argparse
 import os
-import sys;sys.path.append(".")  # Do not remove this
+import sys;sys.path.insert(1, ".")  # Do not remove this
 import traceback
 from sagify.training.training import train as train_function
 
