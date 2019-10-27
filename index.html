@@ -124,26 +124,23 @@
 <pre><code>pip install sagify
 </code></pre>
 <h2 id="getting-started">Getting started</h2>
-<h3 id="step-1-clone-deep-learning-calculator-repository">Step 1: Clone Deep Learning Calculator repository</h3>
-<p>You're going to clone and train a Deep Learning codebase to evaluate arithmetic additions on up to 3 digit integers.</p>
+<h3 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h3>
+<p>You're going to clone and train a Machine Learning codebase to train a classifer for the Iris data set.</p>
 <p>Clone repository:</p>
-<pre><code>git clone https://github.com/Kenza-AI/deep-learning-addition.git
+<pre><code>git clone https://github.com/Kenza-AI/sagify-demo.git
 </code></pre>
 <p>Optionally, if you want to use Python 2.7 replace the value of <code>REQUIRED_PYTHON</code> and <code>PYTHON_INTERPRETER</code> in <code>test_environment.py</code> and <code>Makefile</code>, respectively, to <code>python2</code>. </p>
 <p>Create environment:</p>
 <pre><code>make create_environment
 </code></pre>
-<p>Don't forget to activate the virtualenv after the creation of environment by executing <code>workon deep-learning-addition</code>.</p>
+<p>Don't forget to activate the virtualenv after the creation of environment by executing <code>workon sagify-demo</code>.</p>
 <p>Install dependencies:</p>
 <pre><code>make requirements
-</code></pre>
-<p>Generate training and validation data:</p>
-<pre><code>make data
 </code></pre>
 <h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
 <pre><code>sagify init
 </code></pre>
-<p>Type in <code>deep-learning-addition</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. </p>
+<p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify</code> is created under the directory you provided. The structure is:</p>
 <pre><code>sagify/
     local_test/
@@ -186,69 +183,56 @@
 <p>Hence,</p>
 <ol>
 <li>
-<p>Copy <code>.npy</code> files from <code>data/processed/</code> to <code>sagify/local_test/test_dir/input/data/training/</code></p>
+<p>Copy <code>iris.data</code> files from <code>data</code> to <code>sagify/local_test/test_dir/input/data/training/</code></p>
 </li>
 <li>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify/training/training.py</code> file with:</p>
-<pre><code>train_model.train(input_path=input_data_path, output_path=model_save_path)
+<pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
+    clf, accuracy = training_logic(input_file_path=input_file_path)
+
+    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+    joblib.dump(clf, output_model_file_path)
+
+    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+    with open(accuracy_report_file_path, 'w') as _out:
+        _out.write(str(accuracy))
 </code></pre>
 <p>and at the top of the file, add:</p>
-<pre><code>from src.models import train_model
-</code></pre>
-<p>The body of <code>train(...)</code> function should look like:</p>
-<pre><code>train_model.train(input_path=input_data_path, output_path=model_save_path)
-print('Training complete.')
+<pre><code>import os
+
+from sklearn.externals import joblib
+
+from iris_training import train as training_logic
 </code></pre>
 </li>
 <li>
 <p>Replace the body of <code>predict(...)</code> function in <code>sagify/prediction/prediction.py</code> with:</p>
-<pre><code>def _format_addition(input_str):
-    def _format(input_str_num, part_one):
-        required_spaces_num = 3 - len(input_str_num)
-        spaces = ''
-        for _ in range(required_spaces_num):
-            spaces += ' '
+<pre><code>model_input = json_input['features']
+prediction = ModelService.predict(model_input)
 
-        return spaces + input_str_num if part_one else input_str_num + spaces
-
-    two_parts = input_str.split('+')
-    formatted_part_one = _format(two_parts[0], True)
-    formatted_part_two = _format(two_parts[1], False)
-
-    return '{}+{}'.format(formatted_part_one, formatted_part_two)
-
-addition_str = _format_addition(json_input['addition'])
-
-from src.encoding_utils import decode_prediction, encode_query
-input_model = encode_query(addition_str)
-
-prediction = ModelService.predict(input_model)
-
-result = {
-    'result': decode_prediction(prediction)
+return {
+    "prediction": prediction.item()
 }
-
-return result
 </code></pre>
 <p>and replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
 <pre><code>if cls.model is None:
-    import keras
-    cls.model = keras.models.load_model(os.path.join(_MODEL_PATH, 'model.h5'))
+    from sklearn.externals import joblib
+    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
 return cls.model
 </code></pre>
 </li>
 </ol>
 <h3 id="step-4-build-docker-image">Step 4: Build Docker image</h3>
-<p>It's time to build the Docker image that will contain the Deep Learning Addition codebase:</p>
+<p>It's time to build the Docker image that will contain the Machine Learning codebase:</p>
 <pre><code>sagify build
 </code></pre>
-<p>If you run <code>docker images | grep deep-learning-addition-img</code> in your terminal, you'll see the created Deep Learning Addition image.</p>
-<h3 id="step-5-train-deep-learning-model">Step 5: Train Deep Learning model</h3>
-<p>Time to train the Deep Learning model in the newly built Docker image:</p>
+<p>If you run <code>docker images | grep sagify-demo</code> in your terminal, you'll see the created Sagify-Demo image.</p>
+<h3 id="step-5-train-model">Step 5: Train model</h3>
+<p>Time to train the model for the Iris data set in the newly built Docker image:</p>
 <pre><code>sagify local train
 </code></pre>
-<p>This step takes ~5 minutes in a MacBook Pro Early 2015 3.1 GHz Intel Core i7.</p>
-<h3 id="step-6-deploy-deep-learning-model">Step 6: Deploy Deep Learning model</h3>
+<p>Model file <code>model.pkl</code> and report file <code>report.txt</code> are now under <code>sagify/local_test/test_dir/model/</code></p>
+<h3 id="step-6-deploy-model">Step 6: Deploy model</h3>
 <p>Finally, serve the model as a REST Service:</p>
 <pre><code>sagify local deploy
 </code></pre>
@@ -257,12 +241,13 @@ return cls.model
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
 -H 'Content-Type: application/json' \
+-H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
 -d '{
-    "addition": "943+604"
- }'
+    "features":[[0.34, 0.45, 0.45, 0.3]]
+}'
 </code></pre>
 <p>It will be slow in the first couple of calls as it loads the model in a lazy manner.</p>
-<p>Voila! That's a proof that this Deep Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the <em>Usage</em> section in <a href="https://Kenza-AI.github.io/sagify/">Sagify Docs</a> to see how to train and deploy this Deep Learning model to AWS SageMaker!</p>
+<p>Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the <em>Usage</em> section in <a href="https://Kenza-AI.github.io/sagify/">Sagify Docs</a> to see how to train and deploy this Machine Learning model to AWS SageMaker!</p>
 <h2 id="usage">Usage</h2>
 <h3 id="configure-aws-account">Configure AWS Account</h3>
 <ul>
@@ -352,19 +337,19 @@ source_profile = test-sagemaker
 <h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
 <p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push src</code> to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.</p>
 <h3 id="create-s3-bucket">Create S3 Bucket</h3>
-<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>my-dl-addition</code></p>
+<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
 <h3 id="upload-training-data">Upload Training Data</h3>
-<p>Execute <code>sagify cloud upload-data -i data/processed/ -s s3://my-dl-addition/training-data</code> to upload training data to S3</p>
+<p>Execute <code>sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data</code> to upload training data to S3</p>
 <h3 id="train-on-aws-sagemaker">Train on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud train -i s3://my-dl-addition/training-data/ -o s3://my-dl-addition/output/ -e ml.m4.xlarge</code> to train the Deep Learning model on SageMaker. This command will use the pushed Docker image.</p>
-<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://my-dl-addition/output/deep-learning-addition-img-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
+<p>Execute <code>sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge</code> to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.</p>
+<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
 <h3 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud deploy -m s3://my-dl-addition/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
+<p>Execute <code>sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
 <h3 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h3>
 <p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
 <p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
 <pre><code>    {
-        "addition": "112+143"
+        "features":[[0.34, 0.45, 0.45, 0.3]]
     }
 </code></pre>
 <h2 id="hyperparameter-optimization">Hyperparameter Optimization</h2>
@@ -739,5 +724,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 0.17.4
-Build Date UTC : 2019-10-27 16:19:14
+Build Date UTC : 2019-10-27 18:15:54
 -->
