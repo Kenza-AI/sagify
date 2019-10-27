@@ -4,8 +4,9 @@ from __future__ import print_function, absolute_import
 
 import argparse
 import os
-import sys;sys.path.append("..")  # Do not remove this
+import sys;sys.path.append(".")  # Do not remove this
 import traceback
+from sagify.training.training import train as train_function
 
 
 # The default path arguments values are used when training happens in SageMaker
@@ -67,12 +68,11 @@ def train(input_data_path, model_save_path, hyperparams_path=None, failure_outpu
     """
     print('Starting the training.')
     try:
-        # TODO: If exists, read in hyperparams file JSON content
-
-        # TODO: Write your modeling logic
-
-        # TODO: save the model(s) under 'model_save_path'
-
+        train_function(
+            input_data_path=input_data_path,
+            model_save_path=model_save_path,
+            hyperparams_path=hyperparams_path
+        )
         print('Training complete.')
     except Exception as e:
         # Write out an error file. This will be returned as the failureReason in the

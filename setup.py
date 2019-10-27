@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.17.9',
+    version='0.18.0',
     setup_cfg=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
     packages=find_packages(where='.'),
@@ -21,6 +21,7 @@ setup(
             'template/sagify/__init__.py',
             'template/sagify/training/__init__.py',
             'template/sagify/training/train',
+            'template/sagify/training/*.py',
             'template/sagify/prediction/*.py',
             'template/sagify/prediction/serve',
             'template/sagify/prediction/nginx.conf',

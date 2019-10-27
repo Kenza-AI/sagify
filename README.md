@@ -96,30 +96,28 @@ A `.sagify.json` file is also created in the directory you ran the `sagify init`
 As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:
 
 1. Copy a subset of training data under `sagify/local_test/test_dir/input/data/training/` to test that training works locally
-2. Implement `train(...)` function in `sagify/training/train`
-3. Implement `predict(...)` function in `sagify/prediction/predict.py`
+2. Implement `train(...)` function in `sagify/training/training.py`
+3. Implement `predict(...)` function in `sagify/prediction/prediction.py`
 4. Optionally, specify hyperparameters in `sagify/local_test/test_dir/input/config/hyperparameters.json` 
 
 Hence,
 
 1. Copy `.npy` files from `data/processed/` to `sagify/local_test/test_dir/input/data/training/`
 
-2. Replace the `TODOs` in the `try..except` of `train(...)` function in `sagify/training/train` file with:
+2. Replace the `TODOs` in the `train(...)` function in `sagify/training/training.py` file with:
 
         train_model.train(input_path=input_data_path, output_path=model_save_path)
     
-    and after the `import traceback` at the top of the file, add:
+    and at the top of the file, add:
      
         from src.models import train_model
         
-     The body of `try..except` should look like:
+     The body of `train(...)` function should look like:
      
-        try:
-            train_model.train(input_path=input_data_path, output_path=model_save_path)
-            print('Training complete.')
-        except Exception as e:
+        train_model.train(input_path=input_data_path, output_path=model_save_path)
+        print('Training complete.')
 
-3. Replace the body of `predict(...)` function in `sagify/prediction/predict.py` with:
+3. Replace the body of `predict(...)` function in `sagify/prediction/prediction.py` with:
 
         def _format_addition(input_str):
             def _format(input_str_num, part_one):
@@ -235,7 +233,7 @@ Define the Hyperparameter Configuration File. More specifically, you need to spe
 
 ### Step 2: Implement Train function
 
-Replace the `TODOs` in the `try..except` of `train(...)` function in `sagify/training/train` file with your logic. For example:
+Replace the `TODOs` in the `train(...)` function in `sagify/training/training.py` file with your logic. For example:
 
         from sklearn import datasets
         iris = datasets.load_iris()
@@ -372,7 +370,7 @@ Executes a Docker image in train mode
     
 #### Description
 
-This command executes a Docker image in train mode. More specifically, it executes the `train(...)` function in `sagify/training/train` inside an already built Docker image (see Build command section).
+This command executes a Docker image in train mode. More specifically, it executes the `train(...)` function in `sagify/training/training.py` inside an already built Docker image (see Build command section).
 
 #### Example
 
@@ -391,7 +389,7 @@ Executes a Docker image in serve mode
     
 #### Description
 
-This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to `/invocations` endpoint. Then, the `/invocations` endpoint calls the `predict(...)` function in `sagify/prediction/predict.py` (see Build command section on how to build a Docker image).
+This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to `/invocations` endpoint. Then, the `/invocations` endpoint calls the `predict(...)` function in `sagify/prediction/prediction.py` (see Build command section on how to build a Docker image).
  
 #### Example
 
