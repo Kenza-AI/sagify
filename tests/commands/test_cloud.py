@@ -568,7 +568,7 @@ class TestBatchTransform(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -616,7 +616,7 @@ class TestBatchTransform(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -665,7 +665,7 @@ class TestBatchTransform(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -714,7 +714,7 @@ class TestBatchTransform(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -764,7 +764,7 @@ class TestBatchTransform(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -823,7 +823,7 @@ class TestBatchTransform(object):
                             cli=cli,
                             args=[
                                 '-t', 'some-docker-tag',
-                                'cloud', 'batch_transform',
+                                'cloud', 'batch-transform',
                                 '-m', 's3://bucket/model/location/model.tar.gz',
                                 '-i', 's3://bucket/input_data',
                                 '-o', 's3://bucket/output',
@@ -907,7 +907,7 @@ class TestHyperparameterOptimization(object):
                         result = runner.invoke(
                             cli=cli,
                             args=[
-                                'cloud', 'hyperparameter_optimization',
+                                'cloud', 'hyperparameter-optimization',
                                 '-i', 's3://bucket/input',
                                 '-o', 's3://bucket/output',
                                 '-e', 'ml.c4.2xlarge',

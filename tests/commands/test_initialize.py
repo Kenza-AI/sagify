@@ -72,4 +72,4 @@ def test_init_when_aws_cli_is_not_configure_locally():
         with runner.isolated_filesystem():
             result = runner.invoke(cli=cli, args=['init'], input='my_app\ny\n1\n2\nrequirements.txt\n')
 
-    assert result.exit_code == -1
+    assert result.exit_code == 1

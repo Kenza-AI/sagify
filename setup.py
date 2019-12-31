@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.18.1',
+    version='0.19.0',
     setup_cfg=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
     packages=find_packages(where='.'),
@@ -35,7 +35,7 @@ setup(
     },
     install_requires=[
         'boto3==1.9.220',
-        'click>=6.7, <6.7.99',
+        'click>=7.0, <7.0.99',
         'docker>=3.7.0, <3.7.99',
         'flask>=1.1.0, <1.1.99',
         'paramiko>=2.4.2, <2.4.99',
