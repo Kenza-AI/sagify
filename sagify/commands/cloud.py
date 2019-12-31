@@ -172,7 +172,7 @@ def train(
         sys.exit(-1)
 
 
-@click.command()
+@click.command(name='hyperparameter-optimization')
 @click.option(
     u"-i", u"--input-s3-dir",
     required=True,
@@ -387,7 +387,7 @@ def deploy(
         sys.exit(-1)
 
 
-@click.command()
+@click.command(name="batch-transform")
 @click.option(
     u"-m", u"--s3-model-location",
     required=True,
