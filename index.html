@@ -7,24 +7,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="None">
   
-  <link rel="shortcut icon" href="./img/favicon.ico">
+  <link rel="shortcut icon" href="img/favicon.ico">
   <title>sagify - sagify</title>
   <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
 
-  <link rel="stylesheet" href="./css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="./css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="./css/highlight.css">
+  <link rel="stylesheet" href="css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
   
   <script>
     // Current page data
     var mkdocs_page_name = "sagify";
     var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = "/";
+    var mkdocs_page_url = null;
   </script>
   
-  <script src="./js/jquery-2.1.1.min.js"></script>
-  <script src="./js/modernizr-2.8.3.min.js"></script>
-  <script type="text/javascript" src="./js/highlight.pack.js"></script> 
+  <script src="js/jquery-2.1.1.min.js" defer></script>
+  <script src="js/modernizr-2.8.3.min.js" defer></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
 
@@ -38,7 +39,7 @@
         <a href="." class="icon icon-home"> sagify</a>
         <div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
+    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
@@ -108,9 +109,9 @@
             <div class="section">
               
                 <h1 id="sagify">sagify</h1>
-<p><img alt="Sagify" src="./sagify@2x.png" /></p>
+<p><img alt="Sagify" src="sagify@2x.png" /></p>
 <p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
-<p><img alt="gif" src="./end2end.gif" /></p>
+<p><img alt="gif" src="end2end.gif" /></p>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
@@ -255,27 +256,27 @@ http://localhost:8080/invocations \
 <li>Select <code>Roles</code> from the list in the left-hand side, and click on <em>Create role</em></li>
 <li>Then, select <em>SageMaker</em> as the image shows:</li>
 </ul>
-<p><img alt="Create Role 1st Step" src="./create_role_1st_step.png" /></p>
+<p><img alt="Create Role 1st Step" src="create_role_1st_step.png" /></p>
 <ul>
 <li>Click <em>Next: Review</em> on the following page:</li>
 </ul>
-<p><img alt="Create Role 2nd Step" src="./create_role_2nd_step.png" /></p>
+<p><img alt="Create Role 2nd Step" src="create_role_2nd_step.png" /></p>
 <ul>
 <li>Type a name for the SageMaker role, and click on <em>Create role</em>:</li>
 </ul>
-<p><img alt="Create Role 3rd Step" src="./create_role_3rd_step.png" /></p>
+<p><img alt="Create Role 3rd Step" src="create_role_3rd_step.png" /></p>
 <ul>
 <li>Click on the created role:</li>
 </ul>
-<p><img alt="Successful Role Creation" src="./created_role_page.png" /></p>
+<p><img alt="Successful Role Creation" src="created_role_page.png" /></p>
 <ul>
 <li>Click on <em>Attach policy</em> and search for <code>AmazonEC2ContainerRegistryFullAccess</code>. Attach the corresponding policy:</li>
 </ul>
-<p><img alt="Attach Policy" src="./attach_policy_step_1.png" /></p>
+<p><img alt="Attach Policy" src="attach_policy_step_1.png" /></p>
 <ul>
 <li>Do the same to attach the <code>AmazonS3FullAccess</code> and <code>IAMReadOnlyAccess</code> policies, and end up with the following:</li>
 </ul>
-<p><img alt="Policies" src="./policies.png" /></p>
+<p><img alt="Policies" src="policies.png" /></p>
 <ul>
 <li>
 <p>Now, go to Users page by clicking on <em>Users</em> on the left-hand side.</p>
@@ -284,15 +285,15 @@ http://localhost:8080/invocations \
 <p>Click on your IAM user that you want to use for AWS SageMaker:</p>
 </li>
 </ul>
-<p><img alt="Users" src="./iam_users.png" /></p>
+<p><img alt="Users" src="iam_users.png" /></p>
 <ul>
 <li>Copy the ARN of that user:</li>
 </ul>
-<p><img alt="ARN" src="./user_arn.png" /></p>
+<p><img alt="ARN" src="user_arn.png" /></p>
 <ul>
 <li>Then, go back the page of the Role you created and click on the <em>Trust relationships</em> tab:</li>
 </ul>
-<p><img alt="Trust Relationship" src="./trust_relationship_step_1.png" /></p>
+<p><img alt="Trust Relationship" src="trust_relationship_step_1.png" /></p>
 <ul>
 <li>
 <p>Click on <em>Edit trust relationship</em> and add the following:</p>
@@ -434,11 +435,11 @@ source_profile = test-sagemaker
 </ol>
 <h3 id="step-4-call-the-cli-command">Step 4: Call The CLI Command</h3>
 <p>And, finally, call the hyperparameter-optimization CLI command. For example:</p>
-<pre><code> sagify cloud hyperparameter_optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json
+<pre><code> sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json
 </code></pre>
 <h3 id="step-5-monitor-progress">Step 5: Monitor Progress</h3>
 <p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
-<p><img alt="Hyperparameter Optimization Results" src="./docs/hyperparam_monitor.png" /></p>
+<p><img alt="Hyperparameter Optimization Results" src="docs/hyperparam_monitor.png" /></p>
 <h2 id="commands">Commands</h2>
 <h3 id="initialize">Initialize</h3>
 <h4 id="name">Name</h4>
@@ -562,7 +563,7 @@ log_metric("Accuracy", accuracy)
 ```
 </code></pre>
 <p>When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:</p>
-<p><img alt="Algorithm Metrics" src="./cloud_watch_metrics.png" /></p>
+<p><img alt="Algorithm Metrics" src="cloud_watch_metrics.png" /></p>
 <h4 id="example_7">Example</h4>
 <pre><code>sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
 </code></pre>
@@ -570,7 +571,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_7">Name</h4>
 <p>Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker</p>
 <h4 id="synopsis_8">Synopsis</h4>
-<pre><code>sagify cloud hyperparameter_optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED]
+<pre><code>sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED]
 </code></pre>
 <h4 id="description_8">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode</p>
@@ -621,7 +622,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker training job. NOTE: if a <code>--base-job-name</code> is passed along with this option, it will be ignored. </p>
 <p><code>--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code>: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait) </p>
 <h4 id="example_8">Example</h4>
-<pre><code>sagify cloud hyperparameter_optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
+<pre><code>sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
 </code></pre>
 <h3 id="cloud-deploy">Cloud Deploy</h3>
 <h4 id="name_8">Name</h4>
@@ -647,7 +648,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_9">Name</h4>
 <p>Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batch predictions on user defined S3 data</p>
 <h4 id="synopsis_10">Synopsis</h4>
-<pre><code>sagify cloud batch_transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
+<pre><code>sagify cloud batch-transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
 </code></pre>
 <h4 id="description_10">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.</p>
@@ -680,7 +681,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code>: Optional flag to wait until Batch Transform is finished. (default: don't wait)</p>
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker batch transform job</p>
 <h4 id="example_10">Example</h4>
-<pre><code>sagify cloud batch_transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
+<pre><code>sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
 </code></pre>
               
             </div>
@@ -715,14 +716,13 @@ log_metric("Accuracy", accuracy)
     </span>
 </div>
     <script>var base_url = '.';</script>
-    <script src="./js/theme.js"></script>
-      <script src="./search/require.js"></script>
-      <script src="./search/search.js"></script>
+    <script src="js/theme.js" defer></script>
+      <script src="search/main.js" defer></script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 0.17.4
-Build Date UTC : 2019-10-27 18:15:54
+MkDocs version : 1.0.4
+Build Date UTC : 2019-12-31 16:07:50
 -->
