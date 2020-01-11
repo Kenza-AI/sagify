@@ -34,7 +34,7 @@ setup(
         ]
     },
     install_requires=[
-        'boto3==1.9.220',
+        'boto3',
         'click>=7.0, <7.0.99',
         'docker>=3.7.0, <3.7.99',
         'flask>=1.1.0, <1.1.99',
