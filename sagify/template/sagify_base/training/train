@@ -6,7 +6,7 @@ import argparse
 import os
 import sys;sys.path.insert(1, ".")  # Do not remove this
 import traceback
-from sagify.training.training import train as train_function
+from sagify_base.training.training import train as train_function
 
 
 # The default path arguments values are used when training happens in SageMaker

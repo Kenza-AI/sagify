@@ -31,7 +31,7 @@ def build(obj):
 
         config = ConfigManager(config_file_path).get_config()
         api_build.build(
-            dir=config.sagify_module_dir,
+            source_dir=config.sagify_module_dir,
             requirements_dir=config.requirements_dir,
             docker_tag=obj['docker_tag'],
             image_name=config.image_name,
