@@ -21,7 +21,7 @@ def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id, im
     :param image_name: [str], The name of the Docker image
     """
 
-    sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify/'))
+    sagify_module_path = os.path.relpath(os.path.join(dir, 'sagify_base/'))
     push_script_path = os.path.join(sagify_module_path, 'push.sh')
 
     if not os.path.isfile(push_script_path):

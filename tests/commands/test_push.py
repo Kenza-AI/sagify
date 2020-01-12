@@ -12,7 +12,7 @@ from sagify.__main__ import cli
 
 Case = namedtuple('Case', 'description, init_cmd, push_cmd, expected_exit_code, expected_cli_call')
 
-push_script_path = 'src/sagify/push.sh'
+push_script_path = 'src/sagify_base/push.sh'
 
 t1 = Case('t1: sagify push', ['init'], ['push'], 0,
           lambda command_line: command_line.assert_called_once_with([push_script_path, 'latest', 'us-east-1', '', 'sagemaker', '', 'my_app']))

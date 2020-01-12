@@ -15,26 +15,26 @@ setup(
     url='https://github.com/Kenza-AI/sagify',
     package_data={
         'sagify': [
-            'template/sagify/config.json',
-            'template/sagify/*.sh',
-            'template/sagify/Dockerfile',
-            'template/sagify/__init__.py',
-            'template/sagify/training/__init__.py',
-            'template/sagify/training/train',
-            'template/sagify/training/*.py',
-            'template/sagify/prediction/*.py',
-            'template/sagify/prediction/serve',
-            'template/sagify/prediction/nginx.conf',
-            'template/sagify/local_test/*.sh',
-            'template/sagify/local_test/test_dir/output/.gitkeep',
-            'template/sagify/local_test/test_dir/model/.gitkeep',
-            'template/sagify/local_test/test_dir/input/config/*.json',
-            'template/sagify/local_test/test_dir/input/data/training/'
+            'template/sagify_base/config.json',
+            'template/sagify_base/*.sh',
+            'template/sagify_base/Dockerfile',
+            'template/sagify_base/__init__.py',
+            'template/sagify_base/training/__init__.py',
+            'template/sagify_base/training/train',
+            'template/sagify_base/training/*.py',
+            'template/sagify_base/prediction/*.py',
+            'template/sagify_base/prediction/serve',
+            'template/sagify_base/prediction/nginx.conf',
+            'template/sagify_base/local_test/*.sh',
+            'template/sagify_base/local_test/test_dir/output/.gitkeep',
+            'template/sagify_base/local_test/test_dir/model/.gitkeep',
+            'template/sagify_base/local_test/test_dir/input/config/*.json',
+            'template/sagify_base/local_test/test_dir/input/data/training/'
             '.gitkeep'
         ]
     },
     install_requires=[
-        'boto3==1.9.220',
+        'boto3',
         'click>=7.0, <7.0.99',
         'docker>=3.7.0, <3.7.99',
         'flask>=1.1.0, <1.1.99',

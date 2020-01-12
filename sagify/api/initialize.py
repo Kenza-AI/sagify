@@ -14,7 +14,7 @@ _FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 
 
 def _template_creation(app_name, aws_profile, aws_region, python_version, output_dir, requirements_dir):
-    sagify_module_name = 'sagify'
+    sagify_module_name = 'sagify_base'
 
     sagify_exists = os.path.exists(os.path.join(output_dir, sagify_module_name))
     if sagify_exists:

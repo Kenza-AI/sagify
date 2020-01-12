@@ -32,4 +32,4 @@ RUN apt-get -y purge --auto-remove git
 
 COPY ${module_path} /opt/program/${target_dir_name}
 
-ENTRYPOINT ["sagify/executor.sh"]
+ENTRYPOINT ["sagify_base/executor.sh"]

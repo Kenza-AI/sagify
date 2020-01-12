@@ -16,7 +16,7 @@ def train(dir, docker_tag, image_name):
     :param docker_tag: [str], the Docker tag for the image
     :param image_name: [str], The name of the Docker image
     """
-    sagify_module_path = os.path.join(dir, 'sagify')
+    sagify_module_path = os.path.join(dir, 'sagify_base')
     local_train_script_path = os.path.join(sagify_module_path, 'local_test', 'train_local.sh')
     test_path = os.path.join(sagify_module_path, 'local_test', 'test_dir')
 
@@ -42,7 +42,7 @@ def deploy(dir, docker_tag, image_name):
     :param docker_tag: [str], the Docker tag for the image
     :param image_name: [str], The name of the Docker image
     """
-    sagify_module_path = os.path.join(dir, 'sagify')
+    sagify_module_path = os.path.join(dir, 'sagify_base')
     local_deploy_script_path = os.path.join(sagify_module_path, 'local_test', 'deploy_local.sh')
     test_path = os.path.join(sagify_module_path, 'local_test', 'test_dir')
 
