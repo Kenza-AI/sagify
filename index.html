@@ -143,7 +143,7 @@
 </code></pre>
 <p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify</code> is created under the directory you provided. The structure is:</p>
-<pre><code>sagify/
+<pre><code>sagify_base/
     local_test/
         test_dir/
             input/
@@ -176,18 +176,18 @@
 <h3 id="step-3-integrate-sagify">Step 3: Integrate sagify</h3>
 <p>As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:</p>
 <ol>
-<li>Copy a subset of training data under <code>sagify/local_test/test_dir/input/data/training/</code> to test that training works locally</li>
-<li>Implement <code>train(...)</code> function in <code>sagify/training/training.py</code></li>
-<li>Implement <code>predict(...)</code> function in <code>sagify/prediction/prediction.py</code></li>
-<li>Optionally, specify hyperparameters in <code>sagify/local_test/test_dir/input/config/hyperparameters.json</code> </li>
+<li>Copy a subset of training data under <code>sagify_base/local_test/test_dir/input/data/training/</code> to test that training works locally</li>
+<li>Implement <code>train(...)</code> function in <code>sagify_base/training/training.py</code></li>
+<li>Implement <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code></li>
+<li>Optionally, specify hyperparameters in <code>sagify_base/local_test/test_dir/input/config/hyperparameters.json</code> </li>
 </ol>
 <p>Hence,</p>
 <ol>
 <li>
-<p>Copy <code>iris.data</code> files from <code>data</code> to <code>sagify/local_test/test_dir/input/data/training/</code></p>
+<p>Copy <code>iris.data</code> files from <code>data</code> to <code>sagify_base/local_test/test_dir/input/data/training/</code></p>
 </li>
 <li>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify/training/training.py</code> file with:</p>
+<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with:</p>
 <pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
     clf, accuracy = training_logic(input_file_path=input_file_path)
 
@@ -207,7 +207,7 @@ from iris_training import train as training_logic
 </code></pre>
 </li>
 <li>
-<p>Replace the body of <code>predict(...)</code> function in <code>sagify/prediction/prediction.py</code> with:</p>
+<p>Replace the body of <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code> with:</p>
 <pre><code>model_input = json_input['features']
 prediction = ModelService.predict(model_input)
 
@@ -232,7 +232,7 @@ return cls.model
 <p>Time to train the model for the Iris data set in the newly built Docker image:</p>
 <pre><code>sagify local train
 </code></pre>
-<p>Model file <code>model.pkl</code> and report file <code>report.txt</code> are now under <code>sagify/local_test/test_dir/model/</code></p>
+<p>Model file <code>model.pkl</code> and report file <code>report.txt</code> are now under <code>sagify_base/local_test/test_dir/model/</code></p>
 <h3 id="step-6-deploy-model">Step 6: Deploy model</h3>
 <p>Finally, serve the model as a REST Service:</p>
 <pre><code>sagify local deploy
@@ -332,7 +332,7 @@ source_profile = test-sagemaker
 <p>That's it! From now on, choose the created AWS profile when initializing sagify.</p>
 </li>
 <li>
-<p>You can change the AWS profile in an already initialized sagify module by changing the value of <code>aws_profile</code> and <code>profile</code> in <code>sagify/config.json</code> and <code>sagify/push.sh</code>, respectively.</p>
+<p>You can change the AWS profile in an already initialized sagify module by changing the value of <code>aws_profile</code> and <code>profile</code> in <code>sagify_base/config.json</code> and <code>sagify_base/push.sh</code>, respectively.</p>
 </li>
 </ul>
 <h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
@@ -388,7 +388,7 @@ source_profile = test-sagemaker
 </code></pre>
 
 <h3 id="step-2-implement-train-function">Step 2: Implement Train function</h3>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify/training/training.py</code> file with your logic. For example:</p>
+<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
 <pre><code>    from sklearn import datasets
     iris = datasets.load_iris()
 
@@ -484,7 +484,7 @@ source_profile = test-sagemaker
 <pre><code>sagify local train
 </code></pre>
 <h4 id="description_3">Description</h4>
-<p>This command executes a Docker image in train mode. More specifically, it executes the <code>train(...)</code> function in <code>sagify/training/training.py</code> inside an already built Docker image (see Build command section).</p>
+<p>This command executes a Docker image in train mode. More specifically, it executes the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> inside an already built Docker image (see Build command section).</p>
 <h4 id="example_3">Example</h4>
 <pre><code>sagify local train
 </code></pre>
@@ -495,7 +495,7 @@ source_profile = test-sagemaker
 <pre><code>sagify local deploy
 </code></pre>
 <h4 id="description_4">Description</h4>
-<p>This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to <code>/invocations</code> endpoint. Then, the <code>/invocations</code> endpoint calls the <code>predict(...)</code> function in <code>sagify/prediction/prediction.py</code> (see Build command section on how to build a Docker image).</p>
+<p>This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to <code>/invocations</code> endpoint. Then, the <code>/invocations</code> endpoint calls the <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code> (see Build command section on how to build a Docker image).</p>
 <h4 id="example_4">Example</h4>
 <pre><code>sagify local deploy
 </code></pre>
@@ -724,5 +724,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2019-12-31 16:07:50
+Build Date UTC : 2020-01-12 10:52:04
 -->
