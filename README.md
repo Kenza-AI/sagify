@@ -58,7 +58,7 @@ Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting 
 
 A module called `sagify` is created under the directory you provided. The structure is:
  
-    sagify/
+    sagify_base/
         local_test/
             test_dir/
                 input/
@@ -92,16 +92,16 @@ A module called `sagify` is created under the directory you provided. The struct
 
 As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:
 
-1. Copy a subset of training data under `sagify/local_test/test_dir/input/data/training/` to test that training works locally
-2. Implement `train(...)` function in `sagify/training/training.py`
-3. Implement `predict(...)` function in `sagify/prediction/prediction.py`
-4. Optionally, specify hyperparameters in `sagify/local_test/test_dir/input/config/hyperparameters.json` 
+1. Copy a subset of training data under `sagify_base/local_test/test_dir/input/data/training/` to test that training works locally
+2. Implement `train(...)` function in `sagify_base/training/training.py`
+3. Implement `predict(...)` function in `sagify_base/prediction/prediction.py`
+4. Optionally, specify hyperparameters in `sagify_base/local_test/test_dir/input/config/hyperparameters.json` 
 
 Hence,
 
-1. Copy `iris.data` files from `data` to `sagify/local_test/test_dir/input/data/training/`
+1. Copy `iris.data` files from `data` to `sagify_base/local_test/test_dir/input/data/training/`
 
-2. Replace the `TODOs` in the `train(...)` function in `sagify/training/training.py` file with:
+2. Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with:
 
             input_file_path = os.path.join(input_data_path, 'iris.data')
             clf, accuracy = training_logic(input_file_path=input_file_path)
@@ -121,7 +121,7 @@ Hence,
         
         from iris_training import train as training_logic
 
-3. Replace the body of `predict(...)` function in `sagify/prediction/prediction.py` with:
+3. Replace the body of `predict(...)` function in `sagify_base/prediction/prediction.py` with:
 
         model_input = json_input['features']
         prediction = ModelService.predict(model_input)
@@ -152,7 +152,7 @@ Time to train the model for the Iris data set in the newly built Docker image:
 
     sagify local train
 
-Model file `model.pkl` and report file `report.txt` are now under `sagify/local_test/test_dir/model/`
+Model file `model.pkl` and report file `report.txt` are now under `sagify_base/local_test/test_dir/model/`
 
 ### Step 6: Deploy model
 
@@ -217,7 +217,7 @@ Define the Hyperparameter Configuration File. More specifically, you need to spe
 
 ### Step 2: Implement Train function
 
-Replace the `TODOs` in the `train(...)` function in `sagify/training/training.py` file with your logic. For example:
+Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
 
         from sklearn import datasets
         iris = datasets.load_iris()
@@ -354,7 +354,7 @@ Executes a Docker image in train mode
     
 #### Description
 
-This command executes a Docker image in train mode. More specifically, it executes the `train(...)` function in `sagify/training/training.py` inside an already built Docker image (see Build command section).
+This command executes a Docker image in train mode. More specifically, it executes the `train(...)` function in `sagify_base/training/training.py` inside an already built Docker image (see Build command section).
 
 #### Example
 
@@ -373,7 +373,7 @@ Executes a Docker image in serve mode
     
 #### Description
 
-This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to `/invocations` endpoint. Then, the `/invocations` endpoint calls the `predict(...)` function in `sagify/prediction/prediction.py` (see Build command section on how to build a Docker image).
+This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to `/invocations` endpoint. Then, the `/invocations` endpoint calls the `predict(...)` function in `sagify_base/prediction/prediction.py` (see Build command section on how to build a Docker image).
  
 #### Example
 
