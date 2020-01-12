@@ -2,7 +2,7 @@ from __future__ import absolute_import
 
 # Do not remove the following line
 import sys;sys.path.append(".")  # NOQA
-from sagify.prediction.prediction import predict as predict_function
+from sagify_base.prediction.prediction import predict as predict_function
 
 
 def predict(json_input):
