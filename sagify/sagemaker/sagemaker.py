@@ -35,9 +35,12 @@ class SageMakerClient(object):
                 aws_session_token=credentials['SessionToken'],
                 region_name=aws_region
             )
-        else:
+        elif aws_profile:
             logger.info("No IAM role provided. Using profile {} instead.".format(aws_profile))
             self.boto_session = boto3.Session(profile_name=aws_profile, region_name=aws_region)
+        else:
+            self.boto_session = boto3.Session(region_name=aws_region)
+
 
         self.sagemaker_client = self.boto_session.client('sagemaker')
         self.sagemaker_session = sage.Session(boto_session=self.boto_session)
