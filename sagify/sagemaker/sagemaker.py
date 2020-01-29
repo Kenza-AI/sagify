@@ -41,7 +41,6 @@ class SageMakerClient(object):
         else:
             self.boto_session = boto3.Session(region_name=aws_region)
 
-
         self.sagemaker_client = self.boto_session.client('sagemaker')
         self.sagemaker_session = sage.Session(boto_session=self.boto_session)
         self.role = sage.get_execution_role(self.sagemaker_session) if aws_role is None else aws_role
