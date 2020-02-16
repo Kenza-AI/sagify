@@ -155,6 +155,10 @@ def train(
     logger.info(ASCII_LOGO)
     logger.info("Started training on SageMaker...\n")
 
+    # Because MaxWaitTimeInSeconds is 3600 and cannot be less than training time out
+    if use_spot_instances:
+        time_out = 3600
+
     try:
         s3_model_location = api_cloud.train(
             dir=_config().sagify_module_dir,
@@ -298,6 +302,10 @@ def hyperparameter_optimization(
     """
     logger.info(ASCII_LOGO)
     logger.info("Started hyperparameter optimization on SageMaker...\n")
+
+    # Because MaxWaitTimeInSeconds is 3600 and cannot be less than training time out
+    if use_spot_instances:
+        time_out = 3600
 
     try:
         best_job_name = api_cloud.hyperparameter_optimization(
