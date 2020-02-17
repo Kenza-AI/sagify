@@ -91,6 +91,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            use_spot_instances=False,
                             metric_names=None,
                             tags=None
                         )
@@ -143,6 +144,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name='some job name prefix',
                             job_name=None,
+                            use_spot_instances=False,
                             metric_names=None,
                             tags=None
                         )
@@ -196,6 +198,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name='some job name prefix',
                             job_name='some job name',
+                            use_spot_instances=False,
                             metric_names=None,
                             tags=None
                         )
@@ -246,6 +249,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            use_spot_instances=False,
                             metric_names=None,
                             tags=[
                                 {
@@ -305,6 +309,7 @@ class TestTrain(object):
                             hyperparameters=None,
                             base_job_name=None,
                             job_name=None,
+                            use_spot_instances=False,
                             metric_names=None,
                             tags=None
                         )

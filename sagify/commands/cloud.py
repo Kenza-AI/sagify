@@ -120,6 +120,13 @@ def upload_data(input_dir, s3_dir):
     "NOTE: if a `--base-job-name` is passed along with this option, it will be ignored."
 )
 @click.option(
+    u"--use-spot-instances",
+    default=False,
+    is_flag=True,
+    help="Optional flag that specifies whether to use SageMaker Managed Spot instances for training. "
+         "It should be used only for training jobs that take less than 1 hour."
+)
+@click.option(
     u"--metric-names",
     required=False,
     default=None,
@@ -139,6 +146,7 @@ def train(
         external_id,
         base_job_name,
         job_name,
+        use_spot_instances,
         metric_names
 ):
     """
@@ -146,6 +154,10 @@ def train(
     """
     logger.info(ASCII_LOGO)
     logger.info("Started training on SageMaker...\n")
+
+    # Because MaxWaitTimeInSeconds is 3600 and cannot be less than training time out
+    if use_spot_instances:
+        time_out = 3600
 
     try:
         s3_model_location = api_cloud.train(
@@ -162,6 +174,7 @@ def train(
             external_id=external_id,
             base_job_name=base_job_name,
             job_name=job_name,
+            use_spot_instances=use_spot_instances,
             metric_names=[_val.strip() for _val in metric_names.split(',')] if metric_names else None
         )
 
@@ -251,6 +264,13 @@ def train(
     "NOTE: if a `--base-job-name` is passed along with this option, it will be ignored."
 )
 @click.option(
+    u"--use-spot-instances",
+    default=False,
+    is_flag=True,
+    help="Optional flag that specifies whether to use SageMaker Managed Spot instances for training. "
+         "It should be used only for training jobs that take less than 1 hour."
+)
+@click.option(
     u"-w",
     u"--wait",
     default=False,
@@ -274,6 +294,7 @@ def hyperparameter_optimization(
         external_id,
         base_job_name,
         job_name,
+        use_spot_instances,
         wait
 ):
     """
@@ -281,6 +302,10 @@ def hyperparameter_optimization(
     """
     logger.info(ASCII_LOGO)
     logger.info("Started hyperparameter optimization on SageMaker...\n")
+
+    # Because MaxWaitTimeInSeconds is 3600 and cannot be less than training time out
+    if use_spot_instances:
+        time_out = 3600
 
     try:
         best_job_name = api_cloud.hyperparameter_optimization(
@@ -299,6 +324,7 @@ def hyperparameter_optimization(
             external_id=external_id,
             base_job_name=base_job_name,
             job_name=job_name,
+            use_spot_instances=use_spot_instances,
             wait=wait
         )
 

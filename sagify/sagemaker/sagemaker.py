@@ -70,6 +70,7 @@ class SageMakerClient(object):
             hyperparameters,
             base_job_name,
             job_name,
+            use_spot_instances=False,
             metric_names=None,
             tags=None
     ):
@@ -87,6 +88,12 @@ class SageMakerClient(object):
         this estimator with
         :param base_job_name: [str], Optional prefix for the SageMaker training job
         :param job_name: [str], Optional name for the SageMaker training job. Overrides `base_job_name`
+        :param use_spot_instances: bool, default=False], Specifies whether to use SageMaker
+                Managed Spot instances for training.
+
+                More information:
+                https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html
+                (default: ``False``).
         :param metric_names: [list[str], default=None], Optional list of string metric names
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
@@ -125,7 +132,9 @@ class SageMakerClient(object):
             hyperparameters=hyperparameters,
             base_job_name=base_job_name,
             sagemaker_session=self.sagemaker_session,
-            metric_definitions=metric_definitions
+            metric_definitions=metric_definitions,
+            train_use_spot_instances=use_spot_instances,
+            train_max_wait=3600  # 1 hour
         )
         if tags:
             estimator.tags = tags
@@ -150,6 +159,7 @@ class SageMakerClient(object):
             hyperparams_ranges_dict,
             base_job_name,
             job_name,
+            use_spot_instances=False,
             tags=None,
             wait=False
     ):
@@ -171,6 +181,12 @@ class SageMakerClient(object):
         :param hyperparams_ranges_dict: [dict], Dictionary containing the hyperparameters configuration
         :param base_job_name: [str], Optional prefix for the SageMaker tuning job.
         :param job_name: [str], Optional name for the SageMaker tuning job. Overrides `base_job_name`
+        :param use_spot_instances: bool, default=False], Specifies whether to use SageMaker
+                Managed Spot instances for training.
+
+                More information:
+                https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html
+                (default: ``False``).
         :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -200,7 +216,9 @@ class SageMakerClient(object):
             train_max_run=max_run,
             input_mode='File',
             output_path=output_path,
-            sagemaker_session=self.sagemaker_session
+            sagemaker_session=self.sagemaker_session,
+            train_use_spot_instances=use_spot_instances,
+            train_max_wait=3600  # 1 hour
         )
 
         metric_definitions = [

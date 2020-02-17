@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.20.3',
+    version='0.20.4',
     setup_cfg=True,
     python_requires='>=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4',
     packages=find_packages(where='.'),
@@ -41,7 +41,7 @@ setup(
         'paramiko>=2.4.2, <2.4.99',
         'pathlib2>=2.3.0, <2.3.99',
         'requests>=2.20.0, <2.20.99',
-        'sagemaker>=1.38.0, <1.38.99',
+        'sagemaker>=1.50.0, <1.50.99',
         'six>=1.10, <1.11.99',
         'future>=0.16.0, <0.17.99'
     ],

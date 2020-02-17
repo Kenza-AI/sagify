@@ -97,6 +97,7 @@ def train(
         external_id,
         base_job_name,
         job_name,
+        use_spot_instances=False,
         metric_names=None,
         tags=None
 ):
@@ -116,6 +117,12 @@ def train(
     :param external_id: [str], Optional external id used when using an IAM role
     :param base_job_name: [str], Optional prefix for the SageMaker training job
     :param job_name: [str], Optional name for the SageMaker training job. Overrides `base_job_name`
+    :param use_spot_instances: bool, default=False], Specifies whether to use SageMaker
+                Managed Spot instances for training.
+
+                More information:
+                https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html
+                (default: ``False``).
     :param metric_names: [list[str], default=None], Optional list of string metric names
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
@@ -150,6 +157,7 @@ def train(
         hyperparameters=hyperparams_dict,
         base_job_name=base_job_name,
         job_name=job_name,
+        use_spot_instances=use_spot_instances,
         tags=tags,
         metric_names=metric_names
     )
@@ -171,6 +179,7 @@ def hyperparameter_optimization(
         base_job_name,
         job_name,
         wait,
+        use_spot_instances=False,
         tags=None
 ):
     """
@@ -192,6 +201,12 @@ def hyperparameter_optimization(
     :param base_job_name: [str], Optional prefix for the SageMaker training job
     :param job_name: [str], Optional name for the SageMaker tuning job. Overrides `base_job_name`
     :param wait: [bool, default=False], Wait until hyperparameter tuning is done
+    :param use_spot_instances: bool, default=False], Specifies whether to use SageMaker
+                Managed Spot instances for training.
+
+                More information:
+                https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html
+                (default: ``False``).
     :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
         job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
 
@@ -231,6 +246,7 @@ def hyperparameter_optimization(
         hyperparams_ranges_dict=hyperparams_ranges_dict,
         base_job_name=base_job_name,
         job_name=job_name,
+        use_spot_instances=use_spot_instances,
         tags=tags,
         wait=wait
     )
