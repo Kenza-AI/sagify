@@ -536,7 +536,7 @@ source_profile = test-sagemaker
 <h4 id="name_6">Name</h4>
 <p>Trains your ML/DL model using a Docker image on AWS SageMaker with input from S3</p>
 <h4 id="synopsis_7">Synopsis</h4>
-<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES]
+<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
 </code></pre>
 <h4 id="description_7">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
@@ -553,6 +553,7 @@ source_profile = test-sagemaker
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--base-job-name BASE_JOB_NAME</code> or <code>-n BASE_JOB_NAME</code>: Optional prefix for the SageMaker training job</p>
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker training job. NOTE: if a <code>--base-job-name</code> is passed along with this option, it will be ignored.</p>
+<p><code>--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES</code>: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).</p>
 <p><code>--metric-names COMMA_SEPARATED_METRIC_NAMES</code>: Optional comma-separated metric names for tracking performance of training jobs. Example: <code>Precision,Recall,AUC</code>. Then, make sure you log these metric values using the <code>log_metric</code> function in the <code>train</code> function:</p>
 <pre><code>```
 ...
@@ -571,7 +572,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_7">Name</h4>
 <p>Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker</p>
 <h4 id="synopsis_8">Synopsis</h4>
-<pre><code>sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED]
+<pre><code>sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
 </code></pre>
 <h4 id="description_8">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode</p>
@@ -620,7 +621,8 @@ log_metric("Accuracy", accuracy)
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--base-job-name BASE_JOB_NAME</code> or <code>-n BASE_JOB_NAME</code>: Optional prefix for the SageMaker training job</p>
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker training job. NOTE: if a <code>--base-job-name</code> is passed along with this option, it will be ignored. </p>
-<p><code>--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code>: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait) </p>
+<p><code>--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code>: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait)</p>
+<p><code>--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES</code>: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).</p>
 <h4 id="example_8">Example</h4>
 <pre><code>sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
 </code></pre>
@@ -724,5 +726,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.0.4
-Build Date UTC : 2020-01-12 10:52:04
+Build Date UTC : 2020-02-20 21:54:13
 -->
