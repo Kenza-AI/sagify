@@ -108,7 +108,7 @@ def test_train_happy_case():
                             sagemaker_session=sagemaker_session_instance,
                             metric_definitions=None,
                             train_use_spot_instances=False,
-                            train_max_wait=3600
+                            train_max_wait=None
                         )
                         sagemaker_estimator_instance = mocked_sagemaker_estimator.return_value
                         assert sagemaker_estimator_instance.fit.call_count == 1
@@ -560,7 +560,7 @@ def test_hyperparameter_optimization_happy_case():
                                 output_path='s3://bucket/output',
                                 sagemaker_session=sagemaker_session_instance,
                                 train_use_spot_instances=False,
-                                train_max_wait=3600
+                                train_max_wait=None
                             )
 
                             mocked_sagemaker_tuner_instance = mocked_sagemaker_tuner.return_value
