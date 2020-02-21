@@ -134,7 +134,7 @@ class SageMakerClient(object):
             sagemaker_session=self.sagemaker_session,
             metric_definitions=metric_definitions,
             train_use_spot_instances=use_spot_instances,
-            train_max_wait=3600  # 1 hour
+            train_max_wait=3600 if use_spot_instances else None  # 1 hour
         )
         if tags:
             estimator.tags = tags
@@ -218,7 +218,7 @@ class SageMakerClient(object):
             output_path=output_path,
             sagemaker_session=self.sagemaker_session,
             train_use_spot_instances=use_spot_instances,
-            train_max_wait=3600  # 1 hour
+            train_max_wait=3600 if use_spot_instances else None  # 1 hour
         )
 
         metric_definitions = [
