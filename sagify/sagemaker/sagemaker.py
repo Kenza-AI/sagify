@@ -34,7 +34,6 @@ class SageMakerClient(object):
                     ExternalId=external_id
                 )
 
-
             credentials = assumedRoleObject['Credentials']
             self.boto_session = boto3.Session(
                 aws_access_key_id=credentials['AccessKeyId'],
