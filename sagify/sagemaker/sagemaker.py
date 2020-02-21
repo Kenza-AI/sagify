@@ -22,11 +22,18 @@ class SageMakerClient(object):
             logger.info("An IAM role and corresponding external id were provided. Attempting to assume that role...")
 
             sts_client = boto3.client('sts')
-            assumedRoleObject = sts_client.assume_role(
-                RoleArn=aws_role,
-                RoleSessionName="SagifySession",
-                ExternalId=external_id
-            )
+            if external_id is None:
+                assumedRoleObject = sts_client.assume_role(
+                    RoleArn=aws_role,
+                    RoleSessionName="SagifySession"
+                )
+            else:
+                assumedRoleObject = sts_client.assume_role(
+                    RoleArn=aws_role,
+                    RoleSessionName="SagifySession",
+                    ExternalId=external_id
+                )
+
 
             credentials = assumedRoleObject['Credentials']
             self.boto_session = boto3.Session(
