@@ -12,7 +12,7 @@ A command-line utility to train and deploy Machine Learning/Deep Learning models
 
 sagify requires the following:
 
-1. Python (2.7, 3.5, 3.6)
+1. Python (3.5, 3.6, 3.7, 3.8)
 2. [Docker](https://www.docker.com/) installed and running
 3. Configured [awscli](https://pypi.python.org/pypi/awscli)
 
