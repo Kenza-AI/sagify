@@ -7,13 +7,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="None">
   
+  
   <link rel="shortcut icon" href="img/favicon.ico">
-  <title>sagify - sagify</title>
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700' rel='stylesheet' type='text/css'>
+  <title>sagify</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
 
-  <link rel="stylesheet" href="css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="css/theme_extra.css" type="text/css" />
-  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
+  <link rel="stylesheet" href="css/theme.css" />
+  <link rel="stylesheet" href="css/theme_extra.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
   
   <script>
     // Current page data
@@ -24,7 +25,7 @@
   
   <script src="js/jquery-2.1.1.min.js" defer></script>
   <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   <script>hljs.initHighlightingOnLoad();</script> 
   
 </head>
@@ -35,6 +36,7 @@
 
     
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
         <a href="." class="icon icon-home"> sagify</a>
         <div role="search">
@@ -45,37 +47,226 @@
       </div>
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-	<ul class="current">
-	  
-          
-            <li class="toctree-l1 current">
-		
-    <a class="current" href=".">sagify</a>
-    <ul class="subnav">
-            
-    <li class="toctree-l2"><a href="#sagify">sagify</a></li>
-    
+                <ul class="current">
+                    <li class="toctree-l1 current"><a class="reference internal current" href=".">sagify</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
         <ul>
-        
-            <li><a class="toctree-l3" href="#installation">Installation</a></li>
-        
-            <li><a class="toctree-l3" href="#getting-started">Getting started</a></li>
-        
-            <li><a class="toctree-l3" href="#usage">Usage</a></li>
-        
-            <li><a class="toctree-l3" href="#hyperparameter-optimization">Hyperparameter Optimization</a></li>
-        
-            <li><a class="toctree-l3" href="#commands">Commands</a></li>
-        
+    <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#install-sagify">Install sagify</a>
+    </li>
         </ul>
-    
-
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-initialize-sagify">Step 2: Initialize sagify</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-3-integrate-sagify">Step 3: Integrate sagify</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-4-build-docker-image">Step 4: Build Docker image</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-train-model">Step 5: Train model</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-6-deploy-model">Step 6: Deploy model</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#configure-aws-account">Configure AWS Account</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#create-s3-bucket">Create S3 Bucket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upload-training-data">Upload Training Data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#train-on-aws-sagemaker">Train on AWS SageMaker</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deploy-on-aws-sagemaker">Deploy on AWS SageMaker</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter Optimization</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-define-hyperparameter-configuration-file">Step 1: Define Hyperparameter Configuration File</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-implement-train-function">Step 2: Implement Train function</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-4-call-the-cli-command">Step 4: Call The CLI Command</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-monitor-progress">Step 5: Monitor Progress</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#initialize">Initialize</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description">Description</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#configure">Configure</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#description_1">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_1">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags">Optional Flags</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#build">Build</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_1">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_2">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_2">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_2">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#local-train">Local Train</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_2">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_3">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_3">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_3">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#local-deploy">Local Deploy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_3">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_4">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_4">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_4">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#push">Push</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_4">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_5">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_5">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_1">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_5">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-upload-data">Cloud Upload Data</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_5">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_6">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_6">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_6">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-train">Cloud Train</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_6">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_7">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_7">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_1">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_2">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_7">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-hyperparameter-optimization">Cloud Hyperparameter Optimization</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_7">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_8">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_8">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_2">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_3">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_8">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-deploy">Cloud Deploy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_8">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_9">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_9">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_3">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_4">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_9">Example</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-batch-transform">Cloud Batch Transform</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_9">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_10">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_10">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_4">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_5">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_10">Example</a>
+    </li>
+        </ul>
+    </li>
+        </ul>
+    </li>
     </ul>
-	    </li>
-          
-        </ul>
+                    </li>
+                </ul>
       </div>
-      &nbsp;
+    </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
@@ -103,20 +294,21 @@
       
     </li>
   </ul>
+  
   <hr/>
 </div>
           <div role="main">
             <div class="section">
               
                 <h1 id="sagify">sagify</h1>
-<p><img alt="Sagify" src="sagify@2x.png" /></p>
+<p><img alt="Sagify" src="sagify%402x.png" /></p>
 <p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
 <p><img alt="gif" src="end2end.gif" /></p>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
 <ol>
-<li>Python (2.7, 3.5, 3.6)</li>
+<li>Python (3.5, 3.6, 3.7, 3.8)</li>
 <li><a href="https://www.docker.com/">Docker</a> installed and running</li>
 <li>Configured <a href="https://pypi.python.org/pypi/awscli">awscli</a></li>
 </ol>
@@ -332,7 +524,7 @@ source_profile = test-sagemaker
 <p>That's it! From now on, choose the created AWS profile when initializing sagify.</p>
 </li>
 <li>
-<p>You can change the AWS profile in an already initialized sagify module by changing the value of <code>aws_profile</code> and <code>profile</code> in <code>sagify_base/config.json</code> and <code>sagify_base/push.sh</code>, respectively.</p>
+<p>You can change the AWS profile/region in an already initialized sagify module by changing the value of <code>aws_profile</code>/<code>aws_region</code> in <code>.sagify.json</code>.</p>
 </li>
 </ul>
 <h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
@@ -386,7 +578,6 @@ source_profile = test-sagemaker
     }
 }
 </code></pre>
-
 <h3 id="step-2-implement-train-function">Step 2: Implement Train function</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
 <pre><code>    from sklearn import datasets
@@ -610,7 +801,6 @@ log_metric("Accuracy", accuracy)
     }
 }
 </code></pre>
-
 <h4 id="optional-flags_3">Optional Flags</h4>
 <p><code>--max-jobs MAX_NUMBER_OF_TRAINING_JOBS</code> or <code>-m MAX_NUMBER_OF_TRAINING_JOBS</code>: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)</p>
 <p><code>--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code> or <code>-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code>: Maximum number of parallel training jobs to start (default: 1)</p>
@@ -660,7 +850,6 @@ log_metric("Accuracy", accuracy)
     &quot;features&quot;: [5.1,3.5,1.4,0.2]
 }
 </code></pre>
-
 <ul>
 <li>The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:</li>
 </ul>
@@ -669,7 +858,6 @@ log_metric("Accuracy", accuracy)
 {&quot;features&quot;: [4.7,3.2,1.3,0.2]}
 {&quot;features&quot;: [4.6,3.1,1.5,0.2]}
 </code></pre>
-
 <h4 id="required-flags_4">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--s3-input-location S3_INPUT_LOCATION</code> or <code>-i S3_INPUT_LOCATION</code>: s3 input data location</p>
@@ -698,7 +886,7 @@ log_metric("Accuracy", accuracy)
     
   </div>
 
-  Built with <a href="http://www.mkdocs.org">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
       
         </div>
@@ -708,7 +896,7 @@ log_metric("Accuracy", accuracy)
 
   </div>
 
-  <div class="rst-versions" role="note" style="cursor: pointer">
+  <div class="rst-versions" role="note" aria-label="versions">
     <span class="rst-current-version" data-toggle="rst-current-version">
       
           <a href="https://github.com/Kenza-AI/sagify/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
@@ -720,11 +908,16 @@ log_metric("Accuracy", accuracy)
     <script>var base_url = '.';</script>
     <script src="js/theme.js" defer></script>
       <script src="search/main.js" defer></script>
+    <script defer>
+        window.onload = function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        };
+    </script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 1.0.4
-Build Date UTC : 2020-02-20 21:54:13
+MkDocs version : 1.1.2
+Build Date UTC : 2020-12-31 15:52:18.402148+00:00
 -->
