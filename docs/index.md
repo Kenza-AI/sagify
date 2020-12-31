@@ -162,7 +162,6 @@ Run the following curl command on your terminal to verify that the REST Service 
     http://localhost:8080/invocations \
     -H 'Cache-Control: no-cache' \
     -H 'Content-Type: application/json' \
-    -H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
     -d '{
 	    "features":[[0.34, 0.45, 0.45, 0.3]]
     }'
@@ -248,7 +247,7 @@ Voila! That's a proof that this Machine Learning model is going to be trained an
 
 - That's it! From now on, choose the created AWS profile when initializing sagify.
 
-- You can change the AWS profile in an already initialized sagify module by changing the value of `aws_profile` and `profile` in `sagify_base/config.json` and `sagify_base/push.sh`, respectively.
+- You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
 
 ### Push Docker Image to AWS ECS
 
