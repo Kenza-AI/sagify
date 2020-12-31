@@ -4,6 +4,7 @@ FROM python:$python_version-slim-stretch
 LABEL maintainer="Kenza AI <support@kenza.ai>"
 
 RUN apt-get -y update && apt-get install -y --no-install-recommends \
+         make \
          nginx \
          ca-certificates \
          g++ \
