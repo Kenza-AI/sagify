@@ -162,7 +162,6 @@ Run the following curl command on your terminal to verify that the REST Service 
     http://localhost:8080/invocations \
     -H 'Cache-Control: no-cache' \
     -H 'Content-Type: application/json' \
-    -H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
     -d '{
 	    "features":[[0.34, 0.45, 0.45, 0.3]]
     }'
