@@ -1,6 +1,6 @@
 **Build Status**
 
-master: [![Build Status](https://travis-ci.org/Kenza-AI/sagify.svg?branch=master)](https://travis-ci.org/Kenza-AI/sagify)
+master: [![Build Status](https://github.com/Kenza-AI/sagify/workflows/Build/badge.svg)](https://github.com/ExpediaGroup/mittens/actions?query=workflow:"Build")
 
 # sagify
 
