@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.20.7',
+    version='0.20.8',
     setup_cfg=True,
     python_requires='~=3.5',
     packages=find_packages(where='.'),
