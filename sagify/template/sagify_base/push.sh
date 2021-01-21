@@ -6,6 +6,7 @@ role=$3
 profile=$4
 external_id=$5
 image=$6
+aws_version=`aws --version`
 
 if [[ ! -z "$role" ]]; then 
     aws configure set profile.${role}.role_arn ${role}
@@ -53,11 +54,19 @@ else
     echo "ECR repository already exists, will push there."
 fi
 
+if [[ $aws_version == aws-cli/2* ]]; then
 # Get the login command from ECR and execute it directly
-if [[ ! -z "$profile" ]]; then
-    $(aws ecr get-login --profile ${profile} --region ${region} --no-include-email)
+    if [[ ! -z "$profile" ]]; then
+        aws ecr get-login-password --profile ${profile} --region ${region} | docker login --username AWS --password-stdin "${account}".dkr.ecr."${region}".amazonaws.com
+    else
+        aws ecr get-login-password --region ${region} | docker login --username AWS --password-stdin "${account}".dkr.ecr."${region}".amazonaws.com
+    fi
 else
-    $(aws ecr get-login --region ${region} --no-include-email)
+    if [[ ! -z "$profile" ]]; then
+        $(aws ecr get-login --profile ${profile} --region ${region} --no-include-email)
+    else
+        $(aws ecr get-login --region ${region} --no-include-email)
+    fi
 fi
 
 # Push Docker image to ECR
