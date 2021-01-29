@@ -85,13 +85,14 @@ def ask_for_aws_details():
                     ', '.join([str(pos) for pos in valid_positions])
                 )
             )
-        return int(input_pos) - 1
+        return int(input_pos)
 
     chosen_profile_index = click.prompt(
         text="Choose from {}".format(', '.join([str(pos) for pos in valid_positions])),
         default=1,
         value_proc=lambda x: _validate_profile_position(x)
     )
+    chosen_profile_index -= 1
 
     chosen_profile = available_profiles[chosen_profile_index]
 
