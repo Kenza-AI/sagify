@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
+import os
 import sys
 
 import click
@@ -413,6 +414,290 @@ def deploy(
         sys.exit(-1)
 
 
+@click.command(name="create-streaming-inference")
+@click.option(
+    u"-n",
+    u"--name",
+    required=True,
+    help="Name of streaming inference worker"
+)
+@click.option(
+    u"--endpoint-name",
+    required=True,
+    help="Name for the SageMaker endpoint"
+)
+@click.option(
+    u"--input-topic-name",
+    required=True,
+    help="Name of input topic name"
+)
+@click.option(
+    u"--output-topic-name",
+    required=True,
+    help="Name of output topic name"
+)
+@click.option(
+    u"--type",
+    required=False,
+    default='SQS',
+    help="Type of streaming inference pipeline. Only 'SQS' is supported right now."
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+def create_streaming_inference(
+        name,
+        endpoint_name,
+        input_topic_name,
+        output_topic_name,
+        type,
+        iam_role_arn,
+        external_id
+):
+    """
+    Command to set up a streaming inference pipeline
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Experimental Functionality!\n")
+    logger.info("Started creating streaming inference pipeline ...\n")
+
+    try:
+        config_file_path = os.path.join('.sagify.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+
+        config = ConfigManager(config_file_path).get_config()
+        api_cloud.create_streaming_inference(
+            dir=config.sagify_module_dir,
+            name=name,
+            endpoint_name=endpoint_name,
+            input_topic_name=input_topic_name,
+            output_topic_name=output_topic_name,
+            type=type,
+            aws_role=iam_role_arn,
+            external_id=external_id
+        )
+
+        logger.info("Streaming inference pipeline has been created!")
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
+    except Exception as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
+@click.command(name="delete-streaming-inference")
+@click.option(
+    u"-n",
+    u"--name",
+    required=True,
+    help="Name of streaming inference worker"
+)
+@click.option(
+    u"--input-topic-name",
+    required=True,
+    help="Name of input topic name"
+)
+@click.option(
+    u"--output-topic-name",
+    required=True,
+    help="Name of output topic name"
+)
+@click.option(
+    u"--type",
+    required=False,
+    default='SQS',
+    help="Type of streaming inference pipeline. Only 'SQS' is supported right now."
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+def delete_streaming_inference(
+        name,
+        input_topic_name,
+        output_topic_name,
+        type,
+        iam_role_arn,
+        external_id
+):
+    """
+    Command to delete a streaming inference pipeline
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Experimental Functionality!\n")
+    logger.info("Started deleting streaming inference pipeline ...\n")
+
+    try:
+        config_file_path = os.path.join('.sagify.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+
+        config = ConfigManager(config_file_path).get_config()
+        api_cloud.delete_streaming_inference(
+            dir=config.sagify_module_dir,
+            name=name,
+            input_topic_name=input_topic_name,
+            output_topic_name=output_topic_name,
+            type=type,
+            aws_role=iam_role_arn,
+            external_id=external_id
+        )
+
+        logger.info("Streaming inference pipeline has been deleted!")
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
+    except Exception as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
+@click.command(name="send-to-streaming-inference")
+@click.option(
+    u"--input-features-file",
+    required=True,
+    help="Local path to input features file. Each line in the file is a json object.",
+    type=click.Path(resolve_path=True)
+)
+@click.option(
+    u"--input-topic-name",
+    required=True,
+    help="Name of input topic name"
+)
+@click.option(
+    u"--type",
+    required=False,
+    default='SQS',
+    help="Type of streaming inference pipeline. Only 'SQS' is supported right now."
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+def send_to_streaming_inference(
+        input_features_file,
+        input_topic_name,
+        type,
+        iam_role_arn,
+        external_id
+):
+    """
+    Send features to a streaming inference pipeline
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Experimental Functionality!\n")
+    logger.info("Started sending features to streaming inference pipeline ...\n")
+
+    try:
+        config_file_path = os.path.join('.sagify.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+
+        config = ConfigManager(config_file_path).get_config()
+        api_cloud.send_to_streaming_inference(
+            dir=config.sagify_module_dir,
+            input_features_file=input_features_file,
+            input_topic_name=input_topic_name,
+            type=type,
+            aws_role=iam_role_arn,
+            external_id=external_id
+        )
+
+        logger.info("Features have been sent!")
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
+    except Exception as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
+@click.command(name="listen-to-streaming-inference")
+@click.option(
+    u"--output-topic-name",
+    required=True,
+    help="Name of output topic name"
+)
+@click.option(
+    u"--type",
+    required=False,
+    default='SQS',
+    help="Type of streaming inference pipeline. Only 'SQS' is supported right now."
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the push command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+def listen_to_streaming_inference(
+        output_topic_name,
+        type,
+        iam_role_arn,
+        external_id
+):
+    """
+    Listen to predictions in a streaming inference pipeline
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Experimental Functionality!\n")
+    logger.info("Started listening to predictions in this streaming inference pipeline ...\n")
+
+    try:
+        config_file_path = os.path.join('.sagify.json')
+        if not os.path.isfile(config_file_path):
+            raise ValueError()
+
+        config = ConfigManager(config_file_path).get_config()
+        for _prediction in api_cloud.listen_to_streaming_inference(
+            dir=config.sagify_module_dir,
+            output_topic_name=output_topic_name,
+            type=type,
+            aws_role=iam_role_arn,
+            external_id=external_id
+        ):
+            logger.info(_prediction)
+    except ValueError:
+        logger.info("This is not a sagify directory: {}".format(dir))
+        sys.exit(-1)
+    except Exception as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
 @click.command(name="batch-transform")
 @click.option(
     u"-m", u"--s3-model-location",
@@ -520,4 +805,8 @@ cloud.add_command(upload_data)
 cloud.add_command(train)
 cloud.add_command(hyperparameter_optimization)
 cloud.add_command(deploy)
+cloud.add_command(create_streaming_inference)
+cloud.add_command(delete_streaming_inference)
+cloud.add_command(send_to_streaming_inference)
+cloud.add_command(listen_to_streaming_inference)
 cloud.add_command(batch_transform)
