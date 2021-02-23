@@ -8,6 +8,7 @@ from sagemaker.parameter import CategoricalParameter, ContinuousParameter, Integ
 
 from sagify.config.config import ConfigManager
 from sagify.sagemaker import sagemaker
+from sagify.streaming_inference.streaming_inference import StreamingInferenceClient
 
 
 def _read_config(input_dir):
@@ -303,6 +304,151 @@ def deploy(
         train_instance_type=ec2_type,
         tags=tags,
         endpoint_name=endpoint_name
+    )
+
+
+def create_streaming_inference(
+        dir,
+        name,
+        endpoint_name,
+        input_topic_name,
+        output_topic_name,
+        type='SQS',
+        aws_role=None,
+        external_id=None
+):
+    """
+    Set up a streaming inference pipeline
+
+    :param dir: [str], Source root directory
+    :param name: [str], Name of streaming inference worker
+    :param endpoint_name: [str], Name of the SageMaker endpoint
+    :param input_topic_name: [str], Name of input topic name
+    :param output_topic_name: [str], Name of output topic name
+    :param type: [str, default='SQS'], Type of streaming inference pipeline. Only SQS is supported right now.
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
+
+    """
+    zipped_lambda_handler_path = os.path.relpath(os.path.join(dir, 'sagify_base', 'lambda', 'lambda_handler.zip'))
+
+    config = _read_config(dir)
+    streaming_inference_client = StreamingInferenceClient(
+        aws_profile=config.aws_profile,
+        aws_region=config.aws_region,
+        aws_role=aws_role,
+        external_id=external_id
+    )
+
+    streaming_inference_client.create_inference_pipeline(
+        name=name,
+        path_to_zipped_code=zipped_lambda_handler_path,
+        input_topic_name=input_topic_name,
+        output_topic_name=output_topic_name,
+        endpoint_name=endpoint_name,
+        type=type
+    )
+
+
+def delete_streaming_inference(
+        dir,
+        name,
+        input_topic_name,
+        output_topic_name,
+        type='SQS',
+        aws_role=None,
+        external_id=None
+):
+    """
+    Delete a streaming inference pipeline
+
+    :param dir: [str], Source root directory
+    :param name: [str], Name of streaming inference worker
+    :param input_topic_name: [str], Name of input topic name
+    :param output_topic_name: [str], Name of output topic name
+    :param type: [str, default='SQS'], Type of streaming inference pipeline. Only SQS is supported right now.
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
+
+    """
+    config = _read_config(dir)
+    streaming_inference_client = StreamingInferenceClient(
+        aws_profile=config.aws_profile,
+        aws_region=config.aws_region,
+        aws_role=aws_role,
+        external_id=external_id
+    )
+
+    streaming_inference_client.delete_inference_pipeline(
+        name=name,
+        input_topic_name=input_topic_name,
+        output_topic_name=output_topic_name,
+        type=type
+    )
+
+
+def send_to_streaming_inference(
+        dir,
+        input_features_file,
+        input_topic_name,
+        type='SQS',
+        aws_role=None,
+        external_id=None
+):
+    """
+    Send features to a streaming inference pipeline
+
+    :param dir: [str], Source root directory
+    :param input_features_file: [str], Local path to input features file. Each line in the file is a json object.
+    :param input_topic_name: [str], Name of input topic name
+    :param type: [str, default='SQS'], Type of streaming inference pipeline. Only SQS is supported right now.
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
+
+    """
+    config = _read_config(dir)
+    streaming_inference_client = StreamingInferenceClient(
+        aws_profile=config.aws_profile,
+        aws_region=config.aws_region,
+        aws_role=aws_role,
+        external_id=external_id
+    )
+
+    streaming_inference_client.send_to_streaming_inference(
+        input_features_file=input_features_file,
+        input_topic_name=input_topic_name,
+        type=type
+    )
+
+
+def listen_to_streaming_inference(
+        dir,
+        output_topic_name,
+        type='SQS',
+        aws_role=None,
+        external_id=None
+):
+    """
+    Listen to predictions in a streaming inference pipeline
+
+    :param dir: [str], Source root directory
+    :param output_topic_name: [str], Name of output topic name
+    :param type: [str, default='SQS'], Type of streaming inference pipeline. Only SQS is supported right now.
+    :param aws_role: [str], the AWS role assumed by SageMaker while deploying
+    :param external_id: [str], Optional external id used when using an IAM role
+
+    """
+    config = _read_config(dir)
+    streaming_inference_client = StreamingInferenceClient(
+        aws_profile=config.aws_profile,
+        aws_region=config.aws_region,
+        aws_role=aws_role,
+        external_id=external_id
+    )
+
+    return streaming_inference_client.listen_to_streaming_inference(
+        output_topic_name=output_topic_name,
+        type=type
     )
 
 
