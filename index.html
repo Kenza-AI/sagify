@@ -260,6 +260,20 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-streaming-inference">Cloud Streaming Inference</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_10">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_11">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_11">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_5">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example_11">Example</a>
+    </li>
+        </ul>
+    </li>
         </ul>
     </li>
     </ul>
@@ -434,7 +448,6 @@ return cls.model
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
 -H 'Content-Type: application/json' \
--H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
 -d '{
     "features":[[0.34, 0.45, 0.45, 0.3]]
 }'
@@ -466,7 +479,7 @@ http://localhost:8080/invocations \
 </ul>
 <p><img alt="Attach Policy" src="attach_policy_step_1.png" /></p>
 <ul>
-<li>Do the same to attach the <code>AmazonS3FullAccess</code> and <code>IAMReadOnlyAccess</code> policies, and end up with the following:</li>
+<li>Do the same to attach the <code>AmazonS3FullAccess</code>, <code>IAMReadOnlyAccess</code>, <code>AmazonSQSFullAccess</code>, <code>AWSLambdaFullAccess</code>, <code>AmazonEC2ContainerRegistryFullAccess</code> and <code>AmazonSageMakerFullAccess</code> policies, and end up with the following:</li>
 </ul>
 <p><img alt="Policies" src="policies.png" /></p>
 <ul>
@@ -578,6 +591,7 @@ source_profile = test-sagemaker
     }
 }
 </code></pre>
+
 <h3 id="step-2-implement-train-function">Step 2: Implement Train function</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
 <pre><code>    from sklearn import datasets
@@ -801,6 +815,7 @@ log_metric("Accuracy", accuracy)
     }
 }
 </code></pre>
+
 <h4 id="optional-flags_3">Optional Flags</h4>
 <p><code>--max-jobs MAX_NUMBER_OF_TRAINING_JOBS</code> or <code>-m MAX_NUMBER_OF_TRAINING_JOBS</code>: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)</p>
 <p><code>--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code> or <code>-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code>: Maximum number of parallel training jobs to start (default: 1)</p>
@@ -850,6 +865,7 @@ log_metric("Accuracy", accuracy)
     &quot;features&quot;: [5.1,3.5,1.4,0.2]
 }
 </code></pre>
+
 <ul>
 <li>The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:</li>
 </ul>
@@ -858,6 +874,7 @@ log_metric("Accuracy", accuracy)
 {&quot;features&quot;: [4.7,3.2,1.3,0.2]}
 {&quot;features&quot;: [4.6,3.1,1.5,0.2]}
 </code></pre>
+
 <h4 id="required-flags_4">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--s3-input-location S3_INPUT_LOCATION</code> or <code>-i S3_INPUT_LOCATION</code>: s3 input data location</p>
@@ -872,6 +889,27 @@ log_metric("Accuracy", accuracy)
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker batch transform job</p>
 <h4 id="example_10">Example</h4>
 <pre><code>sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
+</code></pre>
+<h3 id="cloud-streaming-inference">Cloud Streaming Inference</h3>
+<p>NOTE: THIS IS AN EXPERIMENTAL FEATURE</p>
+<p>Make sure that the following 2 policies are attached to the role you created in section "Configure AWS Account":</p>
+<p><img alt="lambda_full_access" src="lambda_full_access.png" /></p>
+<p><img alt="sqs_full_access" src="sqs_full_access.png" /></p>
+<h4 id="name_10">Name</h4>
+<p>Creates and deletes streaming inference pipelines</p>
+<h4 id="synopsis_11">Synopsis</h4>
+<pre><code>sagify cloud create-streaming-inference --name WORKER_NAME --endpoint-name ENDPOINT_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
+</code></pre>
+<h4 id="description_11">Description</h4>
+<p>This command creates a worker as a Lambda function that listens to features in the <code>FEATURES_INPUT_TOPIC_NAME</code>, calls the the endpoint <code>ENDPOINT_NAME</code> and, finally, forwards predictions to <code>PREDICTIONS_OUTPUT_TOPIC_NAME</code>.</p>
+<h4 id="required-flags_5">Required Flags</h4>
+<p><code>--name WORKER_NAME</code>: The name of the Lambda function</p>
+<p><code>--endpoint-name ENDPOINT_NAME</code>: The name of the endpoint of the deployed model</p>
+<p><code>--input-topic-name FEATURES_INPUT_TOPIC_NAME</code>: Topic name where features will be landed</p>
+<p><code>--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME</code>: Topic name where model predictions will be forwarded</p>
+<p><code>--type STREAMING_INFERENCE_TYPE</code>: The type of streaming inference. At the moment, only <code>SQS</code> is supported!</p>
+<h4 id="example_11">Example</h4>
+<pre><code>sagify cloud create-streaming-inference --name recommender-worker --endpoint-name my-recommender-endpoint-1 --input-topic-name features --output-topic-name model-predictions --type SQS
 </code></pre>
               
             </div>
@@ -919,5 +957,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2020-12-31 15:52:18.402148+00:00
+Build Date UTC : 2021-02-23 20:38:32.835625+00:00
 -->
