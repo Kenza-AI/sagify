@@ -781,7 +781,7 @@ Things to do:
     sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
 
 
-### Cloud Streaming Inference
+### Cloud Create Streaming Inference
 
 NOTE: THIS IS AN EXPERIMENTAL FEATURE
 
@@ -793,7 +793,7 @@ Make sure that the following 2 policies are attached to the role you created in 
 
 #### Name
 
-Creates and deletes streaming inference pipelines
+Creates streaming inference pipelines
 
 #### Synopsis
 
@@ -818,3 +818,40 @@ This command creates a worker as a Lambda function that listens to features in t
 #### Example
 
     sagify cloud create-streaming-inference --name recommender-worker --endpoint-name my-recommender-endpoint-1 --input-topic-name features --output-topic-name model-predictions --type SQS
+
+
+### Cloud Delete Streaming Inference
+
+NOTE: THIS IS AN EXPERIMENTAL FEATURE
+
+Make sure that the following 2 policies are attached to the role you created in section "Configure AWS Account":
+
+![lambda_full_access](lambda_full_access.png)
+
+![sqs_full_access](sqs_full_access.png)
+
+#### Name
+
+Deletes streaming inference pipelines
+
+#### Synopsis
+
+    sagify cloud delete-streaming-inference --name WORKER_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
+
+#### Description
+
+This command deletes the worker (i.e. Lambda function), input topic `FEATURES_INPUT_TOPIC_NAME` and output topic `PREDICTIONS_OUTPUT_TOPIC_NAME`.
+
+#### Required Flags
+
+`--name WORKER_NAME`: The name of the Lambda function
+
+`--input-topic-name FEATURES_INPUT_TOPIC_NAME`: Topic name where features will be landed
+
+`--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME`: Topic name where model predictions will be forwarded
+
+`--type STREAMING_INFERENCE_TYPE`: The type of streaming inference. At the moment, only `SQS` is supported!
+
+#### Example
+
+    sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
