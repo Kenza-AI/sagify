@@ -103,39 +103,47 @@ Hence,
 
 2. Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with:
 
-            input_file_path = os.path.join(input_data_path, 'iris.data')
-            clf, accuracy = training_logic(input_file_path=input_file_path)
-            
-            output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-            joblib.dump(clf, output_model_file_path)
-            
-            accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-            with open(accuracy_report_file_path, 'w') as _out:
-                _out.write(str(accuracy))
+    ```python
+    input_file_path = os.path.join(input_data_path, 'iris.data')
+    clf, accuracy = training_logic(input_file_path=input_file_path)
+    
+    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+    joblib.dump(clf, output_model_file_path)
+    
+    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+    with open(accuracy_report_file_path, 'w') as _out:
+        _out.write(str(accuracy))
+    ```
                 
     and at the top of the file, add:
      
-        import os
-        
-        from sklearn.externals import joblib
-        
-        from iris_training import train as training_logic
+     ``python
+    import os
+    
+    from sklearn.externals import joblib
+    
+    from iris_training import train as training_logic
+    ```
 
 3. Replace the body of `predict(...)` function in `sagify_base/prediction/prediction.py` with:
 
-        model_input = json_input['features']
-        prediction = ModelService.predict(model_input)
-    
-        return {
-            "prediction": prediction.item()
-        }
+    ```python
+    model_input = json_input['features']
+    prediction = ModelService.predict(model_input)
+
+    return {
+        "prediction": prediction.item()
+    }
+    ```
         
     and replace the body of `get_model()` function in `ModelService` class in the same file with:
     
-        if cls.model is None:
-            from sklearn.externals import joblib
-            cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-        return cls.model
+    ```python
+    if cls.model is None:
+        from sklearn.externals import joblib
+        cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+    return cls.model
+    ```
     
 
 ### Step 4: Build Docker image
@@ -184,7 +192,7 @@ Given that you have configured your AWS Account as described in the previous sec
 
 Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. `Maximize` or `Minimize`). For example:
 
-```
+```json
 {
 	"ParameterRanges": {
 		"CategoricalParameterRanges": [
@@ -219,6 +227,7 @@ Define the Hyperparameter Configuration File. More specifically, you need to spe
 
 Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
 
+    ```python
         from sklearn import datasets
         iris = datasets.load_iris()
 
@@ -257,6 +266,7 @@ Replace the `TODOs` in the `train(...)` function in `sagify_base/training/traini
         dump(clf, os.path.join(model_save_path, 'model.pkl'))
 
         print('Training complete.')
+    ```
         
 ### Step 3: Build and Push Docker image
 
@@ -480,7 +490,7 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--metric-names COMMA_SEPARATED_METRIC_NAMES`: Optional comma-separated metric names for tracking performance of training jobs. Example: `Precision,Recall,AUC`. Then, make sure you log these metric values using the `log_metric` function in the `train` function:
 
-    ```
+    ```python
     ...
     from sagify.api.hyperparameter_tuning import log_metric
     log_metric("Precision:, precision)
@@ -520,7 +530,8 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 `--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
 
 `--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE` or `-h HYPERPARAM_RANGES_JSON_FILE`: Local path to hyperparameters configuration file. Example:
-```
+
+```json
 {
 	"ParameterRanges": {
 		"CategoricalParameterRanges": [
@@ -632,14 +643,17 @@ Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batc
 This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.
 
 Things to do:
+
 - You should implement the predict function that expects a JSON containing the required feature values. It's the same predict function used for deploying the model as a REST service. Example of a JSON:
-```
+
+```json
 {
     "features": [5.1,3.5,1.4,0.2]
 }
 ```
 - The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:
-```
+
+```json
 {"features": [5.1,3.5,1.4,0.2]}
 {"features": [4.9,3.0,1.4,0.2]}
 {"features": [4.7,3.2,1.3,0.2]}
