@@ -117,7 +117,7 @@ Hence,
                 
     and at the top of the file, add:
      
-     ``python
+    ```python
     import os
     
     from sklearn.externals import joblib
@@ -170,6 +170,7 @@ Finally, serve the model as a REST Service:
 
 Run the following curl command on your terminal to verify that the REST Service works:
 
+    ```bash
     curl -X POST \
     http://localhost:8080/invocations \
     -H 'Cache-Control: no-cache' \
@@ -178,6 +179,7 @@ Run the following curl command on your terminal to verify that the REST Service 
     -d '{
 	    "features":[[0.34, 0.45, 0.45, 0.3]]
     }'
+    ```
 
 It will be slow in the first couple of calls as it loads the model in a lazy manner.
 
@@ -227,46 +229,46 @@ Define the Hyperparameter Configuration File. More specifically, you need to spe
 
 Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
 
-    ```python
-        from sklearn import datasets
-        iris = datasets.load_iris()
+```python
+    from sklearn import datasets
+    iris = datasets.load_iris()
 
-        # Read the hyperparameter config json file
-        import json
-        with open(hyperparams_path) as _in_file:
-            hyperparams_dict = json.load(_in_file)
+    # Read the hyperparameter config json file
+    import json
+    with open(hyperparams_path) as _in_file:
+        hyperparams_dict = json.load(_in_file)
 
-        from sklearn import svm
-        clf = svm.SVC(
-            gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
-            C=float(hyperparams_dict['C']),
-            kernel=hyperparams_dict['kernel']
-        )
+    from sklearn import svm
+    clf = svm.SVC(
+        gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
+        C=float(hyperparams_dict['C']),
+        kernel=hyperparams_dict['kernel']
+    )
 
-        from sklearn.model_selection import train_test_split
-        X_train, X_test, y_train, y_test = train_test_split(
-            iris.data, iris.target, test_size=0.3, random_state=42)
+    from sklearn.model_selection import train_test_split
+    X_train, X_test, y_train, y_test = train_test_split(
+        iris.data, iris.target, test_size=0.3, random_state=42)
 
-        clf.fit(X_train, y_train)
+    clf.fit(X_train, y_train)
 
-        from sklearn.metrics import precision_score
+    from sklearn.metrics import precision_score
 
-        predictions = clf.predict(X_test)
+    predictions = clf.predict(X_test)
 
-        precision = precision_score(y_test, predictions, average='weighted')
-        
-        # Log the objective metric name with its calculated value. In tis example is Precision.
-        # The objective name should be exactly the same with the one specified in the hyperparams congig json file.
-        # The value must be a numeric (float or int).
-        from sagify.api.hyperparameter_tuning import log_metric
-        name = "Precision"
-        log_metric(name, precision)
+    precision = precision_score(y_test, predictions, average='weighted')
+    
+    # Log the objective metric name with its calculated value. In tis example is Precision.
+    # The objective name should be exactly the same with the one specified in the hyperparams congig json file.
+    # The value must be a numeric (float or int).
+    from sagify.api.hyperparameter_tuning import log_metric
+    name = "Precision"
+    log_metric(name, precision)
 
-        from joblib import dump
-        dump(clf, os.path.join(model_save_path, 'model.pkl'))
+    from joblib import dump
+    dump(clf, os.path.join(model_save_path, 'model.pkl'))
 
-        print('Training complete.')
-    ```
+    print('Training complete.')
+```
         
 ### Step 3: Build and Push Docker image
 
