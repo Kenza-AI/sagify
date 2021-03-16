@@ -492,13 +492,13 @@ This command retrieves a Docker image from AWS Elastic Container Service and exe
 
 `--metric-names COMMA_SEPARATED_METRIC_NAMES`: Optional comma-separated metric names for tracking performance of training jobs. Example: `Precision,Recall,AUC`. Then, make sure you log these metric values using the `log_metric` function in the `train` function:
 
-    ```python
-    ...
-    from sagify.api.hyperparameter_tuning import log_metric
-    log_metric("Precision:, precision)
-    log_metric("Accuracy", accuracy)
-    ...
-    ```
+```python
+...
+from sagify.api.hyperparameter_tuning import log_metric
+log_metric("Precision:, precision)
+log_metric("Accuracy", accuracy)
+...
+```
     
    When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:
    
