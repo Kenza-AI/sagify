@@ -52,7 +52,7 @@ Install dependencies:
 
 Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
 
-A module called `sagify` is created under the directory you provided. The structure is:
+A module called `sagify_base` is created under the `src` directory. The structure is:
  
     sagify_base/
         local_test/
@@ -379,7 +379,229 @@ And, finally, call the hyperparameter-optimization CLI command. For example:
 
 You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:
 
-![Hyperparameter Optimization Results](docs/hyperparam_monitor.png)
+![Hyperparameter Optimization Results](hyperparam_monitor.png)
+
+
+## Monitor ML Models in Production
+
+In this part, you'll integrate with [Aporia](https://www.aporia.com/) in order to monitor deployed ML models. More specifically, you'll monitor:
+
+1. data drifting
+2. model degradation
+3. data integrity
+
+### Step 1: Create Aporia Account
+
+Go to [Aporia](https://www.aporia.com/) and create an account. There's a generous free tier.
+
+### Step 2: Create model at Aporia
+ 
+Add your model to Aporia's console. Click the **Add Model** button in the Models page and name it "Iris Model"
+
+### Step 3: Initialize sagify
+
+    sagify init
+
+Type in `iris-model` for SageMaker app name, `y` in question `Are you starting a new project?`, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+
+A module called `sagify_base` is created under the `src` directory. The structure is:
+ 
+    sagify_base/
+        local_test/
+            test_dir/
+                input/
+                    config/
+                        hyperparameters.json
+                    data/
+                        training/
+                model/
+                output/
+            deploy_local.sh
+            train_local.sh
+        prediction/
+            __init__.py
+            nginx.conf
+            predict.py
+            prediction.py
+            predictor.py
+            serve
+            wsgi.py
+        training/
+            __init__.py
+            train
+            training.py
+        __init__.py
+        build.sh
+        Dockerfile
+        executor.sh
+        push.sh
+        
+### Step 4: Initialize the requirements.txt
+
+The `requirements.txt` at the root of the project must have the following content:
+
+        awscli
+        flake8
+        Flask
+        joblib
+        pandas
+        s3transfer
+        sagify>=0.18.0
+        scikit-learn
+        aporia[all]
+        
+### Step 5: Download Iris data set
+
+Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data> and save it in a file named "iris.data" under `src/sagify_base/local_test/test_dir/input/data/training/`.
+
+### Step 6: Implement Training logic
+
+Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/training.py` file with the following. **Remember** to use the `model_id` that Aporia gave you in step 2:
+
+        input_file_path = os.path.join(input_data_path, 'iris.data')
+
+        df = pd.read_csv(
+            input_file_path,
+            header=None,
+            names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
+        )
+    
+        df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
+    
+        features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
+        labels_train_df = df_train[['label']]
+    
+        features_train = features_train_df.values
+        labels_train = labels_train_df.values.ravel()
+    
+        features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
+        labels_test_df = df_test[['label']]
+    
+        features_test = features_test_df.values
+        labels_test = labels_test_df.values.ravel()
+    
+        ###### Report Version Schema ######
+        apr_model_version = 'v1'
+        apr_model_type = 'multiclass'  # Select model type: "binary" or "regression"
+    
+        ###### Create a model version ######
+        apr_model = aporia.create_model_version(
+            model_id="REPLACE WITH YOUR APORIA MODEL ID",
+            model_version=apr_model_version,
+            model_type=apr_model_type,
+            features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
+            predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
+        )
+    
+        ###### Report Training Data ######
+        apr_model.log_training_set(
+            features=features_train_df,
+            labels=labels_train_df
+        )
+    
+        clf = SVC(gamma='auto')
+        clf.fit(features_train, labels_train)
+        
+        ###### Report Testing Data ######
+        test_predictions = clf.predict(features_test)
+        apr_model.log_test_set(
+            features=features_test_df,
+            labels=labels_test_df,
+            predictions=pd.DataFrame({'label': test_predictions})
+        )
+    
+        accuracy = accuracy_score(labels_test, test_predictions)
+    
+        output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+        joblib.dump(clf, output_model_file_path)
+    
+        accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+        with open(accuracy_report_file_path, 'w') as _out:
+            _out.write(str(accuracy))
+                
+and at the top of the file, add:
+     
+        import joblib
+        import os
+        
+        import aporia
+        import pandas as pd
+        from sklearn.metrics import accuracy_score
+        from sklearn.model_selection import train_test_split
+        from sklearn.svm import SVC
+
+
+        ###### Initiate Aporia ######
+        aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+                    
+### Step 7: Implement Prediction logic
+
+Replace the body of `predict(...)` function in `src/sagify_base/prediction/prediction.py` with. **Remember** to use the `model_id` that Aporia gave you in step 2:
+
+        model_input = json_input['features']
+        prediction = ModelService.predict(model_input)
+    
+        ###### Report Inference ######
+        apr_prediction_id = str(uuid.uuid4())
+    
+        apr_model = aporia.Model("REPLACE WITH YOUR APORIA MODEL ID", "v1")
+        apr_model.log_prediction(
+            id=apr_prediction_id,
+            features={
+                'feature1': model_input[0][0],
+                'feature2': model_input[0][1],
+                'feature3': model_input[0][2],
+                'feature4': model_input[0][3],
+            },
+            predictions={
+                'label': prediction.item()
+            },
+        )
+    
+        apr_model.flush()
+        
+        return {
+            "prediction": prediction.item()
+        }
+
+        
+replace the body of `get_model()` function in `ModelService` class in the same file with:
+    
+        if cls.model is None:
+            from sklearn.externals import joblib
+            cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+        return cls.model
+        
+and the top of the file must look like:
+
+        import aporia
+        import os
+        import uuid
+        
+        
+        ###### Initiate Aporia ######
+        aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+        
+        _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
+        
+### Step 8: Build and Train the ML model
+
+Run `sagify build` and after that `sagify local train`
+
+
+### Step 9: Call inference REST API
+
+Run `sagify local deploy` and then run the following curl command to call the inference endpoint:
+
+    curl -X POST \
+    http://localhost:8080/invocations \
+    -H 'Cache-Control: no-cache' \
+    -H 'Content-Type: application/json' \
+    -d '{
+	    "features":[[0.34, 0.45, 0.45, 0.3]]
+    }'
+    
+Now you should be able to see data coming in on Aporia dashboards.
 
 
 ## Commands
