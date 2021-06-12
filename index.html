@@ -106,6 +106,28 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#monitor-ml-models-in-production">Monitor ML Models in Production</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-go-to-aporia-and-create-an-account-theres-a-generous-free-tier">Step 1: Go to Aporia and create an account. There's a generous free tier.</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-add-your-model-to-aporias-console-click-the-add-model-button-in-the-models-page-and-name-it-iris-model">Step 2: Add your model to Aporia's console. Click the Add Model button in the Models page and name it "Iris Model"</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-3-initialize-sagify">Step 3: Initialize sagify</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-iris-data-set">Step 5: Download Iris data set</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-training-logic">Step 6: Implement Training logic</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-prediction-logic">Step 7: Implement Prediction logic</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model">Step 8: Build and Train the ML model</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-inference-rest-api">Step 9: Call inference REST API</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#initialize">Initialize</a>
@@ -362,7 +384,7 @@
 <pre><code>sagify init
 </code></pre>
 <p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
-<p>A module called <code>sagify</code> is created under the directory you provided. The structure is:</p>
+<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
 <pre><code>sagify_base/
     local_test/
         test_dir/
@@ -658,7 +680,200 @@ source_profile = test-sagemaker
 </code></pre>
 <h3 id="step-5-monitor-progress">Step 5: Monitor Progress</h3>
 <p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
-<p><img alt="Hyperparameter Optimization Results" src="docs/hyperparam_monitor.png" /></p>
+<p><img alt="Hyperparameter Optimization Results" src="hyperparam_monitor.png" /></p>
+<h2 id="monitor-ml-models-in-production">Monitor ML Models in Production</h2>
+<p>In this part, you'll integrate with <a href="https://www.aporia.com/">Aporia</a> in order to monitor deployed ML models. More specifically, you'll monitor:</p>
+<ol>
+<li>data drifting</li>
+<li>model degradation</li>
+<li>data integrity</li>
+</ol>
+<h3 id="step-1-go-to-aporia-and-create-an-account-theres-a-generous-free-tier">Step 1: Go to <a href="https://www.aporia.com/">Aporia</a> and create an account. There's a generous free tier.</h3>
+<h3 id="step-2-add-your-model-to-aporias-console-click-the-add-model-button-in-the-models-page-and-name-it-iris-model">Step 2: Add your model to Aporia's console. Click the <strong>Add Model</strong> button in the Models page and name it "Iris Model"</h3>
+<h3 id="step-3-initialize-sagify">Step 3: Initialize sagify</h3>
+<pre><code>sagify init
+</code></pre>
+<p>Type in <code>iris-model</code> for SageMaker app name, <code>y</code> in question <code>Are you starting a new project?</code>, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
+<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
+<pre><code>sagify_base/
+    local_test/
+        test_dir/
+            input/
+                config/
+                    hyperparameters.json
+                data/
+                    training/
+            model/
+            output/
+        deploy_local.sh
+        train_local.sh
+    prediction/
+        __init__.py
+        nginx.conf
+        predict.py
+        prediction.py
+        predictor.py
+        serve
+        wsgi.py
+    training/
+        __init__.py
+        train
+        training.py
+    __init__.py
+    build.sh
+    Dockerfile
+    executor.sh
+    push.sh
+</code></pre>
+<h3 id="step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</h3>
+<p>The <code>requirements.txt</code> at the root of the project must have the following content:</p>
+<pre><code>    awscli
+    flake8
+    Flask
+    joblib
+    pandas
+    s3transfer
+    sagify&gt;=0.18.0
+    scikit-learn
+    aporia[all]
+</code></pre>
+<h3 id="step-5-download-iris-data-set">Step 5: Download Iris data set</h3>
+<p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
+<h3 id="step-6-implement-training-logic">Step 6: Implement Training logic</h3>
+<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
+<pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
+
+    df = pd.read_csv(
+        input_file_path,
+        header=None,
+        names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
+    )
+
+    df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
+
+    features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
+    labels_train_df = df_train[['label']]
+
+    features_train = features_train_df.values
+    labels_train = labels_train_df.values.ravel()
+
+    features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
+    labels_test_df = df_test[['label']]
+
+    features_test = features_test_df.values
+    labels_test = labels_test_df.values.ravel()
+
+    ###### Report Version Schema ######
+    apr_model_version = 'v1'
+    apr_model_type = 'multiclass'  # Select model type: "binary" or "regression"
+
+    ###### Create a model version ######
+    apr_model = aporia.create_model_version(
+        model_id="REPLACE WITH YOUR APORIA MODEL ID",
+        model_version=apr_model_version,
+        model_type=apr_model_type,
+        features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
+        predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
+    )
+
+    ###### Report Training Data ######
+    apr_model.log_training_set(
+        features=features_train_df,
+        labels=labels_train_df
+    )
+
+    clf = SVC(gamma='auto')
+    clf.fit(features_train, labels_train)
+
+    ###### Report Testing Data ######
+    test_predictions = clf.predict(features_test)
+    apr_model.log_test_set(
+        features=features_test_df,
+        labels=labels_test_df,
+        predictions=pd.DataFrame({'label': test_predictions})
+    )
+
+    accuracy = accuracy_score(labels_test, test_predictions)
+
+    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+    joblib.dump(clf, output_model_file_path)
+
+    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+    with open(accuracy_report_file_path, 'w') as _out:
+        _out.write(str(accuracy))
+</code></pre>
+<p>and at the top of the file, add:</p>
+<pre><code>    import joblib
+    import os
+
+    import aporia
+    import pandas as pd
+    from sklearn.metrics import accuracy_score
+    from sklearn.model_selection import train_test_split
+    from sklearn.svm import SVC
+
+
+    ###### Initiate Aporia ######
+    aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+</code></pre>
+<h3 id="step-7-implement-prediction-logic">Step 7: Implement Prediction logic</h3>
+<p>Replace the body of <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
+<pre><code>    model_input = json_input['features']
+    prediction = ModelService.predict(model_input)
+
+    ###### Report Inference ######
+    apr_prediction_id = str(uuid.uuid4())
+
+    apr_model = aporia.Model("REPLACE WITH YOUR APORIA MODEL ID", "v1")
+    apr_model.log_prediction(
+        id=apr_prediction_id,
+        features={
+            'feature1': model_input[0][0],
+            'feature2': model_input[0][1],
+            'feature3': model_input[0][2],
+            'feature4': model_input[0][3],
+        },
+        predictions={
+            'label': prediction.item()
+        },
+    )
+
+    apr_model.flush()
+
+    return {
+        "prediction": prediction.item()
+    }
+</code></pre>
+<p>replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
+<pre><code>    if cls.model is None:
+        from sklearn.externals import joblib
+        cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+    return cls.model
+</code></pre>
+<p>and the top of the file must look like:</p>
+<pre><code>    import aporia
+    import os
+    import uuid
+
+
+    ###### Initiate Aporia ######
+    aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+
+    _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
+</code></pre>
+<h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and Train the ML model</h3>
+<p>Run <code>sagify build</code> and after that <code>sagify local train</code></p>
+<h3 id="step-9-call-inference-rest-api">Step 9: Call inference REST API</h3>
+<p>Run <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
+<pre><code>curl -X POST \
+http://localhost:8080/invocations \
+-H 'Cache-Control: no-cache' \
+-H 'Content-Type: application/json' \
+-d '{
+    "features":[[0.34, 0.45, 0.45, 0.3]]
+}'
+</code></pre>
+<p>Now you should be able to see data coming in on Aporia dashboards.</p>
 <h2 id="commands">Commands</h2>
 <h3 id="initialize">Initialize</h3>
 <h4 id="name">Name</h4>
@@ -991,5 +1206,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-02-23 21:05:52.325817+00:00
+Build Date UTC : 2021-06-12 11:49:12.920440+00:00
 -->
