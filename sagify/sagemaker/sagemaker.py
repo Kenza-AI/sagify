@@ -8,6 +8,7 @@ import sagemaker.tuner
 from six.moves.urllib.parse import urlparse
 
 import boto3
+import botocore
 
 from sagify.log import logger
 
@@ -127,20 +128,20 @@ class SageMakerClient(object):
         ] if metric_names else None
 
         estimator = sage.estimator.Estimator(
-            image_name=image,
+            image_uri=image,
             role=self.role,
-            train_instance_count=train_instance_count,
-            train_instance_type=train_instance_type,
-            train_volume_size=train_volume_size,
-            train_max_run=train_max_run,
+            instance_count=train_instance_count,
+            instance_type=train_instance_type,
+            volume_size=train_volume_size,
+            max_run=train_max_run,
             input_mode='File',
             output_path=output_path,
             hyperparameters=hyperparameters,
             base_job_name=base_job_name,
             sagemaker_session=self.sagemaker_session,
             metric_definitions=metric_definitions,
-            train_use_spot_instances=use_spot_instances,
-            train_max_wait=3600 if use_spot_instances else None  # 1 hour
+            use_spot_instances=use_spot_instances,
+            max_wait=3600 if use_spot_instances else None  # 1 hour
         )
         if tags:
             estimator.tags = tags
@@ -214,17 +215,17 @@ class SageMakerClient(object):
         image = self._construct_image_location(image_name)
 
         estimator = sage.estimator.Estimator(
-            image_name=image,
+            image_uri=image,
             role=self.role,
-            train_instance_count=instance_count,
-            train_instance_type=instance_type,
-            train_volume_size=volume_size,
-            train_max_run=max_run,
+            instance_count=instance_count,
+            instance_type=instance_type,
+            volume_size=volume_size,
+            max_run=max_run,
             input_mode='File',
             output_path=output_path,
             sagemaker_session=self.sagemaker_session,
-            train_use_spot_instances=use_spot_instances,
-            train_max_wait=3600 if use_spot_instances else None  # 1 hour
+            use_spot_instances=use_spot_instances,
+            max_wait=3600 if use_spot_instances else None  # 1 hour
         )
 
         metric_definitions = [
@@ -294,7 +295,7 @@ class SageMakerClient(object):
 
         model = sage.Model(
             model_data=s3_model_location,
-            image=image,
+            image_uri=image,
             role=self.role,
             sagemaker_session=self.sagemaker_session
         )
@@ -304,19 +305,25 @@ class SageMakerClient(object):
                 initial_instance_count=train_instance_count,
                 instance_type=train_instance_type,
                 tags=tags,
-                endpoint_name=endpoint_name,
-                update_endpoint=True
-            )
-        except ValueError:
-            # ValueError raised if there is no endpoint already
-            model.deploy(
-                initial_instance_count=train_instance_count,
-                instance_type=train_instance_type,
-                tags=tags,
                 endpoint_name=endpoint_name
             )
 
-        return model.endpoint_name
+            return model.endpoint_name
+        except botocore.exceptions.ClientError:
+            # ValueError raised if there is no endpoint already
+            predictor = sage.Predictor(
+                endpoint_name=endpoint_name,
+                sagemaker_session=self.sagemaker_session
+            )
+
+            predictor.update_endpoint(
+                initial_instance_count=train_instance_count,
+                instance_type=train_instance_type,
+                tags=tags,
+                model_name=model.name
+            )
+
+            return predictor.endpoint_name
 
     def batch_transform(
             self,
@@ -362,7 +369,7 @@ class SageMakerClient(object):
 
         model = sage.Model(
             model_data=s3_model_location,
-            image=image,
+            image_uri=image,
             role=self.role,
             sagemaker_session=self.sagemaker_session
         )

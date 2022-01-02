@@ -95,20 +95,20 @@ def test_train_happy_case():
                             job_name="some job name"
                         )
                         mocked_sagemaker_estimator.assert_called_with(
-                            image_name='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
-                            train_instance_count=1,
-                            train_instance_type='m1.xlarge',
-                            train_volume_size=30,
-                            train_max_run=60,
+                            instance_count=1,
+                            instance_type='m1.xlarge',
+                            volume_size=30,
+                            max_run=60,
                             input_mode='File',
                             base_job_name="Some-job-name-prefix",
                             output_path='s3://bucket/output',
                             hyperparameters={'n_estimator': 3},
                             sagemaker_session=sagemaker_session_instance,
                             metric_definitions=None,
-                            train_use_spot_instances=False,
-                            train_max_wait=None
+                            use_spot_instances=False,
+                            max_wait=None
                         )
                         sagemaker_estimator_instance = mocked_sagemaker_estimator.return_value
                         assert sagemaker_estimator_instance.fit.call_count == 1
@@ -144,7 +144,7 @@ def test_deploy_happy_case():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -154,8 +154,7 @@ def test_deploy_happy_case():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=None,
-                            endpoint_name=None,
-                            update_endpoint=True
+                            endpoint_name=None
                         )
 
 
@@ -201,7 +200,7 @@ def test_deploy_with_tags():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -211,8 +210,7 @@ def test_deploy_with_tags():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=tags,
-                            endpoint_name=None,
-                            update_endpoint=True
+                            endpoint_name=None
                         )
 
 
@@ -246,7 +244,7 @@ def test_deploy_with_custom_endpoint_name():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -256,8 +254,7 @@ def test_deploy_with_custom_endpoint_name():
                             initial_instance_count=1,
                             instance_type='m1.xlarge',
                             tags=None,
-                            endpoint_name='my-endpoint',
-                            update_endpoint=True
+                            endpoint_name='my-endpoint'
                         )
 
 
@@ -292,7 +289,7 @@ def test_batch_transform_happy_case():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -350,7 +347,7 @@ def test_batch_transform_with_job_name_happy_case():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -408,7 +405,7 @@ def test_batch_transform_wait_happy_case():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -480,7 +477,7 @@ def test_batch_transform_with_tags():
                         )
                         mocked_sagemaker_model.assert_called_with(
                             model_data='s3://bucket/model_input/model.tar.gz',
-                            image='image-full-name',
+                            image_uri='image-full-name',
                             role='arn_role',
                             sagemaker_session=sagemaker_session_instance
                         )
@@ -550,17 +547,17 @@ def test_hyperparameter_optimization_happy_case():
                                 job_name="some job name"
                             )
                             mocked_sagemaker_estimator.assert_called_with(
-                                image_name='image-full-name',
+                                image_uri='image-full-name',
                                 role='arn_role',
-                                train_instance_count=1,
-                                train_instance_type='m1.xlarge',
-                                train_volume_size=30,
-                                train_max_run=60,
+                                instance_count=1,
+                                instance_type='m1.xlarge',
+                                volume_size=30,
+                                max_run=60,
                                 input_mode='File',
                                 output_path='s3://bucket/output',
                                 sagemaker_session=sagemaker_session_instance,
-                                train_use_spot_instances=False,
-                                train_max_wait=None
+                                use_spot_instances=False,
+                                max_wait=None
                             )
 
                             mocked_sagemaker_tuner_instance = mocked_sagemaker_tuner.return_value
