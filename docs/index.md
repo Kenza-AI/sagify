@@ -12,7 +12,7 @@ A command-line utility to train and deploy Machine Learning/Deep Learning models
 
 sagify requires the following:
 
-1. Python (3.5, 3.6, 3.7, 3.8)
+1. Python (3.6, 3.7, 3.8)
 2. [Docker](https://www.docker.com/) installed and running
 3. Configured [awscli](https://pypi.python.org/pypi/awscli)
 
@@ -31,9 +31,7 @@ You're going to clone and train a Machine Learning codebase to train a classifer
 
 Clone repository:
 
-    git clone https://github.com/Kenza-AI/sagify-demo.git
-
-Optionally, if you want to use Python 2.7 replace the value of `REQUIRED_PYTHON` and `PYTHON_INTERPRETER` in `test_environment.py` and `Makefile`, respectively, to `python2`. 
+    git clone https://github.com/Kenza-AI/sagify-demo.git 
     
 Create environment:
     
@@ -50,7 +48,7 @@ Install dependencies:
 
     sagify init
 
-Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
 
 A module called `sagify_base` is created under the `src` directory. The structure is:
  
@@ -643,7 +641,7 @@ Updates an existing configuration value e.g. `python version` or `AWS region`.
 
 `--image-name IMAGE_NAME`: _Docker_ image name used when building for use with _SageMaker_. This shows up as an _AWS ECR_ repository on your _AWS_ account.
 
-`--python-version PYTHON_VERSION`: _Python_ version used when building _SageMaker's_ _Docker_ images. Curently supported versions: `2.7` , `3.6`.
+`--python-version PYTHON_VERSION`: _Python_ version used when building _SageMaker's_ _Docker_ images. Currently supported versions: `3.6`.
 
 
 ### Example
