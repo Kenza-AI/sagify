@@ -37,27 +37,6 @@ def ask_for_root_dir():
     return click.prompt(text="Type in the directory where your code lives. Example: src", type=str).strip('/')
 
 
-def ask_for_python_version():
-    logger.info("Select Python interpreter:")
-    logger.info('{}'.format('\n'.join(['1 - Python3', '2 - Python2'])))
-
-    def _validate_python_option(input_value):
-        if int(input_value) not in {1, 2}:
-            raise BadParameter(
-                message="invalid choice: {}. (choose from 1, 2)".format(str(input_value))
-            )
-
-        return int(input_value)
-
-    chosen_python_index = click.prompt(
-        text="Choose from 1, 2",
-        default=1,
-        value_proc=lambda x: _validate_python_option(x)
-    )
-
-    return '3.6' if chosen_python_index == 1 else '2.7'
-
-
 def ask_for_aws_details():
     available_profiles = _get_local_aws_profiles()
 
@@ -124,8 +103,6 @@ def init():
     if not is_new_project:
         root_dir = ask_for_root_dir()
 
-    python_version = ask_for_python_version()
-
     aws_profile, aws_region = ask_for_aws_details()
 
     requirements_dir = ask_for_requirements_dir()
@@ -135,7 +112,7 @@ def init():
             sagify_app_name=sagify_app_name,
             aws_profile=aws_profile,
             aws_region=aws_region,
-            python_version=python_version,
+            python_version='3.6',
             root_dir=root_dir if root_dir else 'src',
             requirements_dir=requirements_dir
         )
