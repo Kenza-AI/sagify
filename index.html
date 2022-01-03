@@ -358,7 +358,7 @@
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
 <ol>
-<li>Python (3.5, 3.6, 3.7, 3.8)</li>
+<li>Python (3.6, 3.7, 3.8)</li>
 <li><a href="https://www.docker.com/">Docker</a> installed and running</li>
 <li>Configured <a href="https://pypi.python.org/pypi/awscli">awscli</a></li>
 </ol>
@@ -372,7 +372,6 @@
 <p>Clone repository:</p>
 <pre><code>git clone https://github.com/Kenza-AI/sagify-demo.git
 </code></pre>
-<p>Optionally, if you want to use Python 2.7 replace the value of <code>REQUIRED_PYTHON</code> and <code>PYTHON_INTERPRETER</code> in <code>test_environment.py</code> and <code>Makefile</code>, respectively, to <code>python2</code>. </p>
 <p>Create environment:</p>
 <pre><code>make create_environment
 </code></pre>
@@ -383,7 +382,7 @@
 <h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
 <pre><code>sagify init
 </code></pre>
-<p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
+<p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
 <pre><code>sagify_base/
     local_test/
@@ -898,7 +897,7 @@ http://localhost:8080/invocations \
 <p><code>--aws-region AWS_REGION</code>: <em>AWS</em> region where <em>Docker</em> images are pushed and <em>SageMaker</em> operations (<em>train</em>, <em>deploy</em>) are performed.</p>
 <p><code>--aws-profile AWS_PROFILE</code>: <em>AWS</em> profile to use when interacting with <em>AWS</em>.</p>
 <p><code>--image-name IMAGE_NAME</code>: <em>Docker</em> image name used when building for use with <em>SageMaker</em>. This shows up as an <em>AWS ECR</em> repository on your <em>AWS</em> account.</p>
-<p><code>--python-version PYTHON_VERSION</code>: <em>Python</em> version used when building <em>SageMaker's</em> <em>Docker</em> images. Curently supported versions: <code>2.7</code> , <code>3.6</code>.</p>
+<p><code>--python-version PYTHON_VERSION</code>: <em>Python</em> version used when building <em>SageMaker's</em> <em>Docker</em> images. Currently supported versions: <code>3.6</code>.</p>
 <h3 id="example_1">Example</h3>
 <pre><code>sagify configure --aws-region us-east-2 --aws-profile default --image-name sage-docker-image-name --python-version 3.6
 </code></pre>
@@ -1208,5 +1207,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2021-06-12 11:51:54.169914+00:00
+Build Date UTC : 2022-01-03 17:59:39.457683+00:00
 -->
