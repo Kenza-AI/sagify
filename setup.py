@@ -5,9 +5,9 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.21.0',
+    version='0.21.1',
     setup_cfg=True,
-    python_requires='~=3.5',
+    python_requires='~=3.6',
     packages=find_packages(where='.'),
     long_description=long_description,
     long_description_content_type='text/markdown',
@@ -34,16 +34,11 @@ setup(
         ]
     },
     install_requires=[
-        'boto3',
-        'click>=7.0, <7.0.99',
-        'docker>=3.7.0, <3.7.99',
-        'flask>=1.1.0, <1.1.99',
-        'paramiko>=2.4.2, <2.4.99',
-        'pathlib2>=2.3.0, <2.3.99',
-        'requests>=2.20.0, <2.20.99',
-        'sagemaker>=1.50.0, <1.50.99',
-        'six>=1.10, <1.11.99',
-        'future>=0.16.0, <0.17.99'
+        'click>=8.0.0, <8.0.99',
+        'docker>=5.0.0, <5.0.99',
+        'sagemaker>=2.72.0, <2.72.99',
+        'six>=1.16, <1.16.99',
+        'future>=0.18.0, <0.18.99'
     ],
     test_suite='tests',
     zip_safe=True,
