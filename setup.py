@@ -7,7 +7,7 @@ setup(
     name='sagify',
     version='0.21.1',
     setup_cfg=True,
-    python_requires='~=3.6',
+    python_requires='~=3.7',
     packages=find_packages(where='.'),
     long_description=long_description,
     long_description_content_type='text/markdown',

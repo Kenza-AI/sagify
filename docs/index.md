@@ -12,7 +12,7 @@ A command-line utility to train and deploy Machine Learning/Deep Learning models
 
 sagify requires the following:
 
-1. Python (3.6, 3.7, 3.8)
+1. Python (3.7, 3.8)
 2. [Docker](https://www.docker.com/) installed and running
 3. Configured [awscli](https://pypi.python.org/pypi/awscli)
 
@@ -48,7 +48,7 @@ Install dependencies:
 
     sagify init
 
-Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
 
 A module called `sagify_base` is created under the `src` directory. The structure is:
  
