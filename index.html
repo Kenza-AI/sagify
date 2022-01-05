@@ -358,7 +358,7 @@
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
 <ol>
-<li>Python (3.6, 3.7, 3.8)</li>
+<li>Python (3.7, 3.8)</li>
 <li><a href="https://www.docker.com/">Docker</a> installed and running</li>
 <li>Configured <a href="https://pypi.python.org/pypi/awscli">awscli</a></li>
 </ol>
@@ -368,12 +368,15 @@
 </code></pre>
 <h2 id="getting-started">Getting started</h2>
 <h3 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h3>
-<p>You're going to clone and train a Machine Learning codebase to train a classifer for the Iris data set.</p>
+<p>You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.</p>
 <p>Clone repository:</p>
 <pre><code>git clone https://github.com/Kenza-AI/sagify-demo.git
 </code></pre>
 <p>Create environment:</p>
-<pre><code>make create_environment
+<pre><code>mkvirtualenv -p python3.7 sagify-demo
+</code></pre>
+<p>or</p>
+<pre><code>mkvirtualenv -p python3.8 sagify-demo
 </code></pre>
 <p>Don't forget to activate the virtualenv after the creation of environment by executing <code>workon sagify-demo</code>.</p>
 <p>Install dependencies:</p>
@@ -382,7 +385,7 @@
 <h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
 <pre><code>sagify init
 </code></pre>
-<p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
+<p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
 <pre><code>sagify_base/
     local_test/
@@ -442,7 +445,7 @@
 <p>and at the top of the file, add:</p>
 <pre><code>import os
 
-from sklearn.externals import joblib
+import joblib
 
 from iris_training import train as training_logic
 </code></pre>
@@ -458,7 +461,7 @@ return {
 </code></pre>
 <p>and replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
 <pre><code>if cls.model is None:
-    from sklearn.externals import joblib
+    import joblib
     cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
 return cls.model
 </code></pre>
@@ -1207,5 +1210,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-01-03 17:59:39.457683+00:00
+Build Date UTC : 2022-01-05 12:33:11.968210+00:00
 -->
