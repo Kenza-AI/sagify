@@ -118,7 +118,7 @@ Hence,
     ```python
     import os
     
-    from sklearn.externals import joblib
+    import joblib
     
     from iris_training import train as training_logic
     ```
@@ -138,7 +138,7 @@ Hence,
     
     ```python
     if cls.model is None:
-        from sklearn.externals import joblib
+        import joblib
         cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
     return cls.model
     ```
