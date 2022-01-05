@@ -50,12 +50,12 @@ def init(sagify_app_name, aws_profile, aws_region, python_version, root_dir, req
     :param sagify_app_name: [str], name for sagify app
     :param aws_profile: [str], preferred aws profile name on current host
     :param aws_region: [str], preferred aws region. Example: 'us-east-1'
-    :param python_version: [str], preferred Python version. Options: 3.6 or 2.7.
+    :param python_version: [str], preferred Python version. Options: 3.7 or 3.8.
     :param root_dir: [str], root source directory.
     :param root_dir: [str], Path to requirements.txt.
     """
-    if python_version not in {'2.7', '3.6'}:
-        raise ValueError("Invalid Python version. Valid options: 2.7 or 3.6")
+    if python_version not in {'3.7', '3.8'}:
+        raise ValueError("Invalid Python version. Valid options: 3.7 or 3.8")
 
     _template_creation(
         app_name=sagify_app_name,

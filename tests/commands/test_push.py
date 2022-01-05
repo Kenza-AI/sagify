@@ -62,5 +62,5 @@ class PushCommandTests(TestCase):
 def runCommands(init_command, push_command):
     runner = CliRunner()
     with runner.isolated_filesystem():
-        runner.invoke(cli=cli, args=init_command, input='my_app\ny\n2\nus-east-1\nrequirements.txt\n')
+        runner.invoke(cli=cli, args=init_command, input='my_app\ny\n1\n2\nus-east-1\nrequirements.txt\n')
         return runner.invoke(cli=cli, args=push_command)
