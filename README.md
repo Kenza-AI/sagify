@@ -16,7 +16,7 @@ For detailed reference to Sagify commands please go to: [Read the Docs](https://
 
 sagify requires the following:
 
-1. Python (3.6, 3.7, 3.8)
+1. Python (3.7, 3.8)
 2. [Docker](https://www.docker.com/) installed and running
 3. Configured [awscli](https://pypi.python.org/pypi/awscli)
 
@@ -31,7 +31,7 @@ At the command line:
 
 ### Step 1: Clone Machine Learning demo repository
 
-You're going to clone and train a Machine Learning codebase to train a classifer for the Iris data set.
+You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
 
 Clone repository:
 
@@ -39,7 +39,11 @@ Clone repository:
     
 Create environment:
     
-    make create_environment
+    mkvirtualenv -p python3.7 sagify-demo
+    
+or
+
+    mkvirtualenv -p python3.8 sagify-demo
 
 Don't forget to activate the virtualenv after the creation of environment by executing `workon sagify-demo`.
 
@@ -52,7 +56,7 @@ Install dependencies:
 
     sagify init
 
-Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
 
 A module called `sagify` is created under the directory you provided. The structure is:
  
@@ -118,7 +122,7 @@ Hence,
     ```python
     import os
     
-    from sklearn.externals import joblib
+    import joblib
     
     from iris_training import train as training_logic
     ```
@@ -138,7 +142,7 @@ Hence,
     
     ```python
     if cls.model is None:
-        from sklearn.externals import joblib
+        import joblib
         cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
     return cls.model
     ```
