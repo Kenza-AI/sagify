@@ -31,7 +31,7 @@ At the command line:
 
 ### Step 1: Clone Machine Learning demo repository
 
-You're going to clone and train a Machine Learning codebase to train a classifer for the Iris data set.
+You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
 
 Clone repository:
 
@@ -39,7 +39,11 @@ Clone repository:
     
 Create environment:
     
-    make create_environment
+    mkvirtualenv -p python3.7 sagify-demo
+    
+or
+
+    mkvirtualenv -p python3.8 sagify-demo
 
 Don't forget to activate the virtualenv after the creation of environment by executing `workon sagify-demo`.
 
