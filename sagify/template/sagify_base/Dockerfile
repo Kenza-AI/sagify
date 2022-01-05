@@ -1,5 +1,5 @@
 ARG python_version
-FROM python:$python_version-slim-stretch
+FROM python:$python_version-slim-buster
 
 LABEL maintainer="Kenza AI <support@kenza.ai>"
 
