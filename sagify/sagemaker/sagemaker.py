@@ -5,6 +5,8 @@ import os
 
 import sagemaker as sage
 import sagemaker.tuner
+import sagemaker.huggingface
+import sagemaker.sklearn.model
 from six.moves.urllib.parse import urlparse
 
 import boto3
@@ -13,6 +15,7 @@ import botocore
 from sagify.log import logger
 
 
+_FILE_DIR_PATH = os.path.dirname(os.path.realpath(__file__))
 _METRIC_REGEX = "([0-9\\.]+)"
 
 
@@ -265,7 +268,7 @@ class SageMakerClient(object):
             train_instance_count,
             train_instance_type,
             tags=None,
-            endpoint_name=None,
+            endpoint_name=None
     ):
         """
         Deploy model to SageMaker
@@ -399,6 +402,122 @@ class SageMakerClient(object):
                 job_description = self.sagemaker_client.describe_transform_job(TransformJobName=job_name)
 
             return job_description['TransformJobStatus']
+
+    def deploy_sklearn(self,
+            s3_model_location,
+            instance_count,
+            instance_type,
+            framework_version,
+            model_server_workers=None,
+            tags=None,
+            endpoint_name=None
+    ):
+        model = sagemaker.sklearn.model.SKLearnModel(
+            role=self.role,
+            model_data=s3_model_location,
+            framework_version=framework_version,
+            py_version="py3",
+            source_dir=os.path.join(_FILE_DIR_PATH, "sklearn_code"),
+            entry_point="sklearn_inference.py",
+            model_server_workers=model_server_workers,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        try:
+            predictor = model.deploy(
+                instance_type=instance_type,
+                initial_instance_count=instance_count,
+                tags=tags,
+                endpoint_name=endpoint_name
+            )
+        except botocore.exceptions.ClientError:
+            # ValueError raised if there is no endpoint already
+            predictor = sage.Predictor(
+                endpoint_name=endpoint_name,
+                sagemaker_session=self.sagemaker_session
+            )
+
+            predictor.update_endpoint(
+                initial_instance_count=instance_count,
+                instance_type=instance_type,
+                tags=tags,
+                model_name=model.name
+            )
+
+        return predictor.endpoint_name
+
+    def deploy_hugging_face(self,
+            instance_count,
+            instance_type,
+            transformers_version=None,
+            pytorch_version=None,
+            tensorflow_version=None,
+            s3_model_location=None,
+            hub=None,
+            model_server_workers=None,
+            tags=None,
+            endpoint_name=None
+    ):
+        def _validate_either_of_them(name_a, name_b, var_a, var_b):
+            if var_a is not None and var_b is not None:
+                raise ValueError(
+                    f'{name_a} and {name_b} are both not None. '
+                    f'Specify only {name_a} or {name_b}.'
+                )
+            if var_a is None and var_b is None:
+                raise ValueError(
+                    "{name_a} and {name_b} are both None. "
+                    "Specify either {name_a} or {name_b}."
+                )
+
+        _validate_either_of_them(
+            name_a='pytorch_version',
+            name_b='tensorflow_version',
+            var_a=pytorch_version,
+            var_b=tensorflow_version
+        )
+
+        _validate_either_of_them(
+            name_a='model_location',
+            name_b='hub',
+            var_a=s3_model_location,
+            var_b=hub
+        )
+
+        model = sagemaker.huggingface.HuggingFaceModel(
+            role=self.role,
+            model_data=s3_model_location,
+            transformers_version=transformers_version,
+            pytorch_version=pytorch_version,
+            tensorflow_version=tensorflow_version,
+            model_server_workers=model_server_workers,
+            py_version='py36',
+            env=hub,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        try:
+            predictor = model.deploy(
+                instance_type=instance_type,
+                initial_instance_count=instance_count,
+                tags=tags,
+                endpoint_name=endpoint_name
+            )
+        except botocore.exceptions.ClientError:
+            # ValueError raised if there is no endpoint already
+            predictor = sage.Predictor(
+                endpoint_name=endpoint_name,
+                sagemaker_session=self.sagemaker_session
+            )
+
+            predictor.update_endpoint(
+                initial_instance_count=instance_count,
+                instance_type=instance_type,
+                tags=tags,
+                model_name=model.name
+            )
+
+        return predictor.endpoint_name
 
     @staticmethod
     def _get_s3_bucket(s3_dir):

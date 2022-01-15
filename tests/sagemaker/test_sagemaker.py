@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-
+import os
+
 from sagemaker.parameter import ContinuousParameter, CategoricalParameter
 
 try:
@@ -565,3 +567,190 @@ def test_hyperparameter_optimization_happy_case():
                             mocked_sagemaker_tuner_instance.fit.assert_called_with(
                                 's3://bucket/input', job_name='some job name'
                             )
+
+
+def test_deploy_sklearn_happy_case():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.sklearn.model.SKLearnModel'
+                ) as mocked_sagemaker_sklearn_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+                    sage_maker_client.deploy_sklearn(
+                        s3_model_location='s3://bucket/model_input/model.tar.gz',
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        framework_version='0.23-1'
+                    )
+
+                    mocked_sagemaker_sklearn_model.assert_called_with(
+                        role='arn_role',
+                        model_data='s3://bucket/model_input/model.tar.gz',
+                        framework_version='0.23-1',
+                        py_version='py3',
+                        entry_point='sklearn_inference.py',
+                        source_dir=os.path.join(sagemaker._FILE_DIR_PATH, 'sklearn_code'),
+                        model_server_workers=None,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_sklearn_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
+
+
+def test_deploy_sklearn_with_model_server_workers():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.sklearn.model.SKLearnModel'
+                ) as mocked_sagemaker_sklearn_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+                    sage_maker_client.deploy_sklearn(
+                        s3_model_location='s3://bucket/model_input/model.tar.gz',
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        framework_version='0.23-1',
+                        model_server_workers=2
+                    )
+
+                    mocked_sagemaker_sklearn_model.assert_called_with(
+                        role='arn_role',
+                        model_data='s3://bucket/model_input/model.tar.gz',
+                        framework_version='0.23-1',
+                        py_version='py3',
+                        entry_point='sklearn_inference.py',
+                        source_dir=os.path.join(sagemaker._FILE_DIR_PATH, 'sklearn_code'),
+                        model_server_workers=2,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_sklearn_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
+
+def test_deploy_hugging_face_happy_case():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.huggingface.HuggingFaceModel'
+                ) as mocked_sagemaker_hf_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+
+                    sage_maker_client.deploy_hugging_face(
+                        s3_model_location='s3://bucket/model_input/model.tar.gz',
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        transformers_version='4.6.1',
+                        pytorch_version='1.7.1'
+                    )
+
+                    mocked_sagemaker_hf_model.assert_called_with(
+                        role='arn_role',
+                        model_data='s3://bucket/model_input/model.tar.gz',
+                        transformers_version='4.6.1',
+                        pytorch_version='1.7.1',
+                        tensorflow_version=None,
+                        model_server_workers=None,
+                        py_version='py36',
+                        env=None,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_hf_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
+
+
+def test_deploy_hugging_face_with_hub():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.huggingface.HuggingFaceModel'
+                ) as mocked_sagemaker_hf_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+
+                    hub = {
+                        'HF_MODEL_ID':'gpt2',
+                        'HF_TASK':'text-generation'
+                    }
+
+                    sage_maker_client.deploy_hugging_face(
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        transformers_version='4.6.1',
+                        pytorch_version='1.7.1',
+                        hub=hub
+                    )
+
+                    mocked_sagemaker_hf_model.assert_called_with(
+                        role='arn_role',
+                        model_data=None,
+                        transformers_version='4.6.1',
+                        pytorch_version='1.7.1',
+                        tensorflow_version=None,
+                        model_server_workers=None,
+                        py_version='py36',
+                        env=hub,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_hf_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
