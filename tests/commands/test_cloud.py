@@ -1023,8 +1023,8 @@ class TestLightningDeploy(object):
                         transformers_version='4.6.1',
                         pytorch_version='1.7.1',
                         hub={
-                            'HF_MODEL_ID':'gpt2',
-                            'HF_TASK':'text-generation'
+                            'HF_MODEL_ID': 'gpt2',
+                            'HF_TASK': 'text-generation'
                         },
                         model_server_workers=None,
                         tags=None,

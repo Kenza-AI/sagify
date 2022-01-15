@@ -403,7 +403,8 @@ class SageMakerClient(object):
 
             return job_description['TransformJobStatus']
 
-    def deploy_sklearn(self,
+    def deploy_sklearn(
+            self,
             s3_model_location,
             instance_count,
             instance_type,
@@ -446,7 +447,8 @@ class SageMakerClient(object):
 
         return predictor.endpoint_name
 
-    def deploy_hugging_face(self,
+    def deploy_hugging_face(
+            self,
             instance_count,
             instance_type,
             transformers_version=None,

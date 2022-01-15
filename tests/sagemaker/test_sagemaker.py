@@ -657,6 +657,7 @@ def test_deploy_sklearn_with_model_server_workers():
                         endpoint_name=None
                     )
 
+
 def test_deploy_hugging_face_happy_case():
     with patch(
             'boto3.Session'
@@ -723,8 +724,8 @@ def test_deploy_hugging_face_with_hub():
                     sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
 
                     hub = {
-                        'HF_MODEL_ID':'gpt2',
-                        'HF_TASK':'text-generation'
+                        'HF_MODEL_ID': 'gpt2',
+                        'HF_TASK': 'text-generation'
                     }
 
                     sage_maker_client.deploy_hugging_face(
