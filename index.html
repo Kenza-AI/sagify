@@ -58,7 +58,9 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#getting-started">Getting started</a>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started-no-code-deployment">Getting started -  No code deployment</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</a>
     </li>
@@ -310,6 +312,26 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-lightning-deploy">Cloud Lightning Deploy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_12">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_13">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_13">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_7">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_6">Optional Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example-for-sklearn">Example for SKLearn</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example-for-huggingface-by-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace by specifying the S3_LOCATION_TO_MODEL_TAR_GZ</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example-for-huggingface-without-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace without specifying the S3_LOCATION_TO_MODEL_TAR_GZ</a>
+    </li>
+        </ul>
+    </li>
         </ul>
     </li>
     </ul>
@@ -366,7 +388,47 @@
 <p>At the command line:</p>
 <pre><code>pip install sagify
 </code></pre>
-<h2 id="getting-started">Getting started</h2>
+<h2 id="getting-started-no-code-deployment">Getting started -  No code deployment</h2>
+<ol>
+<li>
+<p>Create a file with name <code>huggingface_config.json</code> with the following content:</p>
+<pre><code>{
+  "transformers_version": "4.6.1",
+  "pytorch_version": "1.7.1",
+  "hub": {
+    "HF_MODEL_ID": "gpt2",
+    "HF_TASK": "text-generation"
+  }
+}
+</code></pre>
+</li>
+<li>
+<p>Then, make sure to configure your AWS account by following the instructions at section <a href="#configure-aws-account">Configure AWS Account</a></p>
+</li>
+<li>
+<p>Finally, run the following command:</p>
+<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+</code></pre>
+</li>
+</ol>
+<p>You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.</p>
+<ol>
+<li>Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:</li>
+</ol>
+<p><img alt="Sagemaker-Endpoints-List" src="sagemaker_endpoints_list.png" /></p>
+<ol>
+<li>Then, you can click on your deployed endpoint and copy the endpoint url. For example:</li>
+</ol>
+<p><img alt="Sagemaker-Endpoint" src="sagemaker_endpoint.png" /></p>
+<ol>
+<li>Postman is a good app to call the deployed endpoint. Here's an example on how to set up the AWS signature in order to call the endpoint:</li>
+</ol>
+<p><img alt="Postman-AWS-Signature" src="postman_aws_signature.png" /></p>
+<ol>
+<li>Finally, you can call the endpoint from Postman:</li>
+</ol>
+<p><img alt="Postman-Call-Endpoint" src="postman_call_endpoint.png" /></p>
+<h2 id="getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</h2>
 <h3 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h3>
 <p>You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.</p>
 <p>Clone repository:</p>
@@ -525,7 +587,7 @@ http://localhost:8080/invocations \
 <p>Now, go to Users page by clicking on <em>Users</em> on the left-hand side.</p>
 </li>
 <li>
-<p>Click on your IAM user that you want to use for AWS SageMaker:</p>
+<p>Click on your IAM user that you want to use for AWS SageMaker and attach the <code>AmazonSageMakerFullAccess</code> permission policy:</p>
 </li>
 </ul>
 <p><img alt="Users" src="iam_users.png" /></p>
@@ -1068,7 +1130,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_8">Name</h4>
 <p>Executes a Docker image in serve mode on AWS SageMaker</p>
 <h4 id="synopsis_9">Synopsis</h4>
-<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
 </code></pre>
 <h4 id="description_9">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode. You can update an endpoint (model or number of instances) by specifying the endpoint-name.</p>
@@ -1164,6 +1226,62 @@ log_metric("Accuracy", accuracy)
 <h4 id="example_12">Example</h4>
 <pre><code>sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
 </code></pre>
+<h3 id="cloud-lightning-deploy">Cloud Lightning Deploy</h3>
+<h4 id="name_12">Name</h4>
+<p>Command for lightning deployment of pre-trained ML model(s) on AWS SageMaker without code</p>
+<h4 id="synopsis_13">Synopsis</h4>
+<pre><code>sagify cloud lightning-deploy --framework FRAMEWORK --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION --extra-config-file EXTRA_CONFIG_FILE [--model-server-workers MODEL_SERVER_WORKERS] [--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+</code></pre>
+<h4 id="description_13">Description</h4>
+<p>This command deploys a pre-trained ML model without code. </p>
+<h4 id="required-flags_7">Required Flags</h4>
+<p><code>--framework FRAMEWORK</code>: Name of the ML framework. Valid values: <code>sklearn</code>, <code>huggingface</code></p>
+<p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
+<p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
+<p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
+<p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
+<p><code>--extra-config-file EXTRA_CONFIG_FILE</code>: Json file with ML framework specific arguments</p>
+<p>For SKLearn, you have to specify the <code>framework_version</code> in the EXTRA_CONFIG_FILE and specify the S3 location to model tar.gz (i.e. tar gzip your sklearn pickled file</p>
+<h4 id="optional-flags_6">Optional Flags</h4>
+<p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: Optional S3 location to model tar.gz</p>
+<p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
+<h4 id="example-for-sklearn">Example for SKLearn</h4>
+<p>Rename your pre-trained sklearn model to <code>model.joblib</code> and compress it to a GZIP tar archive with command <code>!tar czvf model.tar.gz model.joblib</code>.</p>
+<pre><code>sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/sklearn_model.tar.gz
+</code></pre>
+<p>The <code>sklearn_config.json</code> must contain the following flag <code>framework_version</code>. Supported sklearn version(s): 0.20.0, 0.23-1.</p>
+<p>Example of <code>sklearn_config.json</code>:</p>
+<pre><code>    {
+      "framework_version": "0.23-1"
+    }
+</code></pre>
+<h4 id="example-for-huggingface-by-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace by specifying the <code>S3_LOCATION_TO_MODEL_TAR_GZ</code></h4>
+<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/hg_model.tar.gz
+</code></pre>
+<p>The <code>huggingface_config.json</code> must contain the following flags  <code>pytorch_version</code> or <code>tensorflow_version</code> (not both), and <code>transformers_version</code>. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.</p>
+<p>Example of <code>huggingface_config.json</code>:</p>
+<pre><code>    {
+      "transformers_version": "4.6.1",
+      "pytorch_version": "1.7.1"
+    }
+</code></pre>
+<h4 id="example-for-huggingface-without-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace without specifying the <code>S3_LOCATION_TO_MODEL_TAR_GZ</code></h4>
+<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+</code></pre>
+<p>The <code>huggingface_config.json</code> must contain the following flags  <code>pytorch_version</code> or <code>tensorflow_version</code> (not both), <code>transformers_version</code> and <code>hub</code>. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.</p>
+<p>Example of <code>huggingface_config.json</code>:</p>
+<pre><code>    {
+      "transformers_version": "4.6.1",
+      "pytorch_version": "1.7.1",
+      "hub": {
+        "HF_MODEL_ID": "gpt2",
+        "HF_TASK": "text-generation"
+      }
+    }
+</code></pre>
               
             </div>
           </div>
@@ -1210,5 +1328,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-01-05 12:33:11.968210+00:00
+Build Date UTC : 2022-01-16 12:58:11.592959+00:00
 -->
