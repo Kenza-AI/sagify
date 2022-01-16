@@ -879,7 +879,7 @@ def lightning_deploy(
         extra_config_file
 ):
     """
-    Commend for lightning deployment of ML model(s) on SageMaker without code
+    Command for lightning deployment of ML model(s) on SageMaker without code
     """
     logger.info(ASCII_LOGO)
     logger.info("Started lightning deployment on SageMaker ...\n")
