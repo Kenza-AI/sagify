@@ -99,7 +99,7 @@ def upload_data(input_dir, s3_dir):
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for the train command"
 )
 @click.option(
     u"-x",
@@ -242,7 +242,7 @@ def train(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for the hyperparam command"
 )
 @click.option(
     u"-x",
@@ -363,7 +363,7 @@ def hyperparameter_optimization(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for the deploy command"
 )
 @click.option(
     u"-x",
@@ -446,7 +446,7 @@ def deploy(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for this command"
 )
 @click.option(
     u"-x",
@@ -523,7 +523,7 @@ def create_streaming_inference(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for this command"
 )
 @click.option(
     u"-x",
@@ -593,7 +593,7 @@ def delete_streaming_inference(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for this command"
 )
 @click.option(
     u"-x",
@@ -655,7 +655,7 @@ def send_to_streaming_inference(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for this command"
 )
 @click.option(
     u"-x",
@@ -731,7 +731,7 @@ def listen_to_streaming_inference(
     u"-r",
     u"--iam-role-arn",
     required=False,
-    help="The AWS role to use for the push command"
+    help="The AWS role to use for this command"
 )
 @click.option(
     u"-x",
@@ -801,6 +801,112 @@ def batch_transform(
         sys.exit(-1)
 
 
+@click.command(name="lightning-deploy")
+@click.option(
+    u"--framework",
+    required=True,
+    help="Name of the ML framework. Valid values: sklearn, huggingface"
+)
+@click.option(
+    u"-m", u"--s3-model-location",
+    required=False,
+    help="s3 location to model tar.gz",
+    type=click.Path()
+)
+@click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
+@click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
+@click.option(
+    u"--model-server-workers",
+    required=False,
+    type=int,
+    default=None,
+    help="The number of worker processes used by the inference server. "
+         "If None, server will use one worker per vCPU")
+@click.option(
+    u"-a", u"--aws-tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+@click.option(
+    u"--aws-profile",
+    required=False,
+    help="The AWS profile to use for the lightning deploy command"
+)
+@click.option(
+    u"--aws-region",
+    required=True,
+    help="The AWS region to use for the lightning deploy command"
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the lightning deploy command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+@click.option(
+    u"--endpoint-name",
+    required=False,
+    default=None,
+    help="Name for the SageMaker endpoint"
+)
+@click.option(
+    u"--extra-config-file",
+    required=True,
+    help="Json file with ML framework specific arguments",
+    type=click.Path(resolve_path=True)
+)
+def lightning_deploy(
+        framework,
+        s3_model_location,
+        num_instances,
+        ec2_type,
+        model_server_workers,
+        aws_tags,
+        aws_profile,
+        aws_region,
+        iam_role_arn,
+        external_id,
+        endpoint_name,
+        extra_config_file
+):
+    """
+    Command for lightning deployment of ML model(s) on SageMaker without code
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Started lightning deployment on SageMaker ...\n")
+
+    try:
+        endpoint_name = api_cloud.lightning_deploy(
+            framework=framework,
+            s3_model_location=s3_model_location,
+            num_instances=num_instances,
+            ec2_type=ec2_type,
+            aws_region=aws_region,
+            model_server_workers=model_server_workers,
+            aws_profile=aws_profile,
+            aws_role=iam_role_arn,
+            external_id=external_id,
+            tags=aws_tags,
+            endpoint_name=endpoint_name,
+            extra_config_file=extra_config_file
+        )
+
+        logger.info("Model deployed to SageMaker successfully")
+        logger.info("Endpoint name: {}".format(endpoint_name))
+    except ValueError as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
 cloud.add_command(upload_data)
 cloud.add_command(train)
 cloud.add_command(hyperparameter_optimization)
@@ -810,3 +916,4 @@ cloud.add_command(delete_streaming_inference)
 cloud.add_command(send_to_streaming_inference)
 cloud.add_command(listen_to_streaming_inference)
 cloud.add_command(batch_transform)
+cloud.add_command(lightning_deploy)

@@ -27,7 +27,44 @@ At the command line:
     pip install sagify
 
 
-## Getting started
+## Getting started -  No code deployment
+
+1. Create a file with name `huggingface_config.json` with the following content:
+
+        {
+          "transformers_version": "4.6.1",
+          "pytorch_version": "1.7.1",
+          "hub": {
+            "HF_MODEL_ID": "gpt2",
+            "HF_TASK": "text-generation"
+          }
+        }
+                
+2. Then, make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
+  
+3. Finally, run the following command:
+
+        sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+        
+You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
+
+4. Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:
+
+![Sagemaker-Endpoints-List](docs/sagemaker_endpoints_list.png)
+
+5. Then, you can click on your deployed endpoint and copy the endpoint url. For example:
+
+![Sagemaker-Endpoint](docs/sagemaker_endpoint.png)
+
+6. Postman is a good app to call the deployed endpoint. Here's an example on how to set up the AWS signature in order to call the endpoint:
+ 
+![Postman-AWS-Signature](docs/postman_aws_signature.png)
+
+7. Finally, you can call the endpoint from Postman:
+
+![Postman-Call-Endpoint](docs/postman_call_endpoint.png)
+
+## Getting started - Custom Training and Deployment
 
 ### Step 1: Clone Machine Learning demo repository
 
@@ -767,3 +804,92 @@ This command deletes the worker (i.e. Lambda function), input topic `FEATURES_IN
 #### Example
 
     sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
+
+
+### Cloud Lightning Deploy
+
+#### Name
+
+Command for lightning deployment of pre-trained ML model(s) on AWS SageMaker without code
+
+#### Synopsis
+
+    sagify cloud lightning-deploy --framework FRAMEWORK --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION --extra-config-file EXTRA_CONFIG_FILE [--model-server-workers MODEL_SERVER_WORKERS] [--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+
+#### Description
+
+This command deploys a pre-trained ML model without code. 
+
+#### Required Flags
+
+`--framework FRAMEWORK`: Name of the ML framework. Valid values: `sklearn`, `huggingface`
+
+`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
+
+`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+
+`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
+
+`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
+
+`--extra-config-file EXTRA_CONFIG_FILE`: Json file with ML framework specific arguments
+
+For SKLearn, you have to specify the `framework_version` in the EXTRA_CONFIG_FILE and specify the S3 location to model tar.gz (i.e. tar gzip your sklearn pickled file
+
+#### Optional Flags
+
+`--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: Optional S3 location to model tar.gz
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+`--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
+
+#### Example for SKLearn
+
+Rename your pre-trained sklearn model to `model.joblib` and compress it to a GZIP tar archive with command `!tar czvf model.tar.gz model.joblib`.
+
+    sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/sklearn_model.tar.gz
+
+The `sklearn_config.json` must contain the following flag `framework_version`. Supported sklearn version(s): 0.20.0, 0.23-1.
+ 
+Example of `sklearn_config.json`:
+
+        {
+          "framework_version": "0.23-1"
+        }
+
+#### Example for HuggingFace by specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
+
+    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/hg_model.tar.gz
+
+The `huggingface_config.json` must contain the following flags  `pytorch_version` or `tensorflow_version` (not both), and `transformers_version`. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.
+ 
+Example of `huggingface_config.json`:
+
+        {
+          "transformers_version": "4.6.1",
+          "pytorch_version": "1.7.1"
+        }
+
+
+#### Example for HuggingFace without specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
+
+    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+
+
+The `huggingface_config.json` must contain the following flags  `pytorch_version` or `tensorflow_version` (not both), `transformers_version` and `hub`. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.
+ 
+Example of `huggingface_config.json`:
+
+        {
+          "transformers_version": "4.6.1",
+          "pytorch_version": "1.7.1",
+          "hub": {
+            "HF_MODEL_ID": "gpt2",
+            "HF_TASK": "text-generation"
+          }
+        }

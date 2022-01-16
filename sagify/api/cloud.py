@@ -32,7 +32,7 @@ def _read_hyperparams_config(hyperparams_file_path):
 def _read_hyperparams_ranges_config(hyperparams_config_file_path):
     if not os.path.isfile(hyperparams_config_file_path):
         raise ValueError(
-            "The given hyperparams file {} doens't exist".format(hyperparams_config_file_path)
+            "The given hyperparams file {} doesn't exist".format(hyperparams_config_file_path)
         )
 
     with open(hyperparams_config_file_path) as _in_file:
@@ -514,3 +514,84 @@ def batch_transform(
         wait=wait,
         job_name=job_name
     )
+
+
+def lightning_deploy(
+        framework,
+        num_instances,
+        ec2_type,
+        aws_region,
+        s3_model_location=None,
+        model_server_workers=None,
+        aws_profile=None,
+        aws_role=None,
+        external_id=None,
+        tags=None,
+        endpoint_name=None,
+        extra_config_file=None
+):
+    """
+    Deploys ML model(s) on SageMaker without code
+
+    :param framework: [str], The name of the ML framework. Valid values: sklearn, huggingface
+    :param num_instances: [int], number of ec2 instances
+    :param ec2_type: [str], ec2 instance type. Refer to:
+    https://aws.amazon.com/sagemaker/pricing/instance-types/
+    :param aws_region: [str], the AWS region
+    :param s3_model_location: [str], S3 model location
+    :param model_server_workers: [int], Optional number of worker processes used by the inference
+    server. If None, server will use one worker per vCPU.
+    :param aws_profile: [optional[str]], Optional AWS profile
+    :param aws_role: [optional[str]], Optional AWS role assumed by SageMaker while deploying
+    :param external_id: [optional[str]], Optional external id used when using an IAM role
+    :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+    :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
+    :param extra_config_file: [optional[str]], Optional Json file with ML framework specific arguments
+
+    :return: [str], endpoint name
+    """
+    sage_maker_client = sagemaker.SageMakerClient(aws_profile, aws_region, aws_role, external_id)
+
+    if not os.path.isfile(extra_config_file):
+        raise ValueError(
+            "The given extra config file {} doesn't exist".format(extra_config_file)
+        )
+
+    with open(extra_config_file) as _in_file:
+        extra_config_dict = json.load(_in_file)
+
+    if framework == 'sklearn':
+        return sage_maker_client.deploy_sklearn(
+            s3_model_location=s3_model_location,
+            instance_count=num_instances,
+            instance_type=ec2_type,
+            model_server_workers=model_server_workers,
+            tags=tags,
+            endpoint_name=endpoint_name,
+            **extra_config_dict
+        )
+    elif framework == 'huggingface':
+        return sage_maker_client.deploy_hugging_face(
+            s3_model_location=s3_model_location,
+            instance_count=num_instances,
+            instance_type=ec2_type,
+            model_server_workers=model_server_workers,
+            tags=tags,
+            endpoint_name=endpoint_name,
+            **extra_config_dict
+        )
+
+    raise ValueError("Invalid framework value")
