@@ -1134,7 +1134,7 @@ This command deploys a pre-trained ML model without code.
 
 #### Required Flags
 
-`--framework FRAMEWORK`: Name of the ML framework. Valid values: `sklearn`, `huggingface`
+`--framework FRAMEWORK`: Name of the ML framework. Valid values: `sklearn`, `huggingface`, `xgboost`
 
 `--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
 
@@ -1162,9 +1162,9 @@ For SKLearn, you have to specify the `framework_version` in the EXTRA_CONFIG_FIL
 
 #### Example for SKLearn
 
-Rename your pre-trained sklearn model to `model.joblib` and compress it to a GZIP tar archive with command `!tar czvf model.tar.gz model.joblib`.
+Compress your pre-trained sklearn model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_sklearn_model_name`.
 
-    sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/sklearn_model.tar.gz
+    sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 
 The `sklearn_config.json` must contain the following flag `framework_version`. Supported sklearn version(s): 0.20.0, 0.23-1.
  
@@ -1176,7 +1176,9 @@ Example of `sklearn_config.json`:
 
 #### Example for HuggingFace by specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
 
-    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/hg_model.tar.gz
+Compress your pre-trained HuggingFace model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_hg_model_name`.
+
+    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 
 The `huggingface_config.json` must contain the following flags  `pytorch_version` or `tensorflow_version` (not both), and `transformers_version`. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.
  
@@ -1186,7 +1188,6 @@ Example of `huggingface_config.json`:
           "transformers_version": "4.6.1",
           "pytorch_version": "1.7.1"
         }
-
 
 #### Example for HuggingFace without specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
 
@@ -1204,4 +1205,18 @@ Example of `huggingface_config.json`:
             "HF_MODEL_ID": "gpt2",
             "HF_TASK": "text-generation"
           }
+        }
+        
+#### Example for XGBoost
+
+Compress your pre-trained XGBoost model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_xgboost_model_name`.
+
+    sagify cloud lightning-deploy --framework xgboost -n 1 -e ml.c4.2xlarge --extra-config-file xgboost_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
+
+The `xgboost_config.json` must contain the following flag `framework_version`. Supported xgboost version(s): 0.90-2, 1.0-1, and later.
+ 
+Example of `xgboost_config.json`:
+
+        {
+          "framework_version": "0.23-1"
         }

@@ -805,7 +805,7 @@ def batch_transform(
 @click.option(
     u"--framework",
     required=True,
-    help="Name of the ML framework. Valid values: sklearn, huggingface"
+    help="Name of the ML framework. Valid values: sklearn, huggingface, xgboost"
 )
 @click.option(
     u"-m", u"--s3-model-location",
