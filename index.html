@@ -330,6 +330,8 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#example-for-huggingface-without-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace without specifying the S3_LOCATION_TO_MODEL_TAR_GZ</a>
     </li>
+    <li class="toctree-l4"><a class="reference internal" href="#example-for-xgboost">Example for XGBoost</a>
+    </li>
         </ul>
     </li>
         </ul>
@@ -1235,7 +1237,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="description_13">Description</h4>
 <p>This command deploys a pre-trained ML model without code. </p>
 <h4 id="required-flags_7">Required Flags</h4>
-<p><code>--framework FRAMEWORK</code>: Name of the ML framework. Valid values: <code>sklearn</code>, <code>huggingface</code></p>
+<p><code>--framework FRAMEWORK</code>: Name of the ML framework. Valid values: <code>sklearn</code>, <code>huggingface</code>, <code>xgboost</code></p>
 <p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
 <p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
@@ -1249,8 +1251,8 @@ log_metric("Accuracy", accuracy)
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
 <h4 id="example-for-sklearn">Example for SKLearn</h4>
-<p>Rename your pre-trained sklearn model to <code>model.joblib</code> and compress it to a GZIP tar archive with command <code>!tar czvf model.tar.gz model.joblib</code>.</p>
-<pre><code>sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/sklearn_model.tar.gz
+<p>Compress your pre-trained sklearn model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_sklearn_model_name</code>.</p>
+<pre><code>sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 </code></pre>
 <p>The <code>sklearn_config.json</code> must contain the following flag <code>framework_version</code>. Supported sklearn version(s): 0.20.0, 0.23-1.</p>
 <p>Example of <code>sklearn_config.json</code>:</p>
@@ -1259,7 +1261,8 @@ log_metric("Accuracy", accuracy)
     }
 </code></pre>
 <h4 id="example-for-huggingface-by-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace by specifying the <code>S3_LOCATION_TO_MODEL_TAR_GZ</code></h4>
-<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/hg_model.tar.gz
+<p>Compress your pre-trained HuggingFace model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_hg_model_name</code>.</p>
+<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 </code></pre>
 <p>The <code>huggingface_config.json</code> must contain the following flags  <code>pytorch_version</code> or <code>tensorflow_version</code> (not both), and <code>transformers_version</code>. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.</p>
 <p>Example of <code>huggingface_config.json</code>:</p>
@@ -1280,6 +1283,16 @@ log_metric("Accuracy", accuracy)
         "HF_MODEL_ID": "gpt2",
         "HF_TASK": "text-generation"
       }
+    }
+</code></pre>
+<h4 id="example-for-xgboost">Example for XGBoost</h4>
+<p>Compress your pre-trained XGBoost model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_xgboost_model_name</code>.</p>
+<pre><code>sagify cloud lightning-deploy --framework xgboost -n 1 -e ml.c4.2xlarge --extra-config-file xgboost_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
+</code></pre>
+<p>The <code>xgboost_config.json</code> must contain the following flag <code>framework_version</code>. Supported xgboost version(s): 0.90-2, 1.0-1, and later.</p>
+<p>Example of <code>xgboost_config.json</code>:</p>
+<pre><code>    {
+      "framework_version": "0.23-1"
     }
 </code></pre>
               
@@ -1328,5 +1341,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-01-16 12:58:11.592959+00:00
+Build Date UTC : 2022-01-30 18:11:35.477991+00:00
 -->
