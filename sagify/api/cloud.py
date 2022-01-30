@@ -533,7 +533,8 @@ def lightning_deploy(
     """
     Deploys ML model(s) on SageMaker without code
 
-    :param framework: [str], The name of the ML framework. Valid values: sklearn, huggingface
+    :param framework: [str], The name of the ML framework.
+    Valid values: sklearn, huggingface, xgboost
     :param num_instances: [int], number of ec2 instances
     :param ec2_type: [str], ec2 instance type. Refer to:
     https://aws.amazon.com/sagemaker/pricing/instance-types/
@@ -585,6 +586,16 @@ def lightning_deploy(
         )
     elif framework == 'huggingface':
         return sage_maker_client.deploy_hugging_face(
+            s3_model_location=s3_model_location,
+            instance_count=num_instances,
+            instance_type=ec2_type,
+            model_server_workers=model_server_workers,
+            tags=tags,
+            endpoint_name=endpoint_name,
+            **extra_config_dict
+        )
+    elif framework == 'xgboost':
+        return sage_maker_client.deploy_xgboost(
             s3_model_location=s3_model_location,
             instance_count=num_instances,
             instance_type=ec2_type,

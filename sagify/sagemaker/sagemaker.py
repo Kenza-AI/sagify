@@ -6,6 +6,7 @@ import os
 import sagemaker as sage
 import sagemaker.tuner
 import sagemaker.huggingface
+import sagemaker.xgboost
 import sagemaker.sklearn.model
 from six.moves.urllib.parse import urlparse
 
@@ -495,6 +496,50 @@ class SageMakerClient(object):
             model_server_workers=model_server_workers,
             py_version='py36',
             env=hub,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        try:
+            predictor = model.deploy(
+                instance_type=instance_type,
+                initial_instance_count=instance_count,
+                tags=tags,
+                endpoint_name=endpoint_name
+            )
+        except botocore.exceptions.ClientError:
+            # ValueError raised if there is no endpoint already
+            predictor = sage.Predictor(
+                endpoint_name=endpoint_name,
+                sagemaker_session=self.sagemaker_session
+            )
+
+            predictor.update_endpoint(
+                initial_instance_count=instance_count,
+                instance_type=instance_type,
+                tags=tags,
+                model_name=model.name
+            )
+
+        return predictor.endpoint_name
+
+    def deploy_xgboost(
+            self,
+            s3_model_location,
+            instance_count,
+            instance_type,
+            framework_version,
+            model_server_workers=None,
+            tags=None,
+            endpoint_name=None
+    ):
+        model = sagemaker.xgboost.model.XGBoostModel(
+            role=self.role,
+            model_data=s3_model_location,
+            framework_version=framework_version,
+            py_version="py3",
+            source_dir=os.path.join(_FILE_DIR_PATH, "xgboost_code"),
+            entry_point="xgboost_inference.py",
+            model_server_workers=model_server_workers,
             sagemaker_session=self.sagemaker_session
         )
 

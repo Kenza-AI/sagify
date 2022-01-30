@@ -1080,3 +1080,51 @@ class TestLightningDeploy(object):
                     )
 
         assert result.exit_code == 0
+
+    def test_lightning_deploy_xgboost_happy_case(self):
+        extra_args = """
+                {
+                    "framework_version": "0.90-2"
+                }
+                """
+
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch(
+                    'sagify.sagemaker.sagemaker.SageMakerClient'
+            ) as mocked_sage_maker_client:
+                instance = mocked_sage_maker_client.return_value
+                with runner.isolated_filesystem():
+                    with open('extra_config_file.json', 'w') as f:
+                        f.write(extra_args)
+
+                    result = runner.invoke(
+                        cli=cli,
+                        args=[
+                            'cloud', 'lightning-deploy',
+                            '--framework', 'xgboost',
+                            '-m', 's3://bucket/model/location/model.tar.gz',
+                            '-n', '2',
+                            '-e', 'ml.c4.2xlarge',
+                            '--extra-config-file', 'extra_config_file.json',
+                            '--aws-region', 'us-east-1',
+                            '--aws-profile', 'sagify'
+                        ]
+                    )
+
+                    assert instance.deploy_xgboost.call_count == 1
+                    instance.deploy_xgboost.assert_called_with(
+                        s3_model_location='s3://bucket/model/location/model.tar.gz',
+                        instance_count=2,
+                        instance_type='ml.c4.2xlarge',
+                        framework_version='0.90-2',
+                        model_server_workers=None,
+                        tags=None,
+                        endpoint_name=None
+                    )
+
+        assert result.exit_code == 0

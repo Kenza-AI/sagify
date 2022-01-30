@@ -755,3 +755,92 @@ def test_deploy_hugging_face_with_hub():
                         tags=None,
                         endpoint_name=None
                     )
+
+
+def test_deploy_xgboost_happy_case():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.xgboost.model.XGBoostModel'
+                ) as mocked_sagemaker_xgboost_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+                    sage_maker_client.deploy_xgboost(
+                        s3_model_location='s3://bucket/model_input/model.tar.gz',
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        framework_version='0.90-2'
+                    )
+
+                    mocked_sagemaker_xgboost_model.assert_called_with(
+                        role='arn_role',
+                        model_data='s3://bucket/model_input/model.tar.gz',
+                        framework_version='0.90-2',
+                        py_version='py3',
+                        entry_point='xgboost_inference.py',
+                        source_dir=os.path.join(sagemaker._FILE_DIR_PATH, 'xgboost_code'),
+                        model_server_workers=None,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_xgboost_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
+
+
+def test_deploy_xgboost_with_model_server_workers():
+    with patch(
+            'boto3.Session'
+    ):
+        with patch(
+                'sagemaker.Session'
+        ) as mocked_sagemaker_session:
+            sagemaker_session_instance = mocked_sagemaker_session.return_value
+
+            with patch(
+                    'sagemaker.get_execution_role',
+                    return_value='arn_role'
+            ):
+                with patch(
+                        'sagemaker.xgboost.model.XGBoostModel'
+                ) as mocked_sagemaker_xgboost_model:
+                    sage_maker_client = sagemaker.SageMakerClient('sagemaker', 'us-east-1')
+                    sage_maker_client.deploy_xgboost(
+                        s3_model_location='s3://bucket/model_input/model.tar.gz',
+                        instance_count=1,
+                        instance_type='m1.xlarge',
+                        framework_version='0.90-2',
+                        model_server_workers=2
+                    )
+
+                    mocked_sagemaker_xgboost_model.assert_called_with(
+                        role='arn_role',
+                        model_data='s3://bucket/model_input/model.tar.gz',
+                        framework_version='0.90-2',
+                        py_version='py3',
+                        entry_point='xgboost_inference.py',
+                        source_dir=os.path.join(sagemaker._FILE_DIR_PATH, 'xgboost_code'),
+                        model_server_workers=2,
+                        sagemaker_session=sagemaker_session_instance
+                    )
+                    sagemaker_model_instance = mocked_sagemaker_xgboost_model.return_value
+                    assert sagemaker_model_instance.deploy.call_count == 1
+                    sagemaker_model_instance.deploy.assert_called_with(
+                        initial_instance_count=1,
+                        instance_type='m1.xlarge',
+                        tags=None,
+                        endpoint_name=None
+                    )
