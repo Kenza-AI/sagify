@@ -17,12 +17,12 @@ def model_fn(model_dir):
     try:
         loaded_model = xgb.Booster()
         loaded_model.load_model(os.path.join(model_dir, model_file_name))
-    except:
+    except:  # noqa: E722
         print("XGBoost's load_model didn't work. Trying with joblib now")
 
         try:
             loaded_model = joblib.load(model_file_name)
-        except:
+        except:  # noqa: E722
             print("XGBoost's joblib.load didn't work. Trying with pickle now")
             loaded_model = pickle.load(open(model_file_name, 'rb'))
 
