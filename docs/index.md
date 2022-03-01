@@ -428,12 +428,12 @@ You can monitor the progress via the SageMaker UI console. Here is an example of
 Superwise provide organization to streamline the model observability and monitoring process 🚀
 It's platform agnostic and provide an extensive freemium tier.
 
-In this part, you'll integrate with [Superwise.ai](https://www.superwise.ai/) gain full visibility on your deployed models. 
+In this part, you'll integrate with [Superwise.ai](https://www.superwise.ai/) to gain full visibility on your deployed models. 
 once integrated you can use Superwise platform to monitor and define workflows to detect and handle: data drift, performance degregation, data integrity, model activity or any other customized monitoring use case. 
 
 ### Step 1: Create Superwise Account
 
-Go to [Superwise](https://portal.superwise.ai) and create an account using the Account button. The free tier support up to 3 models.
+Go to [Superwise](https://portal.superwise.ai) and create an account using the Account button. The free tier supports up to 3 models.
 
 ### Step 2: Create model at Superwise.ai
 
@@ -530,9 +530,6 @@ Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/tr
 
     ###### Report Testing Data ######
     test_predictions = clf.predict(features_test)
-
-
-
     accuracy = accuracy_score(labels_test, test_predictions)
 
     output_model_file_path = os.path.join(model_save_path, 'model.pkl')
@@ -541,8 +538,6 @@ Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/tr
     accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
     with open(accuracy_report_file_path, 'w') as _out:
         _out.write(str(accuracy))
-
-
 
     ## create superwise model
     model = sw.model.create(Model(name=MODEL_NAME,
