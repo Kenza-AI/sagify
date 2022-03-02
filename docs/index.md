@@ -425,17 +425,17 @@ You can monitor the progress via the SageMaker UI console. Here is an example of
 
 ## Superwise.ai
 
-Superwise provide organization to streamline the model observability and monitoring process 🚀
-It's platform agnostic and provide an extensive freemium tier.
+Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀
+The solution is platform agnostic and provides an extensive freemium tier.
 
-In this part, you'll integrate with [Superwise.ai](https://www.superwise.ai/) to gain full visibility on your deployed models. 
-once integrated you can use Superwise platform to monitor and define workflows to detect and handle: data drift, performance degregation, data integrity, model activity or any other customized monitoring use case. 
+In this task, you'll be integrating with [Superwise.ai](https://www.superwise.ai/) to gain full visibility into your deployed models. 
+Once integration is complete, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case. 
 
-### Step 1: Create Superwise Account
+### Step 1: Create a Superwise Account
 
 Go to [Superwise](https://portal.superwise.ai) and create an account using the Account button. The free tier supports up to 3 models.
 
-### Step 2: Create model at Superwise.ai
+### Step 2: Create a model at Superwise.ai
 
 You can use the Superwise SDK to create the model.
 To create an access token on the Superwise dashboard, click User profile and then select Personal tokens.
@@ -445,9 +445,10 @@ To create an access token on the Superwise dashboard, click User profile and the
 
     sagify init
 
-Type in `iris-model` for SageMaker app name, `y` in question `Are you starting a new project?`, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+Type in `iris-model` for the SageMaker app name, and answer `y`  to the question `Are you starting a new project?`
+Make sure to choose Python version 3 and your preferred AWS profile and region. Then, type `requirements.txt` in answer to the prompt`Type in the path to requirements.txt`.
 
-A module called `sagify_base` is created under the `src` directory. The structure is:
+A module called `sagify_base` is created under the `src` directory. The module’s structure is:
 
     sagify_base/
         local_test/
@@ -493,11 +494,11 @@ The `requirements.txt` at the root of the project must have the following conten
         scikit-learn
         superwise
 
-### Step 5: Download Iris data set
+### Step 5: Download the Iris data set
 
 Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data> and save it in a file named "iris.data" under `src/sagify_base/local_test/test_dir/input/data/training/`.
 
-### Step 6: Implement Training logic
+### Step 6: Implement the training logic
 
 Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/training.py` file with the following.
 
@@ -524,14 +525,13 @@ Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/tr
     features_test = features_test_df.values
     labels_test = labels_test_df.values.ravel()
 
-
     clf = SVC(gamma='auto', kernel="linear")
     clf.fit(features_train, labels_train)
 
     ###### Report Testing Data ######
     test_predictions = clf.predict(features_test)
-    accuracy = accuracy_score(labels_test, test_predictions)
 
+    accuracy = accuracy_score(labels_test, test_predictions)
     output_model_file_path = os.path.join(model_save_path, 'model.pkl')
     joblib.dump(clf, output_model_file_path)
 
@@ -584,14 +584,13 @@ and at the top of the file, add:
         client_id="<my client_id>",
         secret="<my secret>",
     )
-### Step 7: Implement Prediction logic
+### Step 7: Implement the prediction logic
 
-Replace the body of `predict(...)` function in `src/sagify_base/prediction/prediction.py` with.
+Replace the body of the `predict(...)` function in `src/sagify_base/prediction/prediction.py` with the following:
 
     model_input = json_input['features']
     prediction = ModelService.predict(model_input)
     model = ModelService.get_superwise_model(MODEL_NAME)
-
 
     for m in model_input:
         records = {
@@ -613,14 +612,13 @@ Replace the body of `predict(...)` function in `src/sagify_base/prediction/predi
         "prediction": prediction.item()
     }
 
-
-replace the body of `get_model()` function in `ModelService` class in the same file with:
+Replace the body of the `get_model()` function under the `ModelService` class in the same file with the following:
 
         if cls.model is None:
             cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
         return cls.model
 
-add to ModelService a new function called `get_superwise_model()`
+Add a new function called `get_superwise_model()` to the ‘ModelService’ class, using the following: 
 
     @classmethod
     def get_superwise_model(cls,model_name):
@@ -628,8 +626,7 @@ add to ModelService a new function called `get_superwise_model()`
         return sw.model.get_by_name(model_name)
 
 
-
-and the top of the file must look like:
+Add the following text to the top of the file:
 
     from superwise import Superwise
     import joblib
@@ -645,13 +642,13 @@ and the top of the file must look like:
     MODEL_NAME = "Iris Model"
     _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
 
-### Step 8: Build and Train the ML model
+### Step 8: Build and train the ML model
 
-Run `sagify build` and after that `sagify local train`
+To build and train the ML model, run the command `sagify build` and then run  `sagify local train`
 
-### Step 9: Call inference REST API
+### Step 9: Call the inference REST API
 
-Run `sagify local deploy` and then run the following curl command to call the inference endpoint:
+To use the REST API, run the command `sagify local deploy` and then run the following curl command to call the inference endpoint:
 
     curl -X POST \
     http://localhost:8080/invocations \
@@ -661,7 +658,7 @@ Run `sagify local deploy` and then run the following curl command to call the in
 	    "features":[[0.34, 0.45, 0.45, 0.3]]
     }'
 
-Now you should be able to see data coming in on Superwise dashboards.
+You should now be able to see data coming in on the Superwise dashboards.
 
 ## Aporia
 
