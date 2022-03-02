@@ -112,23 +112,23 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#superwiseai">Superwise.ai</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-create-superwise-account">Step 1: Create Superwise Account</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-1-create-a-superwise-account">Step 1: Create a Superwise Account</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-create-model-at-superwiseai">Step 2: Create model at Superwise.ai</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-create-a-model-at-superwiseai">Step 2: Create a model at Superwise.ai</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#step-3-initialize-sagify">Step 3: Initialize sagify</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-iris-data-set">Step 5: Download Iris data set</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-the-iris-data-set">Step 5: Download the Iris data set</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-training-logic">Step 6: Implement Training logic</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-the-training-logic">Step 6: Implement the training logic</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-prediction-logic">Step 7: Implement Prediction logic</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model">Step 8: Build and Train the ML model</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-inference-rest-api">Step 9: Call inference REST API</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</a>
     </li>
         </ul>
     </li>
@@ -142,15 +142,15 @@
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-the-requirementstxt_1">Step 4: Initialize the requirements.txt</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-iris-data-set_1">Step 5: Download Iris data set</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-iris-data-set">Step 5: Download Iris data set</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-training-logic_1">Step 6: Implement Training logic</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-training-logic">Step 6: Implement Training logic</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-prediction-logic_1">Step 7: Implement Prediction logic</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-prediction-logic">Step 7: Implement Prediction logic</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model_1">Step 8: Build and Train the ML model</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-inference-rest-api_1">Step 9: Call inference REST API</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-inference-rest-api">Step 9: Call inference REST API</a>
     </li>
         </ul>
     </li>
@@ -773,20 +773,21 @@ source_profile = test-sagemaker
 <p><img alt="Hyperparameter Optimization Results" src="hyperparam_monitor.png" /></p>
 <h2 id="monitor-ml-models-in-production">Monitor ML Models in Production</h2>
 <h2 id="superwiseai">Superwise.ai</h2>
-<p>Superwise provide organization to streamline the model observability and monitoring process 🚀
-It's platform agnostic and provide an extensive freemium tier.</p>
-<p>In this part, you'll integrate with <a href="https://www.superwise.ai/">Superwise.ai</a> to gain full visibility on your deployed models. 
-once integrated you can use Superwise platform to monitor and define workflows to detect and handle: data drift, performance degregation, data integrity, model activity or any other customized monitoring use case. </p>
-<h3 id="step-1-create-superwise-account">Step 1: Create Superwise Account</h3>
+<p>Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀
+The solution is platform agnostic and provides an extensive freemium tier.</p>
+<p>In this task, you'll be integrating with <a href="https://www.superwise.ai/">Superwise.ai</a> to gain full visibility into your deployed models. 
+Once integration is complete, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case. </p>
+<h3 id="step-1-create-a-superwise-account">Step 1: Create a Superwise Account</h3>
 <p>Go to <a href="https://portal.superwise.ai">Superwise</a> and create an account using the Account button. The free tier supports up to 3 models.</p>
-<h3 id="step-2-create-model-at-superwiseai">Step 2: Create model at Superwise.ai</h3>
+<h3 id="step-2-create-a-model-at-superwiseai">Step 2: Create a model at Superwise.ai</h3>
 <p>You can use the Superwise SDK to create the model.
 To create an access token on the Superwise dashboard, click User profile and then select Personal tokens.</p>
 <h3 id="step-3-initialize-sagify">Step 3: Initialize sagify</h3>
 <pre><code>sagify init
 </code></pre>
-<p>Type in <code>iris-model</code> for SageMaker app name, <code>y</code> in question <code>Are you starting a new project?</code>, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
-<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
+<p>Type in <code>iris-model</code> for the SageMaker app name, and answer <code>y</code>  to the question <code>Are you starting a new project?</code>
+Make sure to choose Python version 3 and your preferred AWS profile and region. Then, type <code>requirements.txt</code> in answer to the prompt<code>Type in the path to requirements.txt</code>.</p>
+<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The module’s structure is:</p>
 <pre><code>sagify_base/
     local_test/
         test_dir/
@@ -829,9 +830,9 @@ To create an access token on the Superwise dashboard, click User profile and the
     scikit-learn
     superwise
 </code></pre>
-<h3 id="step-5-download-iris-data-set">Step 5: Download Iris data set</h3>
+<h3 id="step-5-download-the-iris-data-set">Step 5: Download the Iris data set</h3>
 <p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
-<h3 id="step-6-implement-training-logic">Step 6: Implement Training logic</h3>
+<h3 id="step-6-implement-the-training-logic">Step 6: Implement the training logic</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following.</p>
 <pre><code>input_file_path = os.path.join(input_data_path, 'iris.data')
 
@@ -856,14 +857,13 @@ labels_test_df = df_test[['label']]
 features_test = features_test_df.values
 labels_test = labels_test_df.values.ravel()
 
-
 clf = SVC(gamma='auto', kernel="linear")
 clf.fit(features_train, labels_train)
 
 ###### Report Testing Data ######
 test_predictions = clf.predict(features_test)
-accuracy = accuracy_score(labels_test, test_predictions)
 
+accuracy = accuracy_score(labels_test, test_predictions)
 output_model_file_path = os.path.join(model_save_path, 'model.pkl')
 joblib.dump(clf, output_model_file_path)
 
@@ -916,12 +916,11 @@ sw = Superwise(
     secret="&lt;my secret&gt;",
 )
 </code></pre>
-<h3 id="step-7-implement-prediction-logic">Step 7: Implement Prediction logic</h3>
-<p>Replace the body of <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with.</p>
+<h3 id="step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</h3>
+<p>Replace the body of the <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with the following:</p>
 <pre><code>model_input = json_input['features']
 prediction = ModelService.predict(model_input)
 model = ModelService.get_superwise_model(MODEL_NAME)
-
 
 for m in model_input:
     records = {
@@ -943,18 +942,18 @@ return {
     "prediction": prediction.item()
 }
 </code></pre>
-<p>replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
+<p>Replace the body of the <code>get_model()</code> function under the <code>ModelService</code> class in the same file with the following:</p>
 <pre><code>    if cls.model is None:
         cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
     return cls.model
 </code></pre>
-<p>add to ModelService a new function called <code>get_superwise_model()</code></p>
+<p>Add a new function called <code>get_superwise_model()</code> to the ‘ModelService’ class, using the following: </p>
 <pre><code>@classmethod
 def get_superwise_model(cls,model_name):
     """ Get superwise model using superwise SDK """
     return sw.model.get_by_name(model_name)
 </code></pre>
-<p>and the top of the file must look like:</p>
+<p>Add the following text to the top of the file:</p>
 <pre><code>from superwise import Superwise
 import joblib
 import os
@@ -969,10 +968,10 @@ sw = Superwise(
 MODEL_NAME = "Iris Model"
 _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
 </code></pre>
-<h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and Train the ML model</h3>
-<p>Run <code>sagify build</code> and after that <code>sagify local train</code></p>
-<h3 id="step-9-call-inference-rest-api">Step 9: Call inference REST API</h3>
-<p>Run <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
+<h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</h3>
+<p>To build and train the ML model, run the command <code>sagify build</code> and then run  <code>sagify local train</code></p>
+<h3 id="step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</h3>
+<p>To use the REST API, run the command <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
 <pre><code>curl -X POST \
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
@@ -981,7 +980,7 @@ http://localhost:8080/invocations \
     "features":[[0.34, 0.45, 0.45, 0.3]]
 }'
 </code></pre>
-<p>Now you should be able to see data coming in on Superwise dashboards.</p>
+<p>You should now be able to see data coming in on the Superwise dashboards.</p>
 <h2 id="aporia">Aporia</h2>
 <p>In this part, you'll integrate with <a href="https://www.aporia.com/">Aporia</a> in order to monitor deployed ML models. More specifically, you'll monitor:</p>
 <ol>
@@ -1040,9 +1039,9 @@ http://localhost:8080/invocations \
     scikit-learn
     aporia[all]
 </code></pre>
-<h3 id="step-5-download-iris-data-set_1">Step 5: Download Iris data set</h3>
+<h3 id="step-5-download-iris-data-set">Step 5: Download Iris data set</h3>
 <p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
-<h3 id="step-6-implement-training-logic_1">Step 6: Implement Training logic</h3>
+<h3 id="step-6-implement-training-logic">Step 6: Implement Training logic</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
 <pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
 
@@ -1119,7 +1118,7 @@ http://localhost:8080/invocations \
     ###### Initiate Aporia ######
     aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
 </code></pre>
-<h3 id="step-7-implement-prediction-logic_1">Step 7: Implement Prediction logic</h3>
+<h3 id="step-7-implement-prediction-logic">Step 7: Implement Prediction logic</h3>
 <p>Replace the body of <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
 <pre><code>    model_input = json_input['features']
     prediction = ModelService.predict(model_input)
@@ -1166,7 +1165,7 @@ http://localhost:8080/invocations \
 </code></pre>
 <h3 id="step-8-build-and-train-the-ml-model_1">Step 8: Build and Train the ML model</h3>
 <p>Run <code>sagify build</code> and after that <code>sagify local train</code></p>
-<h3 id="step-9-call-inference-rest-api_1">Step 9: Call inference REST API</h3>
+<h3 id="step-9-call-inference-rest-api">Step 9: Call inference REST API</h3>
 <p>Run <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
 <pre><code>curl -X POST \
 http://localhost:8080/invocations \
@@ -1576,5 +1575,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-03-01 13:39:45.698225+00:00
+Build Date UTC : 2022-03-02 19:06:45.549630+00:00
 -->
