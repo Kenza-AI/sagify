@@ -423,32 +423,34 @@ You can monitor the progress via the SageMaker UI console. Here is an example of
 
 ## Monitor ML Models in Production
 
-## Superwise.ai
+## Superwise
 
-Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀
-The solution is platform agnostic and provides an extensive freemium tier.
+Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀. The solution is platform-agnostic and provides an extensive freemium tier.
 
-In this task, you'll be integrating with [Superwise.ai](https://www.superwise.ai/) to gain full visibility into your deployed models. 
-Once integration is complete, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case. 
+
+The steps below explain how you can integrate with Superwise to gain full visibility into your deployed models. Once you complete the integration, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case.
 
 ### Step 1: Create a Superwise Account
 
-Go to [Superwise](https://portal.superwise.ai) and create an account using the Account button. The free tier supports up to 3 models.
+Go to [Superwise](https://portal.superwise.ai) and click the Account button to create an account. Using the free tier, you can monitor up to three models.
 
-### Step 2: Create a model at Superwise.ai
+### Step 2: Create a model at Superwise.aiAdd your model 
 
-You can use the Superwise SDK to create the model.
-To create an access token on the Superwise dashboard, click User profile and then select Personal tokens.
+
+You can use the Superwise SDK to create the model. Click User profile and then select Personal tokens to create an access token on the Superwise dashboard.
 
 
 ### Step 3: Initialize sagify
 
-    sagify init
+To initialize sagify, type the following command
+`sagify init`
 
-Type in `iris-model` for the SageMaker app name, and answer `y`  to the question `Are you starting a new project?`
-Make sure to choose Python version 3 and your preferred AWS profile and region. Then, type `requirements.txt` in answer to the prompt`Type in the path to requirements.txt`.
 
-A module called `sagify_base` is created under the `src` directory. The module’s structure is:
+Enter `iris-model` for the SageMaker app name, and answer `y` to the prompt asking  `Are you starting a new project?` 
+
+Next, make sure to choose Python version 3 and the AWS profile and region you wish to use. Type `requirements.txt` in answer to the prompt `Type in the path to requirements.txt.`
+
+A module called sagify_base is created under the src directory. The module’s structure is as follows:
 
     sagify_base/
         local_test/
@@ -482,7 +484,8 @@ A module called `sagify_base` is created under the `src` directory. The module�
 
 ### Step 4: Initialize the requirements.txt
 
-The `requirements.txt` at the root of the project must have the following content:
+
+Make sure the 'requirements.txt' at the root of the project has the following content:
 
         awscli
         flake8
@@ -500,7 +503,7 @@ Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning
 
 ### Step 6: Implement the training logic
 
-Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/training.py` file with the following.
+In the `src/sagify_base/training/training.py` file, replace the `TODOs` in the `train(...)` function with the following text:
 
     input_file_path = os.path.join(input_data_path, 'iris.data')
 
@@ -562,7 +565,7 @@ Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/tr
     active_version = sw.version.create(version)
     sw.version.activate(active_version.id)
 
-and at the top of the file, add:
+And, at the top of the file, add the following:
     
     import uuid
     
@@ -586,7 +589,7 @@ and at the top of the file, add:
     )
 ### Step 7: Implement the prediction logic
 
-Replace the body of the `predict(...)` function in `src/sagify_base/prediction/prediction.py` with the following:
+In the file `src/sagify_base/prediction/prediction.py` replace the body of the `predict(...)` function with the following:
 
     model_input = json_input['features']
     prediction = ModelService.predict(model_input)
@@ -612,13 +615,13 @@ Replace the body of the `predict(...)` function in `src/sagify_base/prediction/p
         "prediction": prediction.item()
     }
 
-Replace the body of the `get_model()` function under the `ModelService` class in the same file with the following:
+Within the ModelService class in the same file, replace the body of the get_model() function with the following:
 
         if cls.model is None:
             cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
         return cls.model
 
-Add a new function called `get_superwise_model()` to the ‘ModelService’ class, using the following: 
+Then, add a new function called `get_superwise_model()` to the ‘ModelService’ class, using the following:
 
     @classmethod
     def get_superwise_model(cls,model_name):
@@ -626,7 +629,7 @@ Add a new function called `get_superwise_model()` to the ‘ModelService’ clas
         return sw.model.get_by_name(model_name)
 
 
-Add the following text to the top of the file:
+Now, add the following text to the top of the file:
 
     from superwise import Superwise
     import joblib
@@ -644,11 +647,13 @@ Add the following text to the top of the file:
 
 ### Step 8: Build and train the ML model
 
-To build and train the ML model, run the command `sagify build` and then run  `sagify local train`
+If you’re ready to build and train the ML model, run the command `sagify build` and then run `sagify local train`
 
 ### Step 9: Call the inference REST API
 
-To use the REST API, run the command `sagify local deploy` and then run the following curl command to call the inference endpoint:
+To use the REST API, run the command `sagify local deploy` 
+
+Once that’s done, call the inference endpoint by running the following curl command:
 
     curl -X POST \
     http://localhost:8080/invocations \
