@@ -434,7 +434,7 @@ The steps below explain how you can integrate with Superwise to gain full visibi
 
 Go to [Superwise](https://portal.superwise.ai) and click the signup button to create an account. Using the free tier, you can monitor up to three models.
 
-### Step 2: Create a model at Superwise. Add your model 
+### Step 2: Add your model 
 
 
 You can use the Superwise SDK to create the model. To use the SDK you should [generate tokens](https://docs.superwise.ai/docs/authentication).
@@ -615,7 +615,7 @@ In the file `src/sagify_base/prediction/prediction.py` replace the body of the `
         "prediction": prediction.item()
     }
 
-Within the ModelService class in the same file, replace the body of the get_model() function with the following:
+Within the `ModelService` class in the same file, replace the body of the `get_model()` function with the following:
 
         if cls.model is None:
             cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
