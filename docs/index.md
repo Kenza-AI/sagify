@@ -432,12 +432,12 @@ The steps below explain how you can integrate with Superwise to gain full visibi
 
 ### Step 1: Create a Superwise Account
 
-Go to [Superwise](https://portal.superwise.ai) and click the Account button to create an account. Using the free tier, you can monitor up to three models.
+Go to [Superwise](https://portal.superwise.ai) and click the signup button to create an account. Using the free tier, you can monitor up to three models.
 
-### Step 2: Create a model at Superwise.aiAdd your model 
+### Step 2: Create a model at Superwise. Add your model 
 
 
-You can use the Superwise SDK to create the model. Click User profile and then select Personal tokens to create an access token on the Superwise dashboard.
+You can use the Superwise SDK to create the model. To use the SDK you should [generate tokens](https://docs.superwise.ai/docs/authentication).
 
 
 ### Step 3: Initialize sagify
