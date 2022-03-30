@@ -110,11 +110,11 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#monitor-ml-models-in-production">Monitor ML Models in Production</a>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#superwiseai">Superwise.ai</a>
+    <li class="toctree-l2"><a class="reference internal" href="#superwise">Superwise</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#step-1-create-a-superwise-account">Step 1: Create a Superwise Account</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-create-a-model-at-superwiseai">Step 2: Create a model at Superwise.ai</a>
+    <li class="toctree-l3"><a class="reference internal" href="#step-2-add-your-model">Step 2: Add your model</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#step-3-initialize-sagify">Step 3: Initialize sagify</a>
     </li>
@@ -772,22 +772,19 @@ source_profile = test-sagemaker
 <p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
 <p><img alt="Hyperparameter Optimization Results" src="hyperparam_monitor.png" /></p>
 <h2 id="monitor-ml-models-in-production">Monitor ML Models in Production</h2>
-<h2 id="superwiseai">Superwise.ai</h2>
-<p>Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀
-The solution is platform agnostic and provides an extensive freemium tier.</p>
-<p>In this task, you'll be integrating with <a href="https://www.superwise.ai/">Superwise.ai</a> to gain full visibility into your deployed models. 
-Once integration is complete, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case. </p>
+<h2 id="superwise">Superwise</h2>
+<p>Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀. The solution is platform-agnostic and provides an extensive freemium tier.</p>
+<p>The steps below explain how you can integrate with Superwise to gain full visibility into your deployed models. Once you complete the integration, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case.</p>
 <h3 id="step-1-create-a-superwise-account">Step 1: Create a Superwise Account</h3>
-<p>Go to <a href="https://portal.superwise.ai">Superwise</a> and create an account using the Account button. The free tier supports up to 3 models.</p>
-<h3 id="step-2-create-a-model-at-superwiseai">Step 2: Create a model at Superwise.ai</h3>
-<p>You can use the Superwise SDK to create the model.
-To create an access token on the Superwise dashboard, click User profile and then select Personal tokens.</p>
+<p>Go to <a href="https://portal.superwise.ai">Superwise</a> and click the signup button to create an account. Using the free tier, you can monitor up to three models.</p>
+<h3 id="step-2-add-your-model">Step 2: Add your model</h3>
+<p>You can use the Superwise SDK to create the model. To use the SDK you should <a href="https://docs.superwise.ai/docs/authentication">generate tokens</a>.</p>
 <h3 id="step-3-initialize-sagify">Step 3: Initialize sagify</h3>
-<pre><code>sagify init
-</code></pre>
-<p>Type in <code>iris-model</code> for the SageMaker app name, and answer <code>y</code>  to the question <code>Are you starting a new project?</code>
-Make sure to choose Python version 3 and your preferred AWS profile and region. Then, type <code>requirements.txt</code> in answer to the prompt<code>Type in the path to requirements.txt</code>.</p>
-<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The module’s structure is:</p>
+<p>To initialize sagify, type the following command
+<code>sagify init</code></p>
+<p>Enter <code>iris-model</code> for the SageMaker app name, and answer <code>y</code> to the prompt asking  <code>Are you starting a new project?</code> </p>
+<p>Next, make sure to choose Python version 3 and the AWS profile and region you wish to use. Type <code>requirements.txt</code> in answer to the prompt <code>Type in the path to requirements.txt.</code></p>
+<p>A module called sagify_base is created under the src directory. The module’s structure is as follows:</p>
 <pre><code>sagify_base/
     local_test/
         test_dir/
@@ -819,7 +816,7 @@ Make sure to choose Python version 3 and your preferred AWS profile and region. 
     push.sh
 </code></pre>
 <h3 id="step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</h3>
-<p>The <code>requirements.txt</code> at the root of the project must have the following content:</p>
+<p>Make sure the 'requirements.txt' at the root of the project has the following content:</p>
 <pre><code>    awscli
     flake8
     Flask
@@ -833,7 +830,7 @@ Make sure to choose Python version 3 and your preferred AWS profile and region. 
 <h3 id="step-5-download-the-iris-data-set">Step 5: Download the Iris data set</h3>
 <p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
 <h3 id="step-6-implement-the-training-logic">Step 6: Implement the training logic</h3>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following.</p>
+<p>In the <code>src/sagify_base/training/training.py</code> file, replace the <code>TODOs</code> in the <code>train(...)</code> function with the following text:</p>
 <pre><code>input_file_path = os.path.join(input_data_path, 'iris.data')
 
 df = pd.read_csv(
@@ -894,7 +891,7 @@ version = Version(model_id=model.id, name="V1", data_entities=entities)
 active_version = sw.version.create(version)
 sw.version.activate(active_version.id)
 </code></pre>
-<p>and at the top of the file, add:</p>
+<p>And, at the top of the file, add the following:</p>
 <pre><code>import uuid
 
 import joblib
@@ -917,7 +914,7 @@ sw = Superwise(
 )
 </code></pre>
 <h3 id="step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</h3>
-<p>Replace the body of the <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with the following:</p>
+<p>In the file <code>src/sagify_base/prediction/prediction.py</code> replace the body of the <code>predict(...)</code> function with the following:</p>
 <pre><code>model_input = json_input['features']
 prediction = ModelService.predict(model_input)
 model = ModelService.get_superwise_model(MODEL_NAME)
@@ -942,18 +939,18 @@ return {
     "prediction": prediction.item()
 }
 </code></pre>
-<p>Replace the body of the <code>get_model()</code> function under the <code>ModelService</code> class in the same file with the following:</p>
+<p>Within the <code>ModelService</code> class in the same file, replace the body of the <code>get_model()</code> function with the following:</p>
 <pre><code>    if cls.model is None:
         cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
     return cls.model
 </code></pre>
-<p>Add a new function called <code>get_superwise_model()</code> to the ‘ModelService’ class, using the following: </p>
+<p>Then, add a new function called <code>get_superwise_model()</code> to the ‘ModelService’ class, using the following:</p>
 <pre><code>@classmethod
 def get_superwise_model(cls,model_name):
     """ Get superwise model using superwise SDK """
     return sw.model.get_by_name(model_name)
 </code></pre>
-<p>Add the following text to the top of the file:</p>
+<p>Now, add the following text to the top of the file:</p>
 <pre><code>from superwise import Superwise
 import joblib
 import os
@@ -969,9 +966,10 @@ MODEL_NAME = "Iris Model"
 _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
 </code></pre>
 <h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</h3>
-<p>To build and train the ML model, run the command <code>sagify build</code> and then run  <code>sagify local train</code></p>
+<p>If you’re ready to build and train the ML model, run the command <code>sagify build</code> and then run <code>sagify local train</code></p>
 <h3 id="step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</h3>
-<p>To use the REST API, run the command <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
+<p>To use the REST API, run the command <code>sagify local deploy</code> </p>
+<p>Once that’s done, call the inference endpoint by running the following curl command:</p>
 <pre><code>curl -X POST \
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
@@ -1575,5 +1573,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-03-02 19:06:45.549630+00:00
+Build Date UTC : 2022-03-30 18:48:18.800070+00:00
 -->
