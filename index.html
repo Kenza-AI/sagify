@@ -50,6 +50,16 @@
                 <ul class="current">
                     <li class="toctree-l1 current"><a class="reference internal current" href=".">sagify</a>
     <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#why-sagify">Why Sagify?</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#no-more-configuring-cloud-instances-for-training-a-machine-learning-model">No More Configuring Cloud Instances for Training a Machine Learning Model</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#no-more-infrastructure-pain-to-run-hyperparameter-jobs-on-the-cloud">No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#no-more-need-to-hand-over-models-to-a-software-engineer-to-deploy-them">No More Need to Hand Over Models to a Software Engineer to Deploy them</a>
+    </li>
+        </ul>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#installation">Installation</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#prerequisites">Prerequisites</a>
@@ -402,6 +412,33 @@
 <p><img alt="Sagify" src="sagify%402x.png" /></p>
 <p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
 <p><img alt="gif" src="end2end.gif" /></p>
+<h2 id="why-sagify">Why Sagify?</h2>
+<p>"Why should I use Sagify" you may ask.</p>
+<p>We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning on the same day by using Sagify!</p>
+<h3 id="no-more-configuring-cloud-instances-for-training-a-machine-learning-model">No More Configuring Cloud Instances for Training a Machine Learning Model</h3>
+<p>We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:</p>
+<ol>
+<li>All ML Scientists in the team have great ideas to solve problems using ML.</li>
+<li>The team has built a feature engineering pipeline (This is painful, too, and it's in Sagify's roadmap).</li>
+<li>You probably have downloaded on your laptop a subset of the features data set and there's evidence that your model will work.</li>
+<li>The moment of experimentation comes and you want to run 10s of training jobs on the cloud using the entire features data set.</li>
+<li>Everybody in the team has some idea on how to do it but nobody wants to do it :-). </li>
+<li>ML Scientists should focus on ML and not on engineering tasks!</li>
+<li>Just use Sagify! You just need to implement a train function!</li>
+</ol>
+<h3 id="no-more-infrastructure-pain-to-run-hyperparameter-jobs-on-the-cloud">No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud</h3>
+<p>Yet another similar situation to the one before but this time even more challenging! It's exactly the same story line.</p>
+<p><strong>Just use Sagify! Implement a train function and provide a path to json file that contains ranges for your hyperparameters!</strong></p>
+<h3 id="no-more-need-to-hand-over-models-to-a-software-engineer-to-deploy-them">No More Need to Hand Over Models to a Software Engineer to Deploy them</h3>
+<p>This is probably the most classic one! You need to run a batch prediction pipeline or deploy your model as a RESTful endpoint. Here's a real-world storyline:</p>
+<ol>
+<li>The ML team somehow managed to train a fraud detection model and it's time to A/B test it against an existing heuristic.</li>
+<li>The fraud detection backend team wants you to deploy the model behind a RESTful endpoint.</li>
+<li>Nobody wants to do it in the ML team even if some people know how to do it.</li>
+<li>Either way, tt's a waste of ML team's time to ask them to take care of the model deployment infrastructure.</li>
+<li>The fraud detection backend team has other priorities and they have no time to help you in this task.</li>
+<li>Just use Sagify! You just need to implement a predict function!</li>
+</ol>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
@@ -1573,5 +1610,5 @@ log_metric("Accuracy", accuracy)
 
 <!--
 MkDocs version : 1.1.2
-Build Date UTC : 2022-04-27 17:35:25.160888+00:00
+Build Date UTC : 2022-04-27 17:36:41.426918+00:00
 -->
