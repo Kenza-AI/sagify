@@ -6,6 +6,41 @@ A command-line utility to train and deploy Machine Learning/Deep Learning models
 
 ![gif](end2end.gif)
 
+## Why Sagify?
+
+"Why should I use Sagify" you may ask.
+
+We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning on the same day by using Sagify!
+ 
+### No More Configuring Cloud Instances for Training a Machine Learning Model
+
+We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:
+
+1. All ML Scientists in the team have great ideas to solve problems using ML.
+2. The team has built a feature engineering pipeline (This is painful, too, and it's in Sagify's roadmap).
+3. You probably have downloaded on your laptop a subset of the features data set and there's evidence that your model will work.
+4. The moment of experimentation comes and you want to run 10s of training jobs on the cloud using the entire features data set.
+5. Everybody in the team has some idea on how to do it but nobody wants to do it :-). 
+6. ML Scientists should focus on ML and not on engineering tasks!
+7. Just use Sagify! You just need to implement a train function!
+
+### No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud
+
+Yet another similar situation to the one before but this time even more challenging! It's exactly the same story line.
+
+**Just use Sagify! Implement a train function and provide a path to json file that contains ranges for your hyperparameters!**
+ 
+### No More Need to Hand Over Models to a Software Engineer to Deploy them
+
+This is probably the most classic one! You need to run a batch prediction pipeline or deploy your model as a RESTful endpoint. Here's a real-world storyline:
+
+1. The ML team somehow managed to train a fraud detection model and it's time to A/B test it against an existing heuristic.
+2. The fraud detection backend team wants you to deploy the model behind a RESTful endpoint.
+3. Nobody wants to do it in the ML team even if some people know how to do it.
+4. Either way, tt's a waste of ML team's time to ask them to take care of the model deployment infrastructure.
+5. The fraud detection backend team has other priorities and they have no time to help you in this task.
+6. Just use Sagify! You just need to implement a predict function!
+
 ## Installation
 
 ### Prerequisites
