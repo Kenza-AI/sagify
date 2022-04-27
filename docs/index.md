@@ -423,6 +423,250 @@ You can monitor the progress via the SageMaker UI console. Here is an example of
 
 ## Monitor ML Models in Production
 
+## Superwise
+
+Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀. The solution is platform-agnostic and provides an extensive freemium tier.
+
+
+The steps below explain how you can integrate with Superwise to gain full visibility into your deployed models. Once you complete the integration, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case.
+
+### Step 1: Create a Superwise Account
+
+Go to [Superwise](https://portal.superwise.ai) and click the signup button to create an account. Using the free tier, you can monitor up to three models.
+
+### Step 2: Add your model 
+
+
+You can use the Superwise SDK to create the model. To use the SDK you should [generate tokens](https://docs.superwise.ai/docs/authentication).
+
+
+### Step 3: Initialize sagify
+
+To initialize sagify, type the following command
+`sagify init`
+
+
+Enter `iris-model` for the SageMaker app name, and answer `y` to the prompt asking  `Are you starting a new project?` 
+
+Next, make sure to choose Python version 3 and the AWS profile and region you wish to use. Type `requirements.txt` in answer to the prompt `Type in the path to requirements.txt.`
+
+A module called sagify_base is created under the src directory. The module’s structure is as follows:
+
+    sagify_base/
+        local_test/
+            test_dir/
+                input/
+                    config/
+                        hyperparameters.json
+                    data/
+                        training/
+                model/
+                output/
+            deploy_local.sh
+            train_local.sh
+        prediction/
+            __init__.py
+            nginx.conf
+            predict.py
+            prediction.py
+            predictor.py
+            serve
+            wsgi.py
+        training/
+            __init__.py
+            train
+            training.py
+        __init__.py
+        build.sh
+        Dockerfile
+        executor.sh
+        push.sh
+
+### Step 4: Initialize the requirements.txt
+
+
+Make sure the 'requirements.txt' at the root of the project has the following content:
+
+        awscli
+        flake8
+        Flask
+        joblib
+        pandas
+        s3transfer
+        sagify>=0.18.0
+        scikit-learn
+        superwise
+
+### Step 5: Download the Iris data set
+
+Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data> and save it in a file named "iris.data" under `src/sagify_base/local_test/test_dir/input/data/training/`.
+
+### Step 6: Implement the training logic
+
+In the `src/sagify_base/training/training.py` file, replace the `TODOs` in the `train(...)` function with the following text:
+
+    input_file_path = os.path.join(input_data_path, 'iris.data')
+
+    df = pd.read_csv(
+        input_file_path,
+        header=None,
+        names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
+    )
+    df['date_time'] = pd.to_datetime('now')
+    df["id"] = df.apply(lambda _: uuid.uuid4(), axis=1)
+    df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
+
+    features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
+    labels_train_df = df_train[['label']]
+
+    features_train = features_train_df.values
+    labels_train = labels_train_df.values.ravel()
+
+    features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
+    labels_test_df = df_test[['label']]
+
+    features_test = features_test_df.values
+    labels_test = labels_test_df.values.ravel()
+
+    clf = SVC(gamma='auto', kernel="linear")
+    clf.fit(features_train, labels_train)
+
+    ###### Report Testing Data ######
+    test_predictions = clf.predict(features_test)
+
+    accuracy = accuracy_score(labels_test, test_predictions)
+    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+    joblib.dump(clf, output_model_file_path)
+
+    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+    with open(accuracy_report_file_path, 'w') as _out:
+        _out.write(str(accuracy))
+
+    ## create superwise model
+    model = sw.model.create(Model(name=MODEL_NAME,
+                                  description="Iris Model Demo")
+                            )
+    df["prediction"] = clf.predict(df[['feature1', 'feature2', 'feature3', 'feature4']])
+    ## summarize the data, use infer_dtype for auto detect features
+    entities = sw.data_entity.summarise(
+        data=df,
+        entities_dtypes=infer_dtype(df),
+        specific_roles={
+            "date_time" : DataEntityRole.TIMESTAMP,
+            "id" : DataEntityRole.ID,
+            "label" : DataEntityRole.LABEL,
+            "prediction" : DataEntityRole.PREDICTION_VALUE
+        },
+        importance=dict(zip(clf.coef_[0], ['feature1', 'feature2', 'feature3', 'feature4']))
+    )
+
+    ## create and activate superwise version
+    version = Version(model_id=model.id, name="V1", data_entities=entities)
+    active_version = sw.version.create(version)
+    sw.version.activate(active_version.id)
+
+And, at the top of the file, add the following:
+    
+    import uuid
+    
+    import joblib
+    import os
+    
+    import pandas as pd
+    from sklearn.metrics import accuracy_score
+    from sklearn.model_selection import train_test_split
+    from sklearn.svm import SVC
+    from superwise import Superwise
+    from superwise.models.model import Model
+    from superwise.models.version import Version
+    from superwise.resources.superwise_enums import DataEntityRole
+    from superwise.controller.infer import infer_dtype
+    MODEL_NAME = "Iris Model"
+
+    sw = Superwise(
+        client_id="<my client_id>",
+        secret="<my secret>",
+    )
+### Step 7: Implement the prediction logic
+
+In the file `src/sagify_base/prediction/prediction.py` replace the body of the `predict(...)` function with the following:
+
+    model_input = json_input['features']
+    prediction = ModelService.predict(model_input)
+    model = ModelService.get_superwise_model(MODEL_NAME)
+
+    for m in model_input:
+        records = {
+            "date_time" : str(datetime.utcnow()),
+            "id" : str(uuid.uuid4()),
+            "prediction": prediction,
+            "feature1": m[0],
+            "feature2": m[1],
+            "feature3": m[2],
+            "feature4": m[3]
+        }
+        transaction_id = sw.transaction.log_records(
+            model_id=model[0].id,
+            version_id=model[0].active_version_id,
+            records=records
+        )
+        print(f"Created transaction:  {transaction_id}")
+    return {
+        "prediction": prediction.item()
+    }
+
+Within the `ModelService` class in the same file, replace the body of the `get_model()` function with the following:
+
+        if cls.model is None:
+            cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+        return cls.model
+
+Then, add a new function called `get_superwise_model()` to the ‘ModelService’ class, using the following:
+
+    @classmethod
+    def get_superwise_model(cls,model_name):
+        """ Get superwise model using superwise SDK """
+        return sw.model.get_by_name(model_name)
+
+
+Now, add the following text to the top of the file:
+
+    from superwise import Superwise
+    import joblib
+    import os
+    import pandas as pd
+    from datetime import datetime
+    import uuid
+    
+    sw = Superwise(
+        client_id="<my client_id>",
+        secret="<my secret>",
+    )
+    MODEL_NAME = "Iris Model"
+    _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
+
+### Step 8: Build and train the ML model
+
+If you’re ready to build and train the ML model, run the command `sagify build` and then run `sagify local train`
+
+### Step 9: Call the inference REST API
+
+To use the REST API, run the command `sagify local deploy` 
+
+Once that’s done, call the inference endpoint by running the following curl command:
+
+    curl -X POST \
+    http://localhost:8080/invocations \
+    -H 'Cache-Control: no-cache' \
+    -H 'Content-Type: application/json' \
+    -d '{
+	    "features":[[0.34, 0.45, 0.45, 0.3]]
+    }'
+
+You should now be able to see data coming in on the Superwise dashboards.
+
+## Aporia
+
 In this part, you'll integrate with [Aporia](https://www.aporia.com/) in order to monitor deployed ML models. More specifically, you'll monitor:
 
 1. data drifting
