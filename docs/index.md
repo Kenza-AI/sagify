@@ -325,7 +325,7 @@ Voila! That's a proof that this Machine Learning model is going to be trained an
 
 ### Push Docker Image to AWS ECS
 
-If you have followed all the steps of *Getting Started*, run `sagify push src` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
+If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
 
 ### Create S3 Bucket
 
