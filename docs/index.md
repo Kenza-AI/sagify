@@ -922,6 +922,183 @@ Run `sagify local deploy` and then run the following curl command to call the in
 Now you should be able to see data coming in on Aporia dashboards.
 
 
+## Layer
+
+Layer provides Machine Learning practitioners and organizations the ability to log, display, compare and share their Datasets, Models and Project Documentation in one single place.  It helps you create production-grade ML pipelines with a seamless local<>cloud transition while enabling collaboration with semantic versioning, extensive artifact logging and dynamic reporting.
+
+The steps below explain how to take advantage of both platforms, Layer and Sagemaker. At the end, you will have trained your model using the Sagemaker platform, and integrate with Layer to version your Dataset and register your model to Layer.
+
+### Step 1: Create a Layer Account
+
+Go to [Layer](https://layer.ai/) and click the signup button to create an account. There's a free tier option.
+
+### Step 2: Clone Machine Learning demo repository
+
+You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
+
+Clone repository:
+
+    git clone https://github.com/Kenza-AI/sagify-demo.git 
+    
+Create environment:
+
+    mkvirtualenv -p python3.7 sagify-demo
+    
+or
+
+    mkvirtualenv -p python3.8 sagify-demo
+
+Don't forget to activate the virtualenv after the creation of environment by executing `workon sagify-demo`.
+
+Install dependencies:
+
+    make requirements
+
+Finally, install layer:
+
+    pip install layer
+
+### Step 3: Initialize sagify
+
+    sagify init
+
+Type in `layer-sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
+
+A module called `sagify_base` is created under the `src` directory. The structure is:
+ 
+    sagify_base/
+        local_test/
+            test_dir/
+                input/
+                    config/
+                        hyperparameters.json
+                    data/
+                        training/
+                model/
+                output/
+            deploy_local.sh
+            train_local.sh
+        prediction/
+            __init__.py
+            nginx.conf
+            predict.py
+            prediction.py
+            predictor.py
+            serve
+            wsgi.py
+        training/
+            __init__.py
+            train
+            training.py
+        __init__.py
+        build.sh
+        Dockerfile
+        executor.sh
+        push.sh
+
+### Step 4: Integrate sagify
+
+You only need to conduct a couple actions that are stated below. Sagify takes care of the rest:
+
+1. Copy a subset of training data under `sagify_base/local_test/test_dir/input/data/training/` to test that training works locally
+2. Implement `train(...)` function in `sagify_base/training/training.py`
+
+Hence,
+
+1. Copy `iris.data` files from `data` to `sagify_base/local_test/test_dir/input/data/training/`
+
+2. Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with:
+
+            input_file_path = os.path.join(input_data_path, 'iris.data')
+
+            @dataset("iris_data")
+            @resources(path=input_file_path)
+            def _layer_dataset():
+                return pd.read_csv(
+                    input_file_path,
+                    header=None,
+                    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
+                )
+        
+            @model(name='iris_model')
+            def _layer_train():
+                df = layer.get_dataset("iris_data").to_pandas()
+        
+                df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
+        
+                features_train = df_train[['feature1', 'feature2', 'feature3', 'feature4']].values
+                labels_train = df_train[['label']].values.ravel()
+        
+                features_test = df_test[['feature1', 'feature2', 'feature3', 'feature4']].values
+                labels_test = df_test[['label']].values.ravel()
+        
+                clf = SVC(gamma='auto')
+                clf.fit(features_train, labels_train)
+        
+                test_predictions = clf.predict(features_test)
+        
+                layer.log({"accuracy": accuracy_score(labels_test, test_predictions)})
+        
+                return clf
+
+            _layer_dataset()
+            clf = _layer_train()
+        
+            output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+            joblib.dump(clf, output_model_file_path)
+        
+            return clf
+                
+    and at the top of the file, add:
+     
+        import os
+
+        import joblib
+        from layer.decorators import dataset, model, resources
+        import layer
+        import pandas as pd
+        from sklearn.metrics import accuracy_score
+        from sklearn.model_selection import train_test_split
+        from sklearn.svm import SVC
+        
+        layer.login_with_api_key("Go to https://docs.app.layer.ai/docs/getting-started/log-in#log-in-with-an-api-key to get your API KEY")
+        layer.init("sagemaker_iris")
+
+    Don't forget to replace the API key following the instructions [here](https://docs.app.layer.ai/docs/getting-started/log-in#log-in-with-an-api-key)
+
+### Step 4: Build Docker image
+
+It's time to build the Docker image that will contain the Machine Learning codebase:
+
+    sagify build
+
+If you run `docker images | grep layer-sagify-demo` in your terminal, you'll see the created Layer-Sagify-Demo image.
+
+### Step 5: Train model
+
+Time to train the model for the Iris data set in the newly built Docker image as a smoke test:
+
+    sagify local train
+
+### Step 6: Push Image to AWS
+
+If you have followed the instructions from *Configure AWS Account* in *Usage*, then you can push the built Docker image to AWS ECS:
+
+    sagify push
+
+### Step 7: Create S3 bucket and Upload Training Data
+
+Make sure to create an S3 bucket with a name of your choice, for example: `layer-sagify-demo`, and execute `sagify cloud upload-data -i data/ -s s3://layer-sagify-demo/training-data` to upload training data to S3.
+
+### Step 8: Train on AWS SageMaker
+
+Execute `sagify cloud train -i s3://layer-sagify-demo/training-data/ -o s3://layer-sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
+
+### Step 9: Layer Dashboard
+
+When training finishes, you can go to your `My Projects` at Layer, and find the sagemaker-iris project. There will be 2 created assets in this project. One asset for your Dataset, and another for your Model. The advantage here is that you have used the power of Sagemaker for leveraging training resources, and the power of Layer for reproducible Machine Learning pipelines.
+
+
 ## Commands
 
 ### Initialize
