@@ -924,15 +924,15 @@ Now you should be able to see data coming in on Aporia dashboards.
 
 ## Layer
 
-Layer provides Machine Learning practitioners and organizations the ability to log, display, compare and share their Datasets, Models and Project Documentation in one single place.  It helps you create production-grade ML pipelines with a seamless local<>cloud transition while enabling collaboration with semantic versioning, extensive artifact logging and dynamic reporting.
+[Layer](https://layer.ai/) provides machine learning practitioners and organizations the ability to log, display, compare and share their datasets, models and project documentation in one single place.  It helps you create production-grade ML pipelines with a seamless local<>cloud transition while enabling collaboration with semantic versioning, extensive artifact logging and dynamic reporting.
 
-The steps below explain how to take advantage of both platforms, Layer and Sagemaker. At the end, you will have trained your model using the Sagemaker platform, and integrate with Layer to version your Dataset and register your model to Layer.
+The steps below explain how to take advantage of both platforms, Layer and Sagemaker. At the end, you will have trained your model using the Sagemaker platform, and integrated with Layer to version your Dataset and register your model to Layer.
 
 ### Step 1: Create a Layer Account
 
 Go to [Layer](https://layer.ai/) and click the signup button to create an account. There's a free tier option.
 
-### Step 2: Clone Machine Learning demo repository
+### Step 2: Clone machine learning demo repository
 
 You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
 
@@ -1068,7 +1068,7 @@ Hence,
 
 ### Step 4: Build Docker image
 
-It's time to build the Docker image that will contain the Machine Learning codebase:
+It's time to build the Docker image that will contain the machine learning codebase:
 
     sagify build
 
@@ -1092,7 +1092,7 @@ Make sure to create an S3 bucket with a name of your choice, for example: `layer
 
 ### Step 8: Train on AWS SageMaker
 
-Execute `sagify cloud train -i s3://layer-sagify-demo/training-data/ -o s3://layer-sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
+Execute `sagify cloud train -i s3://layer-sagify-demo/training-data/ -o s3://layer-sagify-demo/output/ -e ml.m4.xlarge` to train the machine learning model on SageMaker. This command will use the pushed Docker image.
 
 ### Step 9: Layer Dashboard
 
