@@ -934,7 +934,7 @@ Go to [Layer](https://layer.ai/) and click the signup button to create an accoun
 
 ### Step 2: Clone machine learning demo repository
 
-You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
+After cloning the machine learning demo repo, you will train a classifier on the Iris dataset.
 
 Clone repository:
 
