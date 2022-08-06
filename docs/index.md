@@ -1098,6 +1098,7 @@ Execute `sagify cloud train -i s3://layer-sagify-demo/training-data/ -o s3://lay
 
 When training finishes, you can go to your `My Projects` at Layer, and find the sagemaker-iris project. There will be 2 created assets in this project. One asset for your Dataset, and another for your Model. The advantage here is that you have used the power of Sagemaker for leveraging training resources, and the power of Layer for reproducible Machine Learning pipelines.
 
+![Layer Dashboard](layer_dashboard.png)
 
 ## Commands
 
