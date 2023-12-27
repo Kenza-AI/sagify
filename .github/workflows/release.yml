@@ -1,0 +1,16 @@
+name: Release
+on:
+  release:
+    types:
+      - created
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to PyPI
+        uses: pypa/gh-action-pypi-publish@v2
+        with:
+          username: __token__
+          password: ${{ secrets.PYPI_TOKEN }}
