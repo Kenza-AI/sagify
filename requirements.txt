@@ -1,6 +1,7 @@
 flake8
 mock
 pluggy
+protobuf==3.20.*
 pytest
 pytest-cov
 tox
