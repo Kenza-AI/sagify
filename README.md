@@ -1,10 +1,15 @@
-**Build Status**
+![Sagify](docs/sagify@2x.png)
 
-master: [![Build Status](https://app.travis-ci.com/Kenza-AI/sagify.svg?branch=master)](https://app.travis-ci.com/github/Kenza-AI/sagify)
+<p align="center">
+    <em>Machine Learning Engineering done easily.</em>
+</p>
+<p align="center">
+<a href="https://github.com/cortisolai/cortisol/actions?query=workflow%3ACI" target="_blank">
+    <img src="https://github.com/cortisolai/cortisol/workflows/CI/badge.svg" alt="Test">
+</a>
+</p>
 
 # sagify
-
-![Sagify](docs/sagify@2x.png)
 
 A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps! It hides all the details of Sagemaker so that you can focus 100% on Machine Learning, and not in low level engineering tasks.
 
