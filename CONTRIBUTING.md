@@ -5,9 +5,9 @@
 
 ## Branching Model
 - Standard Fork & Pull Request Workflow is used in this project
-- Every new functionality should be created in a branch (from develop branch) with name format `feature/new-functionality-name`
-- Every bug should be fixed in a branch (from develop branch) with name format `fix/bug-name`
-- All branches will be merged to develop branch
+- Every new functionality should be created in a branch (from master branch) with name format `feature/new-functionality-name`
+- Every bug should be fixed in a branch (from master branch) with name format `fix/bug-name`
+- All branches will be merged to master branch
 
 ## Setup Environment
 - Create a virtualenv. For example, `mkvirtualenv sagify`.
