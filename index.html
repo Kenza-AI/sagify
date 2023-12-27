@@ -1,54 +1,46 @@
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
-  <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="None">
-  
-  
-  <link rel="shortcut icon" href="img/favicon.ico">
-  <title>sagify</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:400,700|Roboto+Slab:400,700|Inconsolata:400,700" />
-
-  <link rel="stylesheet" href="css/theme.css" />
-  <link rel="stylesheet" href="css/theme_extra.css" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" />
-  
-  <script>
-    // Current page data
-    var mkdocs_page_name = "sagify";
-    var mkdocs_page_input_path = "index.md";
-    var mkdocs_page_url = null;
-  </script>
-  
-  <script src="js/jquery-2.1.1.min.js" defer></script>
-  <script src="js/modernizr-2.8.3.min.js" defer></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-  <script>hljs.initHighlightingOnLoad();</script> 
-  
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="description" content="None" />
+      <link rel="shortcut icon" href="img/favicon.ico" />
+    <title>sagify</title>
+    <link rel="stylesheet" href="css/theme.css" />
+    <link rel="stylesheet" href="css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "sagify";
+        var mkdocs_page_input_path = "index.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
 </head>
 
 <body class="wy-body-for-nav" role="document">
 
   <div class="wy-grid-for-nav">
-
-    
     <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
     <div class="wy-side-scroll">
       <div class="wy-side-nav-search">
-        <a href="." class="icon icon-home"> sagify</a>
-        <div role="search">
+          <a href="." class="icon icon-home"> sagify
+        </a><div role="search">
   <form id ="rtd-search-form" class="wy-form" action="./search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" title="Type search term here" />
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
   </form>
 </div>
       </div>
 
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-                <ul class="current">
-                    <li class="toctree-l1 current"><a class="reference internal current" href=".">sagify</a>
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">sagify</a>
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#why-sagify">Why Sagify?</a>
         <ul>
@@ -89,18 +81,6 @@
     <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#configure-aws-account">Configure AWS Account</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#create-s3-bucket">Create S3 Bucket</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#upload-training-data">Upload Training Data</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#train-on-aws-sagemaker">Train on AWS SageMaker</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#deploy-on-aws-sagemaker">Deploy on AWS SageMaker</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</a>
     </li>
         </ul>
     </li>
@@ -371,42 +351,31 @@
         </ul>
     </li>
     </ul>
-                    </li>
-                </ul>
+                </li>
+              </ul>
       </div>
     </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
-        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href=".">sagify</a>
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href=".">sagify</a>
+        
       </nav>
-
-      
       <div class="wy-nav-content">
-        <div class="rst-content">
-          <div role="navigation" aria-label="breadcrumbs navigation">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href=".">Docs</a> &raquo;</li>
-    
-      
-    
-    <li>sagify</li>
+    <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">sagify</li>
     <li class="wy-breadcrumbs-aside">
-      
-        <a href="https://github.com/Kenza-AI/sagify/edit/master/docs/index.md"
-          class="icon icon-github"> Edit on GitHub</a>
-      
+          <a href="https://github.com/Kenza-AI/sagify/edit/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
   </ul>
-  
   <hr/>
 </div>
-          <div role="main">
-            <div class="section">
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
               
                 <h1 id="sagify">sagify</h1>
 <p><img alt="Sagify" src="sagify%402x.png" /></p>
@@ -449,31 +418,31 @@
 </ol>
 <h3 id="install-sagify">Install sagify</h3>
 <p>At the command line:</p>
-<pre><code>pip install sagify
+<pre><code class="language-sh">    pip install sagify
 </code></pre>
 <h2 id="getting-started-no-code-deployment">Getting started -  No code deployment</h2>
 <ol>
-<li>
-<p>Create a file with name <code>huggingface_config.json</code> with the following content:</p>
-<pre><code>{
-  "transformers_version": "4.6.1",
-  "pytorch_version": "1.7.1",
-  "hub": {
-    "HF_MODEL_ID": "gpt2",
-    "HF_TASK": "text-generation"
-  }
+<li>Create a file with name <code>huggingface_config.json</code> with the following content:</li>
+</ol>
+<pre><code class="language-json">{
+    &quot;transformers_version&quot;: &quot;4.6.1&quot;,
+    &quot;pytorch_version&quot;: &quot;1.7.1&quot;,
+    &quot;hub&quot;: {
+    &quot;HF_MODEL_ID&quot;: &quot;gpt2&quot;,
+    &quot;HF_TASK&quot;: &quot;text-generation&quot;
+    }
 }
 </code></pre>
-</li>
+<ol>
 <li>
 <p>Then, make sure to configure your AWS account by following the instructions at section <a href="#configure-aws-account">Configure AWS Account</a></p>
 </li>
 <li>
 <p>Finally, run the following command:</p>
-<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
-</code></pre>
 </li>
 </ol>
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+</code></pre>
 <p>You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.</p>
 <ol>
 <li>Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:</li>
@@ -495,20 +464,20 @@
 <h3 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h3>
 <p>You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.</p>
 <p>Clone repository:</p>
-<pre><code>git clone https://github.com/Kenza-AI/sagify-demo.git
+<pre><code class="language-sh">git clone https://github.com/Kenza-AI/sagify-demo.git 
+</code></pre>
+<p>Cd into the cloned repo:</p>
+<pre><code class="language-sh">cd sagify-demo
 </code></pre>
 <p>Create environment:</p>
-<pre><code>mkvirtualenv -p python3.7 sagify-demo
-</code></pre>
-<p>or</p>
-<pre><code>mkvirtualenv -p python3.8 sagify-demo
+<pre><code class="language-sh">mkvirtualenv sagify-demo
 </code></pre>
 <p>Don't forget to activate the virtualenv after the creation of environment by executing <code>workon sagify-demo</code>.</p>
 <p>Install dependencies:</p>
-<pre><code>make requirements
+<pre><code class="language-sh">make requirements
 </code></pre>
 <h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
-<pre><code>sagify init
+<pre><code class="language-sh">sagify init
 </code></pre>
 <p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
@@ -543,7 +512,7 @@
     push.sh
 </code></pre>
 <h3 id="step-3-integrate-sagify">Step 3: Integrate sagify</h3>
-<p>As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:</p>
+<p>As a Machine Learning engineer, you only need to conduct a few actions. Sagify takes care of the rest:</p>
 <ol>
 <li>Copy a subset of training data under <code>sagify_base/local_test/test_dir/input/data/training/</code> to test that training works locally</li>
 <li>Implement <code>train(...)</code> function in <code>sagify_base/training/training.py</code></li>
@@ -552,67 +521,67 @@
 </ol>
 <p>Hence,</p>
 <ol>
-<li>
-<p>Copy <code>iris.data</code> files from <code>data</code> to <code>sagify_base/local_test/test_dir/input/data/training/</code></p>
-</li>
-<li>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with:</p>
-<pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
-    clf, accuracy = training_logic(input_file_path=input_file_path)
+<li>Copy <code>iris.data</code> files from <code>data</code> to <code>sagify_base/local_test/test_dir/input/data/training/</code>:</li>
+</ol>
+<pre><code class="language-bash">cp ./data/iris.data ./src/sagify_base/local_test/test_dir/input/data/training/
+</code></pre>
+<ol>
+<li>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with:</li>
+</ol>
+<pre><code class="language-python">input_file_path = os.path.join(input_data_path, 'iris.data')
+clf, accuracy = training_logic(input_file_path=input_file_path)
 
-    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-    joblib.dump(clf, output_model_file_path)
+output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+joblib.dump(clf, output_model_file_path)
 
-    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-    with open(accuracy_report_file_path, 'w') as _out:
-        _out.write(str(accuracy))
+accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+with open(accuracy_report_file_path, 'w') as _out:
+    _out.write(str(accuracy))
 </code></pre>
 <p>and at the top of the file, add:</p>
-<pre><code>import os
+<pre><code class="language-python">import os
 
 import joblib
 
 from iris_training import train as training_logic
 </code></pre>
-</li>
-<li>
-<p>Replace the body of <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code> with:</p>
-<pre><code>model_input = json_input['features']
+<ol>
+<li>Replace the body of <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code> with:</li>
+</ol>
+<pre><code class="language-python">model_input = json_input['features']
 prediction = ModelService.predict(model_input)
 
 return {
-    "prediction": prediction.item()
+    &quot;prediction&quot;: prediction.item()
 }
 </code></pre>
 <p>and replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
-<pre><code>if cls.model is None:
+<pre><code class="language-python">if cls.model is None:
     import joblib
     cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
 return cls.model
 </code></pre>
-</li>
-</ol>
 <h3 id="step-4-build-docker-image">Step 4: Build Docker image</h3>
 <p>It's time to build the Docker image that will contain the Machine Learning codebase:</p>
-<pre><code>sagify build
+<pre><code class="language-sh">sagify build
 </code></pre>
 <p>If you run <code>docker images | grep sagify-demo</code> in your terminal, you'll see the created Sagify-Demo image.</p>
 <h3 id="step-5-train-model">Step 5: Train model</h3>
 <p>Time to train the model for the Iris data set in the newly built Docker image:</p>
-<pre><code>sagify local train
+<pre><code class="language-sh">sagify local train
 </code></pre>
 <p>Model file <code>model.pkl</code> and report file <code>report.txt</code> are now under <code>sagify_base/local_test/test_dir/model/</code></p>
 <h3 id="step-6-deploy-model">Step 6: Deploy model</h3>
 <p>Finally, serve the model as a REST Service:</p>
-<pre><code>sagify local deploy
+<pre><code class="language-sh">sagify local deploy
 </code></pre>
 <p>Run the following curl command on your terminal to verify that the REST Service works:</p>
-<pre><code>curl -X POST \
+<pre><code class="language-sh">curl -X POST \
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
 -H 'Content-Type: application/json' \
 -d '{
-    "features":[[0.34, 0.45, 0.45, 0.3]]
+    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
 }'
 </code></pre>
 <p>It will be slow in the first couple of calls as it loads the model in a lazy manner.</p>
@@ -663,69 +632,81 @@ http://localhost:8080/invocations \
 </ul>
 <p><img alt="Trust Relationship" src="trust_relationship_step_1.png" /></p>
 <ul>
-<li>
-<p>Click on <em>Edit trust relationship</em> and add the following:</p>
-<pre><code>{
-    "Version": "2012-10-17",
-    "Statement": [
+<li>Click on <em>Edit trust relationship</em> and add the following:</li>
+</ul>
+<pre><code class="language-json">{
+    &quot;Version&quot;: &quot;2012-10-17&quot;,
+    &quot;Statement&quot;: [
         {
-            "Sid": "",
-            "Effect": "Allow",
-            "Principal": {
-                "AWS": "PASTE_THE_ARN_YOU_COPIED_EARLIER",
-                "Service": "sagemaker.amazonaws.com"
+            &quot;Sid&quot;: &quot;&quot;,
+            &quot;Effect&quot;: &quot;Allow&quot;,
+            &quot;Principal&quot;: {
+                &quot;AWS&quot;: &quot;PASTE_THE_ARN_YOU_COPIED_EARLIER&quot;,
+                &quot;Service&quot;: &quot;sagemaker.amazonaws.com&quot;
             },
-            "Action": "sts:AssumeRole"
+            &quot;Action&quot;: &quot;sts:AssumeRole&quot;
         }
     ]
 }
 </code></pre>
-</li>
-<li>
-<p>You're almost there! Make sure that you have added the IAM user in your <code>~/.aws/credentials</code> file. For example:</p>
+<ul>
+<li>You're almost there! Make sure that you have added the IAM user in your <code>~/.aws/credentials</code> file. For example:</li>
+</ul>
 <pre><code>[test-sagemaker]
 aws_access_key_id = ...
 aws_secret_access_key = ...
 </code></pre>
-</li>
-<li>
-<p>And, finally, add the following in the <code>~/.aws/config</code> file:</p>
-<pre><code>[profile test-sagemaker]
+<ul>
+<li>And, finally, add the following in the <code>~/.aws/config</code> file:</li>
+</ul>
+<p>```
+[profile test-sagemaker]
 region = us-east-1 &lt;-- USE YOUR PREFERRED REGION
 role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
-source_profile = test-sagemaker
-</code></pre>
-</li>
-<li>
-<p>That's it! From now on, choose the created AWS profile when initializing sagify.</p>
-</li>
-<li>
-<p>You can change the AWS profile/region in an already initialized sagify module by changing the value of <code>aws_profile</code>/<code>aws_region</code> in <code>.sagify.json</code>.</p>
-</li>
-</ul>
-<h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
-<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push src</code> to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.</p>
-<h3 id="create-s3-bucket">Create S3 Bucket</h3>
-<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
-<h3 id="upload-training-data">Upload Training Data</h3>
-<p>Execute <code>sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data</code> to upload training data to S3</p>
-<h3 id="train-on-aws-sagemaker">Train on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge</code> to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.</p>
-<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
-<h3 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
-<h3 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h3>
-<p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
-<p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
-<pre><code>    {
-        "features":[[0.34, 0.45, 0.45, 0.3]]
-    }
+source_profile = test-sagemaker</p>
+<pre><code>
+- That's it! From now on, choose the created AWS profile when initializing sagify.
+
+- You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
+
+### Push Docker Image to AWS ECS
+
+If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
+
+### Create S3 Bucket
+
+Make sure to create an S3 bucket with a name of your choice, for example: `sagify-demo`
+
+### Upload Training Data
+
+Execute `sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data` to upload training data to S3
+
+### Train on AWS SageMaker
+
+Execute `sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
+
+Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz`)
+
+### Deploy on AWS SageMaker
+
+Execute `sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
+
+### Call SageMaker REST Endpoint
+
+Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to &lt;https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html&gt; on how to call it from Postman as authorization is required.
+
+Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
+
+```json
+{
+    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
+}
 </code></pre>
 <h2 id="hyperparameter-optimization">Hyperparameter Optimization</h2>
 <p>Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.</p>
 <h3 id="step-1-define-hyperparameter-configuration-file">Step 1: Define Hyperparameter Configuration File</h3>
 <p>Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. <code>Maximize</code> or <code>Minimize</code>). For example:</p>
-<pre><code>{
+<pre><code class="language-json">{
     &quot;ParameterRanges&quot;: {
         &quot;CategoricalParameterRanges&quot;: [
             {
@@ -754,47 +735,46 @@ source_profile = test-sagemaker
     }
 }
 </code></pre>
-
 <h3 id="step-2-implement-train-function">Step 2: Implement Train function</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
-<pre><code>    from sklearn import datasets
-    iris = datasets.load_iris()
+<pre><code class="language-python">from sklearn import datasets
+iris = datasets.load_iris()
 
-    # Read the hyperparameter config json file
-    import json
-    with open(hyperparams_path) as _in_file:
-        hyperparams_dict = json.load(_in_file)
+# Read the hyperparameter config json file
+import json
+with open(hyperparams_path) as _in_file:
+    hyperparams_dict = json.load(_in_file)
 
-    from sklearn import svm
-    clf = svm.SVC(
-        gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
-        C=float(hyperparams_dict['C']),
-        kernel=hyperparams_dict['kernel']
-    )
+from sklearn import svm
+clf = svm.SVC(
+    gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
+    C=float(hyperparams_dict['C']),
+    kernel=hyperparams_dict['kernel']
+)
 
-    from sklearn.model_selection import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(
-        iris.data, iris.target, test_size=0.3, random_state=42)
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.3, random_state=42)
 
-    clf.fit(X_train, y_train)
+clf.fit(X_train, y_train)
 
-    from sklearn.metrics import precision_score
+from sklearn.metrics import precision_score
 
-    predictions = clf.predict(X_test)
+predictions = clf.predict(X_test)
 
-    precision = precision_score(y_test, predictions, average='weighted')
+precision = precision_score(y_test, predictions, average='weighted')
 
-    # Log the objective metric name with its calculated value. In tis example is Precision.
-    # The objective name should be exactly the same with the one specified in the hyperparams congig json file.
-    # The value must be a numeric (float or int).
-    from sagify.api.hyperparameter_tuning import log_metric
-    name = "Precision"
-    log_metric(name, precision)
+# Log the objective metric name with its calculated value. In tis example is Precision.
+# The objective name should be exactly the same with the one specified in the hyperparams congig json file.
+# The value must be a numeric (float or int).
+from sagify.api.hyperparameter_tuning import log_metric
+name = &quot;Precision&quot;
+log_metric(name, precision)
 
-    from joblib import dump
-    dump(clf, os.path.join(model_save_path, 'model.pkl'))
+from joblib import dump
+dump(clf, os.path.join(model_save_path, 'model.pkl'))
 
-    print('Training complete.')
+print('Training complete.')
 </code></pre>
 <h3 id="step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</h3>
 <ol>
@@ -803,7 +783,7 @@ source_profile = test-sagemaker
 </ol>
 <h3 id="step-4-call-the-cli-command">Step 4: Call The CLI Command</h3>
 <p>And, finally, call the hyperparameter-optimization CLI command. For example:</p>
-<pre><code> sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json
+<pre><code class="language-sh">sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
 </code></pre>
 <h3 id="step-5-monitor-progress">Step 5: Monitor Progress</h3>
 <p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
@@ -854,21 +834,21 @@ source_profile = test-sagemaker
 </code></pre>
 <h3 id="step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</h3>
 <p>Make sure the 'requirements.txt' at the root of the project has the following content:</p>
-<pre><code>    awscli
-    flake8
-    Flask
-    joblib
-    pandas
-    s3transfer
-    sagify&gt;=0.18.0
-    scikit-learn
-    superwise
+<pre><code>awscli
+flake8
+Flask
+joblib
+pandas
+s3transfer
+sagify&gt;=0.18.0
+scikit-learn
+superwise
 </code></pre>
 <h3 id="step-5-download-the-iris-data-set">Step 5: Download the Iris data set</h3>
 <p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
 <h3 id="step-6-implement-the-training-logic">Step 6: Implement the training logic</h3>
 <p>In the <code>src/sagify_base/training/training.py</code> file, replace the <code>TODOs</code> in the <code>train(...)</code> function with the following text:</p>
-<pre><code>input_file_path = os.path.join(input_data_path, 'iris.data')
+<pre><code class="language-python">input_file_path = os.path.join(input_data_path, 'iris.data')
 
 df = pd.read_csv(
     input_file_path,
@@ -876,7 +856,7 @@ df = pd.read_csv(
     names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
 )
 df['date_time'] = pd.to_datetime('now')
-df["id"] = df.apply(lambda _: uuid.uuid4(), axis=1)
+df[&quot;id&quot;] = df.apply(lambda _: uuid.uuid4(), axis=1)
 df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
 
 features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
@@ -891,7 +871,7 @@ labels_test_df = df_test[['label']]
 features_test = features_test_df.values
 labels_test = labels_test_df.values.ravel()
 
-clf = SVC(gamma='auto', kernel="linear")
+clf = SVC(gamma='auto', kernel=&quot;linear&quot;)
 clf.fit(features_train, labels_train)
 
 ###### Report Testing Data ######
@@ -907,29 +887,29 @@ with open(accuracy_report_file_path, 'w') as _out:
 
 ## create superwise model
 model = sw.model.create(Model(name=MODEL_NAME,
-                              description="Iris Model Demo")
+                                description=&quot;Iris Model Demo&quot;)
                         )
-df["prediction"] = clf.predict(df[['feature1', 'feature2', 'feature3', 'feature4']])
+df[&quot;prediction&quot;] = clf.predict(df[['feature1', 'feature2', 'feature3', 'feature4']])
 ## summarize the data, use infer_dtype for auto detect features
 entities = sw.data_entity.summarise(
     data=df,
     entities_dtypes=infer_dtype(df),
     specific_roles={
-        "date_time" : DataEntityRole.TIMESTAMP,
-        "id" : DataEntityRole.ID,
-        "label" : DataEntityRole.LABEL,
-        "prediction" : DataEntityRole.PREDICTION_VALUE
+        &quot;date_time&quot; : DataEntityRole.TIMESTAMP,
+        &quot;id&quot; : DataEntityRole.ID,
+        &quot;label&quot; : DataEntityRole.LABEL,
+        &quot;prediction&quot; : DataEntityRole.PREDICTION_VALUE
     },
     importance=dict(zip(clf.coef_[0], ['feature1', 'feature2', 'feature3', 'feature4']))
 )
 
 ## create and activate superwise version
-version = Version(model_id=model.id, name="V1", data_entities=entities)
+version = Version(model_id=model.id, name=&quot;V1&quot;, data_entities=entities)
 active_version = sw.version.create(version)
 sw.version.activate(active_version.id)
 </code></pre>
 <p>And, at the top of the file, add the following:</p>
-<pre><code>import uuid
+<pre><code class="language-python">import uuid
 
 import joblib
 import os
@@ -943,52 +923,52 @@ from superwise.models.model import Model
 from superwise.models.version import Version
 from superwise.resources.superwise_enums import DataEntityRole
 from superwise.controller.infer import infer_dtype
-MODEL_NAME = "Iris Model"
+MODEL_NAME = &quot;Iris Model&quot;
 
 sw = Superwise(
-    client_id="&lt;my client_id&gt;",
-    secret="&lt;my secret&gt;",
+    client_id=&quot;&lt;my client_id&gt;&quot;,
+    secret=&quot;&lt;my secret&gt;&quot;,
 )
 </code></pre>
 <h3 id="step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</h3>
 <p>In the file <code>src/sagify_base/prediction/prediction.py</code> replace the body of the <code>predict(...)</code> function with the following:</p>
-<pre><code>model_input = json_input['features']
+<pre><code class="language-python">model_input = json_input['features']
 prediction = ModelService.predict(model_input)
 model = ModelService.get_superwise_model(MODEL_NAME)
 
 for m in model_input:
     records = {
-        "date_time" : str(datetime.utcnow()),
-        "id" : str(uuid.uuid4()),
-        "prediction": prediction,
-        "feature1": m[0],
-        "feature2": m[1],
-        "feature3": m[2],
-        "feature4": m[3]
+        &quot;date_time&quot; : str(datetime.utcnow()),
+        &quot;id&quot; : str(uuid.uuid4()),
+        &quot;prediction&quot;: prediction,
+        &quot;feature1&quot;: m[0],
+        &quot;feature2&quot;: m[1],
+        &quot;feature3&quot;: m[2],
+        &quot;feature4&quot;: m[3]
     }
     transaction_id = sw.transaction.log_records(
         model_id=model[0].id,
         version_id=model[0].active_version_id,
         records=records
     )
-    print(f"Created transaction:  {transaction_id}")
+    print(f&quot;Created transaction:  {transaction_id}&quot;)
 return {
-    "prediction": prediction.item()
+    &quot;prediction&quot;: prediction.item()
 }
 </code></pre>
 <p>Within the <code>ModelService</code> class in the same file, replace the body of the <code>get_model()</code> function with the following:</p>
-<pre><code>    if cls.model is None:
-        cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-    return cls.model
+<pre><code class="language-python">if cls.model is None:
+    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+return cls.model
 </code></pre>
 <p>Then, add a new function called <code>get_superwise_model()</code> to the ‘ModelService’ class, using the following:</p>
-<pre><code>@classmethod
+<pre><code class="language-python">@classmethod
 def get_superwise_model(cls,model_name):
-    """ Get superwise model using superwise SDK """
+    &quot;&quot;&quot; Get superwise model using superwise SDK &quot;&quot;&quot;
     return sw.model.get_by_name(model_name)
 </code></pre>
 <p>Now, add the following text to the top of the file:</p>
-<pre><code>from superwise import Superwise
+<pre><code class="language-python">from superwise import Superwise
 import joblib
 import os
 import pandas as pd
@@ -996,10 +976,10 @@ from datetime import datetime
 import uuid
 
 sw = Superwise(
-    client_id="&lt;my client_id&gt;",
-    secret="&lt;my secret&gt;",
+    client_id=&quot;&lt;my client_id&gt;&quot;,
+    secret=&quot;&lt;my secret&gt;&quot;,
 )
-MODEL_NAME = "Iris Model"
+MODEL_NAME = &quot;Iris Model&quot;
 _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
 </code></pre>
 <h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</h3>
@@ -1007,12 +987,12 @@ _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) 
 <h3 id="step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</h3>
 <p>To use the REST API, run the command <code>sagify local deploy</code> </p>
 <p>Once that’s done, call the inference endpoint by running the following curl command:</p>
-<pre><code>curl -X POST \
+<pre><code class="language-python">curl -X POST \
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
 -H 'Content-Type: application/json' \
--d '{
-    "features":[[0.34, 0.45, 0.45, 0.3]]
+ -d '{
+     &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
 }'
 </code></pre>
 <p>You should now be able to see data coming in on the Superwise dashboards.</p>
@@ -1028,7 +1008,7 @@ http://localhost:8080/invocations \
 <h3 id="step-2-create-model-at-aporia">Step 2: Create model at Aporia</h3>
 <p>Add your model to Aporia's console. Click the <strong>Add Model</strong> button in the Models page and name it "Iris Model"</p>
 <h3 id="step-3-initialize-sagify_1">Step 3: Initialize sagify</h3>
-<pre><code>sagify init
+<pre><code class="language-sh">sagify init
 </code></pre>
 <p>Type in <code>iris-model</code> for SageMaker app name, <code>y</code> in question <code>Are you starting a new project?</code>, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
 <p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
@@ -1064,150 +1044,150 @@ http://localhost:8080/invocations \
 </code></pre>
 <h3 id="step-4-initialize-the-requirementstxt_1">Step 4: Initialize the requirements.txt</h3>
 <p>The <code>requirements.txt</code> at the root of the project must have the following content:</p>
-<pre><code>    awscli
-    flake8
-    Flask
-    joblib
-    pandas
-    s3transfer
-    sagify&gt;=0.18.0
-    scikit-learn
-    aporia[all]
+<pre><code>awscli
+flake8
+Flask
+joblib
+pandas
+s3transfer
+sagify&gt;=0.18.0
+scikit-learn
+aporia[all]
 </code></pre>
 <h3 id="step-5-download-iris-data-set">Step 5: Download Iris data set</h3>
 <p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
 <h3 id="step-6-implement-training-logic">Step 6: Implement Training logic</h3>
 <p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
-<pre><code>    input_file_path = os.path.join(input_data_path, 'iris.data')
+<pre><code class="language-python">input_file_path = os.path.join(input_data_path, 'iris.data')
 
-    df = pd.read_csv(
-        input_file_path,
-        header=None,
-        names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
-    )
+df = pd.read_csv(
+    input_file_path,
+    header=None,
+    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
+)
 
-    df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
+df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
 
-    features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
-    labels_train_df = df_train[['label']]
+features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
+labels_train_df = df_train[['label']]
 
-    features_train = features_train_df.values
-    labels_train = labels_train_df.values.ravel()
+features_train = features_train_df.values
+labels_train = labels_train_df.values.ravel()
 
-    features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
-    labels_test_df = df_test[['label']]
+features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
+labels_test_df = df_test[['label']]
 
-    features_test = features_test_df.values
-    labels_test = labels_test_df.values.ravel()
+features_test = features_test_df.values
+labels_test = labels_test_df.values.ravel()
 
-    ###### Report Version Schema ######
-    apr_model_version = 'v1'
-    apr_model_type = 'multiclass'  # Select model type: "binary" or "regression"
+###### Report Version Schema ######
+apr_model_version = 'v1'
+apr_model_type = 'multiclass'  # Select model type: &quot;binary&quot; or &quot;regression&quot;
 
-    ###### Create a model version ######
-    apr_model = aporia.create_model_version(
-        model_id="REPLACE WITH YOUR APORIA MODEL ID",
-        model_version=apr_model_version,
-        model_type=apr_model_type,
-        features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
-        predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
-    )
+###### Create a model version ######
+apr_model = aporia.create_model_version(
+    model_id=&quot;REPLACE WITH YOUR APORIA MODEL ID&quot;,
+    model_version=apr_model_version,
+    model_type=apr_model_type,
+    features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
+    predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
+)
 
-    ###### Report Training Data ######
-    apr_model.log_training_set(
-        features=features_train_df,
-        labels=labels_train_df
-    )
+###### Report Training Data ######
+apr_model.log_training_set(
+    features=features_train_df,
+    labels=labels_train_df
+)
 
-    clf = SVC(gamma='auto')
-    clf.fit(features_train, labels_train)
+clf = SVC(gamma='auto')
+clf.fit(features_train, labels_train)
 
-    ###### Report Testing Data ######
-    test_predictions = clf.predict(features_test)
-    apr_model.log_test_set(
-        features=features_test_df,
-        labels=labels_test_df,
-        predictions=pd.DataFrame({'label': test_predictions})
-    )
+###### Report Testing Data ######
+test_predictions = clf.predict(features_test)
+apr_model.log_test_set(
+    features=features_test_df,
+    labels=labels_test_df,
+    predictions=pd.DataFrame({'label': test_predictions})
+)
 
-    accuracy = accuracy_score(labels_test, test_predictions)
+accuracy = accuracy_score(labels_test, test_predictions)
 
-    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-    joblib.dump(clf, output_model_file_path)
+output_model_file_path = os.path.join(model_save_path, 'model.pkl')
+joblib.dump(clf, output_model_file_path)
 
-    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-    with open(accuracy_report_file_path, 'w') as _out:
-        _out.write(str(accuracy))
+accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
+with open(accuracy_report_file_path, 'w') as _out:
+    _out.write(str(accuracy))
 </code></pre>
 <p>and at the top of the file, add:</p>
-<pre><code>    import joblib
-    import os
+<pre><code class="language-python">import joblib
+import os
 
-    import aporia
-    import pandas as pd
-    from sklearn.metrics import accuracy_score
-    from sklearn.model_selection import train_test_split
-    from sklearn.svm import SVC
+import aporia
+import pandas as pd
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+from sklearn.svm import SVC
 
 
-    ###### Initiate Aporia ######
-    aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+###### Initiate Aporia ######
+aporia.init(token=&quot;TOKEN PROVIDED BY APORIA&quot;, environment=&quot;YOUR CHOSEN ENV VALUE&quot;)
 </code></pre>
 <h3 id="step-7-implement-prediction-logic">Step 7: Implement Prediction logic</h3>
 <p>Replace the body of <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
-<pre><code>    model_input = json_input['features']
-    prediction = ModelService.predict(model_input)
+<pre><code class="language-python">model_input = json_input['features']
+prediction = ModelService.predict(model_input)
 
-    ###### Report Inference ######
-    apr_prediction_id = str(uuid.uuid4())
+###### Report Inference ######
+apr_prediction_id = str(uuid.uuid4())
 
-    apr_model = aporia.Model("REPLACE WITH YOUR APORIA MODEL ID", "v1")
-    apr_model.log_prediction(
-        id=apr_prediction_id,
-        features={
-            'feature1': model_input[0][0],
-            'feature2': model_input[0][1],
-            'feature3': model_input[0][2],
-            'feature4': model_input[0][3],
-        },
-        predictions={
-            'label': prediction.item()
-        },
-    )
+apr_model = aporia.Model(&quot;REPLACE WITH YOUR APORIA MODEL ID&quot;, &quot;v1&quot;)
+apr_model.log_prediction(
+    id=apr_prediction_id,
+    features={
+        'feature1': model_input[0][0],
+        'feature2': model_input[0][1],
+        'feature3': model_input[0][2],
+        'feature4': model_input[0][3],
+    },
+    predictions={
+        'label': prediction.item()
+    },
+)
 
-    apr_model.flush()
+apr_model.flush()
 
-    return {
-        "prediction": prediction.item()
-    }
+return {
+    &quot;prediction&quot;: prediction.item()
+}
 </code></pre>
 <p>replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
-<pre><code>    if cls.model is None:
-        from sklearn.externals import joblib
-        cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-    return cls.model
+<pre><code class="language-python">if cls.model is None:
+    from sklearn.externals import joblib
+    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
+return cls.model
 </code></pre>
 <p>and the top of the file must look like:</p>
-<pre><code>    import aporia
-    import os
-    import uuid
+<pre><code class="language-python">import aporia
+import os
+import uuid
 
 
-    ###### Initiate Aporia ######
-    aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
+###### Initiate Aporia ######
+aporia.init(token=&quot;TOKEN PROVIDED BY APORIA&quot;, environment=&quot;YOUR CHOSEN ENV VALUE&quot;)
 
-    _MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
+_MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
 </code></pre>
 <h3 id="step-8-build-and-train-the-ml-model_1">Step 8: Build and Train the ML model</h3>
 <p>Run <code>sagify build</code> and after that <code>sagify local train</code></p>
 <h3 id="step-9-call-inference-rest-api">Step 9: Call inference REST API</h3>
 <p>Run <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
-<pre><code>curl -X POST \
+<pre><code class="language-sh">curl -X POST \
 http://localhost:8080/invocations \
 -H 'Cache-Control: no-cache' \
 -H 'Content-Type: application/json' \
 -d '{
-    "features":[[0.34, 0.45, 0.45, 0.3]]
+    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
 }'
 </code></pre>
 <p>Now you should be able to see data coming in on Aporia dashboards.</p>
@@ -1216,18 +1196,18 @@ http://localhost:8080/invocations \
 <h4 id="name">Name</h4>
 <p>Initializes a sagify module</p>
 <h4 id="synopsis">Synopsis</h4>
-<pre><code>sagify init
+<pre><code class="language-sh">sagify init
 </code></pre>
 <h4 id="description">Description</h4>
 <p>This command initializes a sagify module in the directory you provide when asked after you invoke the <code>init</code> command.</p>
 <h3 id="example">Example</h3>
-<pre><code>sagify init
+<pre><code class="language-sh">sagify init
 </code></pre>
 <h3 id="configure">Configure</h3>
 <h4 id="description_1">Description</h4>
 <p>Updates an existing configuration value e.g. <code>python version</code> or <code>AWS region</code>.</p>
 <h4 id="synopsis_1">Synopsis</h4>
-<pre><code>sagify configure [--aws-region AWS_REGION] [--aws-profile AWS_PROFILE] [--image-name IMAGE_NAME] [--python-version PYTHON_VERSION]
+<pre><code class="language-sh">sagify configure [--aws-region AWS_REGION] [--aws-profile AWS_PROFILE] [--image-name IMAGE_NAME] [--python-version PYTHON_VERSION]
 </code></pre>
 <h4 id="optional-flags">Optional Flags</h4>
 <p><code>--aws-region AWS_REGION</code>: <em>AWS</em> region where <em>Docker</em> images are pushed and <em>SageMaker</em> operations (<em>train</em>, <em>deploy</em>) are performed.</p>
@@ -1235,46 +1215,46 @@ http://localhost:8080/invocations \
 <p><code>--image-name IMAGE_NAME</code>: <em>Docker</em> image name used when building for use with <em>SageMaker</em>. This shows up as an <em>AWS ECR</em> repository on your <em>AWS</em> account.</p>
 <p><code>--python-version PYTHON_VERSION</code>: <em>Python</em> version used when building <em>SageMaker's</em> <em>Docker</em> images. Currently supported versions: <code>3.6</code>.</p>
 <h3 id="example_1">Example</h3>
-<pre><code>sagify configure --aws-region us-east-2 --aws-profile default --image-name sage-docker-image-name --python-version 3.6
+<pre><code class="language-sh">sagify configure --aws-region us-east-2 --aws-profile default --image-name sage-docker-image-name --python-version 3.6
 </code></pre>
 <h3 id="build">Build</h3>
 <h4 id="name_1">Name</h4>
 <p>Builds a Docker image</p>
 <h4 id="synopsis_2">Synopsis</h4>
-<pre><code>sagify build
+<pre><code class="language-sh">sagify build
 </code></pre>
 <h4 id="description_2">Description</h4>
 <p>This command builds a Docker image from code under the directory sagify is installed in. A <code>REQUIREMENTS_FILE</code> needs to be specified during <code>sagify init</code> or later via <code>sagify configure --requirements-dir</code> for all required dependencies to be installed in the Docker image. </p>
 <h4 id="example_2">Example</h4>
-<pre><code>sagify build
+<pre><code class="language-sh">sagify build
 </code></pre>
 <h3 id="local-train">Local Train</h3>
 <h4 id="name_2">Name</h4>
 <p>Executes a Docker image in train mode</p>
 <h4 id="synopsis_3">Synopsis</h4>
-<pre><code>sagify local train
+<pre><code class="language-sh">sagify local train
 </code></pre>
 <h4 id="description_3">Description</h4>
 <p>This command executes a Docker image in train mode. More specifically, it executes the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> inside an already built Docker image (see Build command section).</p>
 <h4 id="example_3">Example</h4>
-<pre><code>sagify local train
+<pre><code class="language-sh">sagify local train
 </code></pre>
 <h3 id="local-deploy">Local Deploy</h3>
 <h4 id="name_3">Name</h4>
 <p>Executes a Docker image in serve mode</p>
 <h4 id="synopsis_4">Synopsis</h4>
-<pre><code>sagify local deploy
+<pre><code class="language-sh">sagify local deploy
 </code></pre>
 <h4 id="description_4">Description</h4>
 <p>This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to <code>/invocations</code> endpoint. Then, the <code>/invocations</code> endpoint calls the <code>predict(...)</code> function in <code>sagify_base/prediction/prediction.py</code> (see Build command section on how to build a Docker image).</p>
 <h4 id="example_4">Example</h4>
-<pre><code>sagify local deploy
+<pre><code class="language-sh">sagify local deploy
 </code></pre>
 <h3 id="push">Push</h3>
 <h4 id="name_4">Name</h4>
 <p>Pushes a Docker image to AWS Elastic Container Service</p>
 <h4 id="synopsis_5">Synopsis</h4>
-<pre><code>sagify push [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+<pre><code class="language-sh">sagify push [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
 <h4 id="description_5">Description</h4>
 <p>This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.</p>
@@ -1287,13 +1267,13 @@ http://localhost:8080/invocations \
 <p><code>--aws-profile PROFILE_NAME</code> or <code>-p PROFILE_NAME</code>: AWS profile to use for pushing to ECR</p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-e EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <h4 id="example_5">Example</h4>
-<pre><code>sagify push
+<pre><code class="language-sh">sagify push
 </code></pre>
 <h3 id="cloud-upload-data">Cloud Upload Data</h3>
 <h4 id="name_5">Name</h4>
 <p>Uploads data to AWS S3</p>
 <h4 id="synopsis_6">Synopsis</h4>
-<pre><code>sagify cloud upload-data --input-dir LOCAL_INPUT_DATA_DIR --s3-dir S3_TARGET_DATA_LOCATION
+<pre><code class="language-sh">sagify cloud upload-data --input-dir LOCAL_INPUT_DATA_DIR --s3-dir S3_TARGET_DATA_LOCATION
 </code></pre>
 <h4 id="description_6">Description</h4>
 <p>This command uploads content under <code>LOCAL_INPUT_DATA_DIR</code> to S3 under <code>S3_TARGET_DATA_LOCATION</code></p>
@@ -1301,13 +1281,13 @@ http://localhost:8080/invocations \
 <p><code>--input-dir LOCAL_INPUT_DATA_DIR</code> or <code>-i LOCAL_INPUT_DATA_DIR</code>: Local input directory</p>
 <p><code>--s3-dir S3_TARGET_DATA_LOCATION</code> or <code>-s S3_TARGET_DATA_LOCATION</code>: S3 target location</p>
 <h4 id="example_6">Example</h4>
-<pre><code>sagify cloud upload-data -i ./training_data/ -s s3://my-bucket/training-data/
+<pre><code class="language-sh">sagify cloud upload-data -i ./training_data/ -s s3://my-bucket/training-data/
 </code></pre>
 <h3 id="cloud-train">Cloud Train</h3>
 <h4 id="name_6">Name</h4>
 <p>Trains your ML/DL model using a Docker image on AWS SageMaker with input from S3</p>
 <h4 id="synopsis_7">Synopsis</h4>
-<pre><code>sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
+<pre><code class="language-sh">sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
 </code></pre>
 <h4 id="description_7">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode</p>
@@ -1326,24 +1306,22 @@ http://localhost:8080/invocations \
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker training job. NOTE: if a <code>--base-job-name</code> is passed along with this option, it will be ignored.</p>
 <p><code>--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES</code>: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).</p>
 <p><code>--metric-names COMMA_SEPARATED_METRIC_NAMES</code>: Optional comma-separated metric names for tracking performance of training jobs. Example: <code>Precision,Recall,AUC</code>. Then, make sure you log these metric values using the <code>log_metric</code> function in the <code>train</code> function:</p>
-<pre><code>```
-...
+<pre><code class="language-python">...
 from sagify.api.hyperparameter_tuning import log_metric
-log_metric("Precision:, precision)
-log_metric("Accuracy", accuracy)
+log_metric(&quot;Precision:, precision)
+log_metric(&quot;Accuracy&quot;, accuracy)
 ...
-```
 </code></pre>
 <p>When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:</p>
 <p><img alt="Algorithm Metrics" src="cloud_watch_metrics.png" /></p>
 <h4 id="example_7">Example</h4>
-<pre><code>sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
+<pre><code class="language-sh">sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
 </code></pre>
 <h3 id="cloud-hyperparameter-optimization">Cloud Hyperparameter Optimization</h3>
 <h4 id="name_7">Name</h4>
 <p>Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker</p>
 <h4 id="synopsis_8">Synopsis</h4>
-<pre><code>sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
+<pre><code class="language-sh">sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
 </code></pre>
 <h4 id="description_8">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode</p>
@@ -1352,7 +1330,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT</code> or <code>-o S3_LOCATION_TO_SAVE_OUTPUT</code>: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.</p>
 <p><code>--ec2-type EC2_TYPE</code> or <code>-e EC2_TYPE</code>: ec2 type. Refer to <a href="https://aws.amazon.com/sagemaker/pricing/instance-types/">https://aws.amazon.com/sagemaker/pricing/instance-types/</a></p>
 <p><code>--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE</code> or <code>-h HYPERPARAM_RANGES_JSON_FILE</code>: Local path to hyperparameters configuration file. Example:</p>
-<pre><code>{
+<pre><code class="language-json">{
     &quot;ParameterRanges&quot;: {
         &quot;CategoricalParameterRanges&quot;: [
             {
@@ -1381,7 +1359,6 @@ log_metric("Accuracy", accuracy)
     }
 }
 </code></pre>
-
 <h4 id="optional-flags_3">Optional Flags</h4>
 <p><code>--max-jobs MAX_NUMBER_OF_TRAINING_JOBS</code> or <code>-m MAX_NUMBER_OF_TRAINING_JOBS</code>: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)</p>
 <p><code>--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code> or <code>-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS</code>: Maximum number of parallel training jobs to start (default: 1)</p>
@@ -1395,13 +1372,13 @@ log_metric("Accuracy", accuracy)
 <p><code>--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED</code>: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait)</p>
 <p><code>--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES</code>: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).</p>
 <h4 id="example_8">Example</h4>
-<pre><code>sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
+<pre><code class="language-sh">sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
 </code></pre>
 <h3 id="cloud-deploy">Cloud Deploy</h3>
 <h4 id="name_8">Name</h4>
 <p>Executes a Docker image in serve mode on AWS SageMaker</p>
 <h4 id="synopsis_9">Synopsis</h4>
-<pre><code>sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+<pre><code class="language-sh">sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
 </code></pre>
 <h4 id="description_9">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode. You can update an endpoint (model or number of instances) by specifying the endpoint-name.</p>
@@ -1415,32 +1392,30 @@ log_metric("Accuracy", accuracy)
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
 <h4 id="example_9">Example</h4>
-<pre><code>sagify cloud deploy -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
+<pre><code class="language-sh">sagify cloud deploy -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
 </code></pre>
 <h3 id="cloud-batch-transform">Cloud Batch Transform</h3>
 <h4 id="name_9">Name</h4>
 <p>Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batch predictions on user defined S3 data</p>
 <h4 id="synopsis_10">Synopsis</h4>
-<pre><code>sagify cloud batch-transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
+<pre><code class="language-sh">sagify cloud batch-transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
 </code></pre>
 <h4 id="description_10">Description</h4>
 <p>This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.</p>
 <p>Things to do:
 - You should implement the predict function that expects a JSON containing the required feature values. It's the same predict function used for deploying the model as a REST service. Example of a JSON:</p>
-<pre><code>{
+<pre><code class="language-json">{
     &quot;features&quot;: [5.1,3.5,1.4,0.2]
 }
 </code></pre>
-
 <ul>
 <li>The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:</li>
 </ul>
-<pre><code>{&quot;features&quot;: [5.1,3.5,1.4,0.2]}
+<pre><code class="language-json">{&quot;features&quot;: [5.1,3.5,1.4,0.2]}
 {&quot;features&quot;: [4.9,3.0,1.4,0.2]}
 {&quot;features&quot;: [4.7,3.2,1.3,0.2]}
 {&quot;features&quot;: [4.6,3.1,1.5,0.2]}
 </code></pre>
-
 <h4 id="required-flags_4">Required Flags</h4>
 <p><code>--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ</code> or <code>-m S3_LOCATION_TO_MODEL_TAR_GZ</code>: S3 location to to model tar.gz</p>
 <p><code>--s3-input-location S3_INPUT_LOCATION</code> or <code>-i S3_INPUT_LOCATION</code>: s3 input data location</p>
@@ -1454,7 +1429,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code> or <code>-w WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED</code>: Optional flag to wait until Batch Transform is finished. (default: don't wait)</p>
 <p><code>--job-name JOB_NAME</code>: Optional name for the SageMaker batch transform job</p>
 <h4 id="example_10">Example</h4>
-<pre><code>sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
+<pre><code class="language-sh">sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
 </code></pre>
 <h3 id="cloud-create-streaming-inference">Cloud Create Streaming Inference</h3>
 <p>NOTE: THIS IS AN EXPERIMENTAL FEATURE</p>
@@ -1464,7 +1439,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_10">Name</h4>
 <p>Creates streaming inference pipelines</p>
 <h4 id="synopsis_11">Synopsis</h4>
-<pre><code>sagify cloud create-streaming-inference --name WORKER_NAME --endpoint-name ENDPOINT_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
+<pre><code class="language-sh">sagify cloud create-streaming-inference --name WORKER_NAME --endpoint-name ENDPOINT_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
 </code></pre>
 <h4 id="description_11">Description</h4>
 <p>This command creates a worker as a Lambda function that listens to features in the <code>FEATURES_INPUT_TOPIC_NAME</code>, calls the the endpoint <code>ENDPOINT_NAME</code> and, finally, forwards predictions to <code>PREDICTIONS_OUTPUT_TOPIC_NAME</code>.</p>
@@ -1475,7 +1450,7 @@ log_metric("Accuracy", accuracy)
 <p><code>--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME</code>: Topic name where model predictions will be forwarded</p>
 <p><code>--type STREAMING_INFERENCE_TYPE</code>: The type of streaming inference. At the moment, only <code>SQS</code> is supported!</p>
 <h4 id="example_11">Example</h4>
-<pre><code>sagify cloud create-streaming-inference --name recommender-worker --endpoint-name my-recommender-endpoint-1 --input-topic-name features --output-topic-name model-predictions --type SQS
+<pre><code class="language-sh">sagify cloud create-streaming-inference --name recommender-worker --endpoint-name my-recommender-endpoint-1 --input-topic-name features --output-topic-name model-predictions --type SQS
 </code></pre>
 <h3 id="cloud-delete-streaming-inference">Cloud Delete Streaming Inference</h3>
 <p>NOTE: THIS IS AN EXPERIMENTAL FEATURE</p>
@@ -1485,7 +1460,7 @@ log_metric("Accuracy", accuracy)
 <h4 id="name_11">Name</h4>
 <p>Deletes streaming inference pipelines</p>
 <h4 id="synopsis_12">Synopsis</h4>
-<pre><code>sagify cloud delete-streaming-inference --name WORKER_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
+<pre><code class="language-sh">sagify cloud delete-streaming-inference --name WORKER_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
 </code></pre>
 <h4 id="description_12">Description</h4>
 <p>This command deletes the worker (i.e. Lambda function), input topic <code>FEATURES_INPUT_TOPIC_NAME</code> and output topic <code>PREDICTIONS_OUTPUT_TOPIC_NAME</code>.</p>
@@ -1495,13 +1470,13 @@ log_metric("Accuracy", accuracy)
 <p><code>--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME</code>: Topic name where model predictions will be forwarded</p>
 <p><code>--type STREAMING_INFERENCE_TYPE</code>: The type of streaming inference. At the moment, only <code>SQS</code> is supported!</p>
 <h4 id="example_12">Example</h4>
-<pre><code>sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
+<pre><code class="language-sh">sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
 </code></pre>
 <h3 id="cloud-lightning-deploy">Cloud Lightning Deploy</h3>
 <h4 id="name_12">Name</h4>
 <p>Command for lightning deployment of pre-trained ML model(s) on AWS SageMaker without code</p>
 <h4 id="synopsis_13">Synopsis</h4>
-<pre><code>sagify cloud lightning-deploy --framework FRAMEWORK --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION --extra-config-file EXTRA_CONFIG_FILE [--model-server-workers MODEL_SERVER_WORKERS] [--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework FRAMEWORK --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION --extra-config-file EXTRA_CONFIG_FILE [--model-server-workers MODEL_SERVER_WORKERS] [--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
 </code></pre>
 <h4 id="description_13">Description</h4>
 <p>This command deploys a pre-trained ML model without code. </p>
@@ -1521,65 +1496,62 @@ log_metric("Accuracy", accuracy)
 <p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
 <h4 id="example-for-sklearn">Example for SKLearn</h4>
 <p>Compress your pre-trained sklearn model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_sklearn_model_name</code>.</p>
-<pre><code>sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 </code></pre>
 <p>The <code>sklearn_config.json</code> must contain the following flag <code>framework_version</code>. Supported sklearn version(s): 0.20.0, 0.23-1.</p>
 <p>Example of <code>sklearn_config.json</code>:</p>
-<pre><code>    {
-      "framework_version": "0.23-1"
-    }
+<pre><code class="language-json">{
+    &quot;framework_version&quot;: &quot;0.23-1&quot;
+}
 </code></pre>
 <h4 id="example-for-huggingface-by-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace by specifying the <code>S3_LOCATION_TO_MODEL_TAR_GZ</code></h4>
 <p>Compress your pre-trained HuggingFace model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_hg_model_name</code>.</p>
-<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 </code></pre>
 <p>The <code>huggingface_config.json</code> must contain the following flags  <code>pytorch_version</code> or <code>tensorflow_version</code> (not both), and <code>transformers_version</code>. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.</p>
 <p>Example of <code>huggingface_config.json</code>:</p>
-<pre><code>    {
-      "transformers_version": "4.6.1",
-      "pytorch_version": "1.7.1"
-    }
+<pre><code class="language-json">{
+    &quot;transformers_version&quot;: &quot;4.6.1&quot;,
+    &quot;pytorch_version&quot;: &quot;1.7.1&quot;
+}
 </code></pre>
 <h4 id="example-for-huggingface-without-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace without specifying the <code>S3_LOCATION_TO_MODEL_TAR_GZ</code></h4>
-<pre><code>sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
 </code></pre>
 <p>The <code>huggingface_config.json</code> must contain the following flags  <code>pytorch_version</code> or <code>tensorflow_version</code> (not both), <code>transformers_version</code> and <code>hub</code>. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.</p>
 <p>Example of <code>huggingface_config.json</code>:</p>
-<pre><code>    {
-      "transformers_version": "4.6.1",
-      "pytorch_version": "1.7.1",
-      "hub": {
-        "HF_MODEL_ID": "gpt2",
-        "HF_TASK": "text-generation"
-      }
+<pre><code class="language-json">{
+    &quot;transformers_version&quot;: &quot;4.6.1&quot;,
+    &quot;pytorch_version&quot;: &quot;1.7.1&quot;,
+    &quot;hub&quot;: {
+    &quot;HF_MODEL_ID&quot;: &quot;gpt2&quot;,
+    &quot;HF_TASK&quot;: &quot;text-generation&quot;
     }
+}
 </code></pre>
 <h4 id="example-for-xgboost">Example for XGBoost</h4>
 <p>Compress your pre-trained XGBoost model to a GZIP tar archive with command <code>!tar czvf model.tar.gz $your_xgboost_model_name</code>.</p>
-<pre><code>sagify cloud lightning-deploy --framework xgboost -n 1 -e ml.c4.2xlarge --extra-config-file xgboost_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
+<pre><code class="language-sh">sagify cloud lightning-deploy --framework xgboost -n 1 -e ml.c4.2xlarge --extra-config-file xgboost_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
 </code></pre>
 <p>The <code>xgboost_config.json</code> must contain the following flag <code>framework_version</code>. Supported xgboost version(s): 0.90-2, 1.0-1, and later.</p>
 <p>Example of <code>xgboost_config.json</code>:</p>
-<pre><code>    {
-      "framework_version": "0.23-1"
-    }
+<pre><code class="language-json">{
+    &quot;framework_version&quot;: &quot;0.23-1&quot;
+}
 </code></pre>
               
             </div>
-          </div>
-          <footer>
-  
+          </div><footer>
 
   <hr/>
 
   <div role="contentinfo">
     <!-- Copyright etc -->
-    
   </div>
 
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 </footer>
-      
+          
         </div>
       </div>
 
@@ -1587,28 +1559,32 @@ log_metric("Accuracy", accuracy)
 
   </div>
 
-  <div class="rst-versions" role="note" aria-label="versions">
-    <span class="rst-current-version" data-toggle="rst-current-version">
-      
-          <a href="https://github.com/Kenza-AI/sagify/" class="fa fa-github" style="float: left; color: #fcfcfc"> GitHub</a>
-      
-      
-      
-    </span>
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+        <span>
+          <a href="https://github.com/Kenza-AI/sagify" class="fa fa-github" style="color: #fcfcfc"> GitHub</a>
+        </span>
+    
+    
+    
+  </span>
 </div>
-    <script>var base_url = '.';</script>
-    <script src="js/theme.js" defer></script>
-      <script src="search/main.js" defer></script>
-    <script defer>
-        window.onload = function () {
+    <script src="js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = ".";</script>
+    <script src="js/theme_extra.js"></script>
+    <script src="js/theme.js"></script>
+      <script src="search/main.js"></script>
+    <script>
+        jQuery(function () {
             SphinxRtdTheme.Navigation.enable(true);
-        };
+        });
     </script>
 
 </body>
 </html>
 
 <!--
-MkDocs version : 1.1.2
-Build Date UTC : 2022-04-27 17:36:41.426918+00:00
+MkDocs version : 1.5.3
+Build Date UTC : 2023-12-27 17:04:13.834175+00:00
 -->
