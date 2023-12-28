@@ -39,23 +39,31 @@ def ask_for_root_dir():
 
 def ask_for_python_version():
     logger.info("Select Python interpreter:")
-    logger.info('{}'.format('\n'.join(['1 - Python37', '2 - Python38'])))
+    logger.info('{}'.format('\n'.join(['1 - Python37', '2 - Python38', '3 - Python39', '4 - Python310', '5 - Python311'])))
 
     def _validate_python_option(input_value):
-        if int(input_value) not in {1, 2}:
+        if int(input_value) not in {1, 2, 3, 4, 5}:
             raise BadParameter(
-                message="invalid choice: {}. (choose from 1, 2)".format(str(input_value))
+                message="invalid choice: {}. (choose from 1, 2, 3, 4, 5)".format(str(input_value))
             )
 
         return int(input_value)
 
     chosen_python_index = click.prompt(
-        text="Choose from 1, 2",
+        text="Choose from 1, 2, 3, 4, 5",
         default=1,
         value_proc=lambda x: _validate_python_option(x)
     )
 
-    return '3.7' if chosen_python_index == 1 else '3.8'
+    _index_to_version = {
+        1: '3.7',
+        2: '3.8',
+        3: '3.9',
+        4: '3.10',
+        5: '3.11'
+    }
+
+    return _index_to_version[chosen_python_index]
 
 
 def ask_for_aws_details():
