@@ -5,7 +5,7 @@ with open('README.md') as f:
 
 setup(
     name='sagify',
-    version='0.23.0',
+    version='0.23.1',
     setup_cfg=True,
     python_requires='~=3.7',
     packages=find_packages(where='.'),
@@ -34,9 +34,9 @@ setup(
         ]
     },
     install_requires=[
-        'click>=8.0.0, <8.0.99',
-        'docker>=5.0.0, <5.0.99',
-        'sagemaker>=2.72.0, <2.72.99',
+        'click>=8.1.0, <8.1.99',
+        'docker>=7.0.0, <7.0.99',
+        'sagemaker>=2.202.0, <2.202.99',
         'six>=1.16, <1.16.99',
         'future>=0.18.0, <0.18.99'
     ],

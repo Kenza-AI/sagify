@@ -47,7 +47,7 @@ This is probably the most classic one! You need to run a batch prediction pipeli
 
 sagify requires the following:
 
-1. Python (3.7, 3.8)
+1. Python (3.7, 3.8, 3.9, 3.10, 3.11)
 2. [Docker](https://www.docker.com/) installed and running
 3. Configured [awscli](https://pypi.python.org/pypi/awscli)
 
