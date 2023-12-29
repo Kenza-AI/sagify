@@ -355,7 +355,7 @@ aws_secret_access_key = ...
 
  - And, finally, add the following in the `~/.aws/config` file:
  
- ```
+```
 [profile test-sagemaker]
 region = us-east-1 <-- USE YOUR PREFERRED REGION
 role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
