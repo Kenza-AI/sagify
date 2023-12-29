@@ -82,6 +82,18 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#configure-aws-account">Configure AWS Account</a>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#create-s3-bucket">Create S3 Bucket</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upload-training-data">Upload Training Data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#train-on-aws-sagemaker">Train on AWS SageMaker</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#deploy-on-aws-sagemaker">Deploy on AWS SageMaker</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</a>
+    </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter Optimization</a>
@@ -412,7 +424,7 @@
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
 <ol>
-<li>Python (3.7, 3.8)</li>
+<li>Python (3.7, 3.8, 3.9, 3.10, 3.11)</li>
 <li><a href="https://www.docker.com/">Docker</a> installed and running</li>
 <li>Configured <a href="https://pypi.python.org/pypi/awscli">awscli</a></li>
 </ol>
@@ -659,46 +671,34 @@ aws_secret_access_key = ...
 <ul>
 <li>And, finally, add the following in the <code>~/.aws/config</code> file:</li>
 </ul>
-<p>```
-[profile test-sagemaker]
+<pre><code>[profile test-sagemaker]
 region = us-east-1 &lt;-- USE YOUR PREFERRED REGION
 role_arn = COPY_PASTE_THE_ARN_OF_THE_CREATED_ROLE_NOT_USER! for example: arn:aws:iam::...:role/TestSageMakerRole
-source_profile = test-sagemaker</p>
-<pre><code>
-- That's it! From now on, choose the created AWS profile when initializing sagify.
-
-- You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
-
-### Push Docker Image to AWS ECS
-
-If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
-
-### Create S3 Bucket
-
-Make sure to create an S3 bucket with a name of your choice, for example: `sagify-demo`
-
-### Upload Training Data
-
-Execute `sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data` to upload training data to S3
-
-### Train on AWS SageMaker
-
-Execute `sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
-
-Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz`)
-
-### Deploy on AWS SageMaker
-
-Execute `sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
-
-### Call SageMaker REST Endpoint
-
-Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to &lt;https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html&gt; on how to call it from Postman as authorization is required.
-
-Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
-
-```json
-{
+source_profile = test-sagemaker
+</code></pre>
+<ul>
+<li>
+<p>That's it! From now on, choose the created AWS profile when initializing sagify.</p>
+</li>
+<li>
+<p>You can change the AWS profile/region in an already initialized sagify module by changing the value of <code>aws_profile</code>/<code>aws_region</code> in <code>.sagify.json</code>.</p>
+</li>
+</ul>
+<h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
+<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push</code> to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.</p>
+<h3 id="create-s3-bucket">Create S3 Bucket</h3>
+<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
+<h3 id="upload-training-data">Upload Training Data</h3>
+<p>Execute <code>sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data</code> to upload training data to S3</p>
+<h3 id="train-on-aws-sagemaker">Train on AWS SageMaker</h3>
+<p>Execute <code>sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge</code> to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.</p>
+<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
+<h3 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h3>
+<p>Execute <code>sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
+<h3 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h3>
+<p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
+<p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
+<pre><code class="language-json">{
     &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
 }
 </code></pre>
@@ -1586,5 +1586,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-27 17:04:13.834175+00:00
+Build Date UTC : 2023-12-29 13:06:54.283790+00:00
 -->
