@@ -30,7 +30,7 @@ jobs:
 
     - name: Publish distribution 📦 to PyPI
       if: matrix.python-version == '3.11'  # only publish once
-      uses: pypa/gh-action-pypi-publish@v1
+      uses: pypa/gh-action-pypi-publish@release/v1
       with:
         user: __token__
         password: ${{ secrets.PYPI_TOKEN }}
