@@ -23,7 +23,7 @@ click.disable_unicode_literals_warning = True
 @click.pass_obj
 def push(obj, aws_region, iam_role_arn, aws_profile, external_id):
     """
-    Command to push Docker image to AWS ECS
+    Command to push Docker image to AWS ECR
     """
     logger.info(ASCII_LOGO)
 
@@ -46,7 +46,7 @@ def push(obj, aws_region, iam_role_arn, aws_profile, external_id):
         external_id = "" if external_id is None else external_id
         iam_role_arn = "" if iam_role_arn is None else iam_role_arn
 
-        logger.info("Started pushing Docker image to AWS ECS. It will take some time. Please, be patient...\n")
+        logger.info("Started pushing Docker image to AWS ECR. It will take some time. Please, be patient...\n")
 
         api_push.push(
             dir=config.sagify_module_dir,
@@ -57,7 +57,7 @@ def push(obj, aws_region, iam_role_arn, aws_profile, external_id):
             external_id=external_id,
             image_name=image_name)
 
-        logger.info("Docker image pushed to ECS successfully!")
+        logger.info("Docker image pushed to ECR successfully!")
     except ValueError:
         logger.info("This is not a sagify directory: {}".format(dir))
         sys.exit(-1)
