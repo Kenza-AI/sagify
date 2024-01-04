@@ -366,9 +366,9 @@ source_profile = test-sagemaker
 
 - You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
 
-### Push Docker Image to AWS ECS
+### Push Docker Image to AWS ECR
 
-If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.
+If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.
 
 ### Create S3 Bucket
 

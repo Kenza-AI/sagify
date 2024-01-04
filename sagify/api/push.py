@@ -10,7 +10,7 @@ from sagify.log import logger
 
 def push(dir, docker_tag, aws_region, iam_role_arn, aws_profile, external_id, image_name):
     """
-    Push Docker image to AWS ECS
+    Push Docker image to AWS ECR
 
     :param dir: [str], source root directory
     :param docker_tag: [str], the Docker tag for the image
