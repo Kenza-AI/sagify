@@ -82,7 +82,7 @@
         <ul>
     <li class="toctree-l3"><a class="reference internal" href="#configure-aws-account">Configure AWS Account</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</a>
+    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecr">Push Docker Image to AWS ECR</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#create-s3-bucket">Create S3 Bucket</a>
     </li>
@@ -684,8 +684,8 @@ source_profile = test-sagemaker
 <p>You can change the AWS profile/region in an already initialized sagify module by changing the value of <code>aws_profile</code>/<code>aws_region</code> in <code>.sagify.json</code>.</p>
 </li>
 </ul>
-<h3 id="push-docker-image-to-aws-ecs">Push Docker Image to AWS ECS</h3>
-<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push</code> to push the Docker image to AWS ECS. This step may take some time depending on your internet connection upload speed.</p>
+<h3 id="push-docker-image-to-aws-ecr">Push Docker Image to AWS ECR</h3>
+<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push</code> to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.</p>
 <h3 id="create-s3-bucket">Create S3 Bucket</h3>
 <p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
 <h3 id="upload-training-data">Upload Training Data</h3>
@@ -1586,5 +1586,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-29 13:06:54.283790+00:00
+Build Date UTC : 2024-01-04 18:40:25.602204+00:00
 -->
