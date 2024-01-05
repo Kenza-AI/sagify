@@ -2,7 +2,7 @@
 
 ![Sagify](sagify@2x.png)
 
-A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
+A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
 
 ![gif](end2end.gif)
 
@@ -10,7 +10,7 @@ A command-line utility to train and deploy Machine Learning/Deep Learning models
 
 "Why should I use Sagify" you may ask.
 
-We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning on the same day by using Sagify!
+We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning or just deploy an LLM on the same day by using Sagify!
  
 ### No More Configuring Cloud Instances for Training a Machine Learning Model
 
@@ -58,6 +58,20 @@ At the command line:
 ```sh
     pip install sagify
 ```
+
+## Getting started -  LLM Deployment with no code
+                
+1. Make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
+  
+2. Finally, run the following command:
+
+```sh
+sagify cloud foundation-model-deploy --model-id model-txt2img-stabilityai-stable-diffusion-v2-1-base --model-version 1.* -n 1 -e ml.p3.2xlarge --aws-region us-east-1 --aws-profile sagemaker-dev
+```
+        
+You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
+
+3. Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
 ## Getting started -  No code deployment
 

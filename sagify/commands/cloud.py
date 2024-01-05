@@ -907,6 +907,98 @@ def lightning_deploy(
         sys.exit(-1)
 
 
+@click.command(name="foundation-model-deploy")
+@click.option(
+    u"--model-id",
+    required=True,
+    help='Model id of the Foundation model. For more, '
+         'see the list of Foundation models https://sagemaker.readthedocs.io/en/stable/doc_utils/pretrainedmodels.html.'
+)
+@click.option(
+    u"--model-version",
+    required=False,
+    default="1.*",
+    help="Model verion of the Foundation model (default: 1.* which fetches the latest of this major version) "
+)
+@click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
+@click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
+@click.option(
+    u"-a", u"--aws-tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling a training job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+@click.option(
+    u"--aws-profile",
+    required=False,
+    help="The AWS profile to use for the foundation model deploy command"
+)
+@click.option(
+    u"--aws-region",
+    required=True,
+    help="The AWS region to use for the foundation model deploy command"
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for the foundation model deploy command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+@click.option(
+    u"--endpoint-name",
+    required=False,
+    default=None,
+    help="Name for the SageMaker endpoint"
+)
+def foundation_model_deploy(
+        model_id,
+        model_version,
+        num_instances,
+        ec2_type,
+        aws_tags,
+        aws_profile,
+        aws_region,
+        iam_role_arn,
+        external_id,
+        endpoint_name
+):
+    """
+    Command for deployment of Foundation models on SageMaker without code
+    """
+    logger.info(ASCII_LOGO)
+    logger.info("Started Foundation model deployment on SageMaker ...\n")
+
+    try:
+        endpoint_name, example_query_code_snippet = api_cloud.foundation_model_deploy(
+            model_id=model_id,
+            model_version=model_version,
+            num_instances=num_instances,
+            ec2_type=ec2_type,
+            aws_region=aws_region,
+            aws_profile=aws_profile,
+            aws_role=iam_role_arn,
+            external_id=external_id,
+            tags=aws_tags,
+            endpoint_name=endpoint_name
+        )
+
+        logger.info("Foundation model deployed to SageMaker successfully")
+        logger.info("Endpoint name: {}".format(endpoint_name))
+        logger.info("Example code snippet on how to query the deployed model:")
+        logger.info(example_query_code_snippet)
+    except ValueError as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
 cloud.add_command(upload_data)
 cloud.add_command(train)
 cloud.add_command(hyperparameter_optimization)
@@ -917,3 +1009,4 @@ cloud.add_command(send_to_streaming_inference)
 cloud.add_command(listen_to_streaming_inference)
 cloud.add_command(batch_transform)
 cloud.add_command(lightning_deploy)
+cloud.add_command(foundation_model_deploy)
