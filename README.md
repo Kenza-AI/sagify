@@ -44,7 +44,7 @@ sagify cloud foundation-model-deploy --model-id model-txt2img-stabilityai-stable
         
 You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
 
-3. Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
+Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
 ## Getting started -  No code deployment
 
