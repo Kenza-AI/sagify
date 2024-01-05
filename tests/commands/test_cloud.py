@@ -1128,3 +1128,42 @@ class TestLightningDeploy(object):
                     )
 
         assert result.exit_code == 0
+
+
+class TestFoundationModelDeploy(object):
+    def test_foundation_model_deploy_happy_case(self):
+        runner = CliRunner()
+
+        with patch(
+                'sagify.commands.initialize._get_local_aws_profiles',
+                return_value=['default', 'sagify']
+        ):
+            with patch(
+                    'sagify.sagemaker.sagemaker.SageMakerClient'
+            ) as mocked_sage_maker_client:
+                instance = mocked_sage_maker_client.return_value
+                instance.deploy_foundation_model.return_value = 'some-endpoint-name', 'some code snippet to query the endpoint'
+                result = runner.invoke(
+                    cli=cli,
+                    args=[
+                        'cloud', 'foundation-model-deploy',
+                        '--model-id', 'model-txt2img-stabilityai-stable-diffusion-v2-1-base',
+                        '--model-version', '1.*',
+                        '-n', '2',
+                        '-e', 'ml.p3.2xlarge',
+                        '--aws-region', 'us-east-1',
+                        '--aws-profile', 'sagify'
+                    ]
+                )
+
+                assert instance.deploy_foundation_model.call_count == 1
+                instance.deploy_foundation_model.assert_called_with(
+                    model_id='model-txt2img-stabilityai-stable-diffusion-v2-1-base',
+                    model_version='1.*',
+                    instance_count=2,
+                    instance_type='ml.p3.2xlarge',
+                    tags=None,
+                    endpoint_name=None
+                )
+
+        assert result.exit_code == 0

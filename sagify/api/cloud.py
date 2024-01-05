@@ -606,3 +606,58 @@ def lightning_deploy(
         )
 
     raise ValueError("Invalid framework value")
+
+
+def foundation_model_deploy(
+        model_id,
+        model_version,
+        num_instances,
+        ec2_type,
+        aws_region,
+        aws_profile=None,
+        aws_role=None,
+        external_id=None,
+        tags=None,
+        endpoint_name=None
+):
+    """
+    Deploys Foundation ML models on SageMaker without code
+
+    :param model_id: [str], The Foundation model id. For more, see the list
+      https://sagemaker.readthedocs.io/en/stable/doc_utils/pretrainedmodels.html.
+    :param model_version: [str], The Foundation model version
+    :param num_instances: [int], number of ec2 instances
+    :param ec2_type: [str], ec2 instance type. Refer to:
+    https://aws.amazon.com/sagemaker/pricing/instance-types/
+    :param aws_region: [str], the AWS region
+    :param aws_profile: [optional[str]], Optional AWS profile
+    :param aws_role: [optional[str]], Optional AWS role assumed by SageMaker while deploying
+    :param external_id: [optional[str]], Optional external id used when using an IAM role
+    :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+    :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
+
+    :return: [str, str], endpoint name, example query model code snippet
+    """
+    sage_maker_client = sagemaker.SageMakerClient(aws_profile, aws_region, aws_role, external_id)
+
+    return sage_maker_client.deploy_foundation_model(
+        model_id=model_id,
+        model_version=model_version,
+        instance_count=num_instances,
+        instance_type=ec2_type,
+        tags=tags,
+        endpoint_name=endpoint_name
+    )

@@ -8,6 +8,8 @@ import sagemaker.tuner
 import sagemaker.huggingface
 import sagemaker.xgboost
 import sagemaker.sklearn.model
+from sagemaker import image_uris, model_uris, payloads
+from sagemaker.predictor import Predictor
 from six.moves.urllib.parse import urlparse
 
 import boto3
@@ -52,6 +54,8 @@ class SageMakerClient(object):
         else:
             self.boto_session = boto3.Session(region_name=aws_region)
 
+        self.aws_region = aws_region
+        self.aws_profile = aws_profile
         self.sagemaker_client = self.boto_session.client('sagemaker')
         self.sagemaker_session = sage.Session(boto_session=self.boto_session)
         self.role = sage.get_execution_role(self.sagemaker_session) if aws_role is None else aws_role
@@ -565,6 +569,191 @@ class SageMakerClient(object):
             )
 
         return predictor.endpoint_name
+
+    def deploy_foundation_model(
+            self,
+            model_id,
+            model_version,
+            instance_count,
+            instance_type,
+            tags=None,
+            endpoint_name=None
+    ):
+        """
+        Deploy Foundation model to SageMaker
+
+        :param model_id: [str], model id
+        :param model_version: [str], model version
+        :param instance_count: [str],  number of ec2 instances
+        :param instance_type: [str], ec2 instance type
+        :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+            [
+                {
+                    'Key': 'key_name_1',
+                    'Value': key_value_1,
+                },
+                {
+                    'Key': 'key_name_2',
+                    'Value': key_value_2,
+                },
+                ...
+            ]
+        :param endpoint_name: [optional[str]], Optional name for the SageMaker endpoint
+
+        :return: [str], endpoint name
+        """
+        deploy_image_uri = image_uris.retrieve(
+            region=self.aws_region,
+            framework=None,  # automatically inferred from model_id
+            image_scope="inference",
+            model_id=model_id,
+            model_version=model_version,
+            instance_type=instance_type,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        model_uri = model_uris.retrieve(
+            model_id=model_id,
+            model_version=model_version,
+            model_scope="inference",
+            region=self.aws_region,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        # Increase the maximum response size from the endpoint
+        env = {
+            "MMS_MAX_RESPONSE_SIZE": "20000000",
+        }
+
+        model = sage.Model(
+            image_uri=deploy_image_uri,
+            model_data=model_uri,
+            role=self.role,
+            predictor_cls=Predictor,
+            name=endpoint_name,
+            env=env,
+            sagemaker_session=self.sagemaker_session
+        )
+
+        model_predictor = model.deploy(
+            initial_instance_count=instance_count,
+            instance_type=instance_type,
+            predictor_cls=Predictor,
+            endpoint_name=endpoint_name,
+            tags=tags,
+            accept_eula=True
+        )
+
+        return model_predictor.endpoint_name, self._generate_foundation_model_query_command(model_id, model_version, model_predictor.endpoint_name)
+
+    def _generate_foundation_model_query_command(self, model_id, model_version, endpoint_name):
+        """
+        Generate foundation model query command
+
+        :param model_id: [str], model id
+        :param model_version: [str], model version
+
+        :return: [str], foundation model query code snippet
+        """
+
+        payload_example = payloads.retrieve_example(
+            model_id=model_id,
+            model_version=model_version,
+            region=self.aws_region,
+            sagemaker_session=self.sagemaker_session,
+            tolerate_deprecated_model=True,
+            tolerate_vulnerable_model=True
+        )
+
+        example_query_code_snippet = None
+        if payload_example:
+            if 'jpeg' in payload_example.accept:
+                parse_response_function = """
+def parse_response(query_response):
+    response_dict = json.loads(query_response)
+    return response_dict["generated_image"], response_dict["prompt"]
+                """
+
+                parse_response_code_line = "img, prmpt = parse_response(query_response)"
+
+                display_img_function = """
+import matplotlib.pyplot as plt
+import numpy as np
+
+def display_img_and_prompt(img, prmpt):
+    plt.figure(figsize=(12, 12))
+    plt.imshow(np.array(img))
+    plt.axis("off")
+    plt.title(prmpt)
+    plt.show()
+                """
+                display_img_code_line = "display_img_and_prompt(img, prmpt)"
+            else:
+                parse_response_function = """
+def parse_response(query_response):
+    response_dict = json.loads(query_response)
+    return response_dict["generated_text"]
+                """
+
+                parse_response_code_line = "generated_text = parse_response(query_response)"
+
+                display_img_function, display_img_code_line = '', ''
+
+            accept = 'application/json' if 'jpeg' in payload_example.accept else payload_example.accept
+            content_type = payload_example.content_type
+            body = payload_example.body
+
+            region = self.aws_region
+            profile = self.aws_profile
+
+            example_query_code_snippet = f"""
+import sagemaker, boto3, json
+from sagemaker import get_execution_role
+from sagemaker.predictor import Predictor
+
+aws_region = '{region}'  # TODO - change if needed. Used the one you provided.
+profile_name = '{profile}'  # TODO - change if needed. Used the one you provided.
+
+endpoint_name = '{endpoint_name}'  # TODO - change if needed. Used the one you provided.
+
+boto_session = boto3.Session(
+    profile_name=profile_name,
+    region_name=aws_region
+)
+
+sagemaker_session = sagemaker.Session(boto_session=boto_session)
+
+model_predictor = Predictor(endpoint_name=endpoint_name, sagemaker_session=sagemaker_session)
+
+def query_endpoint(model_predictor, payload, content_type, accept):
+    if content_type == 'application/x-text':
+        encoded_payload = payload.encode("utf-8")
+    else:  # assuming content type 'application/json' and payload is a dict
+        encoded_payload = json.dumps(payload).encode("utf-8")
+
+    query_response = model_predictor.predict(
+        encoded_payload,
+        {{
+            "ContentType": content_type,
+            "Accept": accept,
+        }},
+    )
+    return query_response
+
+query_response = query_endpoint(model_predictor, '{body}', '{content_type}', '{accept}')
+
+{parse_response_function}
+
+{parse_response_code_line}
+
+{display_img_function}
+
+{display_img_code_line}
+            """
+
+        return example_query_code_snippet
 
     @staticmethod
     def _get_s3_bucket(s3_dir):
