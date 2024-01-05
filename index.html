@@ -60,6 +60,8 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l2"><a class="reference internal" href="#getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</a>
+    </li>
     <li class="toctree-l2"><a class="reference internal" href="#getting-started-no-code-deployment">Getting started -  No code deployment</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</a>
@@ -391,11 +393,11 @@
               
                 <h1 id="sagify">sagify</h1>
 <p><img alt="Sagify" src="sagify%402x.png" /></p>
-<p>A command-line utility to train and deploy Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
+<p>A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
 <p><img alt="gif" src="end2end.gif" /></p>
 <h2 id="why-sagify">Why Sagify?</h2>
 <p>"Why should I use Sagify" you may ask.</p>
-<p>We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning on the same day by using Sagify!</p>
+<p>We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning or just deploy an LLM on the same day by using Sagify!</p>
 <h3 id="no-more-configuring-cloud-instances-for-training-a-machine-learning-model">No More Configuring Cloud Instances for Training a Machine Learning Model</h3>
 <p>We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:</p>
 <ol>
@@ -432,6 +434,21 @@
 <p>At the command line:</p>
 <pre><code class="language-sh">    pip install sagify
 </code></pre>
+<h2 id="getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</h2>
+<ol>
+<li>
+<p>Make sure to configure your AWS account by following the instructions at section <a href="#configure-aws-account">Configure AWS Account</a></p>
+</li>
+<li>
+<p>Finally, run the following command:</p>
+</li>
+</ol>
+<pre><code class="language-sh">sagify cloud foundation-model-deploy --model-id model-txt2img-stabilityai-stable-diffusion-v2-1-base --model-version 1.* -n 1 -e ml.p3.2xlarge --aws-region us-east-1 --aws-profile sagemaker-dev
+</code></pre>
+<p>You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.</p>
+<ol>
+<li>Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!</li>
+</ol>
 <h2 id="getting-started-no-code-deployment">Getting started -  No code deployment</h2>
 <ol>
 <li>Create a file with name <code>huggingface_config.json</code> with the following content:</li>
@@ -1586,5 +1603,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-04 18:40:25.602204+00:00
+Build Date UTC : 2024-01-05 16:21:48.795200+00:00
 -->
