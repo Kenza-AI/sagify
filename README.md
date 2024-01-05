@@ -1,7 +1,7 @@
 ![Sagify](docs/sagify@2x.png)
 
 <p align="center">
-    <em>Machine Learning Engineering done easily.</em>
+    <em>LLMs and Machine Learning done easily.</em>
 </p>
 <p align="center">
 <a href="https://github.com/cortisolai/cortisol/actions?query=workflow%3ACI" target="_blank">
@@ -11,7 +11,7 @@
 
 # sagify
 
-A command-line utility to train and deploy Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps! It hides all the details of Sagemaker so that you can focus 100% on Machine Learning, and not in low level engineering tasks.
+A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps! It hides all the details of Sagemaker so that you can focus 100% on Machine Learning, and not in low level engineering tasks.
 
 For detailed reference to Sagify commands please go to: [Read the Docs](https://Kenza-AI.github.io/sagify/)
 
@@ -31,6 +31,20 @@ At the command line:
 
     pip install sagify
 
+
+## Getting started -  LLM Deployment with no code
+                
+1. Make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
+  
+2. Finally, run the following command:
+
+```sh
+sagify cloud foundation-model-deploy --model-id model-txt2img-stabilityai-stable-diffusion-v2-1-base --model-version 1.* -n 1 -e ml.p3.2xlarge --aws-region us-east-1 --aws-profile sagemaker-dev
+```
+        
+You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
+
+3. Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
 ## Getting started -  No code deployment
 
