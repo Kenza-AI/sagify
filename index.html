@@ -362,6 +362,20 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#cloud-foundation-model-deploy">Cloud Foundation Model Deploy</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_13">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_14">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_14">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_8">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_7">Optional Flags</a>
+    </li>
+        </ul>
+    </li>
         </ul>
     </li>
     </ul>
@@ -1554,6 +1568,26 @@ log_metric(&quot;Accuracy&quot;, accuracy)
     &quot;framework_version&quot;: &quot;0.23-1&quot;
 }
 </code></pre>
+<h3 id="cloud-foundation-model-deploy">Cloud Foundation Model Deploy</h3>
+<h4 id="name_13">Name</h4>
+<p>Command for deployment of Foundation models on SageMaker without code</p>
+<h4 id="synopsis_14">Synopsis</h4>
+<pre><code class="language-sh">sagify cloud foundation-model-deploy --model-id MODEL_ID --model-version MODEL_VERSION --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+</code></pre>
+<h4 id="description_14">Description</h4>
+<p>This command deploys a Foundation model without code. </p>
+<h4 id="required-flags_8">Required Flags</h4>
+<p><code>--model-id MODEL_ID</code>: Model id of the Foundation model. For more, see the list of Foundation models https://sagemaker.readthedocs.io/en/stable/doc_utils/pretrainedmodels.html.</p>
+<p><code>--model-version MODEL_VERSION</code>: Model verion of the Foundation model (default: 1.* which fetches the latest of this major version)</p>
+<p><code>--num-instances NUMBER_OF_EC2_INSTANCES</code> or <code>n NUMBER_OF_EC2_INSTANCES</code>: Number of ec2 instances</p>
+<p><code>--ec2-type EC2_TYPE</code> or <code>e EC2_TYPE</code>: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/</p>
+<p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
+<p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
+<h4 id="optional-flags_7">Optional Flags</h4>
+<p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
               
             </div>
           </div><footer>
@@ -1601,5 +1635,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-05 18:50:30.741208+00:00
+Build Date UTC : 2024-01-14 12:58:04.563575+00:00
 -->
