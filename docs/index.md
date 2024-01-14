@@ -1634,3 +1634,43 @@ Example of `xgboost_config.json`:
     "framework_version": "0.23-1"
 }
 ```
+
+
+### Cloud Foundation Model Deploy
+
+#### Name
+
+Command for deployment of Foundation models on SageMaker without code
+
+#### Synopsis
+```sh
+sagify cloud foundation-model-deploy --model-id MODEL_ID --model-version MODEL_VERSION --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+```
+
+#### Description
+
+This command deploys a Foundation model without code. 
+
+#### Required Flags
+
+`--model-id MODEL_ID`: Model id of the Foundation model. For more, see the list of Foundation models https://sagemaker.readthedocs.io/en/stable/doc_utils/pretrainedmodels.html.
+
+`--model-version MODEL_VERSION`: Model verion of the Foundation model (default: 1.* which fetches the latest of this major version)
+
+`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
+
+`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+
+`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
+
+`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
+
+#### Optional Flags
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+`--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
