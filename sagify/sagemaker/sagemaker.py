@@ -728,6 +728,13 @@ query_response = query_endpoint(model_predictor, '{body}', '{content_type}', '{a
 
         return example_query_code_snippet
 
+    def shutdown_endpoint(self, endpoint_name):
+        """
+        Shuts down a SageMaker endpoint.
+        :param endpoint_name: [str], name of the endpoint to be shut down
+        """
+        self.sagemaker_client.delete_endpoint(EndpointName=endpoint_name)
+
     @staticmethod
     def _get_s3_bucket(s3_dir):
         """

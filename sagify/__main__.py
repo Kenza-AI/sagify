@@ -6,6 +6,7 @@ import click
 from sagify.commands.build import build
 from sagify.commands.cloud import cloud
 from sagify.commands.initialize import init
+from sagify.commands.llm import llm
 from sagify.commands.local import local
 from sagify.commands.push import push
 from sagify.commands.configure import configure
@@ -31,6 +32,7 @@ def add_commands(cli):
     cli.add_command(push)
     cli.add_command(cloud)
     cli.add_command(configure)
+    cli.add_command(llm)
 
 
 add_commands(cli)
