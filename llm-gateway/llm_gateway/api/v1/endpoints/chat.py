@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
 
-from llm_gateway.models.chat import CreateCompletionDTO, RoleItem, MessageItem, ResponseCompletionDTO
+from llm_gateway.schemas.chat import CreateCompletionDTO, RoleItem, MessageItem, ResponseCompletionDTO
 from llm_gateway.services import chat
 
 
@@ -18,20 +17,11 @@ async def create(request: CreateCompletionDTO):
                 role=RoleItem(message.role),
                 content=message.content
             ) for message in request.messages
-        ]
+        ],
+        temperature=request.temperature,
+        max_tokens=request.max_tokens
     )
 
     response = await chat.completions(parsed_message)
 
-    response_dto = {
-        "id": response["id"],
-        "provider": request["provider"],
-        "object": response["object"],
-        "created": response["created"],
-        "model": response["model"],
-        "choices": response["choices"],
-        "usage": response["usage"]
-    }
-
-    return JSONResponse(content=response_dto)
-
+    return response

@@ -1,4 +1,4 @@
-from llm_gateway.models.embeddings import CreateEmbeddingDTO
+from llm_gateway.schemas.embeddings import CreateEmbeddingDTO
 from llm_gateway.providers.client_factory import LLMClientFactory
 
 

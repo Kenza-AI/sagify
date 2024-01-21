@@ -1,4 +1,4 @@
-from llm_gateway.models.images import CreateImageDTO
+from llm_gateway.schemas.images import CreateImageDTO
 from llm_gateway.providers.client_factory import LLMClientFactory
 
 

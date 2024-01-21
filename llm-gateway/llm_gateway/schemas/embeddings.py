@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from llm_gateway.models import Usage
+from llm_gateway.schemas import Usage
 
 
 class CreateEmbeddingDTO(BaseModel):
@@ -17,10 +17,9 @@ class EmbeddingItem(BaseModel):
 
 
 class DataItem(BaseModel):
-    data: List[EmbeddingItem]
-    model: str
     object: str
-    usage: Usage
+    embedding: List[float]
+    index: int
 
 
 class ResponseEmbeddingDTO(BaseModel):

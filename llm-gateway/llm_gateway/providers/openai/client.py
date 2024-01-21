@@ -1,11 +1,10 @@
-import openai
 import structlog
 from openai import OpenAI
-from fastapi import HTTPException
 
-from llm_gateway.models.chat import CreateCompletionDTO, ResponseCompletionDTO
-from llm_gateway.models.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
-from llm_gateway.models.images import CreateImageDTO, ResponseImageDTO
+from llm_gateway.api.v1.exceptions import InternalServerError
+from llm_gateway.schemas.chat import CreateCompletionDTO, ResponseCompletionDTO
+from llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
+from llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
 
 
 logger = structlog.get_logger()
@@ -19,14 +18,18 @@ class OpenAIClient:
         request = {
             "model": message.model,
             "messages": message.messages,
-            "max_tokens": 10
+            "temperature": message.temperature,
+            "max_tokens": message.max_tokens,
+            "stream": False
         }
         try:
             response = self.client.chat.completions.create(**request)
-            return ResponseCompletionDTO(**response.to_dict())
-        except openai.OpenAIError as e:
+            response_dict = response.model_dump()
+            response_dict["provider"] = message.provider
+            return ResponseCompletionDTO(**response_dict)
+        except Exception as e:
             logger.error(e)
-            raise HTTPException(status_code=500, detail=str(e))
+            raise InternalServerError()
 
     async def embeddings(self, embedding_input: CreateEmbeddingDTO):
         request = {
@@ -35,10 +38,12 @@ class OpenAIClient:
         }
         try:
             response = self.client.embeddings.create(**request)
-            return ResponseEmbeddingDTO(**response.to_dict())
-        except openai.OpenAIError as e:
+            response_dict = response.model_dump()
+            response_dict["provider"] = embedding_input.provider
+            return ResponseEmbeddingDTO(**response_dict)
+        except Exception as e:
             logger.error(e)
-            raise HTTPException(status_code=500, detail=str(e))
+            raise InternalServerError()
 
     async def generations(self, image_input: CreateImageDTO):
         request = {
@@ -49,9 +54,10 @@ class OpenAIClient:
         }
         try:
             response = self.client.images.generate(**request)
-            return ResponseImageDTO(**response.to_dict())
-        except openai.OpenAIError as e:
+            response_dict = response.model_dump()
+            response_dict["provider"] = image_input.provider
+            response_dict["model"] = image_input.model
+            return ResponseImageDTO(**response_dict)
+        except Exception as e:
             logger.error(e)
-            raise HTTPException(status_code=500, detail=str(e))
-
-
+            raise InternalServerError()

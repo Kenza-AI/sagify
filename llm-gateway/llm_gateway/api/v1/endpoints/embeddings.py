@@ -1,7 +1,6 @@
 from fastapi import APIRouter
-from fastapi.responses import JSONResponse
 
-from llm_gateway.models.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
+from llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
 from llm_gateway.services import embeddings
 
 
@@ -18,13 +17,4 @@ async def create(request: CreateEmbeddingDTO):
 
     response = await embeddings.embeddings(parsed_message)
 
-    response_dto = {
-        "data": response["data"],
-        "provider": request["provider"],
-        "model": response["model"],
-        "object": response["object"],
-        "usage": response["usage"]
-    }
-
-    return JSONResponse(content=response_dto)
-
+    return response

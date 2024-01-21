@@ -1,4 +1,4 @@
-from llm_gateway.models.chat import CreateCompletionDTO
+from llm_gateway.schemas.chat import CreateCompletionDTO
 from llm_gateway.providers.client_factory import LLMClientFactory
 
 

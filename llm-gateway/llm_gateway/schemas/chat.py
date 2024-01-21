@@ -2,12 +2,13 @@ from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel
 
-from llm_gateway.models import Usage
+from llm_gateway.schemas import Usage
 
 
 class RoleItem(str, Enum):
     SYSTEM = "system"
     USER = "user"
+    ASSISTANT = "assistant"
 
 
 class MessageItem(BaseModel):
@@ -19,6 +20,8 @@ class CreateCompletionDTO(BaseModel):
     provider: str
     model: str
     messages: List[MessageItem]
+    temperature: float
+    max_tokens: int
 
 
 class ChoiceItem(BaseModel):

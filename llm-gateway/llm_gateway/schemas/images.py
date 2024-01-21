@@ -16,5 +16,6 @@ class DataItem(BaseModel):
 
 class ResponseImageDTO(BaseModel):
     provider: str
+    model: str
     created: int
     data: List[DataItem]

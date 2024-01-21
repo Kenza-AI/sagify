@@ -1,4 +1,1 @@
-from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv(Path(".env"))
+__version__ = "0.1.0"
