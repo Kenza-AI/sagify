@@ -8,8 +8,8 @@ import sagemaker.tuner
 import sagemaker.huggingface
 import sagemaker.xgboost
 import sagemaker.sklearn.model
-from sagemaker import image_uris, model_uris, payloads
-from sagemaker.predictor import Predictor
+from sagemaker import payloads
+from sagemaker.jumpstart.model import JumpStartModel
 from six.moves.urllib.parse import urlparse
 
 import boto3
@@ -604,44 +604,17 @@ class SageMakerClient(object):
 
         :return: [str], endpoint name
         """
-        deploy_image_uri = image_uris.retrieve(
-            region=self.aws_region,
-            framework=None,  # automatically inferred from model_id
-            image_scope="inference",
+        model = JumpStartModel(
             model_id=model_id,
             model_version=model_version,
-            instance_type=instance_type,
-            sagemaker_session=self.sagemaker_session
-        )
-
-        model_uri = model_uris.retrieve(
-            model_id=model_id,
-            model_version=model_version,
-            model_scope="inference",
             region=self.aws_region,
-            sagemaker_session=self.sagemaker_session
+            sagemaker_session=self.sagemaker_session,
+            tolerate_deprecated_model=True,
+            tolerate_vulnerable_model=True
         )
-
-        # Increase the maximum response size from the endpoint
-        env = {
-            "MMS_MAX_RESPONSE_SIZE": "20000000",
-        }
-
-        model = sage.Model(
-            image_uri=deploy_image_uri,
-            model_data=model_uri,
-            role=self.role,
-            predictor_cls=Predictor,
-            name=endpoint_name,
-            env=env,
-            sagemaker_session=self.sagemaker_session
-        )
-
         model_predictor = model.deploy(
             initial_instance_count=instance_count,
             instance_type=instance_type,
-            predictor_cls=Predictor,
-            endpoint_name=endpoint_name,
             tags=tags,
             accept_eula=True
         )
@@ -754,6 +727,13 @@ query_response = query_endpoint(model_predictor, '{body}', '{content_type}', '{a
             """
 
         return example_query_code_snippet
+
+    def shutdown_endpoint(self, endpoint_name):
+        """
+        Shuts down a SageMaker endpoint.
+        :param endpoint_name: [str], name of the endpoint to be shut down
+        """
+        self.sagemaker_client.delete_endpoint(EndpointName=endpoint_name)
 
     @staticmethod
     def _get_s3_bucket(s3_dir):

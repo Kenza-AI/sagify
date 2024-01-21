@@ -967,3 +967,81 @@ This command deploys a Foundation model without code.
 `--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
 
 `--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
+
+
+### LLM Start Infrastructure
+
+#### Name
+
+Command to start LLM infrastructure
+
+#### Synopsis
+```sh
+sagify llm start --all --chat-completions --image-creations --embeddings [--config EC2_CONFIG_FILE] --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+```
+
+#### Description
+
+It spins up the endpoints for chat completions, image creation and embeddings.
+
+#### Required Flags
+
+`--all`: Start infrastructure for all services. If this flag is used the flags `--chat-completions`, `--image-creations`, `--embeddings` are ignored.
+
+`--chat-completions`: Start infrastructure for chat completions.
+
+`--image-creations`: Start infrastructure for image creations.
+
+`--embeddings`: Start infrastructure for embeddings.
+
+`--config EC2_CONFIG_FILE`: Path to config file to override foundation models, ec2 instance types and/or number of instances.
+
+`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
+
+`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
+
+#### Optional Flags
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+
+### LLM Stop Infrastructure
+
+#### Name
+
+Command to stop LLM infrastructure
+
+#### Synopsis
+```sh
+sagify llm stop --all --chat-completions --image-creations --embeddings --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+```
+
+#### Description
+
+It stop all or some of the services that are running.
+
+#### Required Flags
+
+`--all`: Start infrastructure for all services. If this flag is used the flags `--chat-completions`, `--image-creations`, `--embeddings` are ignored.
+
+`--chat-completions`: Start infrastructure for chat completions.
+
+`--image-creations`: Start infrastructure for image creations.
+
+`--embeddings`: Start infrastructure for embeddings.
+
+`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
+
+`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
+
+#### Optional Flags
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
