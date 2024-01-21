@@ -376,6 +376,34 @@
     </li>
         </ul>
     </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llm-start-infrastructure">LLM Start Infrastructure</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_14">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_15">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_15">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_9">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_8">Optional Flags</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#llm-stop-infrastructure">LLM Stop Infrastructure</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#name_15">Name</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#synopsis_16">Synopsis</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#description_16">Description</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#required-flags_10">Required Flags</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_9">Optional Flags</a>
+    </li>
+        </ul>
+    </li>
         </ul>
     </li>
     </ul>
@@ -1588,6 +1616,45 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
+<h3 id="llm-start-infrastructure">LLM Start Infrastructure</h3>
+<h4 id="name_14">Name</h4>
+<p>Command to start LLM infrastructure</p>
+<h4 id="synopsis_15">Synopsis</h4>
+<pre><code class="language-sh">sagify llm start --all --chat-completions --image-creations --embeddings [--config EC2_CONFIG_FILE] --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+</code></pre>
+<h4 id="description_15">Description</h4>
+<p>It spins up the endpoints for chat completions, image creation and embeddings.</p>
+<h4 id="required-flags_9">Required Flags</h4>
+<p><code>--all</code>: Start infrastructure for all services. If this flag is used the flags <code>--chat-completions</code>, <code>--image-creations</code>, <code>--embeddings</code> are ignored.</p>
+<p><code>--chat-completions</code>: Start infrastructure for chat completions.</p>
+<p><code>--image-creations</code>: Start infrastructure for image creations.</p>
+<p><code>--embeddings</code>: Start infrastructure for embeddings.</p>
+<p><code>--config EC2_CONFIG_FILE</code>: Path to config file to override foundation models, ec2 instance types and/or number of instances.</p>
+<p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
+<p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
+<h4 id="optional-flags_8">Optional Flags</h4>
+<p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<h3 id="llm-stop-infrastructure">LLM Stop Infrastructure</h3>
+<h4 id="name_15">Name</h4>
+<p>Command to stop LLM infrastructure</p>
+<h4 id="synopsis_16">Synopsis</h4>
+<pre><code class="language-sh">sagify llm stop --all --chat-completions --image-creations --embeddings --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+</code></pre>
+<h4 id="description_16">Description</h4>
+<p>It stop all or some of the services that are running.</p>
+<h4 id="required-flags_10">Required Flags</h4>
+<p><code>--all</code>: Start infrastructure for all services. If this flag is used the flags <code>--chat-completions</code>, <code>--image-creations</code>, <code>--embeddings</code> are ignored.</p>
+<p><code>--chat-completions</code>: Start infrastructure for chat completions.</p>
+<p><code>--image-creations</code>: Start infrastructure for image creations.</p>
+<p><code>--embeddings</code>: Start infrastructure for embeddings.</p>
+<p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
+<p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
+<h4 id="optional-flags_9">Optional Flags</h4>
+<p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
+<p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
+<p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
               
             </div>
           </div><footer>
@@ -1635,5 +1702,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-14 12:58:04.563575+00:00
+Build Date UTC : 2024-01-21 14:53:38.571371+00:00
 -->
