@@ -102,3 +102,4 @@ ENV/
 
 # IDEA project settings
 .idea
+.DS_STORE
