@@ -2,7 +2,7 @@ from enum import Enum
 from typing import List, Optional
 from pydantic import BaseModel
 
-from llm_gateway.schemas import Usage
+from sagify.llm_gateway.schemas import Usage
 
 
 class RoleItem(str, Enum):
@@ -17,7 +17,7 @@ class MessageItem(BaseModel):
 
 
 class CreateCompletionDTO(BaseModel):
-    provider: str
+    provider: Optional[str]
     model: str
     messages: List[MessageItem]
     temperature: float
@@ -37,7 +37,7 @@ class ResponseCompletionDTO(BaseModel):
     provider: str
     model: str
     choices: List[ChoiceItem]
-    usage: Usage
+    usage: Optional[Usage]
 
     class Config:
         populate_by_name = True

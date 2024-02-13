@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from llm_gateway.schemas.chat import CreateCompletionDTO, RoleItem, MessageItem, ResponseCompletionDTO
-from llm_gateway.services import chat
+from sagify.llm_gateway.schemas.chat import CreateCompletionDTO, RoleItem, MessageItem, ResponseCompletionDTO
+from sagify.llm_gateway.services import chat
 
 
 router = APIRouter()

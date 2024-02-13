@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
-from llm_gateway.services import embeddings
+from sagify.llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
+from sagify.llm_gateway.services import embeddings
 
 
 router = APIRouter()

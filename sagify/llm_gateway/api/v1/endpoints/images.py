@@ -1,7 +1,7 @@
 from fastapi import APIRouter
 
-from llm_gateway.services import images
-from llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
+from sagify.llm_gateway.services import images
+from sagify.llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
 
 
 router = APIRouter()

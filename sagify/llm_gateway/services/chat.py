@@ -1,5 +1,5 @@
-from llm_gateway.schemas.chat import CreateCompletionDTO
-from llm_gateway.providers.client_factory import LLMClientFactory
+from sagify.llm_gateway.schemas.chat import CreateCompletionDTO
+from sagify.llm_gateway.providers.client_factory import LLMClientFactory
 
 
 async def completions(message: CreateCompletionDTO):

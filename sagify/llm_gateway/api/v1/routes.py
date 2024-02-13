@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 
-from llm_gateway.api.v1.endpoints import chat, embeddings, images
+from sagify.llm_gateway.api.v1.endpoints import chat, embeddings, images
 
 
 api_router = APIRouter(prefix="/v1")

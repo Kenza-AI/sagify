@@ -1,10 +1,10 @@
 import structlog
 from openai import OpenAI
 
-from llm_gateway.api.v1.exceptions import InternalServerError
-from llm_gateway.schemas.chat import CreateCompletionDTO, ResponseCompletionDTO
-from llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
-from llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
+from sagify.llm_gateway.api.v1.exceptions import InternalServerError
+from sagify.llm_gateway.schemas.chat import CreateCompletionDTO, ResponseCompletionDTO
+from sagify.llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
+from sagify.llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
 
 
 logger = structlog.get_logger()

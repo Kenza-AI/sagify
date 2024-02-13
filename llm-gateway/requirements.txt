@@ -1,9 +1,0 @@
-fastapi
-uvicorn
-pydantic
-openai
-python-dotenv
-structlog
-pytest
-pytest-cov
-pytest-asyncio

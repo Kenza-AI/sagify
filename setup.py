@@ -36,9 +36,14 @@ setup(
     install_requires=[
         'click>=8.1.0, <8.1.99',
         'docker>=7.0.0, <7.0.99',
+        'fastapi>=0.109.0, <0.109.99',
+        'future>=0.18.0, <0.18.99',
+        'pydantic>=2.6.0, <2.6.99',
+        'python-dotenv>=1.0.0, <1.0.99',
         'sagemaker>=2.202.0, <2.202.99',
         'six>=1.16, <1.16.99',
-        'future>=0.18.0, <0.18.99'
+        'structlog>=24.1.0, <24.1.99',
+        'uvicorn>=0.27.0, <0.27.99',
     ],
     test_suite='tests',
     zip_safe=True,

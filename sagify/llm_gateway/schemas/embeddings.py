@@ -1,7 +1,7 @@
 from typing import List
 from pydantic import BaseModel
 
-from llm_gateway.schemas import Usage
+from sagify.llm_gateway.schemas import Usage
 
 
 class CreateEmbeddingDTO(BaseModel):

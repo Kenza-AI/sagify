@@ -1,5 +1,5 @@
-from llm_gateway.schemas.images import CreateImageDTO
-from llm_gateway.providers.client_factory import LLMClientFactory
+from sagify.llm_gateway.schemas.images import CreateImageDTO
+from sagify.llm_gateway.providers.client_factory import LLMClientFactory
 
 
 async def generations(image_input: CreateImageDTO):
