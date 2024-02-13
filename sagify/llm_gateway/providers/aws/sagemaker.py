@@ -8,7 +8,7 @@ import structlog
 
 from sagify.llm_gateway.api.v1.exceptions import InternalServerError
 from sagify.llm_gateway.schemas.chat import CreateCompletionDTO, ResponseCompletionDTO
-from sagify.llm_gateway.schemas.embeddings import CreateEmbeddingDTO
+from sagify.llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
 from sagify.llm_gateway.schemas.images import CreateImageDTO
 from sagify.llm_gateway.schemas.chat import ChoiceItem, MessageItem
 
@@ -42,10 +42,48 @@ class SageMakerClient:
             raise InternalServerError()
 
     async def embeddings(self, embedding_input: CreateEmbeddingDTO):
-        pass
+        request = {
+            "model": embedding_input.model,
+            "input": embedding_input.input,
+        }
+        try:
+            return self._invoke_embeddings_endpoint(**request)
+        except Exception as e:
+            logger.error(e)
+            raise InternalServerError()
 
     async def generations(self, image_input: CreateImageDTO):
         pass
+
+    def _invoke_embeddings_endpoint(self, model, input):
+        """
+        Invoke SageMaker endpoint for embeddings
+
+        :param model: [str], name of the endpoint
+        :param input: [List[str]], input text list
+
+        :return: [ResponseEmbeddingDTO], response from the endpoint
+        """
+        response = self.sagemaker_runtime_client.invoke_endpoint(
+            EndpointName=model,
+            Body=json.dumps(input),
+            ContentType="application/x-text",
+            CustomAttributes='accept_eula=true'
+        )
+        response_dict = json.loads(response['Body'].read().decode('utf-8'))
+
+        return ResponseEmbeddingDTO(
+            object='list',
+            provider='sagemaker',
+            model=model,
+            data=[
+                {
+                    'object': 'embedding',
+                    'embedding': _embedding,
+                    'index': _index
+                } for _index, _embedding in enumerate(response_dict['embedding'])
+            ]
+        )
 
     def _invoke_chat_completions_endpoint(
             self,

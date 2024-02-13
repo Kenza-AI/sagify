@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from pydantic import BaseModel
 
 from sagify.llm_gateway.schemas import Usage
@@ -7,7 +7,7 @@ from sagify.llm_gateway.schemas import Usage
 class CreateEmbeddingDTO(BaseModel):
     provider: str
     model: str
-    input: str
+    input: List[str]
 
 
 class EmbeddingItem(BaseModel):
@@ -27,4 +27,4 @@ class ResponseEmbeddingDTO(BaseModel):
     provider: str
     model: str
     object: str
-    usage: Usage
+    usage: Optional[Usage]
