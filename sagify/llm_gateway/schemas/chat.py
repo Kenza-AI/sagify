@@ -17,7 +17,7 @@ class MessageItem(BaseModel):
 
 
 class CreateCompletionDTO(BaseModel):
-    provider: Optional[str]
+    provider: str
     model: str
     messages: List[MessageItem]
     temperature: float

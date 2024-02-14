@@ -9,7 +9,7 @@ import structlog
 from sagify.llm_gateway.api.v1.exceptions import InternalServerError
 from sagify.llm_gateway.schemas.chat import CreateCompletionDTO, ResponseCompletionDTO
 from sagify.llm_gateway.schemas.embeddings import CreateEmbeddingDTO, ResponseEmbeddingDTO
-from sagify.llm_gateway.schemas.images import CreateImageDTO
+from sagify.llm_gateway.schemas.images import CreateImageDTO, ResponseImageDTO
 from sagify.llm_gateway.schemas.chat import ChoiceItem, MessageItem
 
 logger = structlog.get_logger()
@@ -53,7 +53,60 @@ class SageMakerClient:
             raise InternalServerError()
 
     async def generations(self, image_input: CreateImageDTO):
-        pass
+        request = {
+            "model": image_input.model,
+            "prompt": image_input.prompt,
+            "n": image_input.n,
+            "width": image_input.width,
+            "height": image_input.height,
+            "seed": image_input.seed,
+            "response_format": image_input.response_format
+        }
+        try:
+            return self._invoke_image_creation_endpoint(**request)
+        except Exception as e:
+            logger.error(e)
+            raise InternalServerError()
+
+    def _invoke_image_creation_endpoint(
+            self,
+            model,
+            prompt,
+            n,
+            width,
+            height,
+            seed,
+            response_format
+    ):
+        payload = {
+            "prompt": prompt,
+            "width": width,
+            "height": height,
+            "num_images_per_prompt": n,
+            "num_inference_steps": 50,
+            "guidance_scale": 7.5,
+            "seed": seed,
+        }
+        response = self.sagemaker_runtime_client.invoke_endpoint(
+            EndpointName=model,
+            Body=json.dumps(payload),
+            ContentType="application/json",
+            CustomAttributes='accept_eula=true',
+            Accept="application/json;jpeg"
+        )
+        response_dict = json.loads(response['Body'].read().decode('utf-8'))
+
+        return ResponseImageDTO(
+            provider='sagemaker',
+            model=model,
+            created=int(time.time()),
+            data=[
+                {
+                    'url': None,
+                    'b64_json': _b64_json
+                } for _b64_json in response_dict['generated_images']
+            ]
+        )
 
     def _invoke_embeddings_endpoint(self, model, input):
         """

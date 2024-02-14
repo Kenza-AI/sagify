@@ -1,17 +1,27 @@
-from typing import List
+from enum import Enum
+from typing import List, Optional, Union
 from pydantic import BaseModel
+
+
+class ResponseFormat(str, Enum):
+    URL = "url"
+    B64_JSON = "b64_json"
 
 
 class CreateImageDTO(BaseModel):
     provider: str
     model: str
-    prompt: str
+    prompt: Union[List[str], str]
     n: int
-    size: str
+    width: int
+    height: int
+    seed: Optional[int]
+    response_format: Optional[ResponseFormat] = 'url'
 
 
 class DataItem(BaseModel):
-    url: str
+    url: Optional[str]
+    b64_json: Optional[str]
 
 
 class ResponseImageDTO(BaseModel):
