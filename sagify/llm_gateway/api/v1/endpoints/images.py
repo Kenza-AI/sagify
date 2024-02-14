@@ -17,6 +17,7 @@ async def create(request: CreateImageDTO):
         width=request.width,
         height=request.height,
         seed=request.seed,
+        response_format=request.response_format
     )
 
     response = await images.generations(parsed_message)
