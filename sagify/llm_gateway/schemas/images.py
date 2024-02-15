@@ -10,7 +10,7 @@ class ResponseFormat(str, Enum):
 
 class CreateImageDTO(BaseModel):
     provider: str
-    model: str
+    model: Optional[str]
     prompt: Union[List[str], str]
     n: int
     width: int

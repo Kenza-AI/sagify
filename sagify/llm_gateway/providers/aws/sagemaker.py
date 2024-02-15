@@ -25,6 +25,9 @@ class SageMakerClient:
         aws_region_name = os.environ.get("AWS_REGION_NAME")
         self._bucket_name = os.environ.get("S3_BUCKET_NAME")
         self._image_url_ttl = os.environ.get("IMAGE_URL_TTL_IN_SECONDS", 3600)
+        self._chat_completions_model = os.environ.get("SM_CHAT_COMPLETIONS_MODEL")
+        self._embeddings_model = os.environ.get("SM_EMBEDDINGS_MODEL")
+        self._image_creation_model = os.environ.get("SM_IMAGE_CREATION_MODEL")
         self.boto_session = boto3.Session(
             aws_access_key_id=aws_access_key_id,
             aws_secret_access_key=aws_secret_access_key,
@@ -35,7 +38,7 @@ class SageMakerClient:
 
     async def completions(self, message: CreateCompletionDTO):
         request = {
-            "model": message.model,
+            "model": message.model if message.model else self._chat_completions_model,
             "messages": message.messages,
             "temperature": message.temperature,
             "max_tokens": message.max_tokens,
@@ -49,7 +52,7 @@ class SageMakerClient:
 
     async def embeddings(self, embedding_input: CreateEmbeddingDTO):
         request = {
-            "model": embedding_input.model,
+            "model": embedding_input.model if embedding_input.model else self._embeddings_model,
             "input": embedding_input.input,
         }
         try:
@@ -60,7 +63,7 @@ class SageMakerClient:
 
     async def generations(self, image_input: CreateImageDTO):
         request = {
-            "model": image_input.model,
+            "model": image_input.model if image_input.model else self._image_creation_model,
             "prompt": image_input.prompt,
             "n": image_input.n,
             "width": image_input.width,

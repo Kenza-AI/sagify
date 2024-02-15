@@ -6,7 +6,7 @@ from sagify.llm_gateway.schemas import Usage
 
 class CreateEmbeddingDTO(BaseModel):
     provider: str
-    model: str
+    model: Optional[str]
     input: Union[List[str], str]
 
 
