@@ -23,6 +23,10 @@ class DataItem(BaseModel):
     url: Optional[str]
     b64_json: Optional[str]
 
+    def dict(self, *args, **kwargs):
+        _ = kwargs.pop("exclude_none")
+        return super().dict(*args, exclude_none=True, **kwargs)
+
 
 class ResponseImageDTO(BaseModel):
     provider: str

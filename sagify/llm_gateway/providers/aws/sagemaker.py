@@ -84,6 +84,19 @@ class SageMakerClient:
             seed,
             response_format
     ):
+        """
+        Invoke SageMaker endpoint for image creations
+
+        :param model: [str], name of the endpoint
+        :param prompt: [Union[List[str], str]], prompt text
+        :param n: [int], number of images to generate
+        :param width: [int], width of the image
+        :param height: [int], height of the image
+        :param seed: [Optional[int]], seed for random number generation
+        :param response_format: [ResponseFormat], response format
+
+        :return: [ResponseImageDTO], response from the endpoint
+        """
         payload = {
             "prompt": prompt,
             "width": width,

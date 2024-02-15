@@ -20,8 +20,10 @@ class CreateCompletionDTO(BaseModel):
     provider: str
     model: str
     messages: List[MessageItem]
-    temperature: float
-    max_tokens: int
+    temperature: Optional[float]
+    max_tokens: Optional[int]
+    top_p: Optional[float]
+    seed: Optional[int]
 
 
 class ChoiceItem(BaseModel):
