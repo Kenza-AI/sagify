@@ -24,6 +24,8 @@ class OpenAIClient:
             "messages": message.messages,
             "temperature": message.temperature,
             "max_tokens": message.max_tokens,
+            "top_p": message.top_p,
+            "seed": message.seed,
             "stream": False
         }
         try:
