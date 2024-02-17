@@ -317,10 +317,14 @@ def start(
                         list(_MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME.keys())
                     )
                 )
+            
+            instance_types = [
+                item[0] for item in _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[
+                    _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[default_config['chat_completions']['model']][0]
+                ]
+            ]
 
-            if default_config['chat_completions']['instance_type'] not in _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[
-                _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[default_config['chat_completions']['model']][0]
-            ]:
+            if default_config['chat_completions']['instance_type'] not in instance_types:
                 raise ValueError(
                     "Invalid instance type for chat completions model. Available instance types: {}".format(
                         _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[
@@ -351,10 +355,14 @@ def start(
                         list(_MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME.keys())
                     )
                 )
+            
+            instance_types = [
+                item[0] for item in _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[
+                    _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[default_config['image_creations']['model']][0]
+                ]
+            ]
 
-            if default_config['image_creations']['instance_type'] not in _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[
-                _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[default_config['image_creations']['model']][0]
-            ]:
+            if default_config['image_creations']['instance_type'] not in instance_types:
                 raise ValueError(
                     "Invalid instance type for image creations model. Available instance types: {}".format(
                         _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[
@@ -385,8 +393,10 @@ def start(
                         list(_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME.keys())
                     )
                 )
+            
+            instance_types = [item[0] for item in _VALID_EMBEDDINGS_INSTANCE_TYPES]
 
-            if default_config['embeddings']['instance_type'] not in _VALID_EMBEDDINGS_INSTANCE_TYPES:
+            if default_config['embeddings']['instance_type'] not in instance_types:
                 raise ValueError(
                     "Invalid instance type for embeddings model. Available instance types: {}".format(
                         _VALID_EMBEDDINGS_INSTANCE_TYPES

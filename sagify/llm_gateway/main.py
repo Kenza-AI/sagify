@@ -1,5 +1,6 @@
 import uvicorn
 from fastapi import FastAPI
+import sys
 
 import sagify.llm_gateway
 from sagify.llm_gateway.api.v1.exceptions import InternalServerError, internal_server_error_handler
@@ -15,8 +16,13 @@ app.include_router(api_router)
 app.add_exception_handler(InternalServerError, internal_server_error_handler)
 
 
-def start_server():
-    uvicorn.run("sagify.llm_gateway.main:app", port=8080, host="0.0.0.0")
+def start_server(port):
+    uvicorn.run("sagify.llm_gateway.main:app", port=port, host="0.0.0.0")
+
+
+if __name__ == "__main__":
+    port = int(sys.argv[1]) if len(sys.argv) > 1 else 8080
+    start_server(port)
 
 
 if __name__ == "__main__":

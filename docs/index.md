@@ -2,7 +2,7 @@
 
 ![Sagify](sagify@2x.png)
 
-A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
+Unlock the potential of Large Language Models (LLMs) and Machine Learning with Sagify on [AWS SageMaker](https://aws.amazon.com/sagemaker/), a robust command-line utility designed to simplify the training, fine-tuning and deployment process on AWS SageMaker. Serving as the cornerstone of an innovative LLM and Machine Learning platform, Sagify offers a streamlined workflow for building and deploying LLMs, empowering developers to create next-generation AI solutions with ease and efficiency.
 
 ![gif](end2end.gif)
 
@@ -11,15 +11,23 @@ A command-line utility to train and deploy LLMs and Machine Learning/Deep Learni
 "Why should I use Sagify" you may ask.
 
 We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning or just deploy an LLM on the same day by using Sagify!
- 
+
+### Empower your Use Cases with LLMs
+
+You've likely found yourself in a scenario where you yearn to experiment with a variety of LLMs to ascertain their value for your specific use case. However, the daunting challenge lies in building the necessary tooling to interact with these LLMs effectively. Whether it's managed services like the OpenAI API or open-source LLMs, deploying them on your chosen cloud provider requires significant effort and resources.
+
+Just use Sagify! Sagify serves as your go-to LLM platform, abstracting managed LLM services such as OpenAI and providing a robust infrastructure to deploy and serve open-source LLMs directly on your cloud account.
+
+With Sagify, you can focus on what truly matters: exploring, experimenting, and harnessing the power of Language Models to propel your projects forward.
+
 ### No More Configuring Cloud Instances for Training a Machine Learning Model
 
-We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:
+Have you ever found yourself in a situation where your Machine Learning team is brimming with innovative ideas but lacks the tools to implement them efficiently? Here's a typical scenario:
 
 1. All ML Scientists in the team have great ideas to solve problems using ML.
-2. The team has built a feature engineering pipeline (This is painful, too, and it's in Sagify's roadmap).
+2. The team has built a feature engineering pipeline.
 3. You probably have downloaded on your laptop a subset of the features data set and there's evidence that your model will work.
-4. The moment of experimentation comes and you want to run 10s of training jobs on the cloud using the entire features data set.
+4. The moment of experimentation comes and you want to run 100s of training jobs on the cloud using the entire features data set.
 5. Everybody in the team has some idea on how to do it but nobody wants to do it :-). 
 6. ML Scientists should focus on ML and not on engineering tasks!
 7. Just use Sagify! You just need to implement a train function!
@@ -296,7 +304,7 @@ It will be slow in the first couple of calls as it loads the model in a lazy man
 Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Machine Learning model to AWS SageMaker!
 
 
-## Usage
+## AWS Account Setup
 
 ### Configure AWS Account
 
@@ -379,6 +387,179 @@ source_profile = test-sagemaker
 - That's it! From now on, choose the created AWS profile when initializing sagify.
 
 - You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
+
+## LLM Usage
+
+Sagify provides a set of intuitive command-line interface (CLI) commands to simplify the management of Language Model (LLM) infrastructure. Whether you're exploring available LLM models, starting or stopping LLM infrastructure, Sagify has you covered.
+
+You can run `sagify llm platforms` to get a list of all supported LLM platforms:
+
+- [OpenAI](https://platform.openai.com/docs/overview)
+- [AWS Sagemaker](https://aws.amazon.com/sagemaker)
+
+### OpenAI
+
+TODO
+
+### AWS Sagemaker
+
+The following models are offered for chat completions:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|llama-2-7b|https://huggingface.co/meta-llama/Llama-2-7b|
+|llama-2-13b|https://huggingface.co/meta-llama/Llama-2-13b|
+|llama-2-70b|https://huggingface.co/meta-llama/Llama-2-70b|
+
+For image creation you can rely on the following models:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|stabilityai-stable-diffusion-v2'|https://huggingface.co/stabilityai/stable-diffusion-2|
+|stabilityai-stable-diffusion-v2-1-base|https://huggingface.co/stabilityai/stable-diffusion-2-1-base|
+|stabilityai-stable-diffusion-v2-fp16|https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16|
+
+And for embeddings:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|bge-large-en|https://huggingface.co/BAAI/bge-large-en|
+|bge-base-en|https://huggingface.co/BAAI/bge-base-en|
+|gte-large|https://huggingface.co/thenlper/gte-large|
+|gte-base|https://huggingface.co/thenlper/gte-base|
+|e5-large-v2|https://huggingface.co/intfloat/e5-large-v2|
+|bge-small-en|https://huggingface.co/BAAI/bge-small-en|
+|e5-base-v2|https://huggingface.co/intfloat/e5-base-v2|
+|multilingual-e5-large|https://huggingface.co/intfloat/multilingual-e5-large|
+|e5-large|https://huggingface.co/intfloat/e5-large|
+|gte-small|https://huggingface.co/thenlper/gte-small|
+|e5-base|https://huggingface.co/intfloat/e5-base|
+|e5-small-v2|https://huggingface.co/intfloat/e5-small-v2|
+|multilingual-e5-base|https://huggingface.co/intfloat/multilingual-e5-base|
+|all-MiniLM-L6-v2|https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2|
+
+All these lists of supported models on AWS Sagemaker can be retrieved by running the command `sagify llm sagemaker-models --all`. If you want to focus only on chat completions models, then run `sagify llm sagemaker-models --chat-completions`. For image creations and embeddings, `sagify llm sagemaker-models --image-creations` and `sagify llm sagemaker-models --embeddings`, respectively.
+
+The architectural design of the LLM Platform on AWS SageMaker comprises a FastAPI Restful API serving as the client-facing interface (LLM Gateway). This API acts as the gateway through which end-users and other software systems interact to query the deployed Language Models (LLMs). Behind this FastAPI service, separate SageMaker endpoints are deployed to handle various tasks such as chat completions, image creations, and embeddings.
+
+In a nutshell, the system allows you to configure which specific LLM models you want to deploy for each of these categories, along with specifying the EC2 instance to be utilized and the desired number of instances to be instantiated. This configuration can be easily managed through a dedicated configuration file, providing flexibility and customization options to tailor the platform according to your specific requirements.
+
+TODO - Add architecture diagram
+
+#### Deploy LLM Models
+
+First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
+
+If you want to deploy all of them, then run `sagify llm start --all`. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:
+
+```json
+{
+    "chat_completions": {
+        "model": "llama-2-7b",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
+    },
+    "image_creations": {
+        "model": "stabilityai-stable-diffusion-v2-1-base",
+        "instance_type": "ml.p3.2xlarge",
+        "num_instances": 1,
+    },
+    "embeddings": {
+        "model": "gte-small",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
+    },
+}
+```
+
+You can change this configuration by suppling your own config file, then you can run `sagify llm start -all --config YOUR_CONFIG_FILE.json`.
+
+It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoints.
+
+The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
+
+#### Deploy FastAPI LLM Gateway - Local
+
+Once the LLM endpoints are deployed, you can deploy the FastAPI LLM Gateway locally. 
+
+In case of using the AWS Sagemaker platform, you need to define the following env variables before you start the LLM Gateway server:
+
+- `AWS_ACCESS_KEY_ID`: It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_SECRET_ACCESS_KEY`:  It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_REGION_NAME`: AWS region where the LLM backend services (Sagemaker endpoints) are deployed.
+- `S3_BUCKET_NAME`: S3 bucket name where the created images by the image creation backend service are stored.
+- `IMAGE_URL_TTL_IN_SECONDS`: TTL in seconds of the temporary url to the created images. Default value: 3600.
+- `SM_CHAT_COMPLETIONS_MODEL`: The Sagemaker endpoint name where the chat completions model is deployed.
+- `SM_EMBEDDINGS_MODEL`: The Sagemaker endpoint name where the embeddings model is deployed.
+- `SM_IMAGE_CREATION_MODEL`: The Sagemaker endpoint name where the image creation model is deployed.
+
+In case of using the OpenAI platform, you need to define the following env variables before you start the LLM Gateway server:
+
+- `OPENAI_API_KEY`: Your OpenAI API key. Example: `export OPENAI_API_KEY=...`.
+- `OPEN_AI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
+- `OPEN_AI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
+- `OPEN_AI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
+
+Now, you can run the command `sagify llm start-local-gateway` to start the LLM Gateway locally.
+
+#### Deploy FastAPI LLM Gateway - AWS Fargate
+
+In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
+
+1. Containerize the FastAPI LLM Gateway: TODO
+2. Push Docker image to Amazon ECR
+3. Define Task Definition: Define a task definition that describes how to run your containerized FastAPI application on Fargate. Specify the Docker image, container port, CPU and memory requirements, and environment variables.
+4. Create ECS Service: Create a Fargate service using the task definition. Configure the desired number of tasks, networking options, load balancing, and auto-scaling settings.
+4. Set Environment Variables: Ensure that your FastAPI application retrieves the environment variables correctly at runtime.
+
+Here's an example CloudFormation template to deploy a FastAPI service to AWS Fargate with 5 environment variables:
+
+```yaml
+Resources:
+  MyFargateTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: my-fargate-task
+      ContainerDefinitions:
+        - Name: fastapi-container
+          Image: <YOUR_ECR_REPOSITORY_URI>
+          Memory: 512
+          PortMappings:
+            - ContainerPort: 80
+          Environment:
+            - Name: AWS_ACCESS_KEY_ID
+              Value: "value1"
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: "value2"
+            - Name: AWS_REGION_NAME
+              Value: "value3"
+            - Name: S3_BUCKET_NAME
+              Value: "value4"
+            - Name: IMAGE_URL_TTL_IN_SECONDS
+              Value: "value5"
+            - Name: SM_CHAT_COMPLETIONS_MODEL
+              Value: "value6"
+            - Name: SM_EMBEDDINGS_MODEL
+              Value: "value7"
+            - Name: SM_IMAGE_CREATION_MODEL
+              Value: "value8"
+
+  MyFargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: default
+      TaskDefinition: !Ref MyFargateTaskDefinition
+      DesiredCount: 2
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - <YOUR_SUBNET_ID>
+          SecurityGroups:
+            - <YOUR_SECURITY_GROUP_ID>
+```
+
+## Classic Machine Learning Usage
 
 ### Push Docker Image to AWS ECR
 
