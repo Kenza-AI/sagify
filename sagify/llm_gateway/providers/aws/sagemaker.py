@@ -22,7 +22,7 @@ class SageMakerClient:
     def __init__(self):
         aws_access_key_id = os.environ.get("AWS_ACCESS_KEY_ID")
         aws_secret_access_key = os.environ.get("AWS_SECRET_ACCESS_KEY")
-        aws_region_name = os.environ.get("AWS_REGION_NAME")
+        aws_region_name = os.environ.get("AWS_REGION_NAME", "us-east-1")
         self._bucket_name = os.environ.get("S3_BUCKET_NAME")
         self._image_url_ttl = os.environ.get("IMAGE_URL_TTL_IN_SECONDS", 3600)
         self._chat_completions_model = os.environ.get("SM_CHAT_COMPLETIONS_MODEL")
