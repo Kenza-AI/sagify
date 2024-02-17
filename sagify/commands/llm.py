@@ -15,91 +15,129 @@ from sagify.sagemaker import sagemaker
 click.disable_unicode_literals_warning = True
 
 
+OPENAI_BASE_URL = 'https://platform.openai.com'
+OPENAI_DOCS = 'docs'
+OPENAI_MODELS = 'models'
+OPENAI_URL = f'{OPENAI_BASE_URL}/{OPENAI_DOCS}/{OPENAI_MODELS}'
+
+HF_BASE_URL = 'https://huggingface.co'
+HF_LLAMA = 'meta-llama'
+HF_STABILITYAI = 'stabilityai'
+HF_LLAMA_URL = f'{HF_BASE_URL}/{HF_LLAMA}'
+HF_STABILITY_URL = f'{HF_BASE_URL}/{HF_STABILITYAI}'
+
+VANTAGE_BASE_URL = 'https://instances.vantage.sh'
+VANTAGE_AWS = 'aws'
+VANTAGE_EC2 = 'ec2'
+VANTAGE_URL = f'{VANTAGE_BASE_URL}/{VANTAGE_AWS}/{VANTAGE_EC2}'
+
 _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME = {
-    'llama-2-7b': ('meta-textgeneration-llama-2-7b-f', 'https://huggingface.co/meta-llama/Llama-2-7b'),
-    'llama-2-13b': ('meta-textgeneration-llama-2-13b-f', 'https://huggingface.co/meta-llama/Llama-2-13b'),
-    'llama-2-70b': ('meta-textgeneration-llama-2-70b-f', 'https://huggingface.co/meta-llama/Llama-2-70b'),
+    'openai': {
+        'gpt-4': ('gpt-4', f'{OPENAI_URL}/gpt-4-and-gpt-4-turbo'),
+        'gpt-4-32k': ('gpt-4-32k', f'{OPENAI_URL}/gpt-4-and-gpt-4-turbo'),
+        'gpt-3.5-turbo': ('gpt-3.5-turbo', f'{OPENAI_URL}/models/gpt-3-5-turbo'),
+        'gpt-3.5-turbo-16k': ('gpt-3.5-turbo-16k', f'{OPENAI_URL}/gpt-3-5-turbo')
+    },
+    'sagemaker': {
+        'llama-2-7b': ('meta-textgeneration-llama-2-7b-f', f'{HF_LLAMA_URL}/Llama-2-7b'),
+        'llama-2-13b': ('meta-textgeneration-llama-2-13b-f', f'{HF_LLAMA_URL}/Llama-2-13b'),
+        'llama-2-70b': ('meta-textgeneration-llama-2-70b-f', f'{HF_LLAMA_URL}/Llama-2-70b'),
+    }
 }
 
 _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL = {
     'meta-textgeneration-llama-2-7b-f': [
-        ('ml.g5.2xlarge', 'https://instances.vantage.sh/aws/ec2/g5.2xlarge'),
-        ('ml.g5.4xlarge', 'https://instances.vantage.sh/aws/ec2/g5.4xlarge'),
-        ('ml.g5.12xlarge', 'https://instances.vantage.sh/aws/ec2/g5.12xlarge'),
-        ('ml.g5.24xlarge', 'https://instances.vantage.sh/aws/ec2/g5.24xlarge'),
-        ('ml.g5.48xlarge', 'https://instances.vantage.sh/aws/ec2/g5.48xlarge'),
-        ('ml.p3dn.24xlarge', 'https://instances.vantage.sh/aws/ec2/p3dn.24xlarge'),
+        ('ml.g5.2xlarge', f'{VANTAGE_URL}/g5.2xlarge'),
+        ('ml.g5.4xlarge', f'{VANTAGE_URL}/g5.4xlarge'),
+        ('ml.g5.12xlarge', f'{VANTAGE_URL}/g5.12xlarge'),
+        ('ml.g5.24xlarge', f'{VANTAGE_URL}/g5.24xlarge'),
+        ('ml.g5.48xlarge', f'{VANTAGE_URL}/g5.48xlarge'),
+        ('ml.p3dn.24xlarge', f'{VANTAGE_URL}/p3dn.24xlarge'),
     ],
     'meta-textgeneration-llama-2-13b-f': [
-        ('ml.g5.12xlarge', 'https://instances.vantage.sh/aws/ec2/g5.12xlarge'),
-        ('ml.g5.24xlarge', 'https://instances.vantage.sh/aws/ec2/g5.24xlarge'),
-        ('ml.g5.48xlarge', 'https://instances.vantage.sh/aws/ec2/g5.48xlarge'),
+        ('ml.g5.12xlarge', f'{VANTAGE_URL}/g5.12xlarge'),
+        ('ml.g5.24xlarge', f'{VANTAGE_URL}/g5.24xlarge'),
+        ('ml.g5.48xlarge', f'{VANTAGE_URL}/g5.48xlarge'),
     ],
     'meta-textgeneration-llama-2-70b-f': [
-        ('ml.g5.48xlarge', 'https://instances.vantage.sh/aws/ec2/g5.48xlarge'),
+        ('ml.g5.48xlarge', f'{VANTAGE_URL}/g5.48xlarge'),
     ],
 }
 
 _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME = {
-    'stabilityai-stable-diffusion-v2': (
-        'model-txt2img-stabilityai-stable-diffusion-v2',
-        'https://huggingface.co/stabilityai/stable-diffusion-2'
-    ),
-    'stabilityai-stable-diffusion-v2-1-base': (
-        'model-txt2img-stabilityai-stable-diffusion-v2-1-base',
-        'https://huggingface.co/stabilityai/stable-diffusion-2-1-base'
-    ),
-    'stabilityai-stable-diffusion-v2-fp16': (
-        'model-txt2img-stabilityai-stable-diffusion-v2-fp16',
-        'https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16'
-    )
+    'openai': {
+        'dall-e-3': ('dall-e-3', f'{OPENAI_URL}/dall-e'),
+        'dall-e-2': ('dall-e-2', f'{OPENAI_URL}/dall-e')
+    },
+    'sagemaker': {
+        'stabilityai-stable-diffusion-v2': (
+            'model-txt2img-stabilityai-stable-diffusion-v2',
+            f'{HF_STABILITY_URL}/stable-diffusion-2'
+        ),
+        'stabilityai-stable-diffusion-v2-1-base': (
+            'model-txt2img-stabilityai-stable-diffusion-v2-1-base',
+            f'{HF_STABILITY_URL}/stable-diffusion-2-1-base'
+        ),
+        'stabilityai-stable-diffusion-v2-fp16': (
+            'model-txt2img-stabilityai-stable-diffusion-v2-fp16',
+            f'{HF_STABILITY_URL}/stable-diffusion-2/tree/fp16'
+        )
+    }
 }
 
 _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL = {
     'model-txt2img-stabilityai-stable-diffusion-v2': [
-        ('ml.p3.2xlarge', 'https://instances.vantage.sh/aws/ec2/p3.2xlarge'),
-        ('ml.g4dn.2xlarge', 'https://instances.vantage.sh/aws/ec2/g4dn.2xlarge'),
-        ('ml.g5.2xlarge', 'https://instances.vantage.sh/aws/ec2/g5.2xlarge'),
+        ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
+        ('ml.g4dn.2xlarge', f'{VANTAGE_URL}/g4dn.2xlarge'),
+        ('ml.g5.2xlarge', f'{VANTAGE_URL}/g5.2xlarge'),
     ],
     'model-txt2img-stabilityai-stable-diffusion-v2-1-base': [
-        ('ml.p3.2xlarge', 'https://instances.vantage.sh/aws/ec2/p3.2xlarge'),
-        ('ml.g4dn.2xlarge', 'https://instances.vantage.sh/aws/ec2/g4dn.2xlarge'),
-        ('ml.g5.2xlarge', 'https://instances.vantage.sh/aws/ec2/g5.2xlarge'),
+        ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
+        ('ml.g4dn.2xlarge', f'{VANTAGE_URL}/g4dn.2xlarge'),
+        ('ml.g5.2xlarge', f'{VANTAGE_URL}/g5.2xlarge'),
     ],
     'model-txt2img-stabilityai-stable-diffusion-v2-fp16': [
-        ('ml.p3.2xlarge', 'https://instances.vantage.sh/aws/ec2/p3.2xlarge'),
-        ('ml.g4dn.2xlarge', 'https://instances.vantage.sh/aws/ec2/g4dn.2xlarge'),
-        ('ml.g5.2xlarge', 'https://instances.vantage.sh/aws/ec2/g5.2xlarge'),
+        ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
+        ('ml.g4dn.2xlarge', f'{VANTAGE_URL}/g4dn.2xlarge'),
+        ('ml.g5.2xlarge', f'{VANTAGE_URL}/g5.2xlarge'),
     ],
 }
 
 _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME = {
-    'bge-large-en': ('huggingface-sentencesimilarity-bge-large-en', 'https://huggingface.co/BAAI/bge-large-en'),
-    'bge-base-en': ('huggingface-sentencesimilarity-bge-base-en', 'https://huggingface.co/BAAI/bge-base-en'),
-    'gte-large': ('huggingface-sentencesimilarity-gte-large', 'https://huggingface.co/thenlper/gte-large'),
-    'gte-base': ('huggingface-sentencesimilaritygte-base', 'https://huggingface.co/thenlper/gte-base'),
-    'e5-large-v2': ('huggingface-sentencesimilarity-e5-large-v2', 'https://huggingface.co/intfloat/e5-large-v2'),
-    'bge-small-en': ('huggingface-sentencesimilarity-bge-small-en', 'https://huggingface.co/BAAI/bge-small-en'),
-    'e5-base-v2': ('huggingface-sentencesimilarity-e5-base-v2', 'https://huggingface.co/intfloat/e5-base-v2'),
-    'multilingual-e5-large': ('huggingface-sentencesimilarity-multilingual-e5-large', 'https://huggingface.co/intfloat/multilingual-e5-large'),
-    'e5-large': ('huggingface-sentencesimilarity-e5-large', 'https://huggingface.co/intfloat/e5-large'),
-    'gte-small': ('huggingface-sentencesimilarity-gte-small', 'https://huggingface.co/thenlper/gte-small'),
-    'e5-base': ('huggingface-sentencesimilarity-e5-base', 'https://huggingface.co/intfloat/e5-base'),
-    'e5-small-v2': ('huggingface-sentencesimilarity-e5-small-v2', 'https://huggingface.co/intfloat/e5-small-v2'),
-    'multilingual-e5-base': ('huggingface-sentencesimilarity-multilingual-e5-base', 'https://huggingface.co/intfloat/multilingual-e5-base'),
-    'all-MiniLM-L6-v2': ('huggingface-sentencesimilarity-all-MiniLM-L6-v2', 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2'),
+    'openai': {
+        'text-embedding-3-large': ('text-embedding-3-large', f'{OPENAI_URL}/embeddings'),
+        'text-embedding-3-small': ('text-embedding-3-small', f'{OPENAI_URL}/embeddings'),
+        'text-embedding-ada-002': ('text-embedding-ada-002', f'{OPENAI_URL}/embeddings')
+    },
+    'sagemaker': {
+        'bge-large-en': ('huggingface-sentencesimilarity-bge-large-en', 'https://huggingface.co/BAAI/bge-large-en'),
+        'bge-base-en': ('huggingface-sentencesimilarity-bge-base-en', 'https://huggingface.co/BAAI/bge-base-en'),
+        'gte-large': ('huggingface-sentencesimilarity-gte-large', 'https://huggingface.co/thenlper/gte-large'),
+        'gte-base': ('huggingface-sentencesimilaritygte-base', 'https://huggingface.co/thenlper/gte-base'),
+        'e5-large-v2': ('huggingface-sentencesimilarity-e5-large-v2', 'https://huggingface.co/intfloat/e5-large-v2'),
+        'bge-small-en': ('huggingface-sentencesimilarity-bge-small-en', 'https://huggingface.co/BAAI/bge-small-en'),
+        'e5-base-v2': ('huggingface-sentencesimilarity-e5-base-v2', 'https://huggingface.co/intfloat/e5-base-v2'),
+        'multilingual-e5-large': ('huggingface-sentencesimilarity-multilingual-e5-large', 'https://huggingface.co/intfloat/multilingual-e5-large'),
+        'e5-large': ('huggingface-sentencesimilarity-e5-large', 'https://huggingface.co/intfloat/e5-large'),
+        'gte-small': ('huggingface-sentencesimilarity-gte-small', 'https://huggingface.co/thenlper/gte-small'),
+        'e5-base': ('huggingface-sentencesimilarity-e5-base', 'https://huggingface.co/intfloat/e5-base'),
+        'e5-small-v2': ('huggingface-sentencesimilarity-e5-small-v2', 'https://huggingface.co/intfloat/e5-small-v2'),
+        'multilingual-e5-base': ('huggingface-sentencesimilarity-multilingual-e5-base', 'https://huggingface.co/intfloat/multilingual-e5-base'),
+        'all-MiniLM-L6-v2': ('huggingface-sentencesimilarity-all-MiniLM-L6-v2', 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2'),
+    }
+
 }
 
 _VALID_EMBEDDINGS_INSTANCE_TYPES = [
-    ('ml.g5.2xlarge', 'https://instances.vantage.sh/aws/ec2/g5.2xlarge'),
-    ('ml.g5.4xlarge', 'https://instances.vantage.sh/aws/ec2/g5.4xlarge'),
-    ('ml.g5.12xlarge', 'https://instances.vantage.sh/aws/ec2/g5.12xlarge'),
-    ('ml.g5.24xlarge', 'https://instances.vantage.sh/aws/ec2/g5.24xlarge'),
-    ('ml.g5.48xlarge', 'https://instances.vantage.sh/aws/ec2/g5.48xlarge'),
-    ('ml.p3dn.24xlarge', 'https://instances.vantage.sh/aws/ec2/p3dn.24xlarge'),
-    ('ml.p3.2xlarge', 'https://instances.vantage.sh/aws/ec2/p3.2xlarge'),
-    ('ml.p3.8xlarge', 'https://instances.vantage.sh/aws/ec2/p3.8xlarge'),
-    ('ml.p3.16xlarge', 'https://instances.vantage.sh/aws/ec2/p3.16xlarge'),
+    ('ml.g5.2xlarge', f'{VANTAGE_URL}/g5.2xlarge'),
+    ('ml.g5.4xlarge', f'{VANTAGE_URL}/g5.4xlarge'),
+    ('ml.g5.12xlarge', f'{VANTAGE_URL}/g5.12xlarge'),
+    ('ml.g5.24xlarge', f'{VANTAGE_URL}/g5.24xlarge'),
+    ('ml.g5.48xlarge', f'{VANTAGE_URL}/g5.48xlarge'),
+    ('ml.p3dn.24xlarge', f'{VANTAGE_URL}/p3dn.24xlarge'),
+    ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
+    ('ml.p3.8xlarge', f'{VANTAGE_URL}/p3.8xlarge'),
+    ('ml.p3.16xlarge', f'{VANTAGE_URL}/p3.16xlarge'),
 ]
 
 
@@ -150,7 +188,14 @@ def platforms():
     default=False,
     help='Show embeddings models.'
 )
-def sagemaker_models(all, chat_completions, image_creations, embeddings):
+@click.option(
+    '--provider',
+    type=str,
+    show_default=True,
+    default='sagemaker',
+    help='Filter results by provider'
+)
+def models(all, chat_completions, image_creations, embeddings, provider):
     """
     Command to list available LLM models
     """
@@ -163,39 +208,57 @@ def sagemaker_models(all, chat_completions, image_creations, embeddings):
     if all:
         chat_completions, image_creations, embeddings = True, True, True
 
+    if provider:
+        chat_completions_mappings = {provider: _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[provider]}
+        image_creation_mappings = {provider: _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[provider]}
+        embeddings_mappings = {provider: _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME[provider]}
+    else:
+        chat_completions_mappings = _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME
+        image_creation_mappings = _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME
+        embeddings_mappings = _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME
+
     logger.info("Available LLM models:\n")
 
     if chat_completions:
         logger.info("Chat Completions:")
-        for model_id, (model_name, model_url) in _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME.items():
-            logger.info("  - Model: {}".format(model_id))
-            logger.info("    Model URL: {}".format(model_url))
-            logger.info("    Instance Types:")
-            for instance_type, instance_url in _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[model_name]:
-                logger.info("      - Instance Type: {}".format(instance_type))
-                logger.info("        Instance URL: {}".format(instance_url))
-        logger.info("\n")
+        for provider, provider_mappings in chat_completions_mappings.items():
+            for model_id, (model_name, model_url) in provider_mappings.items():
+                logger.info("  - Model: {}".format(model_id))
+                logger.info("    Provider: {}".format(provider))
+                logger.info("    Model URL: {}".format(model_url))
+                if provider == 'sagemaker':
+                    logger.info("    Instance Types:")
+                    for instance_type, instance_url in _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[model_name]:
+                        logger.info("      - Instance Type: {}".format(instance_type))
+                        logger.info("        Instance URL: {}".format(instance_url))
+            logger.info("\n")
 
     if image_creations:
         logger.info("Image Creations:")
-        for model_id, (model_name, model_url) in _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME.items():
-            logger.info("  - Model: {}".format(model_id))
-            logger.info("    Model URL: {}".format(model_url))
-            logger.info("    Instance Types:")
-            for instance_type, instance_url in _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[model_name]:
-                logger.info("      - Instance Type: {}".format(instance_type))
-                logger.info("        Instance URL: {}".format(instance_url))
-        logger.info("\n")
+        for provider, provider_mappings in image_creation_mappings.items():
+            for model_id, (model_name, model_url) in provider_mappings.items():
+                logger.info("  - Model: {}".format(model_id))
+                logger.info("    Provider: {}".format(provider))
+                logger.info("    Model URL: {}".format(model_url))
+                if provider == 'sagemaker':
+                    logger.info("    Instance Types:")
+                    for instance_type, instance_url in _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[model_name]:
+                        logger.info("      - Instance Type: {}".format(instance_type))
+                        logger.info("        Instance URL: {}".format(instance_url))
+            logger.info("\n")
 
     if embeddings:
         logger.info("\nEmbeddings:")
-        for model_id, (model_name, model_url) in _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME.items():
-            logger.info("  - Model: {}".format(model_id))
-            logger.info("    Model URL: {}".format(model_url))
-            logger.info("    Instance Types:")
-            for instance_type, instance_url in _VALID_EMBEDDINGS_INSTANCE_TYPES:
-                logger.info("      - Instance Type: {}".format(instance_type))
-                logger.info("        Instance URL: {}".format(instance_url))
+        for provider, provider_mappings in embeddings_mappings.items():
+            for model_id, (model_name, model_url) in provider_mappings.items():
+                logger.info("  - Model: {}".format(model_id))
+                logger.info("    Provider: {}".format(provider))
+                logger.info("    Model URL: {}".format(model_url))
+                if provider == 'sagemaker':
+                    logger.info("    Instance Types:")
+                    for instance_type, instance_url in _VALID_EMBEDDINGS_INSTANCE_TYPES:
+                        logger.info("      - Instance Type: {}".format(instance_type))
+                        logger.info("        Instance URL: {}".format(instance_url))
 
 
 @llm.command()
@@ -311,16 +374,16 @@ def start(
         }
 
         if chat_completions:
-            if default_config['chat_completions']['model'] not in _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME:
+            if default_config['chat_completions']['model'] not in _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME['sagemaker']:
                 raise ValueError(
                     "Invalid chat completions model id. Available model ids: {}".format(
-                        list(_MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME.keys())
+                        list(_MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME['sagemaker'].keys())
                     )
                 )
 
             instance_types = [
                 item[0] for item in _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[
-                    _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[default_config['chat_completions']['model']][0]
+                    _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['chat_completions']['model']][0]
                 ]
             ]
 
@@ -328,13 +391,13 @@ def start(
                 raise ValueError(
                     "Invalid instance type for chat completions model. Available instance types: {}".format(
                         _VALID_INSTANCE_TYPES_PER_CHAT_COMPLETIONS_MODEL[
-                            _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[default_config['chat_completions']['model']][0]
+                            _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['chat_completions']['model']][0]
                         ]
                     )
                 )
 
             chat_endpoint_name, _ = api_cloud.foundation_model_deploy(
-                model_id=_MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME[default_config['chat_completions']['model']][0],
+                model_id=_MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['chat_completions']['model']][0],
                 model_version='1.*',
                 num_instances=default_config['chat_completions']['num_instances'],
                 ec2_type=default_config['chat_completions']['instance_type'],
@@ -349,16 +412,16 @@ def start(
             logger.info("Chat Completions Endpoint Name: {}".format(chat_endpoint_name))
 
         if image_creations:
-            if default_config['image_creations']['model'] not in _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME:
+            if default_config['image_creations']['model'] not in _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME['sagemaker']:
                 raise ValueError(
                     "Invalid image creations model id. Available model ids: {}".format(
-                        list(_MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME.keys())
+                        list(_MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME['sagemaker'].keys())
                     )
                 )
 
             instance_types = [
                 item[0] for item in _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[
-                    _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[default_config['image_creations']['model']][0]
+                    _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['image_creations']['model']][0]
                 ]
             ]
 
@@ -366,13 +429,13 @@ def start(
                 raise ValueError(
                     "Invalid instance type for image creations model. Available instance types: {}".format(
                         _VALID_INSTANCE_TYPES_PER_IMAGE_CREATIONS_MODEL[
-                            _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[default_config['image_creations']['model']][0]
+                            _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['image_creations']['model']][0]
                         ]
                     )
                 )
 
             image_endpoint_name, _ = api_cloud.foundation_model_deploy(
-                model_id=_MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME[default_config['image_creations']['model']][0],
+                model_id=_MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['image_creations']['model']][0],
                 model_version='1.*',
                 num_instances=default_config['image_creations']['num_instances'],
                 ec2_type=default_config['image_creations']['instance_type'],
@@ -387,10 +450,10 @@ def start(
             logger.info("Image Creations Endpoint Name: {}".format(image_endpoint_name))
 
         if embeddings:
-            if default_config['embeddings']['model'] not in _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME:
+            if default_config['embeddings']['model'] not in _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker']:
                 raise ValueError(
                     "Invalid embeddings model id. Available model ids: {}".format(
-                        list(_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME.keys())
+                        list(_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker'].keys())
                     )
                 )
 
@@ -404,7 +467,7 @@ def start(
                 )
 
             embeddings_endpoint_name, _ = api_cloud.foundation_model_deploy(
-                model_id=_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME[default_config['embeddings']['model']][0],
+                model_id=_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker'][default_config['embeddings']['model']][0],
                 model_version='1.*',
                 num_instances=default_config['embeddings']['num_instances'],
                 ec2_type=default_config['embeddings']['instance_type'],
@@ -534,6 +597,6 @@ def start_local_gateway():
 
 
 llm.add_command(platforms)
-llm.add_command(sagemaker_models)
+llm.add_command(models)
 llm.add_command(start)
 llm.add_command(stop)

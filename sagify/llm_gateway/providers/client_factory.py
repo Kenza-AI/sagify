@@ -3,14 +3,14 @@ from sagify.llm_gateway.providers.aws.sagemaker import SageMakerClient
 
 
 class LLMClientFactory:
-    def __init__(self):
-        self._clients = {
-            "openai": OpenAIClient(),
-            "sagemaker": SageMakerClient(),
-        }
-
-    async def create_client(self, provider):
-        client = self._clients.get(provider)
-        if not client:
+    def __init__(self, provider):
+        self._providers = ["openai", "sagemaker"]
+        if provider not in self._providers:
             raise ValueError(f"Invalid provider name {provider}")
-        return client
+        self.provider = provider
+
+    async def create_client(self):
+        if self.provider == "openai":
+            return OpenAIClient()
+        if self.provider == "sagemaker":
+            return SageMakerClient()

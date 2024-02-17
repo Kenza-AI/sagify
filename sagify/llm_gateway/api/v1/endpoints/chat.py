@@ -19,7 +19,9 @@ async def create(request: CreateCompletionDTO):
             ) for message in request.messages
         ],
         temperature=request.temperature,
-        max_tokens=request.max_tokens
+        max_tokens=request.max_tokens,
+        top_p=request.top_p,
+        seed=request.seed
     )
 
     response = await chat.completions(parsed_message)

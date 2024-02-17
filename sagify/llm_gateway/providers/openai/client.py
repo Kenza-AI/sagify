@@ -56,7 +56,7 @@ class OpenAIClient:
             "model": image_input.model if image_input.model else self._image_creation_model,
             "prompt": image_input.prompt,
             "n": image_input.n,
-            "size": '{}x{}'.format(image_input.width, image_input.height)
+            "size": f'{image_input.width}x{image_input.height}'
         }
         try:
             response = self.client.images.generate(**request)
