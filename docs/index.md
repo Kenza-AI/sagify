@@ -502,6 +502,16 @@ In case of using the OpenAI platform, you need to define the following env varia
 
 Now, you can run the command `sagify llm start-local-gateway` to start the LLM Gateway locally.
 
+#### Deploy FastAPI LLM Gateway - Local - Docker
+
+TODO -> Improve
+
+- Build the Docker image `docker build -t sagify-llm-gateway .`
+- Run the Docker image for OpenAI `docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... -e OPEN_AI_CHAT_COMPLETIONS_MODEL=gpt-3.5-turbo -e OPEN_AI_EMBEDDINGS_MODEL=text-embedding-3-small -e OPEN_AI_IMAGE_CREATION_MODEL=dall-e-3 --name my-fastapi-container-13 sagify-llm-gateway`
+- Run the Docker image for AWS Sagemaker `docker run -p 8000:8000 -e AWS_ACCESS_KEY_ID=... -e AWS_SECRET_ACCESS_KEY=... -e AWS_REGION_NAME=... -e S3_BUCKET_NAME=... -e IMAGE_URL_TTL_IN_SECONDS=... -e SM_CHAT_COMPLETIONS_MODEL=... -e SM_EMBEDDINGS_MODEL=... -e SM_IMAGE_CREATION_MODEL=...`
+
+If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
+
 #### Deploy FastAPI LLM Gateway - AWS Fargate
 
 In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
