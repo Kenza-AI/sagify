@@ -15,5 +15,9 @@ app.include_router(api_router)
 app.add_exception_handler(InternalServerError, internal_server_error_handler)
 
 
-if __name__ == "__main__":
+def start_server():
     uvicorn.run("sagify.llm_gateway.main:app", port=8080, host="0.0.0.0")
+
+
+if __name__ == "__main__":
+    start_server()
