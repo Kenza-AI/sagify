@@ -422,6 +422,8 @@ And for embeddings:
 |text-embedding-3-small|https://platform.openai.com/docs/models/embeddings|
 |text-embedding-ada-002|https://platform.openai.com/docs/models/embeddings|
 
+All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
+
 ### AWS Sagemaker
 
 The following models are offered for chat completions:
@@ -525,8 +527,21 @@ Now, you can run the command `sagify llm start-local-gateway` to start the LLM G
 
 #### Deploy FastAPI LLM Gateway - Local - Docker
 
-TODO -> Improve
+Using `sagify` you can build and run the gateway locally by:
 
+(*Remember to export first all the environment variables you need*)
+
+Using `sagify llm start-local-gateway`
+```{bash}
+sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0 --dockerfile-dir .`
+ ```
+
+ If you want to use an existing container just run
+ ```{bash}
+ sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0
+ ```
+
+Or manually by using `docker build` and `docker run`
 - Build the Docker image `docker build -t sagify-llm-gateway .`
 - Run the Docker image for OpenAI `docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... -e OPEN_AI_CHAT_COMPLETIONS_MODEL=gpt-3.5-turbo -e OPEN_AI_EMBEDDINGS_MODEL=text-embedding-3-small -e OPEN_AI_IMAGE_CREATION_MODEL=dall-e-3 --name my-fastapi-container-13 sagify-llm-gateway`
 - Run the Docker image for AWS Sagemaker `docker run -p 8000:8000 -e AWS_ACCESS_KEY_ID=... -e AWS_SECRET_ACCESS_KEY=... -e AWS_REGION_NAME=... -e S3_BUCKET_NAME=... -e IMAGE_URL_TTL_IN_SECONDS=... -e SM_CHAT_COMPLETIONS_MODEL=... -e SM_EMBEDDINGS_MODEL=... -e SM_IMAGE_CREATION_MODEL=...`
