@@ -399,7 +399,28 @@ You can run `sagify llm platforms` to get a list of all supported LLM platforms:
 
 ### OpenAI
 
-TODO
+The following models are offered for chat completions:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|gpt-4|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-4-32k|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-3.5-turbo|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+
+For image creation you can rely on the following models:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|dall-e-3|https://platform.openai.com/docs/models/dall-e|
+|dall-e-2|https://platform.openai.com/docs/models/dall-e|
+
+And for embeddings:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|text-embedding-3-large|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-3-small|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-ada-002|https://platform.openai.com/docs/models/embeddings|
 
 ### AWS Sagemaker
 
@@ -415,7 +436,7 @@ For image creation you can rely on the following models:
 
 | Model Name | URL |
 |:------------:|:-----:|
-|stabilityai-stable-diffusion-v2'|https://huggingface.co/stabilityai/stable-diffusion-2|
+|stabilityai-stable-diffusion-v2|https://huggingface.co/stabilityai/stable-diffusion-2|
 |stabilityai-stable-diffusion-v2-1-base|https://huggingface.co/stabilityai/stable-diffusion-2-1-base|
 |stabilityai-stable-diffusion-v2-fp16|https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16|
 
@@ -438,7 +459,7 @@ And for embeddings:
 |multilingual-e5-base|https://huggingface.co/intfloat/multilingual-e5-base|
 |all-MiniLM-L6-v2|https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2|
 
-All these lists of supported models on AWS Sagemaker can be retrieved by running the command `sagify llm sagemaker-models --all`. If you want to focus only on chat completions models, then run `sagify llm sagemaker-models --chat-completions`. For image creations and embeddings, `sagify llm sagemaker-models --image-creations` and `sagify llm sagemaker-models --embeddings`, respectively.
+All these lists of supported models on AWS Sagemaker can be retrieved by running the command `sagify llm models --all --provider sagemaker`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider sagemaker`. For image creations and embeddings, `sagify llm models --image-creations --provider sagemaker` and `sagify llm models --embeddings --provider sagemaker`, respectively.
 
 The architectural design of the LLM Platform on AWS SageMaker comprises a FastAPI Restful API serving as the client-facing interface (LLM Gateway). This API acts as the gateway through which end-users and other software systems interact to query the deployed Language Models (LLMs). Behind this FastAPI service, separate SageMaker endpoints are deployed to handle various tasks such as chat completions, image creations, and embeddings.
 
