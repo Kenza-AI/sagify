@@ -501,7 +501,7 @@ It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoi
 
 The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
 
-#### Deploy FastAPI LLM Gateway - Local
+#### Deploy FastAPI LLM Gateway - Local - Docker
 
 Once the LLM endpoints are deployed, you can deploy the FastAPI LLM Gateway locally. 
 
@@ -525,15 +525,13 @@ In case of using the OpenAI platform, you need to define the following env varia
 
 Now, you can run the command `sagify llm start-local-gateway` to start the LLM Gateway locally.
 
-#### Deploy FastAPI LLM Gateway - Local - Docker
-
-Using `sagify` you can build and run the gateway locally by:
+**Examples**
 
 (*Remember to export first all the environment variables you need*)
 
-Using `sagify llm start-local-gateway`
+In the case you want to create a docker image and then run it
 ```{bash}
-sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0 --dockerfile-dir .`
+sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0 --dockerfile-dir .
  ```
 
  If you want to use an existing container just run
