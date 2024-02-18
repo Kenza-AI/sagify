@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
+import os
 import json
 import sys
 
 import click
+import docker
 
 from sagify.api import cloud as api_cloud
 from sagify.commands import ASCII_LOGO
@@ -586,14 +588,69 @@ def stop(
 
 
 @llm.command()
-def start_local_gateway():
+@click.option(
+    u"--image",
+    required=True,
+    help="The docker image to run"
+)
+@click.option(
+    u"--dockerfile-dir",
+    help="The path for the Dockerfile to use"
+)
+@click.option(
+    u"--platform",
+    default="linux/amd64",
+    help="The platform to use for the docker build"
+)
+def start_local_gateway(image, dockerfile_dir, platform):
     """
     Command to start local gateway
     """
     logger.info(ASCII_LOGO)
+    environment_vars = {
+        'OPENAI_API_KEY': os.environ.get('OPENAI_API_KEY'),
+        'AWS_ACCESS_KEY_ID': os.environ.get('AWS_ACCESS_KEY_ID'),
+        'AWS_SECRET_ACCESS_KEY': os.environ.get('AWS_SECRET_ACCESS_KEY'),
+        'AWS_REGION_NAME': os.environ.get('AWS_REGION_NAME'),
+        'S3_BUCKET_NAME': os.environ.get('S3_BUCKET_NAME'),
+        'SM_CHAT_COMPLETIONS_MODEL': os.environ.get('SM_CHAT_COMPLETIONS_MODEL'),
+        'SM_EMBEDDINGS_MODEL': os.environ.get('SM_EMBEDDINGS_MODEL'),
+        'SM_IMAGE_CREATION_MODEL': os.environ.get('SM_IMAGE_CREATION_MODEL'),
+    }
+    PORT = 8080
+    client = docker.from_env()
+
+    build_image = False
+    try:
+        client.images.get(image)
+        build_image = False
+        logger.info(f"Using existing docker image: {image}")
+    except docker.errors.ImageNotFound:
+        build_image = True
+        logger.info(f"Docker image: {image} was not found")
+
+    if build_image:
+        if not dockerfile_dir:
+            raise ValueError(
+                "Couldn't find the image either provide a valid image name or " +
+                "provide a directory containing a Dockerfile to build the image scratch")
+        logger.info("Building docker image...\n")
+        image, build_logs = client.images.build(
+            path=dockerfile_dir,
+            tag=image,
+            rm=True,
+            platform=platform,
+            pull=True)
+        for log in build_logs:
+            logger.info(log)
+
     logger.info("Starting local gateway...\n")
-    from sagify.llm_gateway.main import start_server
-    start_server()
+    _ = client.containers.run(
+        image=image,
+        environment=environment_vars,
+        ports={'8000/tcp': PORT},
+        detach=True)
+    logger.info(f"Access service docs: http://localhost:{PORT}/docs")
 
 
 llm.add_command(platforms)

@@ -14,9 +14,9 @@ logger = structlog.get_logger()
 class OpenAIClient:
     def __init__(self):
         self.client = OpenAI()
-        self._chat_completions_model = os.environ.get("OPEN_AI_CHAT_COMPLETIONS_MODEL")
-        self._embeddings_model = os.environ.get("OPEN_AI_EMBEDDINGS_MODEL")
-        self._image_creation_model = os.environ.get("OPEN_AI_IMAGE_CREATION_MODEL")
+        self._chat_completions_model = os.environ.get("OPENAI_CHAT_COMPLETIONS_MODEL")
+        self._embeddings_model = os.environ.get("OPENAI_EMBEDDINGS_MODEL")
+        self._image_creation_model = os.environ.get("OPENAI_IMAGE_CREATION_MODEL")
 
     async def completions(self, message: CreateCompletionDTO):
         request = {
