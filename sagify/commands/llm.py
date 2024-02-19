@@ -609,6 +609,9 @@ def start_local_gateway(image, dockerfile_dir, platform):
     logger.info(ASCII_LOGO)
     environment_vars = {
         'OPENAI_API_KEY': os.environ.get('OPENAI_API_KEY'),
+        'OPENAI_CHAT_COMPLETIONS_MODEL': os.environ.get('OPENAI_CHAT_COMPLETIONS_MODEL'),
+        'OPENAI_EMBEDDINGS_MODEL': os.environ.get('OPENAI_EMBEDDINGS_MODEL'),
+        'OPENAI_IMAGE_CREATION_MODEL': os.environ.get('OPENAI_IMAGE_CREATION_MODEL'),
         'AWS_ACCESS_KEY_ID': os.environ.get('AWS_ACCESS_KEY_ID'),
         'AWS_SECRET_ACCESS_KEY': os.environ.get('AWS_SECRET_ACCESS_KEY'),
         'AWS_REGION_NAME': os.environ.get('AWS_REGION_NAME'),
