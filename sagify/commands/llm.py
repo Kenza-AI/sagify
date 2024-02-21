@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 from __future__ import print_function, unicode_literals
 
-import os
 import json
+import pkg_resources
+import os
 import sys
 
 import click
@@ -16,6 +17,11 @@ from sagify.sagemaker import sagemaker
 
 click.disable_unicode_literals_warning = True
 
+
+# Get the directory containing the Dockerfile
+_DOCKERFILE_DIR = os.path.dirname(
+    pkg_resources.resource_filename('sagify', 'Dockerfile')
+)
 
 OPENAI_BASE_URL = 'https://platform.openai.com'
 OPENAI_DOCS = 'docs'
@@ -594,15 +600,12 @@ def stop(
     help="The docker image to run"
 )
 @click.option(
-    u"--dockerfile-dir",
-    help="The path for the Dockerfile to use"
-)
-@click.option(
     u"--platform",
     default="linux/amd64",
+    required=False,
     help="The platform to use for the docker build"
 )
-def start_local_gateway(image, dockerfile_dir, platform):
+def start_local_gateway(image, platform):
     """
     Command to start local gateway
     """
@@ -633,13 +636,10 @@ def start_local_gateway(image, dockerfile_dir, platform):
         logger.info(f"Docker image: {image} was not found")
 
     if build_image:
-        if not dockerfile_dir:
-            raise ValueError(
-                "Couldn't find the image either provide a valid image name or " +
-                "provide a directory containing a Dockerfile to build the image scratch")
         logger.info("Building docker image...\n")
+
         image, build_logs = client.images.build(
-            path=dockerfile_dir,
+            path=_DOCKERFILE_DIR,
             tag=image,
             rm=True,
             platform=platform,
@@ -648,11 +648,12 @@ def start_local_gateway(image, dockerfile_dir, platform):
             logger.info(log)
 
     logger.info("Starting local gateway...\n")
-    _ = client.containers.run(
+    container = client.containers.run(
         image=image,
         environment=environment_vars,
         ports={'8000/tcp': PORT},
         detach=True)
+    logger.info(f"Local gateway started successfully. Container ID: {container.short_id}")
     logger.info(f"Access service docs: http://localhost:{PORT}/docs")
 
 

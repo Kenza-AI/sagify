@@ -15,6 +15,7 @@ setup(
     url='https://github.com/Kenza-AI/sagify',
     package_data={
         'sagify': [
+            'Dockerfile',
             'template/sagify_base/config.json',
             'template/sagify_base/*.sh',
             'template/sagify_base/Dockerfile',

@@ -7,7 +7,7 @@ WORKDIR /app
 RUN pip install --no-cache-dir fastapi pydantic==1.10.13 python-dotenv structlog uvicorn openai sagemaker Pillow
 
 # Copy the rest of the application code into the container
-COPY ./sagify /app/sagify
+COPY ./ /app/sagify/
 
 # Expose port 8000
 EXPOSE 8000
