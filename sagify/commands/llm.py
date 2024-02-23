@@ -600,14 +600,21 @@ def stop(
     help="The docker image to run"
 )
 @click.option(
+    '--start-local',
+    is_flag=True,
+    show_default=True,
+    default=False,
+    help='Start gateway locally'
+)
+@click.option(
     u"--platform",
     default="linux/amd64",
     required=False,
     help="The platform to use for the docker build"
 )
-def start_local_gateway(image, platform):
+def gateway(image, start_local, platform):
     """
-    Command to start local gateway
+    Command to build gateway docker image and start the gateway locally
     """
     logger.info(ASCII_LOGO)
     environment_vars = {
@@ -630,7 +637,7 @@ def start_local_gateway(image, platform):
     try:
         client.images.get(image)
         build_image = False
-        logger.info(f"Using existing docker image: {image}")
+        logger.info(f"Docker image: {image} exists. Skipping build...")
     except docker.errors.ImageNotFound:
         build_image = True
         logger.info(f"Docker image: {image} was not found")
@@ -647,17 +654,19 @@ def start_local_gateway(image, platform):
         for log in build_logs:
             logger.info(log)
 
-    logger.info("Starting local gateway...\n")
-    container = client.containers.run(
-        image=image,
-        environment=environment_vars,
-        ports={'8000/tcp': PORT},
-        detach=True)
-    logger.info(f"Local gateway started successfully. Container ID: {container.short_id}")
-    logger.info(f"Access service docs: http://localhost:{PORT}/docs")
+    if start_local:
+        logger.info("Starting local gateway...\n")
+        container = client.containers.run(
+            image=image,
+            environment=environment_vars,
+            ports={'8000/tcp': PORT},
+            detach=True)
+        logger.info(f"Local gateway started successfully. Container ID: {container.short_id}")
+        logger.info(f"Access service docs: http://localhost:{PORT}/docs")
 
 
 llm.add_command(platforms)
 llm.add_command(models)
 llm.add_command(start)
 llm.add_command(stop)
+llm.add_command(gateway)

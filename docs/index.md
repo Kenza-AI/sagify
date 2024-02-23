@@ -191,7 +191,7 @@ It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoi
 
 The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
 
-#### Deploy FastAPI LLM Gateway - Local - Docker
+#### Deploy FastAPI LLM Gateway - Docker
 
 Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. 
 
@@ -213,7 +213,7 @@ In case of using the OpenAI platform, you need to define the following env varia
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
-Now, you can run the command `sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0` to start the LLM Gateway locally. You can change the name of the image via the `--image` argument.
+Now, you can run the command `sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local` to start the LLM Gateway locally. You can change the name of the image via the `--image` argument.
 
 This command will output the Docker container id. You can stop the container by executing `docker stop <CONTAINER_ID>`.
 
@@ -223,18 +223,13 @@ This command will output the Docker container id. You can stop the container by 
 
 In the case you want to create a docker image and then run it
 ```{bash}
-sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0 --dockerfile-dir .
+sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
  ```
 
- If you want to use an existing container just run
+ If you want to use just build the image
  ```{bash}
- sagify llm start-local-gateway --image sagify-llm-gateway:v0.1.0
+ sagify llm gateway --image sagify-llm-gateway:v0.1.0
  ```
-
-Or manually by using `docker build` and `docker run`
-- Build the Docker image `docker build -t sagify-llm-gateway .`
-- Run the Docker image for OpenAI `docker run -p 8000:8000 -e OPENAI_API_KEY=sk-... -e OPEN_AI_CHAT_COMPLETIONS_MODEL=gpt-3.5-turbo -e OPEN_AI_EMBEDDINGS_MODEL=text-embedding-3-small -e OPEN_AI_IMAGE_CREATION_MODEL=dall-e-3 --name my-fastapi-container-13 sagify-llm-gateway`
-- Run the Docker image for AWS Sagemaker `docker run -p 8000:8000 -e AWS_ACCESS_KEY_ID=... -e AWS_SECRET_ACCESS_KEY=... -e AWS_REGION_NAME=... -e S3_BUCKET_NAME=... -e IMAGE_URL_TTL_IN_SECONDS=... -e SM_CHAT_COMPLETIONS_MODEL=... -e SM_EMBEDDINGS_MODEL=... -e SM_IMAGE_CREATION_MODEL=...`
 
 If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
 
@@ -1483,20 +1478,20 @@ It stop all or some of the services that are running.
 
 `--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
 
-### LLM Start Gateway Locally
+### LLM Gateway
 
 #### Name
 
-Command to start LLM gateway locally
+Command to build gateway docker image and start the gateway locally
 
 #### Synopsis
 ```sh
-sagify llm start --image IMAGE_NAME [--dockerfile-dir DOCKERFILE_DIR] [--platform PLATFORM]
+sagify llm gateway --image IMAGE_NAME [--dockerfile-dir DOCKERFILE_DIR] [--platform PLATFORM] [--start-local]
 ```
 
 #### Description
 
-It spins up the LLM gateway locally by building a Docker image and running it.
+It builds gateway docker image and starts the gateway locally.
 
 #### Required Flags
 
@@ -1505,3 +1500,5 @@ It spins up the LLM gateway locally by building a Docker image and running it.
 #### Optional Flags
 
 `--platform PLATFORM`: Operating system. Platform in the format `os[/arch[/variant]]`.
+
+`--start-local`: Flag to indicate if to start the gateway locally.
