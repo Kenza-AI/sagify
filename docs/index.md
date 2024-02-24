@@ -1355,6 +1355,7 @@ This command deploys a Foundation model without code.
 
 `--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
 
+
 ### LLM List Platforms
 
 #### Name
@@ -1400,6 +1401,7 @@ This command lists all the models per platform/provider.
 #### Optional Flags
 
 `--provider`: Provider name. It can take of the 2 values `sagemaker` or `openai`. Default: `sagemaker`.
+
 
 ### LLM Start Infrastructure
 
@@ -1477,6 +1479,7 @@ It stop all or some of the services that are running.
 `--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
 
 `--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
 
 ### LLM Gateway
 
