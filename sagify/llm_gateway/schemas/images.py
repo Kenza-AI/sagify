@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import List, Optional, Union
+from typing import List, Optional
 from pydantic import BaseModel
 
 
@@ -11,7 +11,7 @@ class ResponseFormat(str, Enum):
 class CreateImageDTO(BaseModel):
     provider: str
     model: Optional[str]
-    prompt: Union[List[str], str]
+    prompt: str
     n: int
     width: int
     height: int
