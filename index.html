@@ -152,9 +152,11 @@
 <li><a href="https://aws.amazon.com/sagemaker">AWS Sagemaker</a>. This option enables you to deploy open-source LLMs to AWS and leverage the powerful AWS computing platform.</li>
 </ul>
 <p>The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).</p>
-<p>Components:
-- <strong>FastAPI Restful API</strong>: At the core of the Sagify LLM Gateway lies a FastAPI-based Restful API, serving as the unified interface for all LLM interactions. This API acts as the entry point, handling requests and orchestrating communication with underlying LLM providers.</p>
+<p>Components:</p>
 <ul>
+<li>
+<p><strong>FastAPI Restful API</strong>: At the core of the Sagify LLM Gateway lies a FastAPI-based Restful API, serving as the unified interface for all LLM interactions. This API acts as the entry point, handling requests and orchestrating communication with underlying LLM providers.</p>
+</li>
 <li>
 <p><strong>Proprietary LLM Integration</strong>: For users opting to leverage proprietary LLMs such as OpenAI, the unified API interface directly interacts with these services. This streamlined integration ensures smooth communication and interoperability with proprietary LLM providers.</p>
 </li>
@@ -2637,5 +2639,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-02-24 12:43:31.149139+00:00
+Build Date UTC : 2024-02-24 12:44:11.140311+00:00
 -->
