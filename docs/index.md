@@ -1,45 +1,49 @@
+---
+title: Sagify
+language_tabs:
+  - shell: Shell
+  - javascript: JavaScript
+  - python: Python
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
+---
+
 # sagify
 
 ![Sagify](sagify@2x.png)
 
-A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps!
+Sagify provides a simplified interface to manage machine learning workflows on [AWS SageMaker](https://aws.amazon.com/sagemaker/), helping you focus on building ML models rather than infrastructure. Its modular architecture includes an LLM Gateway module to provide a unified interface for leveraging both open source and proprietary large language models. The LLM Gateway gives access to various LLMs through a simple API, letting you easily incorporate them into your workflows.
 
 ![gif](end2end.gif)
 
-## Why Sagify?
+## Unlock the Potential of ML and LLMs with Sagify
 
-"Why should I use Sagify" you may ask.
+Are you looking to simplify your machine learning workflows and easily leverage large language models? Sagify is the solution.
 
-We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning or just deploy an LLM on the same day by using Sagify!
- 
-### No More Configuring Cloud Instances for Training a Machine Learning Model
+### Accelerate Your ML Pipelines
 
-We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:
+With Sagify, you can go from idea to deployed model in just a day. Sagify handles all the infrastructure and deployment so you can focus solely on model development.
 
-1. All ML Scientists in the team have great ideas to solve problems using ML.
-2. The team has built a feature engineering pipeline (This is painful, too, and it's in Sagify's roadmap).
-3. You probably have downloaded on your laptop a subset of the features data set and there's evidence that your model will work.
-4. The moment of experimentation comes and you want to run 10s of training jobs on the cloud using the entire features data set.
-5. Everybody in the team has some idea on how to do it but nobody wants to do it :-). 
-6. ML Scientists should focus on ML and not on engineering tasks!
-7. Just use Sagify! You just need to implement a train function!
+Train, tune, and deploy ML models faster without engineering headaches. Sagify's automation empowers your team to be more productive and innovative.
 
-### No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud
+### Harness the Power of LLMs
 
-Yet another similar situation to the one before but this time even more challenging! It's exactly the same story line.
+Experimenting with large language models can be challenging. Leveraging OpenAI, Anthropic, Cohere and others or deploying open source LLMs requires significant effort.
 
-**Just use Sagify! Implement a train function and provide a path to json file that contains ranges for your hyperparameters!**
- 
-### No More Need to Hand Over Models to a Software Engineer to Deploy them
+Sagify eliminates these hurdles. It provides a unified platform to work with any LLM through a simple API.
 
-This is probably the most classic one! You need to run a batch prediction pipeline or deploy your model as a RESTful endpoint. Here's a real-world storyline:
+Focus on what matters - leveraging LLMs to advance your use cases. Sagify allows you to spend less time on operations and more time on groundbreaking work.
 
-1. The ML team somehow managed to train a fraud detection model and it's time to A/B test it against an existing heuristic.
-2. The fraud detection backend team wants you to deploy the model behind a RESTful endpoint.
-3. Nobody wants to do it in the ML team even if some people know how to do it.
-4. Either way, tt's a waste of ML team's time to ask them to take care of the model deployment infrastructure.
-5. The fraud detection backend team has other priorities and they have no time to help you in this task.
-6. Just use Sagify! You just need to implement a predict function!
+### The Easy Button for ML in the Cloud
+
+Tired of configuring cloud infrastructure to train or tune models? Sagify takes care of it for you.
+
+Just implement your model code. Sagify handles provisioning resources, distributed training, hyperparameter tuning, and deployment.
+
+Stop wasting precious time on devops. With Sagify, your team can deliver impactful models faster than ever before.
 
 ## Installation
 
@@ -59,7 +63,25 @@ At the command line:
     pip install sagify
 ```
 
-## Getting started -  LLM Deployment with no code
+## LLMs
+
+Sagify provides a set of intuitive command-line interface (CLI) commands to simplify the management of Large Language Model (LLM) infrastructure. Whether you're exploring proprietary LLM models or open-source ones, or you want to use them in production, Sagify has you covered.
+
+You can run `sagify llm platforms` to get a list of all supported backend LLM platforms:
+
+- [OpenAI](https://platform.openai.com/docs/overview)
+- [AWS Sagemaker](https://aws.amazon.com/sagemaker). This option enables you to deploy open-source LLMs to AWS and leverage the powerful AWS computing platform.
+
+The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).
+
+Components:
+- **FastAPI Restful API**: At the core of the Sagify LLM Gateway lies a FastAPI-based Restful API, serving as the unified interface for all LLM interactions. This API acts as the entry point, handling requests and orchestrating communication with underlying LLM providers.
+- **Proprietary LLM Integration**: For users opting to leverage proprietary LLMs such as OpenAI, the unified API interface directly interacts with these services. This streamlined integration ensures smooth communication and interoperability with proprietary LLM providers.
+- **Open-Source LLM Deployment**: Alternatively, users may choose to utilize open-source LLMs. In this case, these models are deployed as AWS SageMaker endpoints on the AWS cloud infrastructure. The unified API interface seamlessly communicates with these SageMaker endpoints, enabling efficient utilization of open-source LLMs within the Sagify ecosystem.
+
+By adopting this architectural approach, the Sagify LLM Gateway offers a flexible and adaptable solution, accommodating diverse LLM requirements while maintaining simplicity and efficiency in model interactions.
+
+### Getting started -  LLM Deployment with no code
                 
 1. Make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
   
@@ -73,50 +95,1143 @@ You can change the values for ec2 type (-e), aws region and aws profile with you
 
 Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
-## Getting started -  No code deployment
+### Backend Platforms
 
-1. Create a file with name `huggingface_config.json` with the following content:
+#### OpenAI
+
+The following models are offered for chat completions:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|gpt-4|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-4-32k|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-3.5-turbo|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+
+For image creation you can rely on the following models:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|dall-e-3|https://platform.openai.com/docs/models/dall-e|
+|dall-e-2|https://platform.openai.com/docs/models/dall-e|
+
+And for embeddings:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|text-embedding-3-large|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-3-small|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-ada-002|https://platform.openai.com/docs/models/embeddings|
+
+All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
+
+#### Open-Source
+
+The following open-source models are offered for chat completions:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|llama-2-7b|https://huggingface.co/meta-llama/Llama-2-7b|
+|llama-2-13b|https://huggingface.co/meta-llama/Llama-2-13b|
+|llama-2-70b|https://huggingface.co/meta-llama/Llama-2-70b|
+
+For image creation you can rely on the following open-source models:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|stabilityai-stable-diffusion-v2|https://huggingface.co/stabilityai/stable-diffusion-2|
+|stabilityai-stable-diffusion-v2-1-base|https://huggingface.co/stabilityai/stable-diffusion-2-1-base|
+|stabilityai-stable-diffusion-v2-fp16|https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16|
+
+And for embeddings:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|bge-large-en|https://huggingface.co/BAAI/bge-large-en|
+|bge-base-en|https://huggingface.co/BAAI/bge-base-en|
+|gte-large|https://huggingface.co/thenlper/gte-large|
+|gte-base|https://huggingface.co/thenlper/gte-base|
+|e5-large-v2|https://huggingface.co/intfloat/e5-large-v2|
+|bge-small-en|https://huggingface.co/BAAI/bge-small-en|
+|e5-base-v2|https://huggingface.co/intfloat/e5-base-v2|
+|multilingual-e5-large|https://huggingface.co/intfloat/multilingual-e5-large|
+|e5-large|https://huggingface.co/intfloat/e5-large|
+|gte-small|https://huggingface.co/thenlper/gte-small|
+|e5-base|https://huggingface.co/intfloat/e5-base|
+|e5-small-v2|https://huggingface.co/intfloat/e5-small-v2|
+|multilingual-e5-base|https://huggingface.co/intfloat/multilingual-e5-base|
+|all-MiniLM-L6-v2|https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2|
+
+All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command `sagify llm models --all --provider sagemaker`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider sagemaker`. For image creations and embeddings, `sagify llm models --image-creations --provider sagemaker` and `sagify llm models --embeddings --provider sagemaker`, respectively.
+
+#### Set up OpenAI
+
+You need to define the following env variables before you start the LLM Gateway server:
+
+- `OPENAI_API_KEY`: Your OpenAI API key. Example: `export OPENAI_API_KEY=...`.
+- `OPENAI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
+- `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
+- `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
+
+#### Set up open-source LLMs
+
+First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
+
+If you want to deploy all of them, then run `sagify llm start --all`. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:
 
 ```json
 {
-    "transformers_version": "4.6.1",
-    "pytorch_version": "1.7.1",
-    "hub": {
-    "HF_MODEL_ID": "gpt2",
-    "HF_TASK": "text-generation"
-    }
+    "chat_completions": {
+        "model": "llama-2-7b",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
+    },
+    "image_creations": {
+        "model": "stabilityai-stable-diffusion-v2-1-base",
+        "instance_type": "ml.p3.2xlarge",
+        "num_instances": 1,
+    },
+    "embeddings": {
+        "model": "gte-small",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
+    },
 }
 ```
-                
-2. Then, make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
-  
-3. Finally, run the following command:
 
-```sh
-sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+You can change this configuration by suppling your own config file, then you can run `sagify llm start -all --config YOUR_CONFIG_FILE.json`.
+
+It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoints.
+
+The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
+
+#### Deploy FastAPI LLM Gateway - Docker
+
+Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. 
+
+In case of using the AWS Sagemaker platform, you need to define the following env variables before you start the LLM Gateway server:
+
+- `AWS_ACCESS_KEY_ID`: It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_SECRET_ACCESS_KEY`:  It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_REGION_NAME`: AWS region where the LLM backend services (Sagemaker endpoints) are deployed.
+- `S3_BUCKET_NAME`: S3 bucket name where the created images by the image creation backend service are stored.
+- `IMAGE_URL_TTL_IN_SECONDS`: TTL in seconds of the temporary url to the created images. Default value: 3600.
+- `SM_CHAT_COMPLETIONS_MODEL`: The Sagemaker endpoint name where the chat completions model is deployed.
+- `SM_EMBEDDINGS_MODEL`: The Sagemaker endpoint name where the embeddings model is deployed.
+- `SM_IMAGE_CREATION_MODEL`: The Sagemaker endpoint name where the image creation model is deployed.
+
+In case of using the OpenAI platform, you need to define the following env variables before you start the LLM Gateway server:
+
+- `OPENAI_API_KEY`: Your OpenAI API key. Example: `export OPENAI_API_KEY=...`.
+- `OPENAI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
+- `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
+- `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
+
+Now, you can run the command `sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local` to start the LLM Gateway locally. You can change the name of the image via the `--image` argument.
+
+This command will output the Docker container id. You can stop the container by executing `docker stop <CONTAINER_ID>`.
+
+**Examples**
+
+(*Remember to export first all the environment variables you need*)
+
+In the case you want to create a docker image and then run it
+```{bash}
+sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
+ ```
+
+ If you want to use just build the image
+ ```{bash}
+ sagify llm gateway --image sagify-llm-gateway:v0.1.0
+ ```
+
+If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
+
+#### Deploy FastAPI LLM Gateway - AWS Fargate
+
+In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
+
+1. Containerize the FastAPI LLM Gateway: See previous section.
+2. Push Docker image to Amazon ECR.
+3. Define Task Definition: Define a task definition that describes how to run your containerized FastAPI application on Fargate. Specify the Docker image, container port, CPU and memory requirements, and environment variables.
+4. Create ECS Service: Create a Fargate service using the task definition. Configure the desired number of tasks, networking options, load balancing, and auto-scaling settings.
+4. Set Environment Variables: Ensure that your FastAPI application retrieves the environment variables correctly at runtime.
+
+Here's an example CloudFormation template to deploy a FastAPI service to AWS Fargate with 5 environment variables:
+
+```yaml
+Resources:
+  MyFargateTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: my-fargate-task
+      ContainerDefinitions:
+        - Name: fastapi-container
+          Image: <YOUR_ECR_REPOSITORY_URI>
+          Memory: 512
+          PortMappings:
+            - ContainerPort: 80
+          Environment:
+            - Name: AWS_ACCESS_KEY_ID
+              Value: "value1"
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: "value2"
+            - Name: AWS_REGION_NAME
+              Value: "value3"
+            - Name: S3_BUCKET_NAME
+              Value: "value4"
+            - Name: IMAGE_URL_TTL_IN_SECONDS
+              Value: "value5"
+            - Name: SM_CHAT_COMPLETIONS_MODEL
+              Value: "value6"
+            - Name: SM_EMBEDDINGS_MODEL
+              Value: "value7"
+            - Name: SM_IMAGE_CREATION_MODEL
+              Value: "value8"
+            - Name: OPENAI_CHAT_COMPLETIONS_MODEL
+              Value: "value9"
+            - Name: OPENAI_EMBEDDINGS_MODEL
+              Value: "value10"
+            - Name: OPENAI_IMAGE_CREATION_MODEL
+              Value: "value11"
+
+  MyFargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: default
+      TaskDefinition: !Ref MyFargateTaskDefinition
+      DesiredCount: 2
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - <YOUR_SUBNET_ID>
+          SecurityGroups:
+            - <YOUR_SECURITY_GROUP_ID>
 ```
-        
-You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
 
-4. Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:
+#### LLM Gateway API
 
-![Sagemaker-Endpoints-List](sagemaker_endpoints_list.png)
+Once the LLM Gateway is deployed, you can access it on `HOST_NAME/docs`.
 
-5. Then, you can click on your deployed endpoint and copy the endpoint url. For example:
+<h1 id="sagify-llm-gateway-completions">completions</h1>
 
-![Sagemaker-Endpoint](sagemaker_endpoint.png)
+## create_v1_chat_completions_post
 
-6. Postman is a good app to call the deployed endpoint. Here's an example on how to set up the AWS signature in order to call the endpoint:
- 
-![Postman-AWS-Signature](postman_aws_signature.png)
+<a id="opIdcreate_v1_chat_completions_post"></a>
 
-7. Finally, you can call the endpoint from Postman:
+> Code samples
 
-![Postman-Call-Endpoint](postman_call_endpoint.png)
+Shell
 
-## Getting started - Custom Training and Deployment
+```shell
+curl --location --request POST '/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "provider": "sagemaker",
+     "messages": [
+      {
+        "role": "system",
+        "content": "you are a cook"
+      },
+      {
+        "role": "user",
+        "content": "what is the recipe of mayonnaise"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 600,
+    "top_p": 0.9,
+    "seed": 32
+}'
+```
 
-### Step 1: Clone Machine Learning demo repository
+Javascript
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "messages": [
+      {
+        "role": "system",
+        "content": "you are a cook"
+      },
+      {
+        "role": "user",
+        "content": "what is the recipe of mayonnaise"
+      }
+  ],
+  "temperature": 0,
+  "max_tokens": 600,
+  "top_p": 0.9,
+  "seed": 32
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/chat/completions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/chat/completions"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "messages": [
+    {
+      "role": "system",
+      "content": "you are a cook"
+    },
+    {
+      "role": "user",
+      "content": "what is the recipe of mayonnaise"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 600,
+  "top_p": 0.9,
+  "seed": 32
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+`POST /v1/chat/completions`
+
+*Create a model response for the given chat conversation*
+
+> Body parameter
+
+```json
+{
+  "provider": "openai|sagemaker",
+  "model": "string",
+  "messages": [
+    {
+      "role": "system",
+      "content": "string"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 0, 
+  "top_p": 0,
+  "seed": 0
+}
+```
+
+<h3 id="create_v1_chat_completions_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateCompletionDTO](#schemacreatecompletiondto)|true|body params|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "id": "chatcmpl-8167b99c-f22b-4e04-8e26-4ca06d58dc86",
+    "object": "chat.completion",
+    "created": 1708765682,
+    "provider": "sagemaker",
+    "model": "meta-textgeneration-llama-2-7b-f-2024-02-24-08-49-32-123",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": " Ah, a fellow foodie! Mayonnaise is a classic condiment that's easy to make and can elevate any dish. Here's my trusty recipe for homemade mayonnaise:\n\nIngredients:\n\n* 2 egg yolks\n* 1/2 cup (120 ml) neutral-tasting oil, such as canola or grapeseed\n* 1 tablespoon lemon juice or vinegar\n* Salt and pepper to taste\n\nInstructions:\n\n1. In a small bowl, whisk together the egg yolks and lemon juice or vinegar until well combined.\n2. Slowly pour in the oil while continuously whisking the mixture. You can do this by hand with a whisk or use an electric mixer on low speed.\n3. Continue whisking until the mixture thickens and emulsifies, which should take about 5-7 minutes. You'll know it's ready when it reaches a thick, creamy consistency.\n4. Taste and adjust the seasoning as needed. You can add more salt, pepper, or lemon juice to taste.\n5. Transfer the mayonnaise to a jar or airtight container and store it in the fridge for up to 1 week.\n\nThat's it! Homemade mayonnaise is a great way to control the ingredients and flavor, and it's also a fun kitchen experiment. Enjoy!"
+            }
+        }
+    ]
+}
+```
+
+Returns a [ResponseCompletionDTO](#schemaresponsecompletiondto) object.
+
+<h1 id="sagify-llm-gateway-embeddings">embeddings</h1>
+
+## create_v1_embeddings_post
+
+<a id="opIdcreate_v1_embeddings_post"></a>
+
+> Code samples
+
+Shell
+
+```shell
+curl --location --request POST '/v1/embeddings' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+}'
+```
+
+Javascript
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "model": "string",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/embeddings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/embeddings"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+```
+
+`POST /v1/embeddings`
+
+*Create*
+
+> Body parameter
+
+```json
+{
+  "provider": "openai|sagemaker",
+  "model": "string",
+  "input": [
+    "string"
+  ]
+}
+```
+
+<h3 id="create_v1_embeddings_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateEmbeddingDTO](#schemacreateembeddingdto)|true|body params|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "data": [
+        {
+            "object": "embedding",
+            "embedding": [
+                -0.04274585098028183,
+                0.021814687177538872,
+                -0.004705613013356924,
+                ...
+                -0.07548460364341736,
+                0.036427777260541916,
+                0.016453085467219353,
+                0.004641987383365631,
+                -0.0072729517705738544,
+                0.02343473769724369,
+                -0.002924458822235465,
+                0.0339619480073452,
+                0.005262510851025581,
+                -0.06709178537130356,
+                -0.015170316211879253,
+                -0.04612169787287712,
+                -0.012380547821521759,
+                -0.006663458421826363,
+                -0.0573800653219223,
+                0.007938326336443424,
+                0.03486081212759018,
+                0.021514462307095528
+            ],
+            "index": 0
+        }
+    ],
+    "provider": "sagemaker",
+    "model": "hf-sentencesimilarity-gte-small-2024-02-24-09-24-27-341",
+    "object": "list"
+}
+```
+
+Returns a [ResponseEmbeddingDTO](#schemaresponseembeddingdto) object.
+
+<h1 id="sagify-llm-gateway-generations">generations</h1>
+
+## create_v1_images_generations_post
+
+<a id="opIdcreate_v1_images_generations_post"></a>
+
+> Code samples
+
+Shell
+
+```shell
+curl --location --request POST '/v1/images/generations' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "prompt": 
+    "A baby sea otter"
+  ,
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+}'
+```
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "prompt": "A baby sea otter",
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/images/generations',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/images/generations"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "prompt": "A baby sea otter",
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+`POST /v1/images/generations`
+
+*Create*
+
+> Body parameter
+
+```json
+{
+  "provider": "sagemaker|openai",
+  "model": "string",
+  "prompt": "string",
+  "n": 0,
+  "width": 0,
+  "height": 0,
+  "seed": 0,
+  "response_format": "url"
+}
+```
+
+- OpenAI: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.
+- StableDiffusion (Sagemaker): If you get 500, that means that probaly the deployed model on the Sagemaker endpoint was out of memory. You'll need an instance with most memory.
+
+<h3 id="create_v1_images_generations_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateImageDTO](#schemacreateimagedto)|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "provider": "sagemaker",
+    "model": "stable-diffusion-v2-1-base-2024-02-24-11-43-32-177",
+    "created": 1708775601,
+    "data": [
+        {
+            "url": "https://your-bucket.s3.amazonaws.com/31cedd17-ccd7-4cba-8dea-cb7e8b915782.png?AWSAccessKeyId=AKIAUKEQBDHITP26MLXH&Signature=%2Fd1J%2FUjOWbRnP5cwtkSzYUVoEoo%3D&Expires=1708779204"
+        }
+    ]
+}
+```
+
+The above example returns a url to the image. If you want to return a base64 value of the image, then set `response_format` to `base64_json` in the request body params.
+
+Returns a [ResponseImageDTO](#schemaresponseimagedto) object.
+
+# Schemas
+
+<h2 id="tocS_ChoiceItem">ChoiceItem</h2>
+<!-- backwards compatibility -->
+<a id="schemachoiceitem"></a>
+<a id="schema_ChoiceItem"></a>
+<a id="tocSchoiceitem"></a>
+<a id="tocschoiceitem"></a>
+
+```json
+{
+  "index": 0,
+  "message": {
+    "role": "system",
+    "content": "string"
+  },
+  "finish_reason": "string"
+}
+
+```
+
+ChoiceItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|index|integer|true|none|none|
+|message|[MessageItem](#schemamessageitem)|true|none|none|
+|finish_reason|string|false|none|none|
+
+<h2 id="tocS_CreateCompletionDTO">CreateCompletionDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreatecompletiondto"></a>
+<a id="schema_CreateCompletionDTO"></a>
+<a id="tocScreatecompletiondto"></a>
+<a id="tocscreatecompletiondto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "messages": [
+    {
+      "role": "system",
+      "content": "string"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 0,
+  "top_p": 0,
+  "seed": 0
+}
+
+```
+
+CreateCompletionDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|It takes one of the following values: openai or sagemaker|
+|model|string|false|none|It overrides the env variables for models|
+|messages|[[MessageItem](#schemamessageitem)]|true|none|A list of messages for the conversation so far|
+|temperature|number|false|none|Defaults to 1. Ranges from 0 to 1. Use temp closer to 0 for analytical / multiple choice, and closer to 1 for creative and generative tasks.|
+|max_tokens|integer|true|none|The maximum number of tokens to generate before stopping|
+|top_p|number|false|none|An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.|
+|seed|integer|false|none|If specified, the underlying systems will make a best effort to sample deterministically such that repeated requests with the same seed and parameters should return the same result.|
+
+<h2 id="tocS_CreateEmbeddingDTO">CreateEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreateembeddingdto"></a>
+<a id="schema_CreateEmbeddingDTO"></a>
+<a id="tocScreateembeddingdto"></a>
+<a id="tocscreateembeddingdto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "input": [
+    "string"
+  ]
+}
+
+```
+
+CreateEmbeddingDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|false|none|none|
+|input|any|true|none|none|
+
+anyOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+or
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+<h2 id="tocS_CreateImageDTO">CreateImageDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreateimagedto"></a>
+<a id="schema_CreateImageDTO"></a>
+<a id="tocScreateimagedto"></a>
+<a id="tocscreateimagedto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "prompt": "string",
+  "n": 0,
+  "width": 0,
+  "height": 0,
+  "seed": 0,
+  "response_format": "url"
+}
+
+```
+
+CreateImageDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|false|none|none|
+|prompt|string|true|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|n|integer|true|none|none|
+|width|integer|true|none|none|
+|height|integer|true|none|none|
+|seed|integer|false|none|none|
+|response_format|[ResponseFormat](#schemaresponseformat)|false|none|An enumeration.|
+
+<h2 id="tocS_HTTPValidationError">HTTPValidationError</h2>
+<!-- backwards compatibility -->
+<a id="schemahttpvalidationerror"></a>
+<a id="schema_HTTPValidationError"></a>
+<a id="tocShttpvalidationerror"></a>
+<a id="tocshttpvalidationerror"></a>
+
+```json
+{
+  "detail": [
+    {
+      "loc": [
+        "string"
+      ],
+      "msg": "string",
+      "type": "string"
+    }
+  ]
+}
+
+```
+
+HTTPValidationError
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|detail|[[ValidationError](#schemavalidationerror)]|false|none|none|
+
+<h2 id="tocS_MessageItem">MessageItem</h2>
+<!-- backwards compatibility -->
+<a id="schemamessageitem"></a>
+<a id="schema_MessageItem"></a>
+<a id="tocSmessageitem"></a>
+<a id="tocsmessageitem"></a>
+
+```json
+{
+  "role": "system|assistant|user",
+  "content": "string"
+}
+
+```
+
+MessageItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|role|[RoleItem](#schemaroleitem)|true|none|Either `system`, `assistant` or `user`|
+|content|string|true|none|The actual message|
+
+<h2 id="tocS_ResponseCompletionDTO">ResponseCompletionDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponsecompletiondto"></a>
+<a id="schema_ResponseCompletionDTO"></a>
+<a id="tocSresponsecompletiondto"></a>
+<a id="tocsresponsecompletiondto"></a>
+
+```json
+{
+  "id": "string",
+  "object": "string",
+  "created": 0,
+  "provider": "string",
+  "model": "string",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "system",
+        "content": "string"
+      },
+      "finish_reason": "string"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 0,
+    "total_tokens": 0
+  }
+}
+
+```
+
+ResponseCompletionDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|A unique identifier for the chat completion|
+|object|string|true|none|The object type, which is always `chat.completion`|
+|created|integer|true|none|The Unix timestamp (in seconds) of when the chat completion was created|
+|provider|string|true|none|Either `sagemaker` or `openai`|
+|model|string|true|none|none|
+|choices|[[ChoiceItem](#schemachoiceitem)]|true|none|none|
+|usage|[Usage](#schemausage)|false|none|none|
+
+<h2 id="tocS_ResponseEmbeddingDTO">ResponseEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseembeddingdto"></a>
+<a id="schema_ResponseEmbeddingDTO"></a>
+<a id="tocSresponseembeddingdto"></a>
+<a id="tocsresponseembeddingdto"></a>
+
+```json
+{
+  "data": [
+    {
+      "object": "string",
+      "embedding": [
+        0
+      ],
+      "index": 0
+    }
+  ],
+  "provider": "string",
+  "model": "string",
+  "object": "string",
+  "usage": {
+    "prompt_tokens": 0,
+    "total_tokens": 0
+  }
+}
+
+```
+
+ResponseEmbeddingDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|data|[[sagify__llm_gateway__schemas__embeddings__DataItem](#schemasagify__llm_gateway__schemas__embeddings__dataitem)]|true|none|none|
+|provider|string|true|none|none|
+|model|string|true|none|none|
+|object|string|true|none|none|
+|usage|[Usage](#schemausage)|false|none|none|
+
+<h2 id="tocS_ResponseFormat">ResponseFormat</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseformat"></a>
+<a id="schema_ResponseFormat"></a>
+<a id="tocSresponseformat"></a>
+<a id="tocsresponseformat"></a>
+
+```json
+"url"
+
+```
+
+ResponseFormat
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ResponseFormat|string|false|none|An enumeration.|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ResponseFormat|url|
+|ResponseFormat|b64_json|
+
+<h2 id="tocS_ResponseImageDTO">ResponseImageDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseimagedto"></a>
+<a id="schema_ResponseImageDTO"></a>
+<a id="tocSresponseimagedto"></a>
+<a id="tocsresponseimagedto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "created": 0,
+  "data": [
+    {
+      "url": "string",
+      "b64_json": "string"
+    }
+  ]
+}
+
+```
+
+ResponseImageDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|true|none|none|
+|created|integer|true|none|none|
+|data|[[sagify__llm_gateway__schemas__images__DataItem](#schemasagify__llm_gateway__schemas__images__dataitem)]|true|none|none|
+
+<h2 id="tocS_RoleItem">RoleItem</h2>
+<!-- backwards compatibility -->
+<a id="schemaroleitem"></a>
+<a id="schema_RoleItem"></a>
+<a id="tocSroleitem"></a>
+<a id="tocsroleitem"></a>
+
+```json
+"system"
+
+```
+
+RoleItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|RoleItem|string|false|none|Allowed values: `system`, `assistant` or `user`|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|RoleItem|system|
+|RoleItem|user|
+|RoleItem|assistant|
+
+<h2 id="tocS_Usage">Usage</h2>
+<!-- backwards compatibility -->
+<a id="schemausage"></a>
+<a id="schema_Usage"></a>
+<a id="tocSusage"></a>
+<a id="tocsusage"></a>
+
+```json
+{
+  "prompt_tokens": 0,
+  "total_tokens": 0
+}
+
+```
+
+Usage
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|prompt_tokens|integer|true|none|none|
+|total_tokens|integer|true|none|none|
+
+<h2 id="tocS_ValidationError">ValidationError</h2>
+<!-- backwards compatibility -->
+<a id="schemavalidationerror"></a>
+<a id="schema_ValidationError"></a>
+<a id="tocSvalidationerror"></a>
+<a id="tocsvalidationerror"></a>
+
+```json
+{
+  "loc": [
+    "string"
+  ],
+  "msg": "string",
+  "type": "string"
+}
+
+```
+
+<h2 id="tocS_sagify__llm_gateway__schemas__embeddings__DataItem">sagify__llm_gateway__schemas__embeddings__DataItem</h2>
+<!-- backwards compatibility -->
+<a id="schemasagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__embeddings__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__embeddings__dataitem"></a>
+
+```json
+{
+  "object": "string",
+  "embedding": [
+    0
+  ],
+  "index": 0
+}
+
+```
+
+DataItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|object|string|true|none|none|
+|embedding|[number]|true|none|none|
+|index|integer|true|none|none|
+
+<h2 id="tocS_sagify__llm_gateway__schemas__images__DataItem">sagify__llm_gateway__schemas__images__DataItem</h2>
+<!-- backwards compatibility -->
+<a id="schemasagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__images__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__images__dataitem"></a>
+
+```json
+{
+  "url": "string",
+  "b64_json": "string"
+}
+
+```
+
+DataItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|url|string|false|none|none|
+|b64_json|string|false|none|none|
+
+
+#### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
+
+- [Amazong Bedrock](https://aws.amazon.com/bedrock/)
+- [Anthropic](https://www.anthropic.com/)
+- [Cohere](https://cohere.com/)
+- [Mistral](https://docs.mistral.ai/models/)
+- [Gemma](https://blog.google/technology/developers/gemma-open-models/)
+- [GCP VertexAI](https://cloud.google.com/vertex-ai)
+
+
+## Machine Learning
+
+### Getting started - Custom Training and Deployment
+
+#### Step 1: Clone Machine Learning demo repository
 
 You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
 
@@ -147,7 +1262,7 @@ make requirements
 ```
 
 
-### Step 2: Initialize sagify
+#### Step 2: Initialize sagify
 
 ```sh
 sagify init
@@ -189,7 +1304,7 @@ sagify_base/
     push.sh
 ```
 
-### Step 3: Integrate sagify
+#### Step 3: Integrate sagify
 
 As a Machine Learning engineer, you only need to conduct a few actions. Sagify takes care of the rest:
 
@@ -251,7 +1366,7 @@ return cls.model
 ```
 
 
-### Step 4: Build Docker image
+#### Step 4: Build Docker image
 
 It's time to build the Docker image that will contain the Machine Learning codebase:
 
@@ -261,7 +1376,7 @@ sagify build
 
 If you run `docker images | grep sagify-demo` in your terminal, you'll see the created Sagify-Demo image.
 
-### Step 5: Train model
+#### Step 5: Train model
 
 Time to train the model for the Iris data set in the newly built Docker image:
 
@@ -271,7 +1386,7 @@ sagify local train
 
 Model file `model.pkl` and report file `report.txt` are now under `sagify_base/local_test/test_dir/model/`
 
-### Step 6: Deploy model
+#### Step 6: Deploy model
 
 Finally, serve the model as a REST Service:
 
@@ -295,8 +1410,147 @@ It will be slow in the first couple of calls as it loads the model in a lazy man
 
 Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Machine Learning model to AWS SageMaker!
 
+### Classic Machine Learning Usage
 
-## Usage
+#### Push Docker Image to AWS ECR
+
+If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.
+
+#### Create S3 Bucket
+
+Make sure to create an S3 bucket with a name of your choice, for example: `sagify-demo`
+
+#### Upload Training Data
+
+Execute `sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data` to upload training data to S3
+
+#### Train on AWS SageMaker
+
+Execute `sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
+
+Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz`)
+
+#### Deploy on AWS SageMaker
+
+Execute `sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
+
+#### Call SageMaker REST Endpoint
+
+Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to <https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html> on how to call it from Postman as authorization is required.
+ 
+Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
+
+```json
+{
+    "features":[[0.34, 0.45, 0.45, 0.3]]
+}
+```
+
+### Hyperparameter Optimization
+
+Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.
+
+#### Step 1: Define Hyperparameter Configuration File
+
+Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. `Maximize` or `Minimize`). For example:
+
+```json
+{
+	"ParameterRanges": {
+		"CategoricalParameterRanges": [
+			{
+				"Name": "kernel",
+				"Values": ["linear", "rbf"]
+			}
+		],
+		"ContinuousParameterRanges": [
+		{
+		  "MinValue": 0.001,
+		  "MaxValue": 10,
+		  "Name": "gamma"
+		}
+		],
+		"IntegerParameterRanges": [
+			{
+				"Name": "C",
+				"MinValue": 1,
+				"MaxValue": 10
+			}
+		]
+    },
+    "ObjectiveMetric": {
+    	"Name": "Precision",
+        "Type": "Maximize"
+    }
+}
+```
+
+#### Step 2: Implement Train function
+
+Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
+
+```python
+from sklearn import datasets
+iris = datasets.load_iris()
+
+# Read the hyperparameter config json file
+import json
+with open(hyperparams_path) as _in_file:
+    hyperparams_dict = json.load(_in_file)
+
+from sklearn import svm
+clf = svm.SVC(
+    gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
+    C=float(hyperparams_dict['C']),
+    kernel=hyperparams_dict['kernel']
+)
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.3, random_state=42)
+
+clf.fit(X_train, y_train)
+
+from sklearn.metrics import precision_score
+
+predictions = clf.predict(X_test)
+
+precision = precision_score(y_test, predictions, average='weighted')
+
+# Log the objective metric name with its calculated value. In tis example is Precision.
+# The objective name should be exactly the same with the one specified in the hyperparams congig json file.
+# The value must be a numeric (float or int).
+from sagify.api.hyperparameter_tuning import log_metric
+name = "Precision"
+log_metric(name, precision)
+
+from joblib import dump
+dump(clf, os.path.join(model_save_path, 'model.pkl'))
+
+print('Training complete.')
+```
+        
+#### Step 3: Build and Push Docker image
+
+1. `sagify build` Make sure sagify is in your `requirements.txt` file.
+2. `sagify push`
+
+#### Step 4: Call The CLI Command
+
+And, finally, call the hyperparameter-optimization CLI command. For example:
+
+```sh
+sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
+```
+    
+#### Step 5: Monitor Progress
+
+You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:
+
+![Hyperparameter Optimization Results](hyperparam_monitor.png)
+
+
+## AWS Account Setup
 
 ### Configure AWS Account
 
@@ -379,643 +1633,6 @@ source_profile = test-sagemaker
 - That's it! From now on, choose the created AWS profile when initializing sagify.
 
 - You can change the AWS profile/region in an already initialized sagify module by changing the value of `aws_profile`/`aws_region` in `.sagify.json`.
-
-### Push Docker Image to AWS ECR
-
-If you have followed all the steps of *Getting Started*, run `sagify push` to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.
-
-### Create S3 Bucket
-
-Make sure to create an S3 bucket with a name of your choice, for example: `sagify-demo`
-
-### Upload Training Data
-
-Execute `sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data` to upload training data to S3
-
-### Train on AWS SageMaker
-
-Execute `sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge` to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.
-
-Copy the displayed Model S3 location after the command is executed (example: `s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz`)
-
-### Deploy on AWS SageMaker
-
-Execute `sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge` to deploy the model on SageMaker.
-
-### Call SageMaker REST Endpoint
-
-Find the endpoint URL under *Endpoints* in AWS SageMaker service on AWS console. Please, refer to <https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html> on how to call it from Postman as authorization is required.
- 
-Remember that it's a POST HTTP request with Content-Type `application/json`, and the request JSON body is of the form:
-
-```json
-{
-    "features":[[0.34, 0.45, 0.45, 0.3]]
-}
-```
-
-## Hyperparameter Optimization
-
-Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.
-
-### Step 1: Define Hyperparameter Configuration File
-
-Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. `Maximize` or `Minimize`). For example:
-
-```json
-{
-	"ParameterRanges": {
-		"CategoricalParameterRanges": [
-			{
-				"Name": "kernel",
-				"Values": ["linear", "rbf"]
-			}
-		],
-		"ContinuousParameterRanges": [
-		{
-		  "MinValue": 0.001,
-		  "MaxValue": 10,
-		  "Name": "gamma"
-		}
-		],
-		"IntegerParameterRanges": [
-			{
-				"Name": "C",
-				"MinValue": 1,
-				"MaxValue": 10
-			}
-		]
-    },
-    "ObjectiveMetric": {
-    	"Name": "Precision",
-        "Type": "Maximize"
-    }
-}
-```
-
-### Step 2: Implement Train function
-
-Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
-
-```python
-from sklearn import datasets
-iris = datasets.load_iris()
-
-# Read the hyperparameter config json file
-import json
-with open(hyperparams_path) as _in_file:
-    hyperparams_dict = json.load(_in_file)
-
-from sklearn import svm
-clf = svm.SVC(
-    gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
-    C=float(hyperparams_dict['C']),
-    kernel=hyperparams_dict['kernel']
-)
-
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(
-    iris.data, iris.target, test_size=0.3, random_state=42)
-
-clf.fit(X_train, y_train)
-
-from sklearn.metrics import precision_score
-
-predictions = clf.predict(X_test)
-
-precision = precision_score(y_test, predictions, average='weighted')
-
-# Log the objective metric name with its calculated value. In tis example is Precision.
-# The objective name should be exactly the same with the one specified in the hyperparams congig json file.
-# The value must be a numeric (float or int).
-from sagify.api.hyperparameter_tuning import log_metric
-name = "Precision"
-log_metric(name, precision)
-
-from joblib import dump
-dump(clf, os.path.join(model_save_path, 'model.pkl'))
-
-print('Training complete.')
-```
-        
-### Step 3: Build and Push Docker image
-
-1. `sagify build` Make sure sagify is in your `requirements.txt` file.
-2. `sagify push`
-
-### Step 4: Call The CLI Command
-
-And, finally, call the hyperparameter-optimization CLI command. For example:
-
-```sh
-sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
-```
-    
-### Step 5: Monitor Progress
-
-You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:
-
-![Hyperparameter Optimization Results](hyperparam_monitor.png)
-
-
-## Monitor ML Models in Production
-
-## Superwise
-
-Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀. The solution is platform-agnostic and provides an extensive freemium tier.
-
-
-The steps below explain how you can integrate with Superwise to gain full visibility into your deployed models. Once you complete the integration, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case.
-
-### Step 1: Create a Superwise Account
-
-Go to [Superwise](https://portal.superwise.ai) and click the signup button to create an account. Using the free tier, you can monitor up to three models.
-
-### Step 2: Add your model 
-
-
-You can use the Superwise SDK to create the model. To use the SDK you should [generate tokens](https://docs.superwise.ai/docs/authentication).
-
-
-### Step 3: Initialize sagify
-
-To initialize sagify, type the following command
-`sagify init`
-
-
-Enter `iris-model` for the SageMaker app name, and answer `y` to the prompt asking  `Are you starting a new project?` 
-
-Next, make sure to choose Python version 3 and the AWS profile and region you wish to use. Type `requirements.txt` in answer to the prompt `Type in the path to requirements.txt.`
-
-A module called sagify_base is created under the src directory. The module’s structure is as follows:
-
-```
-sagify_base/
-    local_test/
-        test_dir/
-            input/
-                config/
-                    hyperparameters.json
-                data/
-                    training/
-            model/
-            output/
-        deploy_local.sh
-        train_local.sh
-    prediction/
-        __init__.py
-        nginx.conf
-        predict.py
-        prediction.py
-        predictor.py
-        serve
-        wsgi.py
-    training/
-        __init__.py
-        train
-        training.py
-    __init__.py
-    build.sh
-    Dockerfile
-    executor.sh
-    push.sh
-```
-
-### Step 4: Initialize the requirements.txt
-
-
-Make sure the 'requirements.txt' at the root of the project has the following content:
-
-```
-awscli
-flake8
-Flask
-joblib
-pandas
-s3transfer
-sagify>=0.18.0
-scikit-learn
-superwise
-```
-
-### Step 5: Download the Iris data set
-
-Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data> and save it in a file named "iris.data" under `src/sagify_base/local_test/test_dir/input/data/training/`.
-
-### Step 6: Implement the training logic
-
-In the `src/sagify_base/training/training.py` file, replace the `TODOs` in the `train(...)` function with the following text:
-
-```python
-input_file_path = os.path.join(input_data_path, 'iris.data')
-
-df = pd.read_csv(
-    input_file_path,
-    header=None,
-    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
-)
-df['date_time'] = pd.to_datetime('now')
-df["id"] = df.apply(lambda _: uuid.uuid4(), axis=1)
-df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
-
-features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_train_df = df_train[['label']]
-
-features_train = features_train_df.values
-labels_train = labels_train_df.values.ravel()
-
-features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_test_df = df_test[['label']]
-
-features_test = features_test_df.values
-labels_test = labels_test_df.values.ravel()
-
-clf = SVC(gamma='auto', kernel="linear")
-clf.fit(features_train, labels_train)
-
-###### Report Testing Data ######
-test_predictions = clf.predict(features_test)
-
-accuracy = accuracy_score(labels_test, test_predictions)
-output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-joblib.dump(clf, output_model_file_path)
-
-accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-with open(accuracy_report_file_path, 'w') as _out:
-    _out.write(str(accuracy))
-
-## create superwise model
-model = sw.model.create(Model(name=MODEL_NAME,
-                                description="Iris Model Demo")
-                        )
-df["prediction"] = clf.predict(df[['feature1', 'feature2', 'feature3', 'feature4']])
-## summarize the data, use infer_dtype for auto detect features
-entities = sw.data_entity.summarise(
-    data=df,
-    entities_dtypes=infer_dtype(df),
-    specific_roles={
-        "date_time" : DataEntityRole.TIMESTAMP,
-        "id" : DataEntityRole.ID,
-        "label" : DataEntityRole.LABEL,
-        "prediction" : DataEntityRole.PREDICTION_VALUE
-    },
-    importance=dict(zip(clf.coef_[0], ['feature1', 'feature2', 'feature3', 'feature4']))
-)
-
-## create and activate superwise version
-version = Version(model_id=model.id, name="V1", data_entities=entities)
-active_version = sw.version.create(version)
-sw.version.activate(active_version.id)
-```
-
-And, at the top of the file, add the following:
-    
-```python
-import uuid
-
-import joblib
-import os
-
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from superwise import Superwise
-from superwise.models.model import Model
-from superwise.models.version import Version
-from superwise.resources.superwise_enums import DataEntityRole
-from superwise.controller.infer import infer_dtype
-MODEL_NAME = "Iris Model"
-
-sw = Superwise(
-    client_id="<my client_id>",
-    secret="<my secret>",
-)
-```
-
-### Step 7: Implement the prediction logic
-
-In the file `src/sagify_base/prediction/prediction.py` replace the body of the `predict(...)` function with the following:
-
-```python
-model_input = json_input['features']
-prediction = ModelService.predict(model_input)
-model = ModelService.get_superwise_model(MODEL_NAME)
-
-for m in model_input:
-    records = {
-        "date_time" : str(datetime.utcnow()),
-        "id" : str(uuid.uuid4()),
-        "prediction": prediction,
-        "feature1": m[0],
-        "feature2": m[1],
-        "feature3": m[2],
-        "feature4": m[3]
-    }
-    transaction_id = sw.transaction.log_records(
-        model_id=model[0].id,
-        version_id=model[0].active_version_id,
-        records=records
-    )
-    print(f"Created transaction:  {transaction_id}")
-return {
-    "prediction": prediction.item()
-}
-```
-
-Within the `ModelService` class in the same file, replace the body of the `get_model()` function with the following:
-
-```python
-if cls.model is None:
-    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-return cls.model
-```
-
-Then, add a new function called `get_superwise_model()` to the ‘ModelService’ class, using the following:
-
-```python
-@classmethod
-def get_superwise_model(cls,model_name):
-    """ Get superwise model using superwise SDK """
-    return sw.model.get_by_name(model_name)
-```
-
-Now, add the following text to the top of the file:
-
-```python
-from superwise import Superwise
-import joblib
-import os
-import pandas as pd
-from datetime import datetime
-import uuid
-
-sw = Superwise(
-    client_id="<my client_id>",
-    secret="<my secret>",
-)
-MODEL_NAME = "Iris Model"
-_MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
-```
-
-### Step 8: Build and train the ML model
-
-If you’re ready to build and train the ML model, run the command `sagify build` and then run `sagify local train`
-
-### Step 9: Call the inference REST API
-
-To use the REST API, run the command `sagify local deploy` 
-
-Once that’s done, call the inference endpoint by running the following curl command:
-
-```python
-curl -X POST \
-http://localhost:8080/invocations \
--H 'Cache-Control: no-cache' \
--H 'Content-Type: application/json' \
- -d '{
-	 "features":[[0.34, 0.45, 0.45, 0.3]]
-}'
-```
-
-You should now be able to see data coming in on the Superwise dashboards.
-
-## Aporia
-
-In this part, you'll integrate with [Aporia](https://www.aporia.com/) in order to monitor deployed ML models. More specifically, you'll monitor:
-
-1. data drifting
-2. model degradation
-3. data integrity
-
-### Step 1: Create Aporia Account
-
-Go to [Aporia](https://www.aporia.com/) and create an account. There's a generous free tier.
-
-### Step 2: Create model at Aporia
- 
-Add your model to Aporia's console. Click the **Add Model** button in the Models page and name it "Iris Model"
-
-### Step 3: Initialize sagify
-```sh
-sagify init
-```
-
-Type in `iris-model` for SageMaker app name, `y` in question `Are you starting a new project?`, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
-
-A module called `sagify_base` is created under the `src` directory. The structure is:
- 
-```
-sagify_base/
-    local_test/
-        test_dir/
-            input/
-                config/
-                    hyperparameters.json
-                data/
-                    training/
-            model/
-            output/
-        deploy_local.sh
-        train_local.sh
-    prediction/
-        __init__.py
-        nginx.conf
-        predict.py
-        prediction.py
-        predictor.py
-        serve
-        wsgi.py
-    training/
-        __init__.py
-        train
-        training.py
-    __init__.py
-    build.sh
-    Dockerfile
-    executor.sh
-    push.sh
-```
-        
-### Step 4: Initialize the requirements.txt
-
-The `requirements.txt` at the root of the project must have the following content:
-
-```
-awscli
-flake8
-Flask
-joblib
-pandas
-s3transfer
-sagify>=0.18.0
-scikit-learn
-aporia[all]
-```
-        
-### Step 5: Download Iris data set
-
-Download the Iris data set from <https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data> and save it in a file named "iris.data" under `src/sagify_base/local_test/test_dir/input/data/training/`.
-
-### Step 6: Implement Training logic
-
-Replace the `TODOs` in the `train(...)` function in `src/sagify_base/training/training.py` file with the following. **Remember** to use the `model_id` that Aporia gave you in step 2:
-
-```python
-input_file_path = os.path.join(input_data_path, 'iris.data')
-
-df = pd.read_csv(
-    input_file_path,
-    header=None,
-    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
-)
-
-df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
-
-features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_train_df = df_train[['label']]
-
-features_train = features_train_df.values
-labels_train = labels_train_df.values.ravel()
-
-features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_test_df = df_test[['label']]
-
-features_test = features_test_df.values
-labels_test = labels_test_df.values.ravel()
-
-###### Report Version Schema ######
-apr_model_version = 'v1'
-apr_model_type = 'multiclass'  # Select model type: "binary" or "regression"
-
-###### Create a model version ######
-apr_model = aporia.create_model_version(
-    model_id="REPLACE WITH YOUR APORIA MODEL ID",
-    model_version=apr_model_version,
-    model_type=apr_model_type,
-    features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
-    predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
-)
-
-###### Report Training Data ######
-apr_model.log_training_set(
-    features=features_train_df,
-    labels=labels_train_df
-)
-
-clf = SVC(gamma='auto')
-clf.fit(features_train, labels_train)
-
-###### Report Testing Data ######
-test_predictions = clf.predict(features_test)
-apr_model.log_test_set(
-    features=features_test_df,
-    labels=labels_test_df,
-    predictions=pd.DataFrame({'label': test_predictions})
-)
-
-accuracy = accuracy_score(labels_test, test_predictions)
-
-output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-joblib.dump(clf, output_model_file_path)
-
-accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-with open(accuracy_report_file_path, 'w') as _out:
-    _out.write(str(accuracy))
-```
-                
-and at the top of the file, add:
-     
-```python
-import joblib
-import os
-
-import aporia
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-
-
-###### Initiate Aporia ######
-aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
-```
-                    
-### Step 7: Implement Prediction logic
-
-Replace the body of `predict(...)` function in `src/sagify_base/prediction/prediction.py` with. **Remember** to use the `model_id` that Aporia gave you in step 2:
-
-```python
-model_input = json_input['features']
-prediction = ModelService.predict(model_input)
-
-###### Report Inference ######
-apr_prediction_id = str(uuid.uuid4())
-
-apr_model = aporia.Model("REPLACE WITH YOUR APORIA MODEL ID", "v1")
-apr_model.log_prediction(
-    id=apr_prediction_id,
-    features={
-        'feature1': model_input[0][0],
-        'feature2': model_input[0][1],
-        'feature3': model_input[0][2],
-        'feature4': model_input[0][3],
-    },
-    predictions={
-        'label': prediction.item()
-    },
-)
-
-apr_model.flush()
-
-return {
-    "prediction": prediction.item()
-}
-```
-        
-replace the body of `get_model()` function in `ModelService` class in the same file with:
-    
-```python
-if cls.model is None:
-    from sklearn.externals import joblib
-    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-return cls.model
-```
-        
-and the top of the file must look like:
-
-```python
-import aporia
-import os
-import uuid
-
-
-###### Initiate Aporia ######
-aporia.init(token="TOKEN PROVIDED BY APORIA", environment="YOUR CHOSEN ENV VALUE")
-
-_MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
-```
-        
-### Step 8: Build and Train the ML model
-
-Run `sagify build` and after that `sagify local train`
-
-
-### Step 9: Call inference REST API
-
-Run `sagify local deploy` and then run the following curl command to call the inference endpoint:
-
-```sh
-curl -X POST \
-http://localhost:8080/invocations \
--H 'Cache-Control: no-cache' \
--H 'Content-Type: application/json' \
--d '{
-    "features":[[0.34, 0.45, 0.45, 0.3]]
-}'
-```
-    
-Now you should be able to see data coming in on Aporia dashboards.
 
 
 ## Commands
@@ -1676,6 +2293,53 @@ This command deploys a Foundation model without code.
 `--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
 
 
+### LLM List Platforms
+
+#### Name
+
+Command to list available backend LLM platforms
+
+#### Synopsis
+
+```sh
+sagify llm platforms
+```
+
+#### Description
+
+This command lists all the available backend LLM platforms.
+
+### LLM List Models
+
+#### Name
+
+Command to list available LLM models per platform/provider
+
+#### Synopsis
+
+```sh
+sagify llm platforms --all --chat-completions --image-creations --embeddings [--provider PROVIDER_NAME]
+```
+
+#### Description
+
+This command lists all the models per platform/provider.
+
+#### Required Flags
+
+`--all`: Show all LLMS. If this flag is used the flags `--chat-completions`, `--image-creations`, `--embeddings` are ignored.
+
+`--chat-completions`: Show chat completions models.
+
+`--image-creations`: Show image creations models.
+
+`--embeddings`: Show embeddings models.
+
+#### Optional Flags
+
+`--provider`: Provider name. It can take of the 2 values `sagemaker` or `openai`. Default: `sagemaker`.
+
+
 ### LLM Start Infrastructure
 
 #### Name
@@ -1752,3 +2416,29 @@ It stop all or some of the services that are running.
 `--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
 
 `--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+
+### LLM Gateway
+
+#### Name
+
+Command to build gateway docker image and start the gateway locally
+
+#### Synopsis
+```sh
+sagify llm gateway --image IMAGE_NAME [--dockerfile-dir DOCKERFILE_DIR] [--platform PLATFORM] [--start-local]
+```
+
+#### Description
+
+It builds gateway docker image and starts the gateway locally.
+
+#### Required Flags
+
+`--image IMAGE_NAME`: Docker image name to run. If not built already before, it will build it for you.
+
+#### Optional Flags
+
+`--platform PLATFORM`: Operating system. Platform in the format `os[/arch[/variant]]`.
+
+`--start-local`: Flag to indicate if to start the gateway locally.

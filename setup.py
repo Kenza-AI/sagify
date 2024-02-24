@@ -15,6 +15,7 @@ setup(
     url='https://github.com/Kenza-AI/sagify',
     package_data={
         'sagify': [
+            'Dockerfile',
             'template/sagify_base/config.json',
             'template/sagify_base/*.sh',
             'template/sagify_base/Dockerfile',
@@ -36,9 +37,9 @@ setup(
     install_requires=[
         'click>=8.1.0, <8.1.99',
         'docker>=7.0.0, <7.0.99',
-        'sagemaker>=2.202.0, <2.202.99',
+        'future>=0.18.0, <0.18.99',
+        'sagemaker>=2.207.0, <2.207.99',
         'six>=1.16, <1.16.99',
-        'future>=0.18.0, <0.18.99'
     ],
     test_suite='tests',
     zip_safe=True,
