@@ -48,7 +48,7 @@ class SageMakerClient:
             return self._invoke_chat_completions_endpoint(**request)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
 
     async def embeddings(self, embedding_input: CreateEmbeddingDTO):
         request = {
@@ -59,7 +59,7 @@ class SageMakerClient:
             return self._invoke_embeddings_endpoint(**request)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
 
     async def generations(self, image_input: CreateImageDTO):
         request = {
@@ -75,7 +75,7 @@ class SageMakerClient:
             return self._invoke_image_creation_endpoint(**request)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
 
     def _invoke_image_creation_endpoint(
             self,

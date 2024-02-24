@@ -35,7 +35,7 @@ class OpenAIClient:
             return ResponseCompletionDTO(**response_dict)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
 
     async def embeddings(self, embedding_input: CreateEmbeddingDTO):
         request = {
@@ -49,7 +49,7 @@ class OpenAIClient:
             return ResponseEmbeddingDTO(**response_dict)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
 
     async def generations(self, image_input: CreateImageDTO):
         request = {
@@ -66,4 +66,4 @@ class OpenAIClient:
             return ResponseImageDTO(**response_dict)
         except Exception as e:
             logger.error(e)
-            raise InternalServerError()
+            raise InternalServerError(str(e))
