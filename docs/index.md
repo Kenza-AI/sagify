@@ -75,8 +75,11 @@ You can run `sagify llm platforms` to get a list of all supported backend LLM pl
 The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).
 
 Components:
+
 - **FastAPI Restful API**: At the core of the Sagify LLM Gateway lies a FastAPI-based Restful API, serving as the unified interface for all LLM interactions. This API acts as the entry point, handling requests and orchestrating communication with underlying LLM providers.
+
 - **Proprietary LLM Integration**: For users opting to leverage proprietary LLMs such as OpenAI, the unified API interface directly interacts with these services. This streamlined integration ensures smooth communication and interoperability with proprietary LLM providers.
+
 - **Open-Source LLM Deployment**: Alternatively, users may choose to utilize open-source LLMs. In this case, these models are deployed as AWS SageMaker endpoints on the AWS cloud infrastructure. The unified API interface seamlessly communicates with these SageMaker endpoints, enabling efficient utilization of open-source LLMs within the Sagify ecosystem.
 
 By adopting this architectural approach, the Sagify LLM Gateway offers a flexible and adaptable solution, accommodating diverse LLM requirements while maintaining simplicity and efficiency in model interactions.
