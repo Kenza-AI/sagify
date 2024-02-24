@@ -1,3 +1,16 @@
+---
+title: Sagify
+language_tabs:
+  - shell: Shell
+  - javascript: JavaScript
+  - python: Python
+toc_footers: []
+includes: []
+search: true
+highlight_theme: darkula
+headingLevel: 2
+---
+
 # sagify
 
 ![Sagify](sagify@2x.png)
@@ -274,6 +287,12 @@ Resources:
               Value: "value7"
             - Name: SM_IMAGE_CREATION_MODEL
               Value: "value8"
+            - Name: OPENAI_CHAT_COMPLETIONS_MODEL
+              Value: "value9"
+            - Name: OPENAI_EMBEDDINGS_MODEL
+              Value: "value10"
+            - Name: OPENAI_IMAGE_CREATION_MODEL
+              Value: "value11"
 
   MyFargateService:
     Type: AWS::ECS::Service
@@ -289,6 +308,924 @@ Resources:
           SecurityGroups:
             - <YOUR_SECURITY_GROUP_ID>
 ```
+
+#### LLM Gateway API
+
+Once the LLM Gateway is deployed, you can access it on `HOST_NAME/docs`.
+
+<h1 id="sagify-llm-gateway-completions">completions</h1>
+
+## create_v1_chat_completions_post
+
+<a id="opIdcreate_v1_chat_completions_post"></a>
+
+> Code samples
+
+Shell
+
+```shell
+curl --location --request POST '/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "provider": "sagemaker",
+     "messages": [
+      {
+        "role": "system",
+        "content": "you are a cook"
+      },
+      {
+        "role": "user",
+        "content": "what is the recipe of mayonnaise"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 600,
+    "top_p": 0.9,
+    "seed": 32
+}'
+```
+
+Javascript
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "messages": [
+      {
+        "role": "system",
+        "content": "you are a cook"
+      },
+      {
+        "role": "user",
+        "content": "what is the recipe of mayonnaise"
+      }
+  ],
+  "temperature": 0,
+  "max_tokens": 600,
+  "top_p": 0.9,
+  "seed": 32
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/chat/completions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/chat/completions"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "messages": [
+    {
+      "role": "system",
+      "content": "you are a cook"
+    },
+    {
+      "role": "user",
+      "content": "what is the recipe of mayonnaise"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 600,
+  "top_p": 0.9,
+  "seed": 32
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+`POST /v1/chat/completions`
+
+*Create a model response for the given chat conversation*
+
+> Body parameter
+
+```json
+{
+  "provider": "openai|sagemaker",
+  "model": "string",
+  "messages": [
+    {
+      "role": "system",
+      "content": "string"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 0, 
+  "top_p": 0,
+  "seed": 0
+}
+```
+
+<h3 id="create_v1_chat_completions_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateCompletionDTO](#schemacreatecompletiondto)|true|body params|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "id": "chatcmpl-8167b99c-f22b-4e04-8e26-4ca06d58dc86",
+    "object": "chat.completion",
+    "created": 1708765682,
+    "provider": "sagemaker",
+    "model": "meta-textgeneration-llama-2-7b-f-2024-02-24-08-49-32-123",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": " Ah, a fellow foodie! Mayonnaise is a classic condiment that's easy to make and can elevate any dish. Here's my trusty recipe for homemade mayonnaise:\n\nIngredients:\n\n* 2 egg yolks\n* 1/2 cup (120 ml) neutral-tasting oil, such as canola or grapeseed\n* 1 tablespoon lemon juice or vinegar\n* Salt and pepper to taste\n\nInstructions:\n\n1. In a small bowl, whisk together the egg yolks and lemon juice or vinegar until well combined.\n2. Slowly pour in the oil while continuously whisking the mixture. You can do this by hand with a whisk or use an electric mixer on low speed.\n3. Continue whisking until the mixture thickens and emulsifies, which should take about 5-7 minutes. You'll know it's ready when it reaches a thick, creamy consistency.\n4. Taste and adjust the seasoning as needed. You can add more salt, pepper, or lemon juice to taste.\n5. Transfer the mayonnaise to a jar or airtight container and store it in the fridge for up to 1 week.\n\nThat's it! Homemade mayonnaise is a great way to control the ingredients and flavor, and it's also a fun kitchen experiment. Enjoy!"
+            }
+        }
+    ]
+}
+```
+
+Returns a [ResponseCompletionDTO](#schemaresponsecompletiondto) object.
+
+<h1 id="sagify-llm-gateway-embeddings">embeddings</h1>
+
+## create_v1_embeddings_post
+
+<a id="opIdcreate_v1_embeddings_post"></a>
+
+> Code samples
+
+Shell
+
+```shell
+curl --location --request POST '/v1/embeddings' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+}'
+```
+
+Javascript
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "model": "string",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/embeddings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/embeddings"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+
+```
+
+`POST /v1/embeddings`
+
+*Create*
+
+> Body parameter
+
+```json
+{
+  "provider": "openai|sagemaker",
+  "model": "string",
+  "input": [
+    "string"
+  ]
+}
+```
+
+<h3 id="create_v1_embeddings_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateEmbeddingDTO](#schemacreateembeddingdto)|true|body params|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "data": [
+        {
+            "object": "embedding",
+            "embedding": [
+                -0.04274585098028183,
+                0.021814687177538872,
+                -0.004705613013356924,
+                ...
+                -0.07548460364341736,
+                0.036427777260541916,
+                0.016453085467219353,
+                0.004641987383365631,
+                -0.0072729517705738544,
+                0.02343473769724369,
+                -0.002924458822235465,
+                0.0339619480073452,
+                0.005262510851025581,
+                -0.06709178537130356,
+                -0.015170316211879253,
+                -0.04612169787287712,
+                -0.012380547821521759,
+                -0.006663458421826363,
+                -0.0573800653219223,
+                0.007938326336443424,
+                0.03486081212759018,
+                0.021514462307095528
+            ],
+            "index": 0
+        }
+    ],
+    "provider": "sagemaker",
+    "model": "hf-sentencesimilarity-gte-small-2024-02-24-09-24-27-341",
+    "object": "list"
+}
+```
+
+Returns a [ResponseEmbeddingDTO](#schemaresponseembeddingdto) object.
+
+<h1 id="sagify-llm-gateway-generations">generations</h1>
+
+## create_v1_images_generations_post
+
+<a id="opIdcreate_v1_images_generations_post"></a>
+
+> Code samples
+
+Shell
+
+```shell
+curl --location --request POST '/v1/images/generations' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "prompt": 
+    "A baby sea otter"
+  ,
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+}'
+```
+
+```javascript
+const inputBody = '{
+  "provider": "sagemaker",
+  "prompt": "A baby sea otter",
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/images/generations',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+```
+
+Python
+
+```python
+import requests
+import json
+
+url = "/v1/images/generations"
+
+payload = json.dumps({
+  "provider": "sagemaker",
+  "prompt": "A baby sea otter",
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+`POST /v1/images/generations`
+
+*Create*
+
+> Body parameter
+
+```json
+{
+  "provider": "sagemaker|openai",
+  "model": "string",
+  "prompt": "string",
+  "n": 0,
+  "width": 0,
+  "height": 0,
+  "seed": 0,
+  "response_format": "url"
+}
+```
+
+- OpenAI: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.
+- StableDiffusion (Sagemaker): If you get 500, that means that probaly the deployed model on the Sagemaker endpoint was out of memory. You'll need an instance with most memory.
+
+<h3 id="create_v1_images_generations_post-parameters">Parameters</h3>
+
+|Name|In|Type|Required|Description|
+|---|---|---|---|---|
+|body|body|[CreateImageDTO](#schemacreateimagedto)|true|none|
+
+> Example responses
+
+> 200 Response
+
+```json
+{
+    "provider": "sagemaker",
+    "model": "stable-diffusion-v2-1-base-2024-02-24-11-43-32-177",
+    "created": 1708775601,
+    "data": [
+        {
+            "url": "https://your-bucket.s3.amazonaws.com/31cedd17-ccd7-4cba-8dea-cb7e8b915782.png?AWSAccessKeyId=AKIAUKEQBDHITP26MLXH&Signature=%2Fd1J%2FUjOWbRnP5cwtkSzYUVoEoo%3D&Expires=1708779204"
+        }
+    ]
+}
+```
+
+The above example returns a url to the image. If you want to return a base64 value of the image, then set `response_format` to `base64_json` in the request body params.
+
+Returns a [ResponseImageDTO](#schemaresponseimagedto) object.
+
+# Schemas
+
+<h2 id="tocS_ChoiceItem">ChoiceItem</h2>
+<!-- backwards compatibility -->
+<a id="schemachoiceitem"></a>
+<a id="schema_ChoiceItem"></a>
+<a id="tocSchoiceitem"></a>
+<a id="tocschoiceitem"></a>
+
+```json
+{
+  "index": 0,
+  "message": {
+    "role": "system",
+    "content": "string"
+  },
+  "finish_reason": "string"
+}
+
+```
+
+ChoiceItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|index|integer|true|none|none|
+|message|[MessageItem](#schemamessageitem)|true|none|none|
+|finish_reason|string|false|none|none|
+
+<h2 id="tocS_CreateCompletionDTO">CreateCompletionDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreatecompletiondto"></a>
+<a id="schema_CreateCompletionDTO"></a>
+<a id="tocScreatecompletiondto"></a>
+<a id="tocscreatecompletiondto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "messages": [
+    {
+      "role": "system",
+      "content": "string"
+    }
+  ],
+  "temperature": 0,
+  "max_tokens": 0,
+  "top_p": 0,
+  "seed": 0
+}
+
+```
+
+CreateCompletionDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|It takes one of the following values: openai or sagemaker|
+|model|string|false|none|It overrides the env variables for models|
+|messages|[[MessageItem](#schemamessageitem)]|true|none|A list of messages for the conversation so far|
+|temperature|number|false|none|Defaults to 1. Ranges from 0 to 1. Use temp closer to 0 for analytical / multiple choice, and closer to 1 for creative and generative tasks.|
+|max_tokens|integer|true|none|The maximum number of tokens to generate before stopping|
+|top_p|number|false|none|An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.|
+|seed|integer|false|none|If specified, the underlying systems will make a best effort to sample deterministically such that repeated requests with the same seed and parameters should return the same result.|
+
+<h2 id="tocS_CreateEmbeddingDTO">CreateEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreateembeddingdto"></a>
+<a id="schema_CreateEmbeddingDTO"></a>
+<a id="tocScreateembeddingdto"></a>
+<a id="tocscreateembeddingdto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "input": [
+    "string"
+  ]
+}
+
+```
+
+CreateEmbeddingDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|false|none|none|
+|input|any|true|none|none|
+
+anyOf
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|[string]|false|none|none|
+
+or
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|» *anonymous*|string|false|none|none|
+
+<h2 id="tocS_CreateImageDTO">CreateImageDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemacreateimagedto"></a>
+<a id="schema_CreateImageDTO"></a>
+<a id="tocScreateimagedto"></a>
+<a id="tocscreateimagedto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "prompt": "string",
+  "n": 0,
+  "width": 0,
+  "height": 0,
+  "seed": 0,
+  "response_format": "url"
+}
+
+```
+
+CreateImageDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|false|none|none|
+|prompt|string|true|none|none|
+
+continued
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|n|integer|true|none|none|
+|width|integer|true|none|none|
+|height|integer|true|none|none|
+|seed|integer|false|none|none|
+|response_format|[ResponseFormat](#schemaresponseformat)|false|none|An enumeration.|
+
+<h2 id="tocS_HTTPValidationError">HTTPValidationError</h2>
+<!-- backwards compatibility -->
+<a id="schemahttpvalidationerror"></a>
+<a id="schema_HTTPValidationError"></a>
+<a id="tocShttpvalidationerror"></a>
+<a id="tocshttpvalidationerror"></a>
+
+```json
+{
+  "detail": [
+    {
+      "loc": [
+        "string"
+      ],
+      "msg": "string",
+      "type": "string"
+    }
+  ]
+}
+
+```
+
+HTTPValidationError
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|detail|[[ValidationError](#schemavalidationerror)]|false|none|none|
+
+<h2 id="tocS_MessageItem">MessageItem</h2>
+<!-- backwards compatibility -->
+<a id="schemamessageitem"></a>
+<a id="schema_MessageItem"></a>
+<a id="tocSmessageitem"></a>
+<a id="tocsmessageitem"></a>
+
+```json
+{
+  "role": "system|assistant|user",
+  "content": "string"
+}
+
+```
+
+MessageItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|role|[RoleItem](#schemaroleitem)|true|none|Either `system`, `assistant` or `user`|
+|content|string|true|none|The actual message|
+
+<h2 id="tocS_ResponseCompletionDTO">ResponseCompletionDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponsecompletiondto"></a>
+<a id="schema_ResponseCompletionDTO"></a>
+<a id="tocSresponsecompletiondto"></a>
+<a id="tocsresponsecompletiondto"></a>
+
+```json
+{
+  "id": "string",
+  "object": "string",
+  "created": 0,
+  "provider": "string",
+  "model": "string",
+  "choices": [
+    {
+      "index": 0,
+      "message": {
+        "role": "system",
+        "content": "string"
+      },
+      "finish_reason": "string"
+    }
+  ],
+  "usage": {
+    "prompt_tokens": 0,
+    "total_tokens": 0
+  }
+}
+
+```
+
+ResponseCompletionDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|id|string|true|none|A unique identifier for the chat completion|
+|object|string|true|none|The object type, which is always `chat.completion`|
+|created|integer|true|none|The Unix timestamp (in seconds) of when the chat completion was created|
+|provider|string|true|none|Either `sagemaker` or `openai`|
+|model|string|true|none|none|
+|choices|[[ChoiceItem](#schemachoiceitem)]|true|none|none|
+|usage|[Usage](#schemausage)|false|none|none|
+
+<h2 id="tocS_ResponseEmbeddingDTO">ResponseEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseembeddingdto"></a>
+<a id="schema_ResponseEmbeddingDTO"></a>
+<a id="tocSresponseembeddingdto"></a>
+<a id="tocsresponseembeddingdto"></a>
+
+```json
+{
+  "data": [
+    {
+      "object": "string",
+      "embedding": [
+        0
+      ],
+      "index": 0
+    }
+  ],
+  "provider": "string",
+  "model": "string",
+  "object": "string",
+  "usage": {
+    "prompt_tokens": 0,
+    "total_tokens": 0
+  }
+}
+
+```
+
+ResponseEmbeddingDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|data|[[sagify__llm_gateway__schemas__embeddings__DataItem](#schemasagify__llm_gateway__schemas__embeddings__dataitem)]|true|none|none|
+|provider|string|true|none|none|
+|model|string|true|none|none|
+|object|string|true|none|none|
+|usage|[Usage](#schemausage)|false|none|none|
+
+<h2 id="tocS_ResponseFormat">ResponseFormat</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseformat"></a>
+<a id="schema_ResponseFormat"></a>
+<a id="tocSresponseformat"></a>
+<a id="tocsresponseformat"></a>
+
+```json
+"url"
+
+```
+
+ResponseFormat
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|ResponseFormat|string|false|none|An enumeration.|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|ResponseFormat|url|
+|ResponseFormat|b64_json|
+
+<h2 id="tocS_ResponseImageDTO">ResponseImageDTO</h2>
+<!-- backwards compatibility -->
+<a id="schemaresponseimagedto"></a>
+<a id="schema_ResponseImageDTO"></a>
+<a id="tocSresponseimagedto"></a>
+<a id="tocsresponseimagedto"></a>
+
+```json
+{
+  "provider": "string",
+  "model": "string",
+  "created": 0,
+  "data": [
+    {
+      "url": "string",
+      "b64_json": "string"
+    }
+  ]
+}
+
+```
+
+ResponseImageDTO
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|provider|string|true|none|none|
+|model|string|true|none|none|
+|created|integer|true|none|none|
+|data|[[sagify__llm_gateway__schemas__images__DataItem](#schemasagify__llm_gateway__schemas__images__dataitem)]|true|none|none|
+
+<h2 id="tocS_RoleItem">RoleItem</h2>
+<!-- backwards compatibility -->
+<a id="schemaroleitem"></a>
+<a id="schema_RoleItem"></a>
+<a id="tocSroleitem"></a>
+<a id="tocsroleitem"></a>
+
+```json
+"system"
+
+```
+
+RoleItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|RoleItem|string|false|none|Allowed values: `system`, `assistant` or `user`|
+
+#### Enumerated Values
+
+|Property|Value|
+|---|---|
+|RoleItem|system|
+|RoleItem|user|
+|RoleItem|assistant|
+
+<h2 id="tocS_Usage">Usage</h2>
+<!-- backwards compatibility -->
+<a id="schemausage"></a>
+<a id="schema_Usage"></a>
+<a id="tocSusage"></a>
+<a id="tocsusage"></a>
+
+```json
+{
+  "prompt_tokens": 0,
+  "total_tokens": 0
+}
+
+```
+
+Usage
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|prompt_tokens|integer|true|none|none|
+|total_tokens|integer|true|none|none|
+
+<h2 id="tocS_ValidationError">ValidationError</h2>
+<!-- backwards compatibility -->
+<a id="schemavalidationerror"></a>
+<a id="schema_ValidationError"></a>
+<a id="tocSvalidationerror"></a>
+<a id="tocsvalidationerror"></a>
+
+```json
+{
+  "loc": [
+    "string"
+  ],
+  "msg": "string",
+  "type": "string"
+}
+
+```
+
+<h2 id="tocS_sagify__llm_gateway__schemas__embeddings__DataItem">sagify__llm_gateway__schemas__embeddings__DataItem</h2>
+<!-- backwards compatibility -->
+<a id="schemasagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__embeddings__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__embeddings__dataitem"></a>
+
+```json
+{
+  "object": "string",
+  "embedding": [
+    0
+  ],
+  "index": 0
+}
+
+```
+
+DataItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|object|string|true|none|none|
+|embedding|[number]|true|none|none|
+|index|integer|true|none|none|
+
+<h2 id="tocS_sagify__llm_gateway__schemas__images__DataItem">sagify__llm_gateway__schemas__images__DataItem</h2>
+<!-- backwards compatibility -->
+<a id="schemasagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__images__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__images__dataitem"></a>
+
+```json
+{
+  "url": "string",
+  "b64_json": "string"
+}
+
+```
+
+DataItem
+
+### Properties
+
+|Name|Type|Required|Restrictions|Description|
+|---|---|---|---|---|
+|url|string|false|none|none|
+|b64_json|string|false|none|none|
+
+
+#### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
+
+- [Amazong Bedrock](https://aws.amazon.com/bedrock/)
+- [Anthropic](https://www.anthropic.com/)
+- [Cohere](https://cohere.com/)
+- [Mistral](https://docs.mistral.ai/models/)
+- [Gemma](https://blog.google/technology/developers/gemma-open-models/)
+- [GCP VertexAI](https://cloud.google.com/vertex-ai)
+
 
 ## Machine Learning
 
