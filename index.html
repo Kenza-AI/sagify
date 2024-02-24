@@ -12,7 +12,7 @@
     
       <script>
         // Current page data
-        var mkdocs_page_name = "sagify";
+        var mkdocs_page_name = "Sagify";
         var mkdocs_page_input_path = "index.md";
         var mkdocs_page_url = null;
       </script>
@@ -40,15 +40,15 @@
 
       <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href=".">sagify</a>
+                <li class="toctree-l1 current"><a class="reference internal current" href=".">Sagify</a>
     <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#why-sagify">Why Sagify?</a>
+    <li class="toctree-l2"><a class="reference internal" href="#unlock-the-potential-of-ml-and-llms-with-sagify">Unlock the Potential of ML and LLMs with Sagify</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#no-more-configuring-cloud-instances-for-training-a-machine-learning-model">No More Configuring Cloud Instances for Training a Machine Learning Model</a>
+    <li class="toctree-l3"><a class="reference internal" href="#accelerate-your-ml-pipelines">Accelerate Your ML Pipelines</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#no-more-infrastructure-pain-to-run-hyperparameter-jobs-on-the-cloud">No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud</a>
+    <li class="toctree-l3"><a class="reference internal" href="#harness-the-power-of-llms">Harness the Power of LLMs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#no-more-need-to-hand-over-models-to-a-software-engineer-to-deploy-them">No More Need to Hand Over Models to a Software Engineer to Deploy them</a>
+    <li class="toctree-l3"><a class="reference internal" href="#the-easy-button-for-ml-in-the-cloud">The Easy Button for ML in the Cloud</a>
     </li>
         </ul>
     </li>
@@ -60,351 +60,33 @@
     </li>
         </ul>
     </li>
-    <li class="toctree-l2"><a class="reference internal" href="#getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#getting-started-no-code-deployment">Getting started -  No code deployment</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</a>
+    <li class="toctree-l2"><a class="reference internal" href="#llms">LLMs</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</a>
+    <li class="toctree-l3"><a class="reference internal" href="#getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-initialize-sagify">Step 2: Initialize sagify</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-3-integrate-sagify">Step 3: Integrate sagify</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-4-build-docker-image">Step 4: Build Docker image</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-train-model">Step 5: Train model</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-6-deploy-model">Step 6: Deploy model</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#usage">Usage</a>
+    <li class="toctree-l3"><a class="reference internal" href="#backend-platforms">Backend Platforms</a>
         <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#configure-aws-account">Configure AWS Account</a>
+    <li class="toctree-l4"><a class="reference internal" href="#openai">OpenAI</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#push-docker-image-to-aws-ecr">Push Docker Image to AWS ECR</a>
+    <li class="toctree-l4"><a class="reference internal" href="#open-source">Open-Source</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#create-s3-bucket">Create S3 Bucket</a>
+    <li class="toctree-l4"><a class="reference internal" href="#set-up-openai">Set up OpenAI</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#upload-training-data">Upload Training Data</a>
+    <li class="toctree-l4"><a class="reference internal" href="#set-up-open-source-llms">Set up open-source LLMs</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#train-on-aws-sagemaker">Train on AWS SageMaker</a>
+    <li class="toctree-l4"><a class="reference internal" href="#deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</a>
     </li>
-    <li class="toctree-l3"><a class="reference internal" href="#deploy-on-aws-sagemaker">Deploy on AWS SageMaker</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#hyperparameter-optimization">Hyperparameter Optimization</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-define-hyperparameter-configuration-file">Step 1: Define Hyperparameter Configuration File</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-implement-train-function">Step 2: Implement Train function</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-4-call-the-cli-command">Step 4: Call The CLI Command</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-monitor-progress">Step 5: Monitor Progress</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#monitor-ml-models-in-production">Monitor ML Models in Production</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#superwise">Superwise</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-create-a-superwise-account">Step 1: Create a Superwise Account</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-add-your-model">Step 2: Add your model</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-3-initialize-sagify">Step 3: Initialize sagify</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-the-iris-data-set">Step 5: Download the Iris data set</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-the-training-logic">Step 6: Implement the training logic</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#aporia">Aporia</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#step-1-create-aporia-account">Step 1: Create Aporia Account</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-2-create-model-at-aporia">Step 2: Create model at Aporia</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-3-initialize-sagify_1">Step 3: Initialize sagify</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-4-initialize-the-requirementstxt_1">Step 4: Initialize the requirements.txt</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-5-download-iris-data-set">Step 5: Download Iris data set</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-6-implement-training-logic">Step 6: Implement Training logic</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-7-implement-prediction-logic">Step 7: Implement Prediction logic</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-8-build-and-train-the-ml-model_1">Step 8: Build and Train the ML model</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#step-9-call-inference-rest-api">Step 9: Call inference REST API</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#commands">Commands</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#initialize">Initialize</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description">Description</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example">Example</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#configure">Configure</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#description_1">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_1">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags">Optional Flags</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#example_1">Example</a>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#build">Build</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_1">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_2">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_2">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_2">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#local-train">Local Train</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_2">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_3">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_3">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_3">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#local-deploy">Local Deploy</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_3">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_4">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_4">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_4">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#push">Push</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_4">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_5">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_5">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_1">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_5">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-upload-data">Cloud Upload Data</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_5">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_6">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_6">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_6">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-train">Cloud Train</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_6">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_7">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_7">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_1">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_2">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_7">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-hyperparameter-optimization">Cloud Hyperparameter Optimization</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_7">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_8">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_8">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_2">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_3">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_8">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-deploy">Cloud Deploy</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_8">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_9">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_9">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_3">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_4">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_9">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-batch-transform">Cloud Batch Transform</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_9">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_10">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_10">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_4">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_5">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_10">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-create-streaming-inference">Cloud Create Streaming Inference</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_10">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_11">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_11">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_5">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_11">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-delete-streaming-inference">Cloud Delete Streaming Inference</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_11">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_12">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_12">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_6">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example_12">Example</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-lightning-deploy">Cloud Lightning Deploy</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_12">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_13">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_13">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_7">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_6">Optional Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example-for-sklearn">Example for SKLearn</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example-for-huggingface-by-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace by specifying the S3_LOCATION_TO_MODEL_TAR_GZ</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example-for-huggingface-without-specifying-the-s3_location_to_model_tar_gz">Example for HuggingFace without specifying the S3_LOCATION_TO_MODEL_TAR_GZ</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#example-for-xgboost">Example for XGBoost</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#cloud-foundation-model-deploy">Cloud Foundation Model Deploy</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_13">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_14">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_14">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_8">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_7">Optional Flags</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#llm-start-infrastructure">LLM Start Infrastructure</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_14">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_15">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_15">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_9">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_8">Optional Flags</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l3"><a class="reference internal" href="#llm-stop-infrastructure">LLM Stop Infrastructure</a>
-        <ul>
-    <li class="toctree-l4"><a class="reference internal" href="#name_15">Name</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#synopsis_16">Synopsis</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#description_16">Description</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#required-flags_10">Required Flags</a>
-    </li>
-    <li class="toctree-l4"><a class="reference internal" href="#optional-flags_9">Optional Flags</a>
+    <li class="toctree-l4"><a class="reference internal" href="#llm-gateway-api">LLM Gateway API</a>
     </li>
         </ul>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create_v1_chat_completions_post">create_v1_chat_completions_post</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create_v1_embeddings_post">create_v1_embeddings_post</a>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#create_v1_images_generations_post">create_v1_images_generations_post</a>
     </li>
     </ul>
                 </li>
@@ -423,7 +105,7 @@
         <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
     <li><a href="." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">sagify</li>
+      <li class="breadcrumb-item active">Sagify</li>
     <li class="wy-breadcrumbs-aside">
           <a href="https://github.com/Kenza-AI/sagify/edit/master/docs/index.md" class="icon icon-github"> Edit on GitHub</a>
     </li>
@@ -435,35 +117,21 @@
               
                 <h1 id="sagify">sagify</h1>
 <p><img alt="Sagify" src="sagify%402x.png" /></p>
-<p>A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a> in a few simple steps!</p>
+<p>Sagify provides a simplified interface to manage machine learning workflows on <a href="https://aws.amazon.com/sagemaker/">AWS SageMaker</a>, helping you focus on building ML models rather than infrastructure. Its modular architecture includes an LLM Gateway module to provide a unified interface for leveraging both open source and proprietary large language models. The LLM Gateway gives access to various LLMs through a simple API, letting you easily incorporate them into your workflows.</p>
 <p><img alt="gif" src="end2end.gif" /></p>
-<h2 id="why-sagify">Why Sagify?</h2>
-<p>"Why should I use Sagify" you may ask.</p>
-<p>We'll provide you with some examples of how Sagify can simplify and expedite your ML pipelines. You can train, tune and deploy a Machine Learning or just deploy an LLM on the same day by using Sagify!</p>
-<h3 id="no-more-configuring-cloud-instances-for-training-a-machine-learning-model">No More Configuring Cloud Instances for Training a Machine Learning Model</h3>
-<p>We have all been in a situation where a Machine Learning team is formed without planning for a team responsible to implement ML tools for ML Scientists. Here's a timeline of what is happening in this case:</p>
-<ol>
-<li>All ML Scientists in the team have great ideas to solve problems using ML.</li>
-<li>The team has built a feature engineering pipeline (This is painful, too, and it's in Sagify's roadmap).</li>
-<li>You probably have downloaded on your laptop a subset of the features data set and there's evidence that your model will work.</li>
-<li>The moment of experimentation comes and you want to run 10s of training jobs on the cloud using the entire features data set.</li>
-<li>Everybody in the team has some idea on how to do it but nobody wants to do it :-). </li>
-<li>ML Scientists should focus on ML and not on engineering tasks!</li>
-<li>Just use Sagify! You just need to implement a train function!</li>
-</ol>
-<h3 id="no-more-infrastructure-pain-to-run-hyperparameter-jobs-on-the-cloud">No More Infrastructure Pain to Run Hyperparameter Jobs on the Cloud</h3>
-<p>Yet another similar situation to the one before but this time even more challenging! It's exactly the same story line.</p>
-<p><strong>Just use Sagify! Implement a train function and provide a path to json file that contains ranges for your hyperparameters!</strong></p>
-<h3 id="no-more-need-to-hand-over-models-to-a-software-engineer-to-deploy-them">No More Need to Hand Over Models to a Software Engineer to Deploy them</h3>
-<p>This is probably the most classic one! You need to run a batch prediction pipeline or deploy your model as a RESTful endpoint. Here's a real-world storyline:</p>
-<ol>
-<li>The ML team somehow managed to train a fraud detection model and it's time to A/B test it against an existing heuristic.</li>
-<li>The fraud detection backend team wants you to deploy the model behind a RESTful endpoint.</li>
-<li>Nobody wants to do it in the ML team even if some people know how to do it.</li>
-<li>Either way, tt's a waste of ML team's time to ask them to take care of the model deployment infrastructure.</li>
-<li>The fraud detection backend team has other priorities and they have no time to help you in this task.</li>
-<li>Just use Sagify! You just need to implement a predict function!</li>
-</ol>
+<h2 id="unlock-the-potential-of-ml-and-llms-with-sagify">Unlock the Potential of ML and LLMs with Sagify</h2>
+<p>Are you looking to simplify your machine learning workflows and easily leverage large language models? Sagify is the solution.</p>
+<h3 id="accelerate-your-ml-pipelines">Accelerate Your ML Pipelines</h3>
+<p>With Sagify, you can go from idea to deployed model in just a day. Sagify handles all the infrastructure and deployment so you can focus solely on model development.</p>
+<p>Train, tune, and deploy ML models faster without engineering headaches. Sagify's automation empowers your team to be more productive and innovative.</p>
+<h3 id="harness-the-power-of-llms">Harness the Power of LLMs</h3>
+<p>Experimenting with large language models can be challenging. Leveraging OpenAI, Anthropic, Cohere and others or deploying open source LLMs requires significant effort.</p>
+<p>Sagify eliminates these hurdles. It provides a unified platform to work with any LLM through a simple API.</p>
+<p>Focus on what matters - leveraging LLMs to advance your use cases. Sagify allows you to spend less time on operations and more time on groundbreaking work.</p>
+<h3 id="the-easy-button-for-ml-in-the-cloud">The Easy Button for ML in the Cloud</h3>
+<p>Tired of configuring cloud infrastructure to train or tune models? Sagify takes care of it for you.</p>
+<p>Just implement your model code. Sagify handles provisioning resources, distributed training, hyperparameter tuning, and deployment.</p>
+<p>Stop wasting precious time on devops. With Sagify, your team can deliver impactful models faster than ever before.</p>
 <h2 id="installation">Installation</h2>
 <h3 id="prerequisites">Prerequisites</h3>
 <p>sagify requires the following:</p>
@@ -476,7 +144,20 @@
 <p>At the command line:</p>
 <pre><code class="language-sh">    pip install sagify
 </code></pre>
-<h2 id="getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</h2>
+<h2 id="llms">LLMs</h2>
+<p>Sagify provides a set of intuitive command-line interface (CLI) commands to simplify the management of Large Language Model (LLM) infrastructure. Whether you're exploring proprietary LLM models or open-source ones, or you want to use them in production, Sagify has you covered.</p>
+<p>You can run <code>sagify llm platforms</code> to get a list of all supported backend LLM platforms:</p>
+<ul>
+<li><a href="https://platform.openai.com/docs/overview">OpenAI</a></li>
+<li><a href="https://aws.amazon.com/sagemaker">AWS Sagemaker</a>. This option enables you to deploy open-source LLMs to AWS and leverage the powerful AWS computing platform.</li>
+</ul>
+<p>The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).</p>
+<p>Components:
+- <strong>FastAPI Restful API</strong>: At the core of the Sagify LLM Gateway lies a FastAPI-based Restful API, serving as the unified interface for all LLM interactions. This API acts as the entry point, handling requests and orchestrating communication with underlying LLM providers.
+- <strong>Proprietary LLM Integration</strong>: For users opting to leverage proprietary LLMs such as OpenAI, the unified API interface directly interacts with these services. This streamlined integration ensures smooth communication and interoperability with proprietary LLM providers.
+- <strong>Open-Source LLM Deployment</strong>: Alternatively, users may choose to utilize open-source LLMs. In this case, these models are deployed as AWS SageMaker endpoints on the AWS cloud infrastructure. The unified API interface seamlessly communicates with these SageMaker endpoints, enabling efficient utilization of open-source LLMs within the Sagify ecosystem.</p>
+<p>By adopting this architectural approach, the Sagify LLM Gateway offers a flexible and adaptable solution, accommodating diverse LLM requirements while maintaining simplicity and efficiency in model interactions.</p>
+<h3 id="getting-started-llm-deployment-with-no-code">Getting started -  LLM Deployment with no code</h3>
 <ol>
 <li>
 <p>Make sure to configure your AWS account by following the instructions at section <a href="#configure-aws-account">Configure AWS Account</a></p>
@@ -489,48 +170,1662 @@
 </code></pre>
 <p>You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.</p>
 <p>Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!</p>
-<h2 id="getting-started-no-code-deployment">Getting started -  No code deployment</h2>
-<ol>
-<li>Create a file with name <code>huggingface_config.json</code> with the following content:</li>
-</ol>
+<h3 id="backend-platforms">Backend Platforms</h3>
+<h4 id="openai">OpenAI</h4>
+<p>The following models are offered for chat completions:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">gpt-4</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo</td>
+</tr>
+<tr>
+<td style="text-align: center;">gpt-4-32k</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo</td>
+</tr>
+<tr>
+<td style="text-align: center;">gpt-3.5-turbo</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo</td>
+</tr>
+</tbody>
+</table>
+<p>For image creation you can rely on the following models:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">dall-e-3</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/dall-e</td>
+</tr>
+<tr>
+<td style="text-align: center;">dall-e-2</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/dall-e</td>
+</tr>
+</tbody>
+</table>
+<p>And for embeddings:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">text-embedding-3-large</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/embeddings</td>
+</tr>
+<tr>
+<td style="text-align: center;">text-embedding-3-small</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/embeddings</td>
+</tr>
+<tr>
+<td style="text-align: center;">text-embedding-ada-002</td>
+<td style="text-align: center;">https://platform.openai.com/docs/models/embeddings</td>
+</tr>
+</tbody>
+</table>
+<p>All these lists of supported models on Openai can be retrieved by running the command <code>sagify llm models --all --provider openai</code>. If you want to focus only on chat completions models, then run <code>sagify llm models --chat-completions --provider openai</code>. For image creations and embeddings, <code>sagify llm models --image-creations --provider openai</code> and <code>sagify llm models --embeddings --provider openai</code>, respectively.</p>
+<h4 id="open-source">Open-Source</h4>
+<p>The following open-source models are offered for chat completions:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">llama-2-7b</td>
+<td style="text-align: center;">https://huggingface.co/meta-llama/Llama-2-7b</td>
+</tr>
+<tr>
+<td style="text-align: center;">llama-2-13b</td>
+<td style="text-align: center;">https://huggingface.co/meta-llama/Llama-2-13b</td>
+</tr>
+<tr>
+<td style="text-align: center;">llama-2-70b</td>
+<td style="text-align: center;">https://huggingface.co/meta-llama/Llama-2-70b</td>
+</tr>
+</tbody>
+</table>
+<p>For image creation you can rely on the following open-source models:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">stabilityai-stable-diffusion-v2</td>
+<td style="text-align: center;">https://huggingface.co/stabilityai/stable-diffusion-2</td>
+</tr>
+<tr>
+<td style="text-align: center;">stabilityai-stable-diffusion-v2-1-base</td>
+<td style="text-align: center;">https://huggingface.co/stabilityai/stable-diffusion-2-1-base</td>
+</tr>
+<tr>
+<td style="text-align: center;">stabilityai-stable-diffusion-v2-fp16</td>
+<td style="text-align: center;">https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16</td>
+</tr>
+</tbody>
+</table>
+<p>And for embeddings:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">bge-large-en</td>
+<td style="text-align: center;">https://huggingface.co/BAAI/bge-large-en</td>
+</tr>
+<tr>
+<td style="text-align: center;">bge-base-en</td>
+<td style="text-align: center;">https://huggingface.co/BAAI/bge-base-en</td>
+</tr>
+<tr>
+<td style="text-align: center;">gte-large</td>
+<td style="text-align: center;">https://huggingface.co/thenlper/gte-large</td>
+</tr>
+<tr>
+<td style="text-align: center;">gte-base</td>
+<td style="text-align: center;">https://huggingface.co/thenlper/gte-base</td>
+</tr>
+<tr>
+<td style="text-align: center;">e5-large-v2</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/e5-large-v2</td>
+</tr>
+<tr>
+<td style="text-align: center;">bge-small-en</td>
+<td style="text-align: center;">https://huggingface.co/BAAI/bge-small-en</td>
+</tr>
+<tr>
+<td style="text-align: center;">e5-base-v2</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/e5-base-v2</td>
+</tr>
+<tr>
+<td style="text-align: center;">multilingual-e5-large</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/multilingual-e5-large</td>
+</tr>
+<tr>
+<td style="text-align: center;">e5-large</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/e5-large</td>
+</tr>
+<tr>
+<td style="text-align: center;">gte-small</td>
+<td style="text-align: center;">https://huggingface.co/thenlper/gte-small</td>
+</tr>
+<tr>
+<td style="text-align: center;">e5-base</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/e5-base</td>
+</tr>
+<tr>
+<td style="text-align: center;">e5-small-v2</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/e5-small-v2</td>
+</tr>
+<tr>
+<td style="text-align: center;">multilingual-e5-base</td>
+<td style="text-align: center;">https://huggingface.co/intfloat/multilingual-e5-base</td>
+</tr>
+<tr>
+<td style="text-align: center;">all-MiniLM-L6-v2</td>
+<td style="text-align: center;">https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2</td>
+</tr>
+</tbody>
+</table>
+<p>All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command <code>sagify llm models --all --provider sagemaker</code>. If you want to focus only on chat completions models, then run <code>sagify llm models --chat-completions --provider sagemaker</code>. For image creations and embeddings, <code>sagify llm models --image-creations --provider sagemaker</code> and <code>sagify llm models --embeddings --provider sagemaker</code>, respectively.</p>
+<h4 id="set-up-openai">Set up OpenAI</h4>
+<p>You need to define the following env variables before you start the LLM Gateway server:</p>
+<ul>
+<li><code>OPENAI_API_KEY</code>: Your OpenAI API key. Example: <code>export OPENAI_API_KEY=...</code>.</li>
+<li><code>OPENAI_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/gpt-3-5-turbo">here</a> or <a href="https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo">here</a>.</li>
+<li><code>OPENAI_EMBEDDINGS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/embeddings">here</a>.</li>
+<li><code>OPENAI_IMAGE_CREATION_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/dall-e">here</a>.</li>
+</ul>
+<h4 id="set-up-open-source-llms">Set up open-source LLMs</h4>
+<p>First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. </p>
+<p>If you want to deploy all of them, then run <code>sagify llm start --all</code>. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:</p>
 <pre><code class="language-json">{
-    &quot;transformers_version&quot;: &quot;4.6.1&quot;,
-    &quot;pytorch_version&quot;: &quot;1.7.1&quot;,
-    &quot;hub&quot;: {
-    &quot;HF_MODEL_ID&quot;: &quot;gpt2&quot;,
-    &quot;HF_TASK&quot;: &quot;text-generation&quot;
-    }
+    &quot;chat_completions&quot;: {
+        &quot;model&quot;: &quot;llama-2-7b&quot;,
+        &quot;instance_type&quot;: &quot;ml.g5.2xlarge&quot;,
+        &quot;num_instances&quot;: 1,
+    },
+    &quot;image_creations&quot;: {
+        &quot;model&quot;: &quot;stabilityai-stable-diffusion-v2-1-base&quot;,
+        &quot;instance_type&quot;: &quot;ml.p3.2xlarge&quot;,
+        &quot;num_instances&quot;: 1,
+    },
+    &quot;embeddings&quot;: {
+        &quot;model&quot;: &quot;gte-small&quot;,
+        &quot;instance_type&quot;: &quot;ml.g5.2xlarge&quot;,
+        &quot;num_instances&quot;: 1,
+    },
 }
 </code></pre>
-<ol>
-<li>
-<p>Then, make sure to configure your AWS account by following the instructions at section <a href="#configure-aws-account">Configure AWS Account</a></p>
-</li>
-<li>
-<p>Finally, run the following command:</p>
-</li>
-</ol>
-<pre><code class="language-sh">sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
+<p>You can change this configuration by suppling your own config file, then you can run <code>sagify llm start -all --config YOUR_CONFIG_FILE.json</code>.</p>
+<p>It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoints.</p>
+<p>The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file <code>.sagify_llm_infra.json</code>. You can also access them from the AWS Sagemaker web console.</p>
+<h4 id="deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</h4>
+<p>Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. </p>
+<p>In case of using the AWS Sagemaker platform, you need to define the following env variables before you start the LLM Gateway server:</p>
+<ul>
+<li><code>AWS_ACCESS_KEY_ID</code>: It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: <code>export AWS_ACCESS_KEY_ID=...</code>.</li>
+<li><code>AWS_SECRET_ACCESS_KEY</code>:  It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: <code>export AWS_ACCESS_KEY_ID=...</code>.</li>
+<li><code>AWS_REGION_NAME</code>: AWS region where the LLM backend services (Sagemaker endpoints) are deployed.</li>
+<li><code>S3_BUCKET_NAME</code>: S3 bucket name where the created images by the image creation backend service are stored.</li>
+<li><code>IMAGE_URL_TTL_IN_SECONDS</code>: TTL in seconds of the temporary url to the created images. Default value: 3600.</li>
+<li><code>SM_CHAT_COMPLETIONS_MODEL</code>: The Sagemaker endpoint name where the chat completions model is deployed.</li>
+<li><code>SM_EMBEDDINGS_MODEL</code>: The Sagemaker endpoint name where the embeddings model is deployed.</li>
+<li><code>SM_IMAGE_CREATION_MODEL</code>: The Sagemaker endpoint name where the image creation model is deployed.</li>
+</ul>
+<p>In case of using the OpenAI platform, you need to define the following env variables before you start the LLM Gateway server:</p>
+<ul>
+<li><code>OPENAI_API_KEY</code>: Your OpenAI API key. Example: <code>export OPENAI_API_KEY=...</code>.</li>
+<li><code>OPENAI_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/gpt-3-5-turbo">here</a> or <a href="https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo">here</a>.</li>
+<li><code>OPENAI_EMBEDDINGS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/embeddings">here</a>.</li>
+<li><code>OPENAI_IMAGE_CREATION_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/dall-e">here</a>.</li>
+</ul>
+<p>Now, you can run the command <code>sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local</code> to start the LLM Gateway locally. You can change the name of the image via the <code>--image</code> argument.</p>
+<p>This command will output the Docker container id. You can stop the container by executing <code>docker stop &lt;CONTAINER_ID&gt;</code>.</p>
+<p><strong>Examples</strong></p>
+<p>(<em>Remember to export first all the environment variables you need</em>)</p>
+<p>In the case you want to create a docker image and then run it</p>
+<pre><code>sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
+ ```
+
+ If you want to use just build the image
+ ```{bash}
+ sagify llm gateway --image sagify-llm-gateway:v0.1.0
+ ```
+
+If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
+
+#### Deploy FastAPI LLM Gateway - AWS Fargate
+
+In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
+
+1. Containerize the FastAPI LLM Gateway: See previous section.
+2. Push Docker image to Amazon ECR.
+3. Define Task Definition: Define a task definition that describes how to run your containerized FastAPI application on Fargate. Specify the Docker image, container port, CPU and memory requirements, and environment variables.
+4. Create ECS Service: Create a Fargate service using the task definition. Configure the desired number of tasks, networking options, load balancing, and auto-scaling settings.
+4. Set Environment Variables: Ensure that your FastAPI application retrieves the environment variables correctly at runtime.
+
+Here's an example CloudFormation template to deploy a FastAPI service to AWS Fargate with 5 environment variables:
+
+```yaml
+Resources:
+  MyFargateTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: my-fargate-task
+      ContainerDefinitions:
+        - Name: fastapi-container
+          Image: &lt;YOUR_ECR_REPOSITORY_URI&gt;
+          Memory: 512
+          PortMappings:
+            - ContainerPort: 80
+          Environment:
+            - Name: AWS_ACCESS_KEY_ID
+              Value: &quot;value1&quot;
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: &quot;value2&quot;
+            - Name: AWS_REGION_NAME
+              Value: &quot;value3&quot;
+            - Name: S3_BUCKET_NAME
+              Value: &quot;value4&quot;
+            - Name: IMAGE_URL_TTL_IN_SECONDS
+              Value: &quot;value5&quot;
+            - Name: SM_CHAT_COMPLETIONS_MODEL
+              Value: &quot;value6&quot;
+            - Name: SM_EMBEDDINGS_MODEL
+              Value: &quot;value7&quot;
+            - Name: SM_IMAGE_CREATION_MODEL
+              Value: &quot;value8&quot;
+            - Name: OPENAI_CHAT_COMPLETIONS_MODEL
+              Value: &quot;value9&quot;
+            - Name: OPENAI_EMBEDDINGS_MODEL
+              Value: &quot;value10&quot;
+            - Name: OPENAI_IMAGE_CREATION_MODEL
+              Value: &quot;value11&quot;
+
+  MyFargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: default
+      TaskDefinition: !Ref MyFargateTaskDefinition
+      DesiredCount: 2
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - &lt;YOUR_SUBNET_ID&gt;
+          SecurityGroups:
+            - &lt;YOUR_SECURITY_GROUP_ID&gt;
 </code></pre>
-<p>You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.</p>
-<ol>
-<li>Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:</li>
-</ol>
-<p><img alt="Sagemaker-Endpoints-List" src="sagemaker_endpoints_list.png" /></p>
-<ol>
-<li>Then, you can click on your deployed endpoint and copy the endpoint url. For example:</li>
-</ol>
-<p><img alt="Sagemaker-Endpoint" src="sagemaker_endpoint.png" /></p>
-<ol>
-<li>Postman is a good app to call the deployed endpoint. Here's an example on how to set up the AWS signature in order to call the endpoint:</li>
-</ol>
-<p><img alt="Postman-AWS-Signature" src="postman_aws_signature.png" /></p>
-<ol>
-<li>Finally, you can call the endpoint from Postman:</li>
-</ol>
-<p><img alt="Postman-Call-Endpoint" src="postman_call_endpoint.png" /></p>
-<h2 id="getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</h2>
-<h3 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h3>
+<h4 id="llm-gateway-api">LLM Gateway API</h4>
+<p>Once the LLM Gateway is deployed, you can access it on <code>HOST_NAME/docs</code>.</p>
+<h1 id="sagify-llm-gateway-completions">completions</h1>
+
+<h2 id="create_v1_chat_completions_post">create_v1_chat_completions_post</h2>
+<p><a id="opIdcreate_v1_chat_completions_post"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<p>Shell</p>
+<pre><code class="language-shell">curl --location --request POST '/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    &quot;provider&quot;: &quot;sagemaker&quot;,
+     &quot;messages&quot;: [
+      {
+        &quot;role&quot;: &quot;system&quot;,
+        &quot;content&quot;: &quot;you are a cook&quot;
+      },
+      {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: &quot;what is the recipe of mayonnaise&quot;
+      }
+    ],
+    &quot;temperature&quot;: 0,
+    &quot;max_tokens&quot;: 600,
+    &quot;top_p&quot;: 0.9,
+    &quot;seed&quot;: 32
+}'
+</code></pre>
+<p>Javascript</p>
+<pre><code class="language-javascript">const inputBody = '{
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;messages&quot;: [
+      {
+        &quot;role&quot;: &quot;system&quot;,
+        &quot;content&quot;: &quot;you are a cook&quot;
+      },
+      {
+        &quot;role&quot;: &quot;user&quot;,
+        &quot;content&quot;: &quot;what is the recipe of mayonnaise&quot;
+      }
+  ],
+  &quot;temperature&quot;: 0,
+  &quot;max_tokens&quot;: 600,
+  &quot;top_p&quot;: 0.9,
+  &quot;seed&quot;: 32
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/chat/completions',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+</code></pre>
+<p>Python</p>
+<pre><code class="language-python">import requests
+import json
+
+url = &quot;/v1/chat/completions&quot;
+
+payload = json.dumps({
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;system&quot;,
+      &quot;content&quot;: &quot;you are a cook&quot;
+    },
+    {
+      &quot;role&quot;: &quot;user&quot;,
+      &quot;content&quot;: &quot;what is the recipe of mayonnaise&quot;
+    }
+  ],
+  &quot;temperature&quot;: 0,
+  &quot;max_tokens&quot;: 600,
+  &quot;top_p&quot;: 0.9,
+  &quot;seed&quot;: 32
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request(&quot;POST&quot;, url, headers=headers, data=payload)
+
+print(response.text)
+</code></pre>
+<p><code>POST /v1/chat/completions</code></p>
+<p><em>Create a model response for the given chat conversation</em></p>
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;openai|sagemaker&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;system&quot;,
+      &quot;content&quot;: &quot;string&quot;
+    }
+  ],
+  &quot;temperature&quot;: 0,
+  &quot;max_tokens&quot;: 0, 
+  &quot;top_p&quot;: 0,
+  &quot;seed&quot;: 0
+}
+</code></pre>
+<h3 id="create_v1_chat_completions_post-parameters">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacreatecompletiondto">CreateCompletionDTO</a></td>
+<td>true</td>
+<td>body params</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+<p>200 Response</p>
+</blockquote>
+<pre><code class="language-json">{
+    &quot;id&quot;: &quot;chatcmpl-8167b99c-f22b-4e04-8e26-4ca06d58dc86&quot;,
+    &quot;object&quot;: &quot;chat.completion&quot;,
+    &quot;created&quot;: 1708765682,
+    &quot;provider&quot;: &quot;sagemaker&quot;,
+    &quot;model&quot;: &quot;meta-textgeneration-llama-2-7b-f-2024-02-24-08-49-32-123&quot;,
+    &quot;choices&quot;: [
+        {
+            &quot;index&quot;: 0,
+            &quot;message&quot;: {
+                &quot;role&quot;: &quot;assistant&quot;,
+                &quot;content&quot;: &quot; Ah, a fellow foodie! Mayonnaise is a classic condiment that's easy to make and can elevate any dish. Here's my trusty recipe for homemade mayonnaise:\n\nIngredients:\n\n* 2 egg yolks\n* 1/2 cup (120 ml) neutral-tasting oil, such as canola or grapeseed\n* 1 tablespoon lemon juice or vinegar\n* Salt and pepper to taste\n\nInstructions:\n\n1. In a small bowl, whisk together the egg yolks and lemon juice or vinegar until well combined.\n2. Slowly pour in the oil while continuously whisking the mixture. You can do this by hand with a whisk or use an electric mixer on low speed.\n3. Continue whisking until the mixture thickens and emulsifies, which should take about 5-7 minutes. You'll know it's ready when it reaches a thick, creamy consistency.\n4. Taste and adjust the seasoning as needed. You can add more salt, pepper, or lemon juice to taste.\n5. Transfer the mayonnaise to a jar or airtight container and store it in the fridge for up to 1 week.\n\nThat's it! Homemade mayonnaise is a great way to control the ingredients and flavor, and it's also a fun kitchen experiment. Enjoy!&quot;
+            }
+        }
+    ]
+}
+</code></pre>
+<p>Returns a <a href="#schemaresponsecompletiondto">ResponseCompletionDTO</a> object.</p>
+<h1 id="sagify-llm-gateway-embeddings">embeddings</h1>
+
+<h2 id="create_v1_embeddings_post">create_v1_embeddings_post</h2>
+<p><a id="opIdcreate_v1_embeddings_post"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<p>Shell</p>
+<pre><code class="language-shell">curl --location --request POST '/v1/embeddings' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;input&quot;: [
+    &quot;The mayonnaise was delicious&quot;
+  ]
+}'
+</code></pre>
+<p>Javascript</p>
+<pre><code class="language-javascript">const inputBody = '{
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;input&quot;: [
+    &quot;The mayonnaise was delicious&quot;
+  ]
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/embeddings',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+</code></pre>
+<p>Python</p>
+<pre><code class="language-python">import requests
+import json
+
+url = &quot;/v1/embeddings&quot;
+
+payload = json.dumps({
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;input&quot;: [
+    &quot;The mayonnaise was delicious&quot;
+  ]
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request(&quot;POST&quot;, url, headers=headers, data=payload)
+
+print(response.text)
+
+</code></pre>
+<p><code>POST /v1/embeddings</code></p>
+<p><em>Create</em></p>
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;openai|sagemaker&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;input&quot;: [
+    &quot;string&quot;
+  ]
+}
+</code></pre>
+<h3 id="create_v1_embeddings_post-parameters">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacreateembeddingdto">CreateEmbeddingDTO</a></td>
+<td>true</td>
+<td>body params</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+<p>200 Response</p>
+</blockquote>
+<pre><code class="language-json">{
+    &quot;data&quot;: [
+        {
+            &quot;object&quot;: &quot;embedding&quot;,
+            &quot;embedding&quot;: [
+                -0.04274585098028183,
+                0.021814687177538872,
+                -0.004705613013356924,
+                ...
+                -0.07548460364341736,
+                0.036427777260541916,
+                0.016453085467219353,
+                0.004641987383365631,
+                -0.0072729517705738544,
+                0.02343473769724369,
+                -0.002924458822235465,
+                0.0339619480073452,
+                0.005262510851025581,
+                -0.06709178537130356,
+                -0.015170316211879253,
+                -0.04612169787287712,
+                -0.012380547821521759,
+                -0.006663458421826363,
+                -0.0573800653219223,
+                0.007938326336443424,
+                0.03486081212759018,
+                0.021514462307095528
+            ],
+            &quot;index&quot;: 0
+        }
+    ],
+    &quot;provider&quot;: &quot;sagemaker&quot;,
+    &quot;model&quot;: &quot;hf-sentencesimilarity-gte-small-2024-02-24-09-24-27-341&quot;,
+    &quot;object&quot;: &quot;list&quot;
+}
+</code></pre>
+<p>Returns a <a href="#schemaresponseembeddingdto">ResponseEmbeddingDTO</a> object.</p>
+<h1 id="sagify-llm-gateway-generations">generations</h1>
+
+<h2 id="create_v1_images_generations_post">create_v1_images_generations_post</h2>
+<p><a id="opIdcreate_v1_images_generations_post"></a></p>
+<blockquote>
+<p>Code samples</p>
+</blockquote>
+<p>Shell</p>
+<pre><code class="language-shell">curl --location --request POST '/v1/images/generations' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;prompt&quot;: 
+    &quot;A baby sea otter&quot;
+  ,
+  &quot;n&quot;: 1,
+  &quot;width&quot;: 512,
+  &quot;height&quot;: 512,
+  &quot;seed&quot;: 32,
+  &quot;response_format&quot;: &quot;url&quot;
+}'
+</code></pre>
+<pre><code class="language-javascript">const inputBody = '{
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;prompt&quot;: &quot;A baby sea otter&quot;,
+  &quot;n&quot;: 1,
+  &quot;width&quot;: 512,
+  &quot;height&quot;: 512,
+  &quot;seed&quot;: 32,
+  &quot;response_format&quot;: &quot;url&quot;
+}';
+const headers = {
+  'Content-Type':'application/json',
+  'Accept':'application/json'
+};
+
+fetch('/v1/images/generations',
+{
+  method: 'POST',
+  body: inputBody,
+  headers: headers
+})
+.then(function(res) {
+    return res.json();
+}).then(function(body) {
+    console.log(body);
+});
+
+</code></pre>
+<p>Python</p>
+<pre><code class="language-python">import requests
+import json
+
+url = &quot;/v1/images/generations&quot;
+
+payload = json.dumps({
+  &quot;provider&quot;: &quot;sagemaker&quot;,
+  &quot;prompt&quot;: &quot;A baby sea otter&quot;,
+  &quot;n&quot;: 1,
+  &quot;width&quot;: 512,
+  &quot;height&quot;: 512,
+  &quot;seed&quot;: 32,
+  &quot;response_format&quot;: &quot;url&quot;
+})
+headers = {
+  'Content-Type': 'application/json'
+}
+
+response = requests.request(&quot;POST&quot;, url, headers=headers, data=payload)
+
+print(response.text)
+</code></pre>
+<p><code>POST /v1/images/generations</code></p>
+<p><em>Create</em></p>
+<blockquote>
+<p>Body parameter</p>
+</blockquote>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;sagemaker|openai&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;prompt&quot;: &quot;string&quot;,
+  &quot;n&quot;: 0,
+  &quot;width&quot;: 0,
+  &quot;height&quot;: 0,
+  &quot;seed&quot;: 0,
+  &quot;response_format&quot;: &quot;url&quot;
+}
+</code></pre>
+<ul>
+<li>OpenAI: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.</li>
+<li>StableDiffusion (Sagemaker): If you get 500, that means that probaly the deployed model on the Sagemaker endpoint was out of memory. You'll need an instance with most memory.</li>
+</ul>
+<h3 id="create_v1_images_generations_post-parameters">Parameters</h3>
+
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>In</th>
+<th>Type</th>
+<th>Required</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>body</td>
+<td>body</td>
+<td><a href="#schemacreateimagedto">CreateImageDTO</a></td>
+<td>true</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>Example responses</p>
+<p>200 Response</p>
+</blockquote>
+<pre><code class="language-json">{
+    &quot;provider&quot;: &quot;sagemaker&quot;,
+    &quot;model&quot;: &quot;stable-diffusion-v2-1-base-2024-02-24-11-43-32-177&quot;,
+    &quot;created&quot;: 1708775601,
+    &quot;data&quot;: [
+        {
+            &quot;url&quot;: &quot;https://your-bucket.s3.amazonaws.com/31cedd17-ccd7-4cba-8dea-cb7e8b915782.png?AWSAccessKeyId=AKIAUKEQBDHITP26MLXH&amp;Signature=%2Fd1J%2FUjOWbRnP5cwtkSzYUVoEoo%3D&amp;Expires=1708779204&quot;
+        }
+    ]
+}
+</code></pre>
+<p>The above example returns a url to the image. If you want to return a base64 value of the image, then set <code>response_format</code> to <code>base64_json</code> in the request body params.</p>
+<p>Returns a <a href="#schemaresponseimagedto">ResponseImageDTO</a> object.</p>
+<h1 id="schemas">Schemas</h1>
+<h2 id="tocS_ChoiceItem">ChoiceItem</h2>
+<!-- backwards compatibility -->
+<p><a id="schemachoiceitem"></a>
+<a id="schema_ChoiceItem"></a>
+<a id="tocSchoiceitem"></a>
+<a id="tocschoiceitem"></a></p>
+<pre><code class="language-json">{
+  &quot;index&quot;: 0,
+  &quot;message&quot;: {
+    &quot;role&quot;: &quot;system&quot;,
+    &quot;content&quot;: &quot;string&quot;
+  },
+  &quot;finish_reason&quot;: &quot;string&quot;
+}
+
+</code></pre>
+<p>ChoiceItem</p>
+<h3 id="properties">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>index</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>message</td>
+<td><a href="#schemamessageitem">MessageItem</a></td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>finish_reason</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_CreateCompletionDTO">CreateCompletionDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemacreatecompletiondto"></a>
+<a id="schema_CreateCompletionDTO"></a>
+<a id="tocScreatecompletiondto"></a>
+<a id="tocscreatecompletiondto"></a></p>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;messages&quot;: [
+    {
+      &quot;role&quot;: &quot;system&quot;,
+      &quot;content&quot;: &quot;string&quot;
+    }
+  ],
+  &quot;temperature&quot;: 0,
+  &quot;max_tokens&quot;: 0,
+  &quot;top_p&quot;: 0,
+  &quot;seed&quot;: 0
+}
+
+</code></pre>
+<p>CreateCompletionDTO</p>
+<h3 id="properties_1">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>It takes one of the following values: openai or sagemaker</td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>It overrides the env variables for models</td>
+</tr>
+<tr>
+<td>messages</td>
+<td>[<a href="#schemamessageitem">MessageItem</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>A list of messages for the conversation so far</td>
+</tr>
+<tr>
+<td>temperature</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>Defaults to 1. Ranges from 0 to 1. Use temp closer to 0 for analytical / multiple choice, and closer to 1 for creative and generative tasks.</td>
+</tr>
+<tr>
+<td>max_tokens</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>The maximum number of tokens to generate before stopping</td>
+</tr>
+<tr>
+<td>top_p</td>
+<td>number</td>
+<td>false</td>
+<td>none</td>
+<td>An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.</td>
+</tr>
+<tr>
+<td>seed</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>If specified, the underlying systems will make a best effort to sample deterministically such that repeated requests with the same seed and parameters should return the same result.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_CreateEmbeddingDTO">CreateEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemacreateembeddingdto"></a>
+<a id="schema_CreateEmbeddingDTO"></a>
+<a id="tocScreateembeddingdto"></a>
+<a id="tocscreateembeddingdto"></a></p>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;input&quot;: [
+    &quot;string&quot;
+  ]
+}
+
+</code></pre>
+<p>CreateEmbeddingDTO</p>
+<h3 id="properties_2">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>input</td>
+<td>any</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>anyOf</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>» <em>anonymous</em></td>
+<td>[string]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>or</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>» <em>anonymous</em></td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_CreateImageDTO">CreateImageDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemacreateimagedto"></a>
+<a id="schema_CreateImageDTO"></a>
+<a id="tocScreateimagedto"></a>
+<a id="tocscreateimagedto"></a></p>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;prompt&quot;: &quot;string&quot;,
+  &quot;n&quot;: 0,
+  &quot;width&quot;: 0,
+  &quot;height&quot;: 0,
+  &quot;seed&quot;: 0,
+  &quot;response_format&quot;: &quot;url&quot;
+}
+
+</code></pre>
+<p>CreateImageDTO</p>
+<h3 id="properties_3">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>prompt</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<p>continued</p>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>n</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>width</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>height</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>seed</td>
+<td>integer</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>response_format</td>
+<td><a href="#schemaresponseformat">ResponseFormat</a></td>
+<td>false</td>
+<td>none</td>
+<td>An enumeration.</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_HTTPValidationError">HTTPValidationError</h2>
+<!-- backwards compatibility -->
+<p><a id="schemahttpvalidationerror"></a>
+<a id="schema_HTTPValidationError"></a>
+<a id="tocShttpvalidationerror"></a>
+<a id="tocshttpvalidationerror"></a></p>
+<pre><code class="language-json">{
+  &quot;detail&quot;: [
+    {
+      &quot;loc&quot;: [
+        &quot;string&quot;
+      ],
+      &quot;msg&quot;: &quot;string&quot;,
+      &quot;type&quot;: &quot;string&quot;
+    }
+  ]
+}
+
+</code></pre>
+<p>HTTPValidationError</p>
+<h3 id="properties_4">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>detail</td>
+<td>[<a href="#schemavalidationerror">ValidationError</a>]</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_MessageItem">MessageItem</h2>
+<!-- backwards compatibility -->
+<p><a id="schemamessageitem"></a>
+<a id="schema_MessageItem"></a>
+<a id="tocSmessageitem"></a>
+<a id="tocsmessageitem"></a></p>
+<pre><code class="language-json">{
+  &quot;role&quot;: &quot;system|assistant|user&quot;,
+  &quot;content&quot;: &quot;string&quot;
+}
+
+</code></pre>
+<p>MessageItem</p>
+<h3 id="properties_5">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>role</td>
+<td><a href="#schemaroleitem">RoleItem</a></td>
+<td>true</td>
+<td>none</td>
+<td>Either <code>system</code>, <code>assistant</code> or <code>user</code></td>
+</tr>
+<tr>
+<td>content</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>The actual message</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_ResponseCompletionDTO">ResponseCompletionDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemaresponsecompletiondto"></a>
+<a id="schema_ResponseCompletionDTO"></a>
+<a id="tocSresponsecompletiondto"></a>
+<a id="tocsresponsecompletiondto"></a></p>
+<pre><code class="language-json">{
+  &quot;id&quot;: &quot;string&quot;,
+  &quot;object&quot;: &quot;string&quot;,
+  &quot;created&quot;: 0,
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;choices&quot;: [
+    {
+      &quot;index&quot;: 0,
+      &quot;message&quot;: {
+        &quot;role&quot;: &quot;system&quot;,
+        &quot;content&quot;: &quot;string&quot;
+      },
+      &quot;finish_reason&quot;: &quot;string&quot;
+    }
+  ],
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 0,
+    &quot;total_tokens&quot;: 0
+  }
+}
+
+</code></pre>
+<p>ResponseCompletionDTO</p>
+<h3 id="properties_6">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>id</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>A unique identifier for the chat completion</td>
+</tr>
+<tr>
+<td>object</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>The object type, which is always <code>chat.completion</code></td>
+</tr>
+<tr>
+<td>created</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>The Unix timestamp (in seconds) of when the chat completion was created</td>
+</tr>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>Either <code>sagemaker</code> or <code>openai</code></td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>choices</td>
+<td>[<a href="#schemachoiceitem">ChoiceItem</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>usage</td>
+<td><a href="#schemausage">Usage</a></td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_ResponseEmbeddingDTO">ResponseEmbeddingDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemaresponseembeddingdto"></a>
+<a id="schema_ResponseEmbeddingDTO"></a>
+<a id="tocSresponseembeddingdto"></a>
+<a id="tocsresponseembeddingdto"></a></p>
+<pre><code class="language-json">{
+  &quot;data&quot;: [
+    {
+      &quot;object&quot;: &quot;string&quot;,
+      &quot;embedding&quot;: [
+        0
+      ],
+      &quot;index&quot;: 0
+    }
+  ],
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;object&quot;: &quot;string&quot;,
+  &quot;usage&quot;: {
+    &quot;prompt_tokens&quot;: 0,
+    &quot;total_tokens&quot;: 0
+  }
+}
+
+</code></pre>
+<p>ResponseEmbeddingDTO</p>
+<h3 id="properties_7">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>data</td>
+<td>[<a href="#schemasagify__llm_gateway__schemas__embeddings__dataitem">sagify__llm_gateway__schemas__embeddings__DataItem</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>object</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>usage</td>
+<td><a href="#schemausage">Usage</a></td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_ResponseFormat">ResponseFormat</h2>
+<!-- backwards compatibility -->
+<p><a id="schemaresponseformat"></a>
+<a id="schema_ResponseFormat"></a>
+<a id="tocSresponseformat"></a>
+<a id="tocsresponseformat"></a></p>
+<pre><code class="language-json">&quot;url&quot;
+
+</code></pre>
+<p>ResponseFormat</p>
+<h3 id="properties_8">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ResponseFormat</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>An enumeration.</td>
+</tr>
+</tbody>
+</table>
+<h4 id="enumerated-values">Enumerated Values</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ResponseFormat</td>
+<td>url</td>
+</tr>
+<tr>
+<td>ResponseFormat</td>
+<td>b64_json</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_ResponseImageDTO">ResponseImageDTO</h2>
+<!-- backwards compatibility -->
+<p><a id="schemaresponseimagedto"></a>
+<a id="schema_ResponseImageDTO"></a>
+<a id="tocSresponseimagedto"></a>
+<a id="tocsresponseimagedto"></a></p>
+<pre><code class="language-json">{
+  &quot;provider&quot;: &quot;string&quot;,
+  &quot;model&quot;: &quot;string&quot;,
+  &quot;created&quot;: 0,
+  &quot;data&quot;: [
+    {
+      &quot;url&quot;: &quot;string&quot;,
+      &quot;b64_json&quot;: &quot;string&quot;
+    }
+  ]
+}
+
+</code></pre>
+<p>ResponseImageDTO</p>
+<h3 id="properties_9">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>provider</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>model</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>created</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>data</td>
+<td>[<a href="#schemasagify__llm_gateway__schemas__images__dataitem">sagify__llm_gateway__schemas__images__DataItem</a>]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_RoleItem">RoleItem</h2>
+<!-- backwards compatibility -->
+<p><a id="schemaroleitem"></a>
+<a id="schema_RoleItem"></a>
+<a id="tocSroleitem"></a>
+<a id="tocsroleitem"></a></p>
+<pre><code class="language-json">&quot;system&quot;
+
+</code></pre>
+<p>RoleItem</p>
+<h3 id="properties_10">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoleItem</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>Allowed values: <code>system</code>, <code>assistant</code> or <code>user</code></td>
+</tr>
+</tbody>
+</table>
+<h4 id="enumerated-values_1">Enumerated Values</h4>
+<table>
+<thead>
+<tr>
+<th>Property</th>
+<th>Value</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RoleItem</td>
+<td>system</td>
+</tr>
+<tr>
+<td>RoleItem</td>
+<td>user</td>
+</tr>
+<tr>
+<td>RoleItem</td>
+<td>assistant</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_Usage">Usage</h2>
+<!-- backwards compatibility -->
+<p><a id="schemausage"></a>
+<a id="schema_Usage"></a>
+<a id="tocSusage"></a>
+<a id="tocsusage"></a></p>
+<pre><code class="language-json">{
+  &quot;prompt_tokens&quot;: 0,
+  &quot;total_tokens&quot;: 0
+}
+
+</code></pre>
+<p>Usage</p>
+<h3 id="properties_11">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>prompt_tokens</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>total_tokens</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_ValidationError">ValidationError</h2>
+<!-- backwards compatibility -->
+<p><a id="schemavalidationerror"></a>
+<a id="schema_ValidationError"></a>
+<a id="tocSvalidationerror"></a>
+<a id="tocsvalidationerror"></a></p>
+<pre><code class="language-json">{
+  &quot;loc&quot;: [
+    &quot;string&quot;
+  ],
+  &quot;msg&quot;: &quot;string&quot;,
+  &quot;type&quot;: &quot;string&quot;
+}
+
+</code></pre>
+<h2 id="tocS_sagify__llm_gateway__schemas__embeddings__DataItem">sagify__llm_gateway__schemas__embeddings__DataItem</h2>
+<!-- backwards compatibility -->
+<p><a id="schemasagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__embeddings__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__embeddings__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__embeddings__dataitem"></a></p>
+<pre><code class="language-json">{
+  &quot;object&quot;: &quot;string&quot;,
+  &quot;embedding&quot;: [
+    0
+  ],
+  &quot;index&quot;: 0
+}
+
+</code></pre>
+<p>DataItem</p>
+<h3 id="properties_12">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>object</td>
+<td>string</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>embedding</td>
+<td>[number]</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>index</td>
+<td>integer</td>
+<td>true</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tocS_sagify__llm_gateway__schemas__images__DataItem">sagify__llm_gateway__schemas__images__DataItem</h2>
+<!-- backwards compatibility -->
+<p><a id="schemasagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="schema_sagify__llm_gateway__schemas__images__DataItem"></a>
+<a id="tocSsagify__llm_gateway__schemas__images__dataitem"></a>
+<a id="tocssagify__llm_gateway__schemas__images__dataitem"></a></p>
+<pre><code class="language-json">{
+  &quot;url&quot;: &quot;string&quot;,
+  &quot;b64_json&quot;: &quot;string&quot;
+}
+
+</code></pre>
+<p>DataItem</p>
+<h3 id="properties_13">Properties</h3>
+<table>
+<thead>
+<tr>
+<th>Name</th>
+<th>Type</th>
+<th>Required</th>
+<th>Restrictions</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>url</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+<tr>
+<td>b64_json</td>
+<td>string</td>
+<td>false</td>
+<td>none</td>
+<td>none</td>
+</tr>
+</tbody>
+</table>
+<h4 id="upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</h4>
+<ul>
+<li><a href="https://aws.amazon.com/bedrock/">Amazong Bedrock</a></li>
+<li><a href="https://www.anthropic.com/">Anthropic</a></li>
+<li><a href="https://cohere.com/">Cohere</a></li>
+<li><a href="https://docs.mistral.ai/models/">Mistral</a></li>
+<li><a href="https://blog.google/technology/developers/gemma-open-models/">Gemma</a></li>
+<li><a href="https://cloud.google.com/vertex-ai">GCP VertexAI</a></li>
+</ul>
+<h2 id="machine-learning">Machine Learning</h2>
+<h3 id="getting-started-custom-training-and-deployment">Getting started - Custom Training and Deployment</h3>
+<h4 id="step-1-clone-machine-learning-demo-repository">Step 1: Clone Machine Learning demo repository</h4>
 <p>You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.</p>
 <p>Clone repository:</p>
 <pre><code class="language-sh">git clone https://github.com/Kenza-AI/sagify-demo.git 
@@ -545,7 +1840,7 @@
 <p>Install dependencies:</p>
 <pre><code class="language-sh">make requirements
 </code></pre>
-<h3 id="step-2-initialize-sagify">Step 2: Initialize sagify</h3>
+<h4 id="step-2-initialize-sagify">Step 2: Initialize sagify</h4>
 <pre><code class="language-sh">sagify init
 </code></pre>
 <p>Type in <code>sagify-demo</code> for SageMaker app name, <code>N</code> in question <code>Are you starting a new project?</code>, <code>src</code> for question <code>Type in the directory where your code lives</code> and make sure to choose your preferred Python version, AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
@@ -580,7 +1875,7 @@
     executor.sh
     push.sh
 </code></pre>
-<h3 id="step-3-integrate-sagify">Step 3: Integrate sagify</h3>
+<h4 id="step-3-integrate-sagify">Step 3: Integrate sagify</h4>
 <p>As a Machine Learning engineer, you only need to conduct a few actions. Sagify takes care of the rest:</p>
 <ol>
 <li>Copy a subset of training data under <code>sagify_base/local_test/test_dir/input/data/training/</code> to test that training works locally</li>
@@ -630,17 +1925,17 @@ return {
     cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
 return cls.model
 </code></pre>
-<h3 id="step-4-build-docker-image">Step 4: Build Docker image</h3>
+<h4 id="step-4-build-docker-image">Step 4: Build Docker image</h4>
 <p>It's time to build the Docker image that will contain the Machine Learning codebase:</p>
 <pre><code class="language-sh">sagify build
 </code></pre>
 <p>If you run <code>docker images | grep sagify-demo</code> in your terminal, you'll see the created Sagify-Demo image.</p>
-<h3 id="step-5-train-model">Step 5: Train model</h3>
+<h4 id="step-5-train-model">Step 5: Train model</h4>
 <p>Time to train the model for the Iris data set in the newly built Docker image:</p>
 <pre><code class="language-sh">sagify local train
 </code></pre>
 <p>Model file <code>model.pkl</code> and report file <code>report.txt</code> are now under <code>sagify_base/local_test/test_dir/model/</code></p>
-<h3 id="step-6-deploy-model">Step 6: Deploy model</h3>
+<h4 id="step-6-deploy-model">Step 6: Deploy model</h4>
 <p>Finally, serve the model as a REST Service:</p>
 <pre><code class="language-sh">sagify local deploy
 </code></pre>
@@ -655,7 +1950,112 @@ http://localhost:8080/invocations \
 </code></pre>
 <p>It will be slow in the first couple of calls as it loads the model in a lazy manner.</p>
 <p>Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the <em>Usage</em> section in <a href="https://Kenza-AI.github.io/sagify/">Sagify Docs</a> to see how to train and deploy this Machine Learning model to AWS SageMaker!</p>
-<h2 id="usage">Usage</h2>
+<h3 id="classic-machine-learning-usage">Classic Machine Learning Usage</h3>
+<h4 id="push-docker-image-to-aws-ecr">Push Docker Image to AWS ECR</h4>
+<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push</code> to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.</p>
+<h4 id="create-s3-bucket">Create S3 Bucket</h4>
+<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
+<h4 id="upload-training-data">Upload Training Data</h4>
+<p>Execute <code>sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data</code> to upload training data to S3</p>
+<h4 id="train-on-aws-sagemaker">Train on AWS SageMaker</h4>
+<p>Execute <code>sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge</code> to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.</p>
+<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
+<h4 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h4>
+<p>Execute <code>sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
+<h4 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h4>
+<p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
+<p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
+<pre><code class="language-json">{
+    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
+}
+</code></pre>
+<h3 id="hyperparameter-optimization">Hyperparameter Optimization</h3>
+<p>Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.</p>
+<h4 id="step-1-define-hyperparameter-configuration-file">Step 1: Define Hyperparameter Configuration File</h4>
+<p>Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. <code>Maximize</code> or <code>Minimize</code>). For example:</p>
+<pre><code class="language-json">{
+    &quot;ParameterRanges&quot;: {
+        &quot;CategoricalParameterRanges&quot;: [
+            {
+                &quot;Name&quot;: &quot;kernel&quot;,
+                &quot;Values&quot;: [&quot;linear&quot;, &quot;rbf&quot;]
+            }
+        ],
+        &quot;ContinuousParameterRanges&quot;: [
+        {
+          &quot;MinValue&quot;: 0.001,
+          &quot;MaxValue&quot;: 10,
+          &quot;Name&quot;: &quot;gamma&quot;
+        }
+        ],
+        &quot;IntegerParameterRanges&quot;: [
+            {
+                &quot;Name&quot;: &quot;C&quot;,
+                &quot;MinValue&quot;: 1,
+                &quot;MaxValue&quot;: 10
+            }
+        ]
+    },
+    &quot;ObjectiveMetric&quot;: {
+        &quot;Name&quot;: &quot;Precision&quot;,
+        &quot;Type&quot;: &quot;Maximize&quot;
+    }
+}
+</code></pre>
+<h4 id="step-2-implement-train-function">Step 2: Implement Train function</h4>
+<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
+<pre><code class="language-python">from sklearn import datasets
+iris = datasets.load_iris()
+
+# Read the hyperparameter config json file
+import json
+with open(hyperparams_path) as _in_file:
+    hyperparams_dict = json.load(_in_file)
+
+from sklearn import svm
+clf = svm.SVC(
+    gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
+    C=float(hyperparams_dict['C']),
+    kernel=hyperparams_dict['kernel']
+)
+
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(
+    iris.data, iris.target, test_size=0.3, random_state=42)
+
+clf.fit(X_train, y_train)
+
+from sklearn.metrics import precision_score
+
+predictions = clf.predict(X_test)
+
+precision = precision_score(y_test, predictions, average='weighted')
+
+# Log the objective metric name with its calculated value. In tis example is Precision.
+# The objective name should be exactly the same with the one specified in the hyperparams congig json file.
+# The value must be a numeric (float or int).
+from sagify.api.hyperparameter_tuning import log_metric
+name = &quot;Precision&quot;
+log_metric(name, precision)
+
+from joblib import dump
+dump(clf, os.path.join(model_save_path, 'model.pkl'))
+
+print('Training complete.')
+</code></pre>
+<h4 id="step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</h4>
+<ol>
+<li><code>sagify build</code> Make sure sagify is in your <code>requirements.txt</code> file.</li>
+<li><code>sagify push</code></li>
+</ol>
+<h4 id="step-4-call-the-cli-command">Step 4: Call The CLI Command</h4>
+<p>And, finally, call the hyperparameter-optimization CLI command. For example:</p>
+<pre><code class="language-sh">sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
+</code></pre>
+<h4 id="step-5-monitor-progress">Step 5: Monitor Progress</h4>
+<p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
+<p><img alt="Hyperparameter Optimization Results" src="hyperparam_monitor.png" /></p>
+<h2 id="aws-account-setup">AWS Account Setup</h2>
 <h3 id="configure-aws-account">Configure AWS Account</h3>
 <ul>
 <li>Sign in to the AWS Management Console as an IAM user and open the IAM console at <a href="https://console.aws.amazon.com/iam/">https://console.aws.amazon.com/iam/</a></li>
@@ -741,513 +2141,6 @@ source_profile = test-sagemaker
 <p>You can change the AWS profile/region in an already initialized sagify module by changing the value of <code>aws_profile</code>/<code>aws_region</code> in <code>.sagify.json</code>.</p>
 </li>
 </ul>
-<h3 id="push-docker-image-to-aws-ecr">Push Docker Image to AWS ECR</h3>
-<p>If you have followed all the steps of <em>Getting Started</em>, run <code>sagify push</code> to push the Docker image to AWS ECR. This step may take some time depending on your internet connection upload speed.</p>
-<h3 id="create-s3-bucket">Create S3 Bucket</h3>
-<p>Make sure to create an S3 bucket with a name of your choice, for example: <code>sagify-demo</code></p>
-<h3 id="upload-training-data">Upload Training Data</h3>
-<p>Execute <code>sagify cloud upload-data -i data/ -s s3://sagify-demo/training-data</code> to upload training data to S3</p>
-<h3 id="train-on-aws-sagemaker">Train on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud train -i s3://sagify-demo/training-data/ -o s3://sagify-demo/output/ -e ml.m4.xlarge</code> to train the Machine Learning model on SageMaker. This command will use the pushed Docker image.</p>
-<p>Copy the displayed Model S3 location after the command is executed (example: <code>s3://sagify-demo/output/sagify-demo-2018-04-29-15-04-14-483/output/model.tar.gz</code>)</p>
-<h3 id="deploy-on-aws-sagemaker">Deploy on AWS SageMaker</h3>
-<p>Execute <code>sagify cloud deploy -m s3://sagify-demo/output/.../output/model.tar.gz -n 3 -e ml.m4.xlarge</code> to deploy the model on SageMaker.</p>
-<h3 id="call-sagemaker-rest-endpoint">Call SageMaker REST Endpoint</h3>
-<p>Find the endpoint URL under <em>Endpoints</em> in AWS SageMaker service on AWS console. Please, refer to <a href="https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html">https://docs.aws.amazon.com/apigateway/latest/developerguide/how-to-use-postman-to-call-api.html</a> on how to call it from Postman as authorization is required.</p>
-<p>Remember that it's a POST HTTP request with Content-Type <code>application/json</code>, and the request JSON body is of the form:</p>
-<pre><code class="language-json">{
-    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
-}
-</code></pre>
-<h2 id="hyperparameter-optimization">Hyperparameter Optimization</h2>
-<p>Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.</p>
-<h3 id="step-1-define-hyperparameter-configuration-file">Step 1: Define Hyperparameter Configuration File</h3>
-<p>Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. <code>Maximize</code> or <code>Minimize</code>). For example:</p>
-<pre><code class="language-json">{
-    &quot;ParameterRanges&quot;: {
-        &quot;CategoricalParameterRanges&quot;: [
-            {
-                &quot;Name&quot;: &quot;kernel&quot;,
-                &quot;Values&quot;: [&quot;linear&quot;, &quot;rbf&quot;]
-            }
-        ],
-        &quot;ContinuousParameterRanges&quot;: [
-        {
-          &quot;MinValue&quot;: 0.001,
-          &quot;MaxValue&quot;: 10,
-          &quot;Name&quot;: &quot;gamma&quot;
-        }
-        ],
-        &quot;IntegerParameterRanges&quot;: [
-            {
-                &quot;Name&quot;: &quot;C&quot;,
-                &quot;MinValue&quot;: 1,
-                &quot;MaxValue&quot;: 10
-            }
-        ]
-    },
-    &quot;ObjectiveMetric&quot;: {
-        &quot;Name&quot;: &quot;Precision&quot;,
-        &quot;Type&quot;: &quot;Maximize&quot;
-    }
-}
-</code></pre>
-<h3 id="step-2-implement-train-function">Step 2: Implement Train function</h3>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>sagify_base/training/training.py</code> file with your logic. For example:</p>
-<pre><code class="language-python">from sklearn import datasets
-iris = datasets.load_iris()
-
-# Read the hyperparameter config json file
-import json
-with open(hyperparams_path) as _in_file:
-    hyperparams_dict = json.load(_in_file)
-
-from sklearn import svm
-clf = svm.SVC(
-    gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
-    C=float(hyperparams_dict['C']),
-    kernel=hyperparams_dict['kernel']
-)
-
-from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(
-    iris.data, iris.target, test_size=0.3, random_state=42)
-
-clf.fit(X_train, y_train)
-
-from sklearn.metrics import precision_score
-
-predictions = clf.predict(X_test)
-
-precision = precision_score(y_test, predictions, average='weighted')
-
-# Log the objective metric name with its calculated value. In tis example is Precision.
-# The objective name should be exactly the same with the one specified in the hyperparams congig json file.
-# The value must be a numeric (float or int).
-from sagify.api.hyperparameter_tuning import log_metric
-name = &quot;Precision&quot;
-log_metric(name, precision)
-
-from joblib import dump
-dump(clf, os.path.join(model_save_path, 'model.pkl'))
-
-print('Training complete.')
-</code></pre>
-<h3 id="step-3-build-and-push-docker-image">Step 3: Build and Push Docker image</h3>
-<ol>
-<li><code>sagify build</code> Make sure sagify is in your <code>requirements.txt</code> file.</li>
-<li><code>sagify push</code></li>
-</ol>
-<h3 id="step-4-call-the-cli-command">Step 4: Call The CLI Command</h3>
-<p>And, finally, call the hyperparameter-optimization CLI command. For example:</p>
-<pre><code class="language-sh">sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
-</code></pre>
-<h3 id="step-5-monitor-progress">Step 5: Monitor Progress</h3>
-<p>You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:</p>
-<p><img alt="Hyperparameter Optimization Results" src="hyperparam_monitor.png" /></p>
-<h2 id="monitor-ml-models-in-production">Monitor ML Models in Production</h2>
-<h2 id="superwise">Superwise</h2>
-<p>Superwise provides organizations with the ability to streamline model observability and the monitoring process 🚀. The solution is platform-agnostic and provides an extensive freemium tier.</p>
-<p>The steps below explain how you can integrate with Superwise to gain full visibility into your deployed models. Once you complete the integration, you can use the Superwise platform to define workflows that automatically monitor: data drift, performance degradation, data integrity, model activity, or any other customized monitoring use case.</p>
-<h3 id="step-1-create-a-superwise-account">Step 1: Create a Superwise Account</h3>
-<p>Go to <a href="https://portal.superwise.ai">Superwise</a> and click the signup button to create an account. Using the free tier, you can monitor up to three models.</p>
-<h3 id="step-2-add-your-model">Step 2: Add your model</h3>
-<p>You can use the Superwise SDK to create the model. To use the SDK you should <a href="https://docs.superwise.ai/docs/authentication">generate tokens</a>.</p>
-<h3 id="step-3-initialize-sagify">Step 3: Initialize sagify</h3>
-<p>To initialize sagify, type the following command
-<code>sagify init</code></p>
-<p>Enter <code>iris-model</code> for the SageMaker app name, and answer <code>y</code> to the prompt asking  <code>Are you starting a new project?</code> </p>
-<p>Next, make sure to choose Python version 3 and the AWS profile and region you wish to use. Type <code>requirements.txt</code> in answer to the prompt <code>Type in the path to requirements.txt.</code></p>
-<p>A module called sagify_base is created under the src directory. The module’s structure is as follows:</p>
-<pre><code>sagify_base/
-    local_test/
-        test_dir/
-            input/
-                config/
-                    hyperparameters.json
-                data/
-                    training/
-            model/
-            output/
-        deploy_local.sh
-        train_local.sh
-    prediction/
-        __init__.py
-        nginx.conf
-        predict.py
-        prediction.py
-        predictor.py
-        serve
-        wsgi.py
-    training/
-        __init__.py
-        train
-        training.py
-    __init__.py
-    build.sh
-    Dockerfile
-    executor.sh
-    push.sh
-</code></pre>
-<h3 id="step-4-initialize-the-requirementstxt">Step 4: Initialize the requirements.txt</h3>
-<p>Make sure the 'requirements.txt' at the root of the project has the following content:</p>
-<pre><code>awscli
-flake8
-Flask
-joblib
-pandas
-s3transfer
-sagify&gt;=0.18.0
-scikit-learn
-superwise
-</code></pre>
-<h3 id="step-5-download-the-iris-data-set">Step 5: Download the Iris data set</h3>
-<p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
-<h3 id="step-6-implement-the-training-logic">Step 6: Implement the training logic</h3>
-<p>In the <code>src/sagify_base/training/training.py</code> file, replace the <code>TODOs</code> in the <code>train(...)</code> function with the following text:</p>
-<pre><code class="language-python">input_file_path = os.path.join(input_data_path, 'iris.data')
-
-df = pd.read_csv(
-    input_file_path,
-    header=None,
-    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
-)
-df['date_time'] = pd.to_datetime('now')
-df[&quot;id&quot;] = df.apply(lambda _: uuid.uuid4(), axis=1)
-df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
-
-features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_train_df = df_train[['label']]
-
-features_train = features_train_df.values
-labels_train = labels_train_df.values.ravel()
-
-features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_test_df = df_test[['label']]
-
-features_test = features_test_df.values
-labels_test = labels_test_df.values.ravel()
-
-clf = SVC(gamma='auto', kernel=&quot;linear&quot;)
-clf.fit(features_train, labels_train)
-
-###### Report Testing Data ######
-test_predictions = clf.predict(features_test)
-
-accuracy = accuracy_score(labels_test, test_predictions)
-output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-joblib.dump(clf, output_model_file_path)
-
-accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-with open(accuracy_report_file_path, 'w') as _out:
-    _out.write(str(accuracy))
-
-## create superwise model
-model = sw.model.create(Model(name=MODEL_NAME,
-                                description=&quot;Iris Model Demo&quot;)
-                        )
-df[&quot;prediction&quot;] = clf.predict(df[['feature1', 'feature2', 'feature3', 'feature4']])
-## summarize the data, use infer_dtype for auto detect features
-entities = sw.data_entity.summarise(
-    data=df,
-    entities_dtypes=infer_dtype(df),
-    specific_roles={
-        &quot;date_time&quot; : DataEntityRole.TIMESTAMP,
-        &quot;id&quot; : DataEntityRole.ID,
-        &quot;label&quot; : DataEntityRole.LABEL,
-        &quot;prediction&quot; : DataEntityRole.PREDICTION_VALUE
-    },
-    importance=dict(zip(clf.coef_[0], ['feature1', 'feature2', 'feature3', 'feature4']))
-)
-
-## create and activate superwise version
-version = Version(model_id=model.id, name=&quot;V1&quot;, data_entities=entities)
-active_version = sw.version.create(version)
-sw.version.activate(active_version.id)
-</code></pre>
-<p>And, at the top of the file, add the following:</p>
-<pre><code class="language-python">import uuid
-
-import joblib
-import os
-
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-from superwise import Superwise
-from superwise.models.model import Model
-from superwise.models.version import Version
-from superwise.resources.superwise_enums import DataEntityRole
-from superwise.controller.infer import infer_dtype
-MODEL_NAME = &quot;Iris Model&quot;
-
-sw = Superwise(
-    client_id=&quot;&lt;my client_id&gt;&quot;,
-    secret=&quot;&lt;my secret&gt;&quot;,
-)
-</code></pre>
-<h3 id="step-7-implement-the-prediction-logic">Step 7: Implement the prediction logic</h3>
-<p>In the file <code>src/sagify_base/prediction/prediction.py</code> replace the body of the <code>predict(...)</code> function with the following:</p>
-<pre><code class="language-python">model_input = json_input['features']
-prediction = ModelService.predict(model_input)
-model = ModelService.get_superwise_model(MODEL_NAME)
-
-for m in model_input:
-    records = {
-        &quot;date_time&quot; : str(datetime.utcnow()),
-        &quot;id&quot; : str(uuid.uuid4()),
-        &quot;prediction&quot;: prediction,
-        &quot;feature1&quot;: m[0],
-        &quot;feature2&quot;: m[1],
-        &quot;feature3&quot;: m[2],
-        &quot;feature4&quot;: m[3]
-    }
-    transaction_id = sw.transaction.log_records(
-        model_id=model[0].id,
-        version_id=model[0].active_version_id,
-        records=records
-    )
-    print(f&quot;Created transaction:  {transaction_id}&quot;)
-return {
-    &quot;prediction&quot;: prediction.item()
-}
-</code></pre>
-<p>Within the <code>ModelService</code> class in the same file, replace the body of the <code>get_model()</code> function with the following:</p>
-<pre><code class="language-python">if cls.model is None:
-    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-return cls.model
-</code></pre>
-<p>Then, add a new function called <code>get_superwise_model()</code> to the ‘ModelService’ class, using the following:</p>
-<pre><code class="language-python">@classmethod
-def get_superwise_model(cls,model_name):
-    &quot;&quot;&quot; Get superwise model using superwise SDK &quot;&quot;&quot;
-    return sw.model.get_by_name(model_name)
-</code></pre>
-<p>Now, add the following text to the top of the file:</p>
-<pre><code class="language-python">from superwise import Superwise
-import joblib
-import os
-import pandas as pd
-from datetime import datetime
-import uuid
-
-sw = Superwise(
-    client_id=&quot;&lt;my client_id&gt;&quot;,
-    secret=&quot;&lt;my secret&gt;&quot;,
-)
-MODEL_NAME = &quot;Iris Model&quot;
-_MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
-</code></pre>
-<h3 id="step-8-build-and-train-the-ml-model">Step 8: Build and train the ML model</h3>
-<p>If you’re ready to build and train the ML model, run the command <code>sagify build</code> and then run <code>sagify local train</code></p>
-<h3 id="step-9-call-the-inference-rest-api">Step 9: Call the inference REST API</h3>
-<p>To use the REST API, run the command <code>sagify local deploy</code> </p>
-<p>Once that’s done, call the inference endpoint by running the following curl command:</p>
-<pre><code class="language-python">curl -X POST \
-http://localhost:8080/invocations \
--H 'Cache-Control: no-cache' \
--H 'Content-Type: application/json' \
- -d '{
-     &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
-}'
-</code></pre>
-<p>You should now be able to see data coming in on the Superwise dashboards.</p>
-<h2 id="aporia">Aporia</h2>
-<p>In this part, you'll integrate with <a href="https://www.aporia.com/">Aporia</a> in order to monitor deployed ML models. More specifically, you'll monitor:</p>
-<ol>
-<li>data drifting</li>
-<li>model degradation</li>
-<li>data integrity</li>
-</ol>
-<h3 id="step-1-create-aporia-account">Step 1: Create Aporia Account</h3>
-<p>Go to <a href="https://www.aporia.com/">Aporia</a> and create an account. There's a generous free tier.</p>
-<h3 id="step-2-create-model-at-aporia">Step 2: Create model at Aporia</h3>
-<p>Add your model to Aporia's console. Click the <strong>Add Model</strong> button in the Models page and name it "Iris Model"</p>
-<h3 id="step-3-initialize-sagify_1">Step 3: Initialize sagify</h3>
-<pre><code class="language-sh">sagify init
-</code></pre>
-<p>Type in <code>iris-model</code> for SageMaker app name, <code>y</code> in question <code>Are you starting a new project?</code>, make sure to choose Python version 3 and your preferred AWS profile and region. Finally, type <code>requirements.txt</code> in question <code>Type in the path to requirements.txt</code>.</p>
-<p>A module called <code>sagify_base</code> is created under the <code>src</code> directory. The structure is:</p>
-<pre><code>sagify_base/
-    local_test/
-        test_dir/
-            input/
-                config/
-                    hyperparameters.json
-                data/
-                    training/
-            model/
-            output/
-        deploy_local.sh
-        train_local.sh
-    prediction/
-        __init__.py
-        nginx.conf
-        predict.py
-        prediction.py
-        predictor.py
-        serve
-        wsgi.py
-    training/
-        __init__.py
-        train
-        training.py
-    __init__.py
-    build.sh
-    Dockerfile
-    executor.sh
-    push.sh
-</code></pre>
-<h3 id="step-4-initialize-the-requirementstxt_1">Step 4: Initialize the requirements.txt</h3>
-<p>The <code>requirements.txt</code> at the root of the project must have the following content:</p>
-<pre><code>awscli
-flake8
-Flask
-joblib
-pandas
-s3transfer
-sagify&gt;=0.18.0
-scikit-learn
-aporia[all]
-</code></pre>
-<h3 id="step-5-download-iris-data-set">Step 5: Download Iris data set</h3>
-<p>Download the Iris data set from <a href="https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data">https://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data</a> and save it in a file named "iris.data" under <code>src/sagify_base/local_test/test_dir/input/data/training/</code>.</p>
-<h3 id="step-6-implement-training-logic">Step 6: Implement Training logic</h3>
-<p>Replace the <code>TODOs</code> in the <code>train(...)</code> function in <code>src/sagify_base/training/training.py</code> file with the following. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
-<pre><code class="language-python">input_file_path = os.path.join(input_data_path, 'iris.data')
-
-df = pd.read_csv(
-    input_file_path,
-    header=None,
-    names=['feature1', 'feature2', 'feature3', 'feature4', 'label']
-)
-
-df_train, df_test = train_test_split(df, test_size=0.3, random_state=42)
-
-features_train_df = df_train[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_train_df = df_train[['label']]
-
-features_train = features_train_df.values
-labels_train = labels_train_df.values.ravel()
-
-features_test_df = df_test[['feature1', 'feature2', 'feature3', 'feature4']]
-labels_test_df = df_test[['label']]
-
-features_test = features_test_df.values
-labels_test = labels_test_df.values.ravel()
-
-###### Report Version Schema ######
-apr_model_version = 'v1'
-apr_model_type = 'multiclass'  # Select model type: &quot;binary&quot; or &quot;regression&quot;
-
-###### Create a model version ######
-apr_model = aporia.create_model_version(
-    model_id=&quot;REPLACE WITH YOUR APORIA MODEL ID&quot;,
-    model_version=apr_model_version,
-    model_type=apr_model_type,
-    features=aporia.pandas.infer_schema_from_dataframe(features_train_df),
-    predictions=aporia.pandas.infer_schema_from_dataframe(labels_train_df)
-)
-
-###### Report Training Data ######
-apr_model.log_training_set(
-    features=features_train_df,
-    labels=labels_train_df
-)
-
-clf = SVC(gamma='auto')
-clf.fit(features_train, labels_train)
-
-###### Report Testing Data ######
-test_predictions = clf.predict(features_test)
-apr_model.log_test_set(
-    features=features_test_df,
-    labels=labels_test_df,
-    predictions=pd.DataFrame({'label': test_predictions})
-)
-
-accuracy = accuracy_score(labels_test, test_predictions)
-
-output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-joblib.dump(clf, output_model_file_path)
-
-accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-with open(accuracy_report_file_path, 'w') as _out:
-    _out.write(str(accuracy))
-</code></pre>
-<p>and at the top of the file, add:</p>
-<pre><code class="language-python">import joblib
-import os
-
-import aporia
-import pandas as pd
-from sklearn.metrics import accuracy_score
-from sklearn.model_selection import train_test_split
-from sklearn.svm import SVC
-
-
-###### Initiate Aporia ######
-aporia.init(token=&quot;TOKEN PROVIDED BY APORIA&quot;, environment=&quot;YOUR CHOSEN ENV VALUE&quot;)
-</code></pre>
-<h3 id="step-7-implement-prediction-logic">Step 7: Implement Prediction logic</h3>
-<p>Replace the body of <code>predict(...)</code> function in <code>src/sagify_base/prediction/prediction.py</code> with. <strong>Remember</strong> to use the <code>model_id</code> that Aporia gave you in step 2:</p>
-<pre><code class="language-python">model_input = json_input['features']
-prediction = ModelService.predict(model_input)
-
-###### Report Inference ######
-apr_prediction_id = str(uuid.uuid4())
-
-apr_model = aporia.Model(&quot;REPLACE WITH YOUR APORIA MODEL ID&quot;, &quot;v1&quot;)
-apr_model.log_prediction(
-    id=apr_prediction_id,
-    features={
-        'feature1': model_input[0][0],
-        'feature2': model_input[0][1],
-        'feature3': model_input[0][2],
-        'feature4': model_input[0][3],
-    },
-    predictions={
-        'label': prediction.item()
-    },
-)
-
-apr_model.flush()
-
-return {
-    &quot;prediction&quot;: prediction.item()
-}
-</code></pre>
-<p>replace the body of <code>get_model()</code> function in <code>ModelService</code> class in the same file with:</p>
-<pre><code class="language-python">if cls.model is None:
-    from sklearn.externals import joblib
-    cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-return cls.model
-</code></pre>
-<p>and the top of the file must look like:</p>
-<pre><code class="language-python">import aporia
-import os
-import uuid
-
-
-###### Initiate Aporia ######
-aporia.init(token=&quot;TOKEN PROVIDED BY APORIA&quot;, environment=&quot;YOUR CHOSEN ENV VALUE&quot;)
-
-_MODEL_PATH = os.path.join('/opt/ml/', 'model')  # Path where all your model(s) live in
-</code></pre>
-<h3 id="step-8-build-and-train-the-ml-model_1">Step 8: Build and Train the ML model</h3>
-<p>Run <code>sagify build</code> and after that <code>sagify local train</code></p>
-<h3 id="step-9-call-inference-rest-api">Step 9: Call inference REST API</h3>
-<p>Run <code>sagify local deploy</code> and then run the following curl command to call the inference endpoint:</p>
-<pre><code class="language-sh">curl -X POST \
-http://localhost:8080/invocations \
--H 'Cache-Control: no-cache' \
--H 'Content-Type: application/json' \
--d '{
-    &quot;features&quot;:[[0.34, 0.45, 0.45, 0.3]]
-}'
-</code></pre>
-<p>Now you should be able to see data coming in on Aporia dashboards.</p>
 <h2 id="commands">Commands</h2>
 <h3 id="initialize">Initialize</h3>
 <h4 id="name">Name</h4>
@@ -1616,15 +2509,38 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <p><code>--endpoint-name ENDPOINT_NAME</code>: Optional name for the SageMaker endpoint</p>
-<h3 id="llm-start-infrastructure">LLM Start Infrastructure</h3>
+<h3 id="llm-list-platforms">LLM List Platforms</h3>
 <h4 id="name_14">Name</h4>
-<p>Command to start LLM infrastructure</p>
+<p>Command to list available backend LLM platforms</p>
 <h4 id="synopsis_15">Synopsis</h4>
-<pre><code class="language-sh">sagify llm start --all --chat-completions --image-creations --embeddings [--config EC2_CONFIG_FILE] --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+<pre><code class="language-sh">sagify llm platforms
 </code></pre>
 <h4 id="description_15">Description</h4>
-<p>It spins up the endpoints for chat completions, image creation and embeddings.</p>
+<p>This command lists all the available backend LLM platforms.</p>
+<h3 id="llm-list-models">LLM List Models</h3>
+<h4 id="name_15">Name</h4>
+<p>Command to list available LLM models per platform/provider</p>
+<h4 id="synopsis_16">Synopsis</h4>
+<pre><code class="language-sh">sagify llm platforms --all --chat-completions --image-creations --embeddings [--provider PROVIDER_NAME]
+</code></pre>
+<h4 id="description_16">Description</h4>
+<p>This command lists all the models per platform/provider.</p>
 <h4 id="required-flags_9">Required Flags</h4>
+<p><code>--all</code>: Show all LLMS. If this flag is used the flags <code>--chat-completions</code>, <code>--image-creations</code>, <code>--embeddings</code> are ignored.</p>
+<p><code>--chat-completions</code>: Show chat completions models.</p>
+<p><code>--image-creations</code>: Show image creations models.</p>
+<p><code>--embeddings</code>: Show embeddings models.</p>
+<h4 id="optional-flags_8">Optional Flags</h4>
+<p><code>--provider</code>: Provider name. It can take of the 2 values <code>sagemaker</code> or <code>openai</code>. Default: <code>sagemaker</code>.</p>
+<h3 id="llm-start-infrastructure">LLM Start Infrastructure</h3>
+<h4 id="name_16">Name</h4>
+<p>Command to start LLM infrastructure</p>
+<h4 id="synopsis_17">Synopsis</h4>
+<pre><code class="language-sh">sagify llm start --all --chat-completions --image-creations --embeddings [--config EC2_CONFIG_FILE] --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+</code></pre>
+<h4 id="description_17">Description</h4>
+<p>It spins up the endpoints for chat completions, image creation and embeddings.</p>
+<h4 id="required-flags_10">Required Flags</h4>
 <p><code>--all</code>: Start infrastructure for all services. If this flag is used the flags <code>--chat-completions</code>, <code>--image-creations</code>, <code>--embeddings</code> are ignored.</p>
 <p><code>--chat-completions</code>: Start infrastructure for chat completions.</p>
 <p><code>--image-creations</code>: Start infrastructure for image creations.</p>
@@ -1632,29 +2548,42 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 <p><code>--config EC2_CONFIG_FILE</code>: Path to config file to override foundation models, ec2 instance types and/or number of instances.</p>
 <p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
 <p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
-<h4 id="optional-flags_8">Optional Flags</h4>
+<h4 id="optional-flags_9">Optional Flags</h4>
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
 <h3 id="llm-stop-infrastructure">LLM Stop Infrastructure</h3>
-<h4 id="name_15">Name</h4>
+<h4 id="name_17">Name</h4>
 <p>Command to stop LLM infrastructure</p>
-<h4 id="synopsis_16">Synopsis</h4>
+<h4 id="synopsis_18">Synopsis</h4>
 <pre><code class="language-sh">sagify llm stop --all --chat-completions --image-creations --embeddings --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
 </code></pre>
-<h4 id="description_16">Description</h4>
+<h4 id="description_18">Description</h4>
 <p>It stop all or some of the services that are running.</p>
-<h4 id="required-flags_10">Required Flags</h4>
+<h4 id="required-flags_11">Required Flags</h4>
 <p><code>--all</code>: Start infrastructure for all services. If this flag is used the flags <code>--chat-completions</code>, <code>--image-creations</code>, <code>--embeddings</code> are ignored.</p>
 <p><code>--chat-completions</code>: Start infrastructure for chat completions.</p>
 <p><code>--image-creations</code>: Start infrastructure for image creations.</p>
 <p><code>--embeddings</code>: Start infrastructure for embeddings.</p>
 <p><code>--aws-profile AWS_PROFILE</code>: The AWS profile to use for the lightning deploy command</p>
 <p><code>--aws-region AWS_REGION</code>: The AWS region to use for the lightning deploy command</p>
-<h4 id="optional-flags_9">Optional Flags</h4>
+<h4 id="optional-flags_10">Optional Flags</h4>
 <p><code>--aws-tags TAGS</code> or <code>-a TAGS</code>: Tags for labeling a training job of the form <code>tag1=value1;tag2=value2</code>. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.</p>
 <p><code>--iam-role-arn IAM_ROLE</code> or <code>-r IAM_ROLE</code>: AWS IAM role to use for deploying with <em>SageMaker</em></p>
 <p><code>--external-id EXTERNAL_ID</code> or <code>-x EXTERNAL_ID</code>: Optional external id used when using an IAM role</p>
+<h3 id="llm-gateway">LLM Gateway</h3>
+<h4 id="name_18">Name</h4>
+<p>Command to build gateway docker image and start the gateway locally</p>
+<h4 id="synopsis_19">Synopsis</h4>
+<pre><code class="language-sh">sagify llm gateway --image IMAGE_NAME [--dockerfile-dir DOCKERFILE_DIR] [--platform PLATFORM] [--start-local]
+</code></pre>
+<h4 id="description_19">Description</h4>
+<p>It builds gateway docker image and starts the gateway locally.</p>
+<h4 id="required-flags_12">Required Flags</h4>
+<p><code>--image IMAGE_NAME</code>: Docker image name to run. If not built already before, it will build it for you.</p>
+<h4 id="optional-flags_11">Optional Flags</h4>
+<p><code>--platform PLATFORM</code>: Operating system. Platform in the format <code>os[/arch[/variant]]</code>.</p>
+<p><code>--start-local</code>: Flag to indicate if to start the gateway locally.</p>
               
             </div>
           </div><footer>
@@ -1702,5 +2631,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-01-21 14:53:38.571371+00:00
+Build Date UTC : 2024-02-24 12:37:07.976610+00:00
 -->
