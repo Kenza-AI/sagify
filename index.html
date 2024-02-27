@@ -70,17 +70,25 @@
     </li>
     <li class="toctree-l4"><a class="reference internal" href="#open-source">Open-Source</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#set-up-openai">Set up OpenAI</a>
+        </ul>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#set-up-open-source-llms">Set up open-source LLMs</a>
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-openai">Set up OpenAI</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</a>
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-open-source-llms">Set up open-source LLMs</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#llm-gateway-api">LLM Gateway API</a>
+    <li class="toctree-l3"><a class="reference internal" href="#deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</a>
     </li>
-    <li class="toctree-l4"><a class="reference internal" href="#upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</a>
+    <li class="toctree-l3"><a class="reference internal" href="#llm-gateway-api">LLM Gateway API</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#completions">Completions</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#embeddings">Embeddings</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#image-generations">Image Generations</a>
     </li>
         </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</a>
     </li>
         </ul>
     </li>
@@ -699,7 +707,7 @@
 </tbody>
 </table>
 <p>All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command <code>sagify llm models --all --provider sagemaker</code>. If you want to focus only on chat completions models, then run <code>sagify llm models --chat-completions --provider sagemaker</code>. For image creations and embeddings, <code>sagify llm models --image-creations --provider sagemaker</code> and <code>sagify llm models --embeddings --provider sagemaker</code>, respectively.</p>
-<h4 id="set-up-openai">Set up OpenAI</h4>
+<h3 id="set-up-openai">Set up OpenAI</h3>
 <p>You need to define the following env variables before you start the LLM Gateway server:</p>
 <ul>
 <li><code>OPENAI_API_KEY</code>: Your OpenAI API key. Example: <code>export OPENAI_API_KEY=...</code>.</li>
@@ -707,7 +715,7 @@
 <li><code>OPENAI_EMBEDDINGS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/embeddings">here</a>.</li>
 <li><code>OPENAI_IMAGE_CREATION_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/dall-e">here</a>.</li>
 </ul>
-<h4 id="set-up-open-source-llms">Set up open-source LLMs</h4>
+<h3 id="set-up-open-source-llms">Set up open-source LLMs</h3>
 <p>First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. </p>
 <p>If you want to deploy all of them, then run <code>sagify llm start --all</code>. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:</p>
 <pre><code class="language-json">{
@@ -731,7 +739,7 @@
 <p>You can change this configuration by suppling your own config file, then you can run <code>sagify llm start -all --config YOUR_CONFIG_FILE.json</code>.</p>
 <p>It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoints.</p>
 <p>The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file <code>.sagify_llm_infra.json</code>. You can also access them from the AWS Sagemaker web console.</p>
-<h4 id="deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</h4>
+<h3 id="deploy-fastapi-llm-gateway-docker">Deploy FastAPI LLM Gateway - Docker</h3>
 <p>Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. </p>
 <p>In case of using the AWS Sagemaker platform, you need to define the following env variables before you start the LLM Gateway server:</p>
 <ul>
@@ -766,7 +774,7 @@
 
 If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
 
-#### Deploy FastAPI LLM Gateway - AWS Fargate
+### Deploy FastAPI LLM Gateway - AWS Fargate
 
 In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
 
@@ -828,9 +836,9 @@ Resources:
           SecurityGroups:
             - &lt;YOUR_SECURITY_GROUP_ID&gt;
 </code></pre>
-<h4 id="llm-gateway-api">LLM Gateway API</h4>
+<h3 id="llm-gateway-api">LLM Gateway API</h3>
 <p>Once the LLM Gateway is deployed, you can access it on <code>HOST_NAME/docs</code>.</p>
-<h5 id="completions">Completions</h5>
+<h4 id="completions">Completions</h4>
 <p>Code samples</p>
 <p>Shell</p>
 <pre><code class="language-shell">curl --location --request POST '/v1/chat/completions' \
@@ -958,7 +966,7 @@ print(response.text)
     ]
 }
 </code></pre>
-<h5 id="embeddings">Embeddings</h5>
+<h4 id="embeddings">Embeddings</h4>
 <p>Code samples</p>
 <p>Shell</p>
 <pre><code class="language-shell">curl --location --request POST '/v1/embeddings' \
@@ -1067,7 +1075,7 @@ print(response.text)
     &quot;object&quot;: &quot;list&quot;
 }
 </code></pre>
-<h5 id="image-generations">Image Generations</h5>
+<h4 id="image-generations">Image Generations</h4>
 <p>Code samples</p>
 <p>Shell</p>
 <pre><code class="language-shell">curl --location --request POST '/v1/images/generations' \
@@ -1167,7 +1175,7 @@ print(response.text)
 }
 </code></pre>
 <p>The above example returns a url to the image. If you want to return a base64 value of the image, then set <code>response_format</code> to <code>base64_json</code> in the request body params.</p>
-<h4 id="upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</h4>
+<h3 id="upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</h3>
 <ul>
 <li><a href="https://aws.amazon.com/bedrock/">Amazong Bedrock</a></li>
 <li><a href="https://www.anthropic.com/">Anthropic</a></li>
@@ -1984,5 +1992,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-02-27 17:35:07.802537+00:00
+Build Date UTC : 2024-02-27 17:36:41.270071+00:00
 -->
