@@ -405,6 +405,6 @@ curl --location --request POST '/v1/images/generations' \
 
 Email: pavlos@sagify.ai
 
-## Why we build this
+## Why did we build this
 
 We realized that there is not a single LLM to rule them all!
