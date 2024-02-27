@@ -166,7 +166,7 @@ And for embeddings:
 
 All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command `sagify llm models --all --provider sagemaker`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider sagemaker`. For image creations and embeddings, `sagify llm models --image-creations --provider sagemaker` and `sagify llm models --embeddings --provider sagemaker`, respectively.
 
-#### Set up OpenAI
+### Set up OpenAI
 
 You need to define the following env variables before you start the LLM Gateway server:
 
@@ -175,7 +175,7 @@ You need to define the following env variables before you start the LLM Gateway 
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
-#### Set up open-source LLMs
+### Set up open-source LLMs
 
 First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
 
@@ -207,7 +207,7 @@ It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoi
 
 The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
 
-#### Deploy FastAPI LLM Gateway - Docker
+### Deploy FastAPI LLM Gateway - Docker
 
 Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. 
 
@@ -249,7 +249,7 @@ sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
 
 If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
 
-#### Deploy FastAPI LLM Gateway - AWS Fargate
+### Deploy FastAPI LLM Gateway - AWS Fargate
 
 In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
 
@@ -312,17 +312,13 @@ Resources:
             - <YOUR_SECURITY_GROUP_ID>
 ```
 
-#### LLM Gateway API
+### LLM Gateway API
 
 Once the LLM Gateway is deployed, you can access it on `HOST_NAME/docs`.
 
-<h1 id="sagify-llm-gateway-completions">completions</h1>
+#### Completions
 
-## create_v1_chat_completions_post
-
-<a id="opIdcreate_v1_chat_completions_post"></a>
-
-> Code samples
+Code samples
 
 Shell
 
@@ -425,30 +421,22 @@ print(response.text)
 
 *Create a model response for the given chat conversation*
 
-> Body parameter
-
 ```json
 {
   "provider": "openai|sagemaker",
-  "model": "string",
+  "model": "string", # optional
   "messages": [
     {
-      "role": "system",
+      "role": "system|user|assistant",
       "content": "string"
     }
   ],
-  "temperature": 0,
+  "temperature": 0, # optional
   "max_tokens": 0, 
-  "top_p": 0,
-  "seed": 0
+  "top_p": 0, # optional
+  "seed": 0 # optional
 }
 ```
-
-<h3 id="create_v1_chat_completions_post-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CreateCompletionDTO](#schemacreatecompletiondto)|true|body params|
 
 > Example responses
 
@@ -473,15 +461,9 @@ print(response.text)
 }
 ```
 
-Returns a [ResponseCompletionDTO](#schemaresponsecompletiondto) object.
+#### Embeddings
 
-<h1 id="sagify-llm-gateway-embeddings">embeddings</h1>
-
-## create_v1_embeddings_post
-
-<a id="opIdcreate_v1_embeddings_post"></a>
-
-> Code samples
+Code samples
 
 Shell
 
@@ -553,23 +535,15 @@ print(response.text)
 
 *Create*
 
-> Body parameter
-
 ```json
 {
   "provider": "openai|sagemaker",
-  "model": "string",
+  "model": "string", # optional
   "input": [
     "string"
   ]
 }
 ```
-
-<h3 id="create_v1_embeddings_post-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CreateEmbeddingDTO](#schemacreateembeddingdto)|true|body params|
 
 > Example responses
 
@@ -613,15 +587,9 @@ print(response.text)
 }
 ```
 
-Returns a [ResponseEmbeddingDTO](#schemaresponseembeddingdto) object.
+#### Image Generations
 
-<h1 id="sagify-llm-gateway-generations">generations</h1>
-
-## create_v1_images_generations_post
-
-<a id="opIdcreate_v1_images_generations_post"></a>
-
-> Code samples
+Code samples
 
 Shell
 
@@ -700,29 +668,21 @@ print(response.text)
 
 *Create*
 
-> Body parameter
-
 ```json
 {
   "provider": "sagemaker|openai",
-  "model": "string",
+  "model": "string", # optional
   "prompt": "string",
   "n": 0,
   "width": 0,
   "height": 0,
-  "seed": 0,
+  "seed": 0, # optional
   "response_format": "url"
 }
 ```
 
 - OpenAI: The size of the generated images. Must be one of 256x256, 512x512, or 1024x1024 for dall-e-2. Must be one of 1024x1024, 1792x1024, or 1024x1792 for dall-e-3 models.
 - StableDiffusion (Sagemaker): If you get 500, that means that probaly the deployed model on the Sagemaker endpoint was out of memory. You'll need an instance with most memory.
-
-<h3 id="create_v1_images_generations_post-parameters">Parameters</h3>
-
-|Name|In|Type|Required|Description|
-|---|---|---|---|---|
-|body|body|[CreateImageDTO](#schemacreateimagedto)|true|none|
 
 > Example responses
 
@@ -743,484 +703,8 @@ print(response.text)
 
 The above example returns a url to the image. If you want to return a base64 value of the image, then set `response_format` to `base64_json` in the request body params.
 
-Returns a [ResponseImageDTO](#schemaresponseimagedto) object.
 
-# Schemas
-
-<h2 id="tocS_ChoiceItem">ChoiceItem</h2>
-<!-- backwards compatibility -->
-<a id="schemachoiceitem"></a>
-<a id="schema_ChoiceItem"></a>
-<a id="tocSchoiceitem"></a>
-<a id="tocschoiceitem"></a>
-
-```json
-{
-  "index": 0,
-  "message": {
-    "role": "system",
-    "content": "string"
-  },
-  "finish_reason": "string"
-}
-
-```
-
-ChoiceItem
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|index|integer|true|none|none|
-|message|[MessageItem](#schemamessageitem)|true|none|none|
-|finish_reason|string|false|none|none|
-
-<h2 id="tocS_CreateCompletionDTO">CreateCompletionDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemacreatecompletiondto"></a>
-<a id="schema_CreateCompletionDTO"></a>
-<a id="tocScreatecompletiondto"></a>
-<a id="tocscreatecompletiondto"></a>
-
-```json
-{
-  "provider": "string",
-  "model": "string",
-  "messages": [
-    {
-      "role": "system",
-      "content": "string"
-    }
-  ],
-  "temperature": 0,
-  "max_tokens": 0,
-  "top_p": 0,
-  "seed": 0
-}
-
-```
-
-CreateCompletionDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|provider|string|true|none|It takes one of the following values: openai or sagemaker|
-|model|string|false|none|It overrides the env variables for models|
-|messages|[[MessageItem](#schemamessageitem)]|true|none|A list of messages for the conversation so far|
-|temperature|number|false|none|Defaults to 1. Ranges from 0 to 1. Use temp closer to 0 for analytical / multiple choice, and closer to 1 for creative and generative tasks.|
-|max_tokens|integer|true|none|The maximum number of tokens to generate before stopping|
-|top_p|number|false|none|An alternative to sampling with temperature, called nucleus sampling, where the model considers the results of the tokens with top_p probability mass. So 0.1 means only the tokens comprising the top 10% probability mass are considered.|
-|seed|integer|false|none|If specified, the underlying systems will make a best effort to sample deterministically such that repeated requests with the same seed and parameters should return the same result.|
-
-<h2 id="tocS_CreateEmbeddingDTO">CreateEmbeddingDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemacreateembeddingdto"></a>
-<a id="schema_CreateEmbeddingDTO"></a>
-<a id="tocScreateembeddingdto"></a>
-<a id="tocscreateembeddingdto"></a>
-
-```json
-{
-  "provider": "string",
-  "model": "string",
-  "input": [
-    "string"
-  ]
-}
-
-```
-
-CreateEmbeddingDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|provider|string|true|none|none|
-|model|string|false|none|none|
-|input|any|true|none|none|
-
-anyOf
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|[string]|false|none|none|
-
-or
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|» *anonymous*|string|false|none|none|
-
-<h2 id="tocS_CreateImageDTO">CreateImageDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemacreateimagedto"></a>
-<a id="schema_CreateImageDTO"></a>
-<a id="tocScreateimagedto"></a>
-<a id="tocscreateimagedto"></a>
-
-```json
-{
-  "provider": "string",
-  "model": "string",
-  "prompt": "string",
-  "n": 0,
-  "width": 0,
-  "height": 0,
-  "seed": 0,
-  "response_format": "url"
-}
-
-```
-
-CreateImageDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|provider|string|true|none|none|
-|model|string|false|none|none|
-|prompt|string|true|none|none|
-
-continued
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|n|integer|true|none|none|
-|width|integer|true|none|none|
-|height|integer|true|none|none|
-|seed|integer|false|none|none|
-|response_format|[ResponseFormat](#schemaresponseformat)|false|none|An enumeration.|
-
-<h2 id="tocS_HTTPValidationError">HTTPValidationError</h2>
-<!-- backwards compatibility -->
-<a id="schemahttpvalidationerror"></a>
-<a id="schema_HTTPValidationError"></a>
-<a id="tocShttpvalidationerror"></a>
-<a id="tocshttpvalidationerror"></a>
-
-```json
-{
-  "detail": [
-    {
-      "loc": [
-        "string"
-      ],
-      "msg": "string",
-      "type": "string"
-    }
-  ]
-}
-
-```
-
-HTTPValidationError
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|detail|[[ValidationError](#schemavalidationerror)]|false|none|none|
-
-<h2 id="tocS_MessageItem">MessageItem</h2>
-<!-- backwards compatibility -->
-<a id="schemamessageitem"></a>
-<a id="schema_MessageItem"></a>
-<a id="tocSmessageitem"></a>
-<a id="tocsmessageitem"></a>
-
-```json
-{
-  "role": "system|assistant|user",
-  "content": "string"
-}
-
-```
-
-MessageItem
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|role|[RoleItem](#schemaroleitem)|true|none|Either `system`, `assistant` or `user`|
-|content|string|true|none|The actual message|
-
-<h2 id="tocS_ResponseCompletionDTO">ResponseCompletionDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemaresponsecompletiondto"></a>
-<a id="schema_ResponseCompletionDTO"></a>
-<a id="tocSresponsecompletiondto"></a>
-<a id="tocsresponsecompletiondto"></a>
-
-```json
-{
-  "id": "string",
-  "object": "string",
-  "created": 0,
-  "provider": "string",
-  "model": "string",
-  "choices": [
-    {
-      "index": 0,
-      "message": {
-        "role": "system",
-        "content": "string"
-      },
-      "finish_reason": "string"
-    }
-  ],
-  "usage": {
-    "prompt_tokens": 0,
-    "total_tokens": 0
-  }
-}
-
-```
-
-ResponseCompletionDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|id|string|true|none|A unique identifier for the chat completion|
-|object|string|true|none|The object type, which is always `chat.completion`|
-|created|integer|true|none|The Unix timestamp (in seconds) of when the chat completion was created|
-|provider|string|true|none|Either `sagemaker` or `openai`|
-|model|string|true|none|none|
-|choices|[[ChoiceItem](#schemachoiceitem)]|true|none|none|
-|usage|[Usage](#schemausage)|false|none|none|
-
-<h2 id="tocS_ResponseEmbeddingDTO">ResponseEmbeddingDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemaresponseembeddingdto"></a>
-<a id="schema_ResponseEmbeddingDTO"></a>
-<a id="tocSresponseembeddingdto"></a>
-<a id="tocsresponseembeddingdto"></a>
-
-```json
-{
-  "data": [
-    {
-      "object": "string",
-      "embedding": [
-        0
-      ],
-      "index": 0
-    }
-  ],
-  "provider": "string",
-  "model": "string",
-  "object": "string",
-  "usage": {
-    "prompt_tokens": 0,
-    "total_tokens": 0
-  }
-}
-
-```
-
-ResponseEmbeddingDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|data|[[sagify__llm_gateway__schemas__embeddings__DataItem](#schemasagify__llm_gateway__schemas__embeddings__dataitem)]|true|none|none|
-|provider|string|true|none|none|
-|model|string|true|none|none|
-|object|string|true|none|none|
-|usage|[Usage](#schemausage)|false|none|none|
-
-<h2 id="tocS_ResponseFormat">ResponseFormat</h2>
-<!-- backwards compatibility -->
-<a id="schemaresponseformat"></a>
-<a id="schema_ResponseFormat"></a>
-<a id="tocSresponseformat"></a>
-<a id="tocsresponseformat"></a>
-
-```json
-"url"
-
-```
-
-ResponseFormat
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|ResponseFormat|string|false|none|An enumeration.|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|ResponseFormat|url|
-|ResponseFormat|b64_json|
-
-<h2 id="tocS_ResponseImageDTO">ResponseImageDTO</h2>
-<!-- backwards compatibility -->
-<a id="schemaresponseimagedto"></a>
-<a id="schema_ResponseImageDTO"></a>
-<a id="tocSresponseimagedto"></a>
-<a id="tocsresponseimagedto"></a>
-
-```json
-{
-  "provider": "string",
-  "model": "string",
-  "created": 0,
-  "data": [
-    {
-      "url": "string",
-      "b64_json": "string"
-    }
-  ]
-}
-
-```
-
-ResponseImageDTO
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|provider|string|true|none|none|
-|model|string|true|none|none|
-|created|integer|true|none|none|
-|data|[[sagify__llm_gateway__schemas__images__DataItem](#schemasagify__llm_gateway__schemas__images__dataitem)]|true|none|none|
-
-<h2 id="tocS_RoleItem">RoleItem</h2>
-<!-- backwards compatibility -->
-<a id="schemaroleitem"></a>
-<a id="schema_RoleItem"></a>
-<a id="tocSroleitem"></a>
-<a id="tocsroleitem"></a>
-
-```json
-"system"
-
-```
-
-RoleItem
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|RoleItem|string|false|none|Allowed values: `system`, `assistant` or `user`|
-
-#### Enumerated Values
-
-|Property|Value|
-|---|---|
-|RoleItem|system|
-|RoleItem|user|
-|RoleItem|assistant|
-
-<h2 id="tocS_Usage">Usage</h2>
-<!-- backwards compatibility -->
-<a id="schemausage"></a>
-<a id="schema_Usage"></a>
-<a id="tocSusage"></a>
-<a id="tocsusage"></a>
-
-```json
-{
-  "prompt_tokens": 0,
-  "total_tokens": 0
-}
-
-```
-
-Usage
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|prompt_tokens|integer|true|none|none|
-|total_tokens|integer|true|none|none|
-
-<h2 id="tocS_ValidationError">ValidationError</h2>
-<!-- backwards compatibility -->
-<a id="schemavalidationerror"></a>
-<a id="schema_ValidationError"></a>
-<a id="tocSvalidationerror"></a>
-<a id="tocsvalidationerror"></a>
-
-```json
-{
-  "loc": [
-    "string"
-  ],
-  "msg": "string",
-  "type": "string"
-}
-
-```
-
-<h2 id="tocS_sagify__llm_gateway__schemas__embeddings__DataItem">sagify__llm_gateway__schemas__embeddings__DataItem</h2>
-<!-- backwards compatibility -->
-<a id="schemasagify__llm_gateway__schemas__embeddings__dataitem"></a>
-<a id="schema_sagify__llm_gateway__schemas__embeddings__DataItem"></a>
-<a id="tocSsagify__llm_gateway__schemas__embeddings__dataitem"></a>
-<a id="tocssagify__llm_gateway__schemas__embeddings__dataitem"></a>
-
-```json
-{
-  "object": "string",
-  "embedding": [
-    0
-  ],
-  "index": 0
-}
-
-```
-
-DataItem
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|object|string|true|none|none|
-|embedding|[number]|true|none|none|
-|index|integer|true|none|none|
-
-<h2 id="tocS_sagify__llm_gateway__schemas__images__DataItem">sagify__llm_gateway__schemas__images__DataItem</h2>
-<!-- backwards compatibility -->
-<a id="schemasagify__llm_gateway__schemas__images__dataitem"></a>
-<a id="schema_sagify__llm_gateway__schemas__images__DataItem"></a>
-<a id="tocSsagify__llm_gateway__schemas__images__dataitem"></a>
-<a id="tocssagify__llm_gateway__schemas__images__dataitem"></a>
-
-```json
-{
-  "url": "string",
-  "b64_json": "string"
-}
-
-```
-
-DataItem
-
-### Properties
-
-|Name|Type|Required|Restrictions|Description|
-|---|---|---|---|---|
-|url|string|false|none|none|
-|b64_json|string|false|none|none|
-
-
-#### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
+### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
 
 - [Amazong Bedrock](https://aws.amazon.com/bedrock/)
 - [Anthropic](https://www.anthropic.com/)

@@ -11,9 +11,9 @@
 
 # sagify
 
-A command-line utility to train and deploy LLMs and Machine Learning/Deep Learning models on [AWS SageMaker](https://aws.amazon.com/sagemaker/) in a few simple steps! It hides all the details of Sagemaker so that you can focus 100% on Machine Learning, and not in low level engineering tasks.
+Sagify provides a simplified interface to manage machine learning workflows on [AWS SageMaker](https://aws.amazon.com/sagemaker/), helping you focus on building ML models rather than infrastructure. Its modular architecture includes an LLM Gateway module to provide a unified interface for leveraging both open source and proprietary large language models. The LLM Gateway gives access to various LLMs through a simple API, letting you easily incorporate them into your workflows.
 
-For detailed reference to Sagify commands please go to: [Read the Docs](https://Kenza-AI.github.io/sagify/)
+For detailed reference to Sagify please go to: [Read the Docs](https://Kenza-AI.github.io/sagify/)
 
 ## Installation
 
@@ -46,1002 +46,365 @@ You can change the values for ec2 type (-e), aws region and aws profile with you
 
 Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
-## Getting started -  No code deployment
+## Backend Platforms
 
-1. Create a file with name `huggingface_config.json` with the following content:
+### OpenAI
 
-        {
-          "transformers_version": "4.6.1",
-          "pytorch_version": "1.7.1",
-          "hub": {
-            "HF_MODEL_ID": "gpt2",
-            "HF_TASK": "text-generation"
-          }
-        }
-                
-2. Then, make sure to configure your AWS account by following the instructions at section [Configure AWS Account](#configure-aws-account)
-  
-3. Finally, run the following command:
+The following models are offered for chat completions:
 
-        sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
-        
-You can change the values for ec2 type (-e), aws region and aws profile with your preferred ones.
+| Model Name | URL |
+|:------------:|:-----:|
+|gpt-4|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-4-32k|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
+|gpt-3.5-turbo|https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo|
 
-4. Once the Hugging Face model is deployed, you can go to https://console.aws.amazon.com/sagemaker/home?region=us-east-1#/endpoints (make sure you're on your preferred region) and find your deployed endpoint. For example:
+For image creation you can rely on the following models:
 
-![Sagemaker-Endpoints-List](docs/sagemaker_endpoints_list.png)
+| Model Name | URL |
+|:------------:|:-----:|
+|dall-e-3|https://platform.openai.com/docs/models/dall-e|
+|dall-e-2|https://platform.openai.com/docs/models/dall-e|
 
-5. Then, you can click on your deployed endpoint and copy the endpoint url. For example:
+And for embeddings:
 
-![Sagemaker-Endpoint](docs/sagemaker_endpoint.png)
+| Model Name | URL |
+|:------------:|:-----:|
+|text-embedding-3-large|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-3-small|https://platform.openai.com/docs/models/embeddings|
+|text-embedding-ada-002|https://platform.openai.com/docs/models/embeddings|
 
-6. Postman is a good app to call the deployed endpoint. Here's an example on how to set up the AWS signature in order to call the endpoint:
- 
-![Postman-AWS-Signature](docs/postman_aws_signature.png)
+All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
 
-7. Finally, you can call the endpoint from Postman:
+### Open-Source
 
-![Postman-Call-Endpoint](docs/postman_call_endpoint.png)
+The following open-source models are offered for chat completions:
 
-## Getting started - Custom Training and Deployment
+| Model Name | URL |
+|:------------:|:-----:|
+|llama-2-7b|https://huggingface.co/meta-llama/Llama-2-7b|
+|llama-2-13b|https://huggingface.co/meta-llama/Llama-2-13b|
+|llama-2-70b|https://huggingface.co/meta-llama/Llama-2-70b|
 
-### Step 1: Clone Machine Learning demo repository
+For image creation you can rely on the following open-source models:
 
-You're going to clone and train a Machine Learning codebase to train a classifier for the Iris data set.
+| Model Name | URL |
+|:------------:|:-----:|
+|stabilityai-stable-diffusion-v2|https://huggingface.co/stabilityai/stable-diffusion-2|
+|stabilityai-stable-diffusion-v2-1-base|https://huggingface.co/stabilityai/stable-diffusion-2-1-base|
+|stabilityai-stable-diffusion-v2-fp16|https://huggingface.co/stabilityai/stable-diffusion-2/tree/fp16|
 
-Clone repository:
+And for embeddings:
 
-    git clone https://github.com/Kenza-AI/sagify-demo.git 
-    
-Create environment:
-    
-    mkvirtualenv -p python3.7 sagify-demo
-    
-or
+| Model Name | URL |
+|:------------:|:-----:|
+|bge-large-en|https://huggingface.co/BAAI/bge-large-en|
+|bge-base-en|https://huggingface.co/BAAI/bge-base-en|
+|gte-large|https://huggingface.co/thenlper/gte-large|
+|gte-base|https://huggingface.co/thenlper/gte-base|
+|e5-large-v2|https://huggingface.co/intfloat/e5-large-v2|
+|bge-small-en|https://huggingface.co/BAAI/bge-small-en|
+|e5-base-v2|https://huggingface.co/intfloat/e5-base-v2|
+|multilingual-e5-large|https://huggingface.co/intfloat/multilingual-e5-large|
+|e5-large|https://huggingface.co/intfloat/e5-large|
+|gte-small|https://huggingface.co/thenlper/gte-small|
+|e5-base|https://huggingface.co/intfloat/e5-base|
+|e5-small-v2|https://huggingface.co/intfloat/e5-small-v2|
+|multilingual-e5-base|https://huggingface.co/intfloat/multilingual-e5-base|
+|all-MiniLM-L6-v2|https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2|
 
-    mkvirtualenv -p python3.8 sagify-demo
+All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command `sagify llm models --all --provider sagemaker`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider sagemaker`. For image creations and embeddings, `sagify llm models --image-creations --provider sagemaker` and `sagify llm models --embeddings --provider sagemaker`, respectively.
 
-Don't forget to activate the virtualenv after the creation of environment by executing `workon sagify-demo`.
+## Set up OpenAI
 
-Install dependencies:
+You need to define the following env variables before you start the LLM Gateway server:
 
-    make requirements
+- `OPENAI_API_KEY`: Your OpenAI API key. Example: `export OPENAI_API_KEY=...`.
+- `OPENAI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
+- `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
+- `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
+## Set up open-source LLMs
 
-### Step 2: Initialize sagify
+First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
 
-    sagify init
-
-Type in `sagify-demo` for SageMaker app name, `N` in question `Are you starting a new project?`, `src` for question `Type in the directory where your code lives` and make sure to choose your preferred Python version, AWS profile and region. Finally, type `requirements.txt` in question `Type in the path to requirements.txt`.
-
-A module called `sagify` is created under the directory you provided. The structure is:
- 
-    sagify_base/
-        local_test/
-            test_dir/
-                input/
-                    config/
-                        hyperparameters.json
-                    data/
-                        training/
-                model/
-                output/
-            deploy_local.sh
-            train_local.sh
-        prediction/
-            __init__.py
-            nginx.conf
-            predict.py
-            prediction.py
-            predictor.py
-            serve
-            wsgi.py
-        training/
-            __init__.py
-            train
-            training.py
-        __init__.py
-        build.sh
-        Dockerfile
-        executor.sh
-        push.sh
-
-### Step 3: Integrate sagify
-
-As a Data Scientist, you only need to conduct a few actions. Sagify takes care of the rest:
-
-1. Copy a subset of training data under `sagify_base/local_test/test_dir/input/data/training/` to test that training works locally
-2. Implement `train(...)` function in `sagify_base/training/training.py`
-3. Implement `predict(...)` function in `sagify_base/prediction/prediction.py`
-4. Optionally, specify hyperparameters in `sagify_base/local_test/test_dir/input/config/hyperparameters.json` 
-
-Hence,
-
-1. Copy `iris.data` files from `data` to `sagify_base/local_test/test_dir/input/data/training/`
-
-2. Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with:
-
-    ```python
-    input_file_path = os.path.join(input_data_path, 'iris.data')
-    clf, accuracy = training_logic(input_file_path=input_file_path)
-    
-    output_model_file_path = os.path.join(model_save_path, 'model.pkl')
-    joblib.dump(clf, output_model_file_path)
-    
-    accuracy_report_file_path = os.path.join(model_save_path, 'report.txt')
-    with open(accuracy_report_file_path, 'w') as _out:
-        _out.write(str(accuracy))
-    ```
-                
-    and at the top of the file, add:
-     
-    ```python
-    import os
-    
-    import joblib
-    
-    from iris_training import train as training_logic
-    ```
-
-3. Replace the body of `predict(...)` function in `sagify_base/prediction/prediction.py` with:
-
-    ```python
-    model_input = json_input['features']
-    prediction = ModelService.predict(model_input)
-
-    return {
-        "prediction": prediction.item()
-    }
-    ```
-        
-    and replace the body of `get_model()` function in `ModelService` class in the same file with:
-    
-    ```python
-    if cls.model is None:
-        import joblib
-        cls.model = joblib.load(os.path.join(_MODEL_PATH, 'model.pkl'))
-    return cls.model
-    ```
-    
-
-### Step 4: Build Docker image
-
-It's time to build the Docker image that will contain the Machine Learning codebase:
-
-    sagify build
-
-If you run `docker images | grep sagify-demo` in your terminal, you'll see the created Sagify-Demo image.
-
-### Step 5: Train model
-
-Time to train the model for the Iris data set in the newly built Docker image:
-
-    sagify local train
-
-Model file `model.pkl` and report file `report.txt` are now under `sagify_base/local_test/test_dir/model/`
-
-### Step 6: Deploy model
-
-Finally, serve the model as a REST Service:
-
-    sagify local deploy
-
-Run the following curl command on your terminal to verify that the REST Service works:
-
-    ```bash
-    curl -X POST \
-    http://localhost:8080/invocations \
-    -H 'Cache-Control: no-cache' \
-    -H 'Content-Type: application/json' \
-    -H 'Postman-Token: 41189b9a-40e2-abcf-b981-c31ae692072e' \
-    -d '{
-	    "features":[[0.34, 0.45, 0.45, 0.3]]
-    }'
-    ```
-
-It will be slow in the first couple of calls as it loads the model in a lazy manner.
-
-Voila! That's a proof that this Machine Learning model is going to be trained and deployed on AWS SageMaker successfully. Now, go to the *Usage* section in [Sagify Docs](https://Kenza-AI.github.io/sagify/) to see how to train and deploy this Machine Learning model to AWS SageMaker!
-
-
-## Hyperparameter Optimization
-
-Given that you have configured your AWS Account as described in the previous section, you're now ready to perform Bayesian Hyperparameter Optimization on AWS SageMaker! The process is similar to training step.
-
-### Step 1: Define Hyperparameter Configuration File
-
-Define the Hyperparameter Configuration File. More specifically, you need to specify in a local JSON file the ranges for the hyperparameters, the name of the objective metric and its type (i.e. `Maximize` or `Minimize`). For example:
+If you want to deploy all of them, then run `sagify llm start --all`. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:
 
 ```json
 {
-	"ParameterRanges": {
-		"CategoricalParameterRanges": [
-			{
-				"Name": "kernel",
-				"Values": ["linear", "rbf"]
-			}
-		],
-		"ContinuousParameterRanges": [
-		{
-		  "MinValue": 0.001,
-		  "MaxValue": 10,
-		  "Name": "gamma"
-		}
-		],
-		"IntegerParameterRanges": [
-			{
-				"Name": "C",
-				"MinValue": 1,
-				"MaxValue": 10
-			}
-		]
+    "chat_completions": {
+        "model": "llama-2-7b",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
     },
-    "ObjectiveMetric": {
-    	"Name": "Precision",
-        "Type": "Maximize"
-    }
-}
-```
-
-### Step 2: Implement Train function
-
-Replace the `TODOs` in the `train(...)` function in `sagify_base/training/training.py` file with your logic. For example:
-
-```python
-    from sklearn import datasets
-    iris = datasets.load_iris()
-
-    # Read the hyperparameter config json file
-    import json
-    with open(hyperparams_path) as _in_file:
-        hyperparams_dict = json.load(_in_file)
-
-    from sklearn import svm
-    clf = svm.SVC(
-        gamma=float(hyperparams_dict['gamma']),  # Values will be read as strings, so make sure to convert them to the right data type
-        C=float(hyperparams_dict['C']),
-        kernel=hyperparams_dict['kernel']
-    )
-
-    from sklearn.model_selection import train_test_split
-    X_train, X_test, y_train, y_test = train_test_split(
-        iris.data, iris.target, test_size=0.3, random_state=42)
-
-    clf.fit(X_train, y_train)
-
-    from sklearn.metrics import precision_score
-
-    predictions = clf.predict(X_test)
-
-    precision = precision_score(y_test, predictions, average='weighted')
-    
-    # Log the objective metric name with its calculated value. In tis example is Precision.
-    # The objective name should be exactly the same with the one specified in the hyperparams congig json file.
-    # The value must be a numeric (float or int).
-    from sagify.api.hyperparameter_tuning import log_metric
-    name = "Precision"
-    log_metric(name, precision)
-
-    from joblib import dump
-    dump(clf, os.path.join(model_save_path, 'model.pkl'))
-
-    print('Training complete.')
-```
-        
-### Step 3: Build and Push Docker image
-
-1. `sagify build` Make sure sagify is in your `requirements.txt` file.
-2. `sagify push`
-
-### Step 4: Call The CLI Command
-
-And, finally, call the hyperparameter-optimization CLI command. For example:
-
-     sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json 
-    
-### Step 5: Monitor Progress
-
-You can monitor the progress via the SageMaker UI console. Here is an example of a finished Hyperparameter Optimization job:
-
-![Hyperparameter Optimization Results](docs/hyperparam_monitor.png)
-
-
-## Commands
-
-### Initialize
-
-#### Name
-
-Initializes a sagify module
-
-#### Synopsis
-
-    sagify init
-    
-#### Description
-
-This command initializes a sagify module in the directory you provide when asked after you invoke the `init` command.
-
-### Example
-
-    sagify init
-
-
-### Configure
-
-#### Description
-
-Updates an existing configuration value e.g. `python version` or `AWS region`.
-
-#### Synopsis
-
-    sagify configure [--aws-region AWS_REGION] [--aws-profile AWS_PROFILE] [--image-name IMAGE_NAME] [--python-version PYTHON_VERSION]
-
-#### Optional Flags
-
-`--aws-region AWS_REGION`: _AWS_ region where _Docker_ images are pushed and _SageMaker_ operations (_train_, _deploy_) are performed.
-
-`--aws-profile AWS_PROFILE`: _AWS_ profile to use when interacting with _AWS_.
-
-`--image-name IMAGE_NAME`: _Docker_ image name used when building for use with _SageMaker_. This shows up as an _AWS ECR_ repository on your _AWS_ account.
-
-`--python-version PYTHON_VERSION`: _Python_ version used when building _SageMaker's_ _Docker_ images. Currently supported versions: `3.6`.
-
-
-### Example
-
-    sagify configure --aws-region us-east-2 --aws-profile default --image-name sage-docker-image-name --python-version 3.6
-
-
-### Build
-
-#### Name
-
-Builds a Docker image
-
-#### Synopsis
-
-    sagify build
-    
-#### Description
-
-This command builds a Docker image from code under the directory sagify is installed in. A `REQUIREMENTS_FILE` needs to be specified during `sagify init` or later via `sagify configure --requirements-dir` for all required dependencies to be installed in the Docker image.
-
-#### Example
-
-    sagify build
-
-
-### Local Train
-
-#### Name
-
-Executes a Docker image in train mode
-
-#### Synopsis
-
-    sagify local train
-    
-#### Description
-
-This command executes a Docker image in train mode. More specifically, it executes the `train(...)` function in `sagify_base/training/training.py` inside an already built Docker image (see Build command section).
-
-#### Example
-
-    sagify local train
-    
-
-### Local Deploy
-
-#### Name
-
-Executes a Docker image in serve mode
-
-#### Synopsis
-
-    sagify local deploy
-    
-#### Description
-
-This command executes a Docker image in serve mode. More specifically, it runs a Flask REST app in Docker image and directs HTTP requests to `/invocations` endpoint. Then, the `/invocations` endpoint calls the `predict(...)` function in `sagify_base/prediction/prediction.py` (see Build command section on how to build a Docker image).
- 
-#### Example
-
-    sagify local deploy
-    
-
-### Push
-
-#### Name
-
-Pushes a Docker image to AWS Elastic Container Service
-
-#### Synopsis
-
-    sagify push [--aws-profile PROFILE_NAME] [--aws-region AWS_REGION] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
-
-#### Description
-
-This command pushes an already built Docker image to AWS Elastic Container Service. Later on, AWS SageMaker will consume that image from AWS Elastic Container Service for train and serve mode.
-
-> Only one of _iam-role-arn_ and _aws_profile_ can be provided. _external-id_ is ignored when no _iam-role-arn_ is provided.
-
-#### Optional Flags
-
-`--iam-role-arn IAM_ROLE` or `-i IAM_ROLE`: AWS IAM role to use for pushing to ECR
-
-`--aws-region AWS_REGION` or `-r AWS_REGION`: The AWS region to push the image to
-
-`--aws-profile PROFILE_NAME` or `-p PROFILE_NAME`: AWS profile to use for pushing to ECR
-
-`--external-id EXTERNAL_ID` or `-e EXTERNAL_ID`: Optional external id used when using an IAM role
-
-#### Example
-
-    sagify push
-    
-
-### Cloud Upload Data
-
-#### Name
-
-Uploads data to AWS S3
-
-#### Synopsis
-
-    sagify cloud upload-data --input-dir LOCAL_INPUT_DATA_DIR --s3-dir S3_TARGET_DATA_LOCATION
-    
-#### Description
- 
-This command uploads content under `LOCAL_INPUT_DATA_DIR` to S3 under `S3_TARGET_DATA_LOCATION`
-
-#### Required Flags
-
-`--input-dir LOCAL_INPUT_DATA_DIR` or `-i LOCAL_INPUT_DATA_DIR`: Local input directory
-
-`--s3-dir S3_TARGET_DATA_LOCATION` or `-s S3_TARGET_DATA_LOCATION`: S3 target location
-
-#### Example
-
-    sagify cloud upload-data -i ./training_data/ -s s3://my-bucket/training-data/
-
-
-### Cloud Train
-
-#### Name
-
-Trains your ML/DL model using a Docker image on AWS SageMaker with input from S3
-
-#### Synopsis
-
-    sagify cloud train --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT --ec2-type EC2_TYPE [--hyperparams-file HYPERPARAMS_JSON_FILE] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--metric-names COMMA_SEPARATED_METRIC_NAMES] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
-
-#### Description
-
-This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in train mode
-
-#### Required Flags
-
-`--input-s3-dir INPUT_DATA_S3_LOCATION` or `-i INPUT_DATA_S3_LOCATION`: S3 location to input data
-
-`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `-o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
-
-`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
-
-#### Optional Flags
-
-`--hyperparams-file HYPERPARAMS_JSON_FILE` or `-h HYPERPARAMS_JSON_FILE`: Path to hyperparams JSON file
- 
-`--volume-size EBS_SIZE_IN_GB` or `-v EBS_SIZE_IN_GB`: Size in GB of the EBS volume (default: 30)
-
-`--time-out TIME_OUT_IN_SECS` or `-s TIME_OUT_IN_SECS`: Time-out in seconds (default: 24 * 60 * 60)
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for training with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-`--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
-
-`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored.
-
-`--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES`: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).
-
-`--metric-names COMMA_SEPARATED_METRIC_NAMES`: Optional comma-separated metric names for tracking performance of training jobs. Example: `Precision,Recall,AUC`. Then, make sure you log these metric values using the `log_metric` function in the `train` function:
-
-```python
-...
-from sagify.api.hyperparameter_tuning import log_metric
-log_metric("Precision:, precision)
-log_metric("Accuracy", accuracy)
-...
-```
-    
-   When the training jobs finishes, they will be stored in the CloudWatch algorithm metrics logs of the SageMaker training job:
-   
-   ![Algorithm Metrics](docs/cloud_watch_metrics.png)
-
-#### Example
-
-    sagify cloud train -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparams.json -v 60 -t 86400 --metric-names Accuracy,Precision
-    
-    
-### Cloud Hyperparameter Optimization
-
-#### Name
-
-Executes a Docker image in hyperparameter-optimization mode on AWS SageMaker
-
-#### Synopsis
-
-    sagify cloud hyperparameter-optimization --input-s3-dir INPUT_DATA_S3_LOCATION --output-s3-dir S3_LOCATION_TO_SAVE_MULTIPLE_TRAINED_MODELS --ec2-type EC2_TYPE [--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE] [--max-jobs MAX_NUMBER_OF_TRAINING_JOBS] [--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS] [--volume-size EBS_SIZE_IN_GB] [--time-out TIME_OUT_IN_SECS] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--base-job-name BASE_JOB_NAME] [--job-name JOB_NAME] [--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED] [--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES]
-
-#### Description
-
-This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in hyperparameter-optimization mode
-
-#### Required Flags
-
-`--input-s3-dir INPUT_DATA_S3_LOCATION` or `-i INPUT_DATA_S3_LOCATION`: S3 location to input data
-
-`--output-s3-dir S3_LOCATION_TO_SAVE_OUTPUT` or `-o S3_LOCATION_TO_SAVE_OUTPUT`: S3 location to save output (models, reports, etc). Make sure that the output bucket already exists. Any not existing key prefix will be created by sagify.
-
-`--ec2-type EC2_TYPE` or `-e EC2_TYPE`: ec2 type. Refer to <https://aws.amazon.com/sagemaker/pricing/instance-types/>
-
-`--hyperparams-config-file HYPERPARAM_RANGES_JSON_FILE` or `-h HYPERPARAM_RANGES_JSON_FILE`: Local path to hyperparameters configuration file. Example:
-
-```json
-{
-	"ParameterRanges": {
-		"CategoricalParameterRanges": [
-			{
-				"Name": "kernel",
-				"Values": ["linear", "rbf"]
-			}
-		],
-		"ContinuousParameterRanges": [
-		{
-		  "MinValue": 0.001,
-		  "MaxValue": 10,
-		  "Name": "gamma"
-		}
-		],
-		"IntegerParameterRanges": [
-			{
-				"Name": "C",
-				"MinValue": 1,
-				"MaxValue": 10
-			}
-		]
+    "image_creations": {
+        "model": "stabilityai-stable-diffusion-v2-1-base",
+        "instance_type": "ml.p3.2xlarge",
+        "num_instances": 1,
     },
-    "ObjectiveMetric": {
-    	"Name": "Precision",
-        "Type": "Maximize"
-    }
+    "embeddings": {
+        "model": "gte-small",
+        "instance_type": "ml.g5.2xlarge",
+        "num_instances": 1,
+    },
 }
 ```
 
-#### Optional Flags
+You can change this configuration by suppling your own config file, then you can run `sagify llm start -all --config YOUR_CONFIG_FILE.json`.
 
-`--max-jobs MAX_NUMBER_OF_TRAINING_JOBS` or `-m MAX_NUMBER_OF_TRAINING_JOBS`: Maximum total number of training jobs to start for the hyperparameter tuning job (default: 3)
+It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoints.
 
-`--max-parallel-jobs MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS` or `-p MAX_NUMBER_OF_PARALLEL_TRAINING_JOBS`: Maximum number of parallel training jobs to start (default: 1)
- 
-`--volume-size EBS_SIZE_IN_GB` or `-v EBS_SIZE_IN_GB`: Size in GB of the EBS volume (default: 30)
+The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
 
-`--time-out TIME_OUT_IN_SECS` or `-s TIME_OUT_IN_SECS`: Time-out in seconds (default: 24 * 60 * 60)
+## Deploy FastAPI LLM Gateway - Docker
 
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. 
 
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for training with *SageMaker*
+In case of using the AWS Sagemaker platform, you need to define the following env variables before you start the LLM Gateway server:
 
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+- `AWS_ACCESS_KEY_ID`: It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_SECRET_ACCESS_KEY`:  It can be the same one you use locally for Sagify. It should have access to Sagemaker and S3. Example: `export AWS_ACCESS_KEY_ID=...`.
+- `AWS_REGION_NAME`: AWS region where the LLM backend services (Sagemaker endpoints) are deployed.
+- `S3_BUCKET_NAME`: S3 bucket name where the created images by the image creation backend service are stored.
+- `IMAGE_URL_TTL_IN_SECONDS`: TTL in seconds of the temporary url to the created images. Default value: 3600.
+- `SM_CHAT_COMPLETIONS_MODEL`: The Sagemaker endpoint name where the chat completions model is deployed.
+- `SM_EMBEDDINGS_MODEL`: The Sagemaker endpoint name where the embeddings model is deployed.
+- `SM_IMAGE_CREATION_MODEL`: The Sagemaker endpoint name where the image creation model is deployed.
 
-`--base-job-name BASE_JOB_NAME` or `-n BASE_JOB_NAME`: Optional prefix for the SageMaker training job
+In case of using the OpenAI platform, you need to define the following env variables before you start the LLM Gateway server:
 
-`--job-name JOB_NAME`: Optional name for the SageMaker training job. NOTE: if a `--base-job-name` is passed along with this option, it will be ignored. 
+- `OPENAI_API_KEY`: Your OpenAI API key. Example: `export OPENAI_API_KEY=...`.
+- `OPENAI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
+- `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
+- `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
-`--wait WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED` or `-w WAIT_UNTIL_HYPERPARAM_JOB_IS_FINISHED`: Optional flag to wait until Hyperparameter Tuning is finished. (default: don't wait)
- 
-`--use-spot-instances FLAG_TO_USE_SPOT_INSTANCES`: Optional flag that specifies whether to use SageMaker Managed Spot instances for training. It should be used only for training jobs that take less than 1 hour. More information: https://docs.aws.amazon.com/sagemaker/latest/dg/model-managed-spot-training.html (default: False).
+Now, you can run the command `sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local` to start the LLM Gateway locally. You can change the name of the image via the `--image` argument.
 
-#### Example
+This command will output the Docker container id. You can stop the container by executing `docker stop <CONTAINER_ID>`.
 
-    sagify cloud hyperparameter-optimization -i s3://my-bucket/training-data/ -o s3://my-bucket/output/ -e ml.m4.xlarge -h local/path/to/hyperparam_ranges.json -v 60 -t 86400
+**Examples**
 
+(*Remember to export first all the environment variables you need*)
 
-### Cloud Deploy
+In the case you want to create a docker image and then run it
+```{bash}
+sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
+ ```
 
-#### Name
+ If you want to use just build the image
+ ```{bash}
+ sagify llm gateway --image sagify-llm-gateway:v0.1.0
+ ```
 
-Executes a Docker image in serve mode on AWS SageMaker
+If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
 
-#### Synopsis
+## Deploy FastAPI LLM Gateway - AWS Fargate
 
-    sagify cloud deploy --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
 
-#### Description
+1. Containerize the FastAPI LLM Gateway: See previous section.
+2. Push Docker image to Amazon ECR.
+3. Define Task Definition: Define a task definition that describes how to run your containerized FastAPI application on Fargate. Specify the Docker image, container port, CPU and memory requirements, and environment variables.
+4. Create ECS Service: Create a Fargate service using the task definition. Configure the desired number of tasks, networking options, load balancing, and auto-scaling settings.
+4. Set Environment Variables: Ensure that your FastAPI application retrieves the environment variables correctly at runtime.
 
-This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in serve mode. You can update an endpoint (model or number of instances) by specifying the endpoint-name. 
+Here's an example CloudFormation template to deploy a FastAPI service to AWS Fargate with 5 environment variables:
 
-#### Required Flags
+```yaml
+Resources:
+  MyFargateTaskDefinition:
+    Type: AWS::ECS::TaskDefinition
+    Properties:
+      Family: my-fargate-task
+      ContainerDefinitions:
+        - Name: fastapi-container
+          Image: <YOUR_ECR_REPOSITORY_URI>
+          Memory: 512
+          PortMappings:
+            - ContainerPort: 80
+          Environment:
+            - Name: AWS_ACCESS_KEY_ID
+              Value: "value1"
+            - Name: AWS_SECRET_ACCESS_KEY
+              Value: "value2"
+            - Name: AWS_REGION_NAME
+              Value: "value3"
+            - Name: S3_BUCKET_NAME
+              Value: "value4"
+            - Name: IMAGE_URL_TTL_IN_SECONDS
+              Value: "value5"
+            - Name: SM_CHAT_COMPLETIONS_MODEL
+              Value: "value6"
+            - Name: SM_EMBEDDINGS_MODEL
+              Value: "value7"
+            - Name: SM_IMAGE_CREATION_MODEL
+              Value: "value8"
+            - Name: OPENAI_CHAT_COMPLETIONS_MODEL
+              Value: "value9"
+            - Name: OPENAI_EMBEDDINGS_MODEL
+              Value: "value10"
+            - Name: OPENAI_IMAGE_CREATION_MODEL
+              Value: "value11"
 
-`--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: S3 location to to model tar.gz
+  MyFargateService:
+    Type: AWS::ECS::Service
+    Properties:
+      Cluster: default
+      TaskDefinition: !Ref MyFargateTaskDefinition
+      DesiredCount: 2
+      LaunchType: FARGATE
+      NetworkConfiguration:
+        AwsvpcConfiguration:
+          Subnets:
+            - <YOUR_SUBNET_ID>
+          SecurityGroups:
+            - <YOUR_SECURITY_GROUP_ID>
+```
 
-`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
+## LLM Gateway API
 
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+Once the LLM Gateway is deployed, you can access it on `HOST_NAME/docs`.
 
-#### Optional Flags
+### Completions
 
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+```shell
+curl --location --request POST '/v1/chat/completions' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "provider": "sagemaker",
+     "messages": [
+      {
+        "role": "system",
+        "content": "you are a cook"
+      },
+      {
+        "role": "user",
+        "content": "what is the recipe of mayonnaise"
+      }
+    ],
+    "temperature": 0,
+    "max_tokens": 600,
+    "top_p": 0.9,
+    "seed": 32
+}'
+```
 
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
+> Example responses
 
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-`--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
-
-#### Example
-
-    sagify cloud deploy -m s3://my-bucket/output/model.tar.gz -n 3 -e ml.m4.xlarge
-
-    
-### Cloud Batch Transform
-
-#### Name
-
-Executes a Docker image in batch transform mode on AWS SageMaker, i.e. runs batch predictions on user defined S3 data
-
-#### Synopsis
-
-    sagify cloud batch-transform --s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --num-instance NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED] [--job-name JOB_NAME]
-
-#### Description
-
-This command retrieves a Docker image from AWS Elastic Container Service and executes it on AWS SageMaker in batch transform mode, i.e. runs batch predictions on user defined S3 data. SageMaker will spin up REST container(s) and call it/them with input data(features) from a user defined S3 path.
-
-Things to do:
-
-- You should implement the predict function that expects a JSON containing the required feature values. It's the same predict function used for deploying the model as a REST service. Example of a JSON:
+> 200 Response
 
 ```json
 {
-    "features": [5.1,3.5,1.4,0.2]
+    "id": "chatcmpl-8167b99c-f22b-4e04-8e26-4ca06d58dc86",
+    "object": "chat.completion",
+    "created": 1708765682,
+    "provider": "sagemaker",
+    "model": "meta-textgeneration-llama-2-7b-f-2024-02-24-08-49-32-123",
+    "choices": [
+        {
+            "index": 0,
+            "message": {
+                "role": "assistant",
+                "content": " Ah, a fellow foodie! Mayonnaise is a classic condiment that's easy to make and can elevate any dish. Here's my trusty recipe for homemade mayonnaise:\n\nIngredients:\n\n* 2 egg yolks\n* 1/2 cup (120 ml) neutral-tasting oil, such as canola or grapeseed\n* 1 tablespoon lemon juice or vinegar\n* Salt and pepper to taste\n\nInstructions:\n\n1. In a small bowl, whisk together the egg yolks and lemon juice or vinegar until well combined.\n2. Slowly pour in the oil while continuously whisking the mixture. You can do this by hand with a whisk or use an electric mixer on low speed.\n3. Continue whisking until the mixture thickens and emulsifies, which should take about 5-7 minutes. You'll know it's ready when it reaches a thick, creamy consistency.\n4. Taste and adjust the seasoning as needed. You can add more salt, pepper, or lemon juice to taste.\n5. Transfer the mayonnaise to a jar or airtight container and store it in the fridge for up to 1 week.\n\nThat's it! Homemade mayonnaise is a great way to control the ingredients and flavor, and it's also a fun kitchen experiment. Enjoy!"
+            }
+        }
+    ]
 }
 ```
-- The input S3 path should contain a file or multiple files where each line is a JSON, the same JSON format as the one expected in the predict function. Example of a file:
+
+### Embeddings
+
+```shell
+curl --location --request POST '/v1/embeddings' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "input": [
+    "The mayonnaise was delicious"
+  ]
+}'
+```
+
+> Example responses
+
+> 200 Response
 
 ```json
-{"features": [[5.1,3.5,1.4,0.2]]}
-{"features": [[4.9,3.0,1.4,0.2]]}
-{"features": [[4.7,3.2,1.3,0.2]]}
-{"features": [[4.6,3.1,1.5,0.2]]}
+{
+    "data": [
+        {
+            "object": "embedding",
+            "embedding": [
+                -0.04274585098028183,
+                0.021814687177538872,
+                -0.004705613013356924,
+                ...
+                -0.07548460364341736,
+                0.036427777260541916,
+                0.016453085467219353,
+                0.004641987383365631,
+                -0.0072729517705738544,
+                0.02343473769724369,
+                -0.002924458822235465,
+                0.0339619480073452,
+                0.005262510851025581,
+                -0.06709178537130356,
+                -0.015170316211879253,
+                -0.04612169787287712,
+                -0.012380547821521759,
+                -0.006663458421826363,
+                -0.0573800653219223,
+                0.007938326336443424,
+                0.03486081212759018,
+                0.021514462307095528
+            ],
+            "index": 0
+        }
+    ],
+    "provider": "sagemaker",
+    "model": "hf-sentencesimilarity-gte-small-2024-02-24-09-24-27-341",
+    "object": "list"
+}
 ```
 
-#### Required Flags
-
-`--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: S3 location to to model tar.gz
-
-`--s3-input-location S3_INPUT_LOCATION` or `-i S3_INPUT_LOCATION`: s3 input data location
-
-`--s3-output-location S3_OUTPUT_LOCATION` or `-o S3_OUTPUT_LOCATION`: s3 location to save predictions
-
-`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
-
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
-
-#### Optional Flags
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-`--wait WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED` or `-w WAIT_UNTIL_BATCH_TRANSFORM_JOB_IS_FINISHED`: Optional flag to wait until Batch Transform is finished. (default: don't wait)
-
-`--job-name JOB_NAME`: Optional name for the SageMaker batch transform job
-
-#### Example
-
-    sagify cloud batch-transform -m s3://my-bucket/output/model.tar.gz -i s3://my-bucket/input_features -o s3://my-bucket/predictions -n 3 -e ml.m4.xlarge
-
-
-### Cloud Create Streaming Inference
-
-NOTE: THIS IS AN EXPERIMENTAL FEATURE
-
-Make sure that the following 2 policies are attached to the role you created in section "Configure AWS Account":
-
-![lambda_full_access](docs/lambda_full_access.png)
-
-![sqs_full_access](docs/sqs_full_access.png)
-
-#### Name
-
-Creates streaming inference pipelines
-
-#### Synopsis
-
-    sagify cloud create-streaming-inference --name WORKER_NAME --endpoint-name ENDPOINT_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
-
-#### Description
-
-This command creates a worker as a Lambda function that listens to features in the `FEATURES_INPUT_TOPIC_NAME`, calls the the endpoint `ENDPOINT_NAME` and, finally, forwards predictions to `PREDICTIONS_OUTPUT_TOPIC_NAME`.
-
-#### Required Flags
-
-`--name WORKER_NAME`: The name of the Lambda function
-
-`--endpoint-name ENDPOINT_NAME`: The name of the endpoint of the deployed model
-
-`--input-topic-name FEATURES_INPUT_TOPIC_NAME`: Topic name where features will be landed
-
-`--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME`: Topic name where model predictions will be forwarded
-
-`--type STREAMING_INFERENCE_TYPE`: The type of streaming inference. At the moment, only `SQS` is supported!
-
-#### Example
-
-    sagify cloud create-streaming-inference --name recommender-worker --endpoint-name my-recommender-endpoint-1 --input-topic-name features --output-topic-name model-predictions --type SQS
-
-
-### Cloud Delete Streaming Inference
-
-NOTE: THIS IS AN EXPERIMENTAL FEATURE
-
-Make sure that the following 2 policies are attached to the role you created in section "Configure AWS Account":
-
-![lambda_full_access](lambda_full_access.png)
-
-![sqs_full_access](sqs_full_access.png)
-
-#### Name
-
-Deletes streaming inference pipelines
-
-#### Synopsis
-
-    sagify cloud delete-streaming-inference --name WORKER_NAME --input-topic-name FEATURES_INPUT_TOPIC_NAME --output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME --type STREAMING_INFERENCE_TYPE
-
-#### Description
-
-This command deletes the worker (i.e. Lambda function), input topic `FEATURES_INPUT_TOPIC_NAME` and output topic `PREDICTIONS_OUTPUT_TOPIC_NAME`.
-
-#### Required Flags
-
-`--name WORKER_NAME`: The name of the Lambda function
-
-`--input-topic-name FEATURES_INPUT_TOPIC_NAME`: Topic name where features will be landed
-
-`--output-topic-name PREDICTIONS_OUTPUT_TOPIC_NAME`: Topic name where model predictions will be forwarded
-
-`--type STREAMING_INFERENCE_TYPE`: The type of streaming inference. At the moment, only `SQS` is supported!
-
-#### Example
-
-    sagify cloud delete-streaming-inference --name recommender-worker --input-topic-name features --output-topic-name model-predictions --type SQS
-
-
-### Cloud Lightning Deploy
-
-#### Name
-
-Command for lightning deployment of pre-trained ML model(s) on AWS SageMaker without code
-
-#### Synopsis
-
-    sagify cloud lightning-deploy --framework FRAMEWORK --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION --extra-config-file EXTRA_CONFIG_FILE [--model-server-workers MODEL_SERVER_WORKERS] [--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ] [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
-
-#### Description
-
-This command deploys a pre-trained ML model without code. 
-
-#### Required Flags
-
-`--framework FRAMEWORK`: Name of the ML framework. Valid values: `sklearn`, `huggingface`, `xgboost`
-
-`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
-
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
-
-`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
-
-`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
-
-`--extra-config-file EXTRA_CONFIG_FILE`: Json file with ML framework specific arguments
-
-For SKLearn, you have to specify the `framework_version` in the EXTRA_CONFIG_FILE and specify the S3 location to model tar.gz (i.e. tar gzip your sklearn pickled file
-
-#### Optional Flags
-
-`--s3-model-location S3_LOCATION_TO_MODEL_TAR_GZ` or `-m S3_LOCATION_TO_MODEL_TAR_GZ`: Optional S3 location to model tar.gz
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-`--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
-
-#### Example for SKLearn
-
-Compress your pre-trained sklearn model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_sklearn_model_name`.
-
-    sagify cloud lightning-deploy --framework sklearn -n 1 -e ml.c4.2xlarge --extra-config-file sklearn_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
-
-The `sklearn_config.json` must contain the following flag `framework_version`. Supported sklearn version(s): 0.20.0, 0.23-1.
- 
-Example of `sklearn_config.json`:
-
-        {
-          "framework_version": "0.23-1"
-        }
-
-#### Example for HuggingFace by specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
-
-Compress your pre-trained HuggingFace model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_hg_model_name`.
-
-    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
-
-The `huggingface_config.json` must contain the following flags  `pytorch_version` or `tensorflow_version` (not both), and `transformers_version`. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.
- 
-Example of `huggingface_config.json`:
-
-        {
-          "transformers_version": "4.6.1",
-          "pytorch_version": "1.7.1"
-        }
-
-#### Example for HuggingFace without specifying the `S3_LOCATION_TO_MODEL_TAR_GZ`
-
-    sagify cloud lightning-deploy --framework huggingface -n 1 -e ml.c4.2xlarge --extra-config-file huggingface_config.json --aws-region us-east-1 --aws-profile sagemaker-dev
-
-
-The `huggingface_config.json` must contain the following flags  `pytorch_version` or `tensorflow_version` (not both), `transformers_version` and `hub`. For more info: https://sagemaker.readthedocs.io/en/stable/frameworks/huggingface/sagemaker.huggingface.html#hugging-face-model.
- 
-Example of `huggingface_config.json`:
-
-        {
-          "transformers_version": "4.6.1",
-          "pytorch_version": "1.7.1",
-          "hub": {
-            "HF_MODEL_ID": "gpt2",
-            "HF_TASK": "text-generation"
-          }
-        }
-        
-#### Example for XGBoost
-
-Compress your pre-trained XGBoost model to a GZIP tar archive with command `!tar czvf model.tar.gz $your_xgboost_model_name`.
-
-    sagify cloud lightning-deploy --framework xgboost -n 1 -e ml.c4.2xlarge --extra-config-file xgboost_config.json --aws-region us-east-1 --aws-profile sagemaker-dev -m s3://my-bucket/output/model.tar.gz
-
-The `xgboost_config.json` must contain the following flag `framework_version`. Supported xgboost version(s): 0.90-2, 1.0-1, and later.
- 
-Example of `xgboost_config.json`:
-
-        {
-          "framework_version": "0.23-1"
-        }
-
-
-### Cloud Foundation Model Deploy
-
-#### Name
-
-Command for deployment of Foundation models on SageMaker without code
-
-#### Synopsis
-```sh
-sagify cloud foundation-model-deploy --model-id MODEL_ID --model-version MODEL_VERSION --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--endpoint-name ENDPOINT_NAME]
+### Image Generations
+
+```shell
+curl --location --request POST '/v1/images/generations' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+  "provider": "sagemaker",
+  "prompt": 
+    "A baby sea otter"
+  ,
+  "n": 1,
+  "width": 512,
+  "height": 512,
+  "seed": 32,
+  "response_format": "url"
+}'
 ```
 
-#### Description
+> Example responses
 
-This command deploys a Foundation model without code. 
+> 200 Response
 
-#### Required Flags
-
-`--model-id MODEL_ID`: Model id of the Foundation model. For more, see the list of Foundation models https://sagemaker.readthedocs.io/en/stable/doc_utils/pretrainedmodels.html.
-
-`--model-version MODEL_VERSION`: Model verion of the Foundation model (default: 1.* which fetches the latest of this major version)
-
-`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
-
-`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
-
-`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
-
-`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
-
-#### Optional Flags
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-`--endpoint-name ENDPOINT_NAME`: Optional name for the SageMaker endpoint
-
-
-### LLM Start Infrastructure
-
-#### Name
-
-Command to start LLM infrastructure
-
-#### Synopsis
-```sh
-sagify llm start --all --chat-completions --image-creations --embeddings [--config EC2_CONFIG_FILE] --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
+```json
+{
+    "provider": "sagemaker",
+    "model": "stable-diffusion-v2-1-base-2024-02-24-11-43-32-177",
+    "created": 1708775601,
+    "data": [
+        {
+            "url": "https://your-bucket.s3.amazonaws.com/31cedd17-ccd7-4cba-8dea-cb7e8b915782.png?AWSAccessKeyId=AKIAUKEQBDHITP26MLXH&Signature=%2Fd1J%2FUjOWbRnP5cwtkSzYUVoEoo%3D&Expires=1708779204"
+        }
+    ]
+}
 ```
 
-#### Description
+## Talk with the team
 
-It spins up the endpoints for chat completions, image creation and embeddings.
+Email: pavlos@sagify.ai
 
-#### Required Flags
+## Why we build this
 
-`--all`: Start infrastructure for all services. If this flag is used the flags `--chat-completions`, `--image-creations`, `--embeddings` are ignored.
-
-`--chat-completions`: Start infrastructure for chat completions.
-
-`--image-creations`: Start infrastructure for image creations.
-
-`--embeddings`: Start infrastructure for embeddings.
-
-`--config EC2_CONFIG_FILE`: Path to config file to override foundation models, ec2 instance types and/or number of instances.
-
-`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
-
-`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
-
-#### Optional Flags
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
-
-
-### LLM Stop Infrastructure
-
-#### Name
-
-Command to stop LLM infrastructure
-
-#### Synopsis
-```sh
-sagify llm stop --all --chat-completions --image-creations --embeddings --aws-profile AWS_PROFILE --aws-region AWS_REGION [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID]
-```
-
-#### Description
-
-It stop all or some of the services that are running.
-
-#### Required Flags
-
-`--all`: Start infrastructure for all services. If this flag is used the flags `--chat-completions`, `--image-creations`, `--embeddings` are ignored.
-
-`--chat-completions`: Start infrastructure for chat completions.
-
-`--image-creations`: Start infrastructure for image creations.
-
-`--embeddings`: Start infrastructure for embeddings.
-
-`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
-
-`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
-
-#### Optional Flags
-
-`--aws-tags TAGS` or `-a TAGS`: Tags for labeling a training job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
-
-`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for deploying with *SageMaker*
-
-`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+We realized that there is not a single LLM to rule them all!
