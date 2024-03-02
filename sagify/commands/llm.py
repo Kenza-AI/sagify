@@ -28,6 +28,11 @@ OPENAI_DOCS = 'docs'
 OPENAI_MODELS = 'models'
 OPENAI_URL = f'{OPENAI_BASE_URL}/{OPENAI_DOCS}/{OPENAI_MODELS}'
 
+ANTHROPIC_BASE_URL = 'https://docs.anthropic.com'
+ANTHROPIC_DOCS = 'claude/reference'
+ANTHROPIC_MODELS = 'models'
+ANTHROPIC_URL = f'{ANTHROPIC_BASE_URL}/{ANTHROPIC_DOCS}/{ANTHROPIC_MODELS}'
+
 HF_BASE_URL = 'https://huggingface.co'
 HF_LLAMA = 'meta-llama'
 HF_STABILITYAI = 'stabilityai'
@@ -50,6 +55,11 @@ _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME = {
         'llama-2-7b': ('meta-textgeneration-llama-2-7b-f', f'{HF_LLAMA_URL}/Llama-2-7b'),
         'llama-2-13b': ('meta-textgeneration-llama-2-13b-f', f'{HF_LLAMA_URL}/Llama-2-13b'),
         'llama-2-70b': ('meta-textgeneration-llama-2-70b-f', f'{HF_LLAMA_URL}/Llama-2-70b'),
+    },
+    'anthropic': {
+        'claude-2.1': ('claude-2.1', ANTHROPIC_URL),
+        'claude-2.0': ('claude-2.0', ANTHROPIC_URL),
+        'claude-instant-1.2': ('claude-instant-1.2', ANTHROPIC_URL)
     }
 }
 
@@ -90,6 +100,9 @@ _MAPPING_IMAGE_CREATION_MODEL_ID_TO_MODEL_NAME = {
             'model-txt2img-stabilityai-stable-diffusion-v2-fp16',
             f'{HF_STABILITY_URL}/stable-diffusion-2/tree/fp16'
         )
+    },
+    'anthropic': {
+        'NOT SUPPORTED': ('Learn more', ANTHROPIC_BASE_URL)
     }
 }
 
@@ -132,6 +145,9 @@ _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME = {
         'e5-small-v2': ('huggingface-sentencesimilarity-e5-small-v2', 'https://huggingface.co/intfloat/e5-small-v2'),
         'multilingual-e5-base': ('huggingface-sentencesimilarity-multilingual-e5-base', 'https://huggingface.co/intfloat/multilingual-e5-base'),
         'all-MiniLM-L6-v2': ('huggingface-sentencesimilarity-all-MiniLM-L6-v2', 'https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2'),
+    },
+    'anthropic': {
+        'NOT SUPPORTED': ('Learn more', ANTHROPIC_BASE_URL)
     }
 
 }
@@ -618,6 +634,8 @@ def gateway(image, start_local, platform):
     """
     logger.info(ASCII_LOGO)
     environment_vars = {
+        'ANTHROPIC_API_KEY': os.environ.get('ANTHROPIC_API_KEY'),
+        'ANTHROPIC_CHAT_COMPLETIONS_MODEL': os.environ.get('ANTHROPIC_CHAT_COMPLETIONS_MODEL'),
         'OPENAI_API_KEY': os.environ.get('OPENAI_API_KEY'),
         'OPENAI_CHAT_COMPLETIONS_MODEL': os.environ.get('OPENAI_CHAT_COMPLETIONS_MODEL'),
         'OPENAI_EMBEDDINGS_MODEL': os.environ.get('OPENAI_EMBEDDINGS_MODEL'),
