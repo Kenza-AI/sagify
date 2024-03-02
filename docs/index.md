@@ -127,6 +127,18 @@ And for embeddings:
 
 All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
 
+
+### Anthropic
+
+The following models are offered for chat completions:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|claude-2.1|https://docs.anthropic.com/claude/reference/models|
+|claude-2.0|https://docs.anthropic.com/claude/reference/models|
+|claude-instant-1.2|https://docs.anthropic.com/claude/reference/models|
+
+
 #### Open-Source
 
 The following open-source models are offered for chat completions:
@@ -229,6 +241,11 @@ In case of using the OpenAI platform, you need to define the following env varia
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
+
+In case of using the Anthropic platform, you need to define the following env variables before you start the LLM Gateway server:
+- `ANTHROPIC_API_KEY`: Your Anthropic API key. Example: `export ANTHROPIC_API_KEY=...`.
+- `ANTHROPIC_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://docs.anthropic.com/claude/reference/models).
+
 Now, you can run the command `sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local` to start the LLM Gateway locally. You can change the name of the image via the `--image` argument.
 
 This command will output the Docker container id. You can stop the container by executing `docker stop <CONTAINER_ID>`.
@@ -295,6 +312,8 @@ Resources:
             - Name: OPENAI_EMBEDDINGS_MODEL
               Value: "value10"
             - Name: OPENAI_IMAGE_CREATION_MODEL
+              Value: "value11"
+            - Name: ANTHROPIC_CHAT_COMPLETIONS_MODEL
               Value: "value11"
 
   MyFargateService:

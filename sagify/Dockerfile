@@ -4,7 +4,7 @@ FROM python:3.9-slim
 WORKDIR /app
 
 # Install dependencies
-RUN pip install --no-cache-dir fastapi pydantic==1.10.13 python-dotenv structlog uvicorn openai sagemaker Pillow
+RUN pip install --no-cache-dir fastapi pydantic==1.10.13 python-dotenv structlog uvicorn openai sagemaker Pillow anthropic
 
 # Copy the rest of the application code into the container
 COPY ./ /app/sagify/
