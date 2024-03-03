@@ -68,11 +68,17 @@
         <ul>
     <li class="toctree-l4"><a class="reference internal" href="#openai">OpenAI</a>
     </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#anthropic">Anthropic</a>
+        <ul>
     <li class="toctree-l4"><a class="reference internal" href="#open-source">Open-Source</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#set-up-openai">Set up OpenAI</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#set-up-anthropic">Set up Anthropic</a>
     </li>
     <li class="toctree-l3"><a class="reference internal" href="#set-up-open-source-llms">Set up open-source LLMs</a>
     </li>
@@ -592,6 +598,30 @@
 </tbody>
 </table>
 <p>All these lists of supported models on Openai can be retrieved by running the command <code>sagify llm models --all --provider openai</code>. If you want to focus only on chat completions models, then run <code>sagify llm models --chat-completions --provider openai</code>. For image creations and embeddings, <code>sagify llm models --image-creations --provider openai</code> and <code>sagify llm models --embeddings --provider openai</code>, respectively.</p>
+<h3 id="anthropic">Anthropic</h3>
+<p>The following models are offered for chat completions:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">Model Name</th>
+<th style="text-align: center;">URL</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">claude-2.1</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+</tr>
+<tr>
+<td style="text-align: center;">claude-2.0</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+</tr>
+<tr>
+<td style="text-align: center;">claude-instant-1.2</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+</tr>
+</tbody>
+</table>
 <h4 id="open-source">Open-Source</h4>
 <p>The following open-source models are offered for chat completions:</p>
 <table>
@@ -715,6 +745,12 @@
 <li><code>OPENAI_EMBEDDINGS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/embeddings">here</a>.</li>
 <li><code>OPENAI_IMAGE_CREATION_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/dall-e">here</a>.</li>
 </ul>
+<h3 id="set-up-anthropic">Set up Anthropic</h3>
+<p>You need to define the following env variables before you start the LLM Gateway server:</p>
+<ul>
+<li><code>ANTHROPIC_API_KEY</code>: Your OpenAI API key. Example: <code>export ANTHROPIC_API_KEY=...</code>.</li>
+<li><code>ANTHROPIC_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://docs.anthropic.com/claude/reference/models">here</a>. Example <code>export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1</code></li>
+</ul>
 <h3 id="set-up-open-source-llms">Set up open-source LLMs</h3>
 <p>First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. </p>
 <p>If you want to deploy all of them, then run <code>sagify llm start --all</code>. This command will deploy all backend services (chat completions, image creations, embeddings) with the following configuration:</p>
@@ -759,6 +795,9 @@
 <li><code>OPENAI_EMBEDDINGS_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/embeddings">here</a>.</li>
 <li><code>OPENAI_IMAGE_CREATION_MODEL</code>: It should have one of values <a href="https://platform.openai.com/docs/models/dall-e">here</a>.</li>
 </ul>
+<p>In case of using the Anthropic platform, you need to define the following env variables before you start the LLM Gateway server:
+- <code>ANTHROPIC_API_KEY</code>: Your Anthropic API key. Example: <code>export ANTHROPIC_API_KEY=...</code>.
+- <code>ANTHROPIC_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://docs.anthropic.com/claude/reference/models">here</a>.</p>
 <p>Now, you can run the command <code>sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local</code> to start the LLM Gateway locally. You can change the name of the image via the <code>--image</code> argument.</p>
 <p>This command will output the Docker container id. You can stop the container by executing <code>docker stop &lt;CONTAINER_ID&gt;</code>.</p>
 <p><strong>Examples</strong></p>
@@ -821,6 +860,9 @@ Resources:
               Value: &quot;value10&quot;
             - Name: OPENAI_IMAGE_CREATION_MODEL
               Value: &quot;value11&quot;
+            - Name: ANTHROPIC_CHAT_COMPLETIONS_MODEL
+              Value: &quot;value11&quot;
+              ...
 
   MyFargateService:
     Type: AWS::ECS::Service
@@ -931,7 +973,7 @@ print(response.text)
 <p><code>POST /v1/chat/completions</code></p>
 <p><em>Create a model response for the given chat conversation</em></p>
 <pre><code class="language-json">{
-  &quot;provider&quot;: &quot;openai|sagemaker&quot;,
+  &quot;provider&quot;: &quot;openai|sagemaker|anthropic&quot;,
   &quot;model&quot;: &quot;string&quot;, # optional
   &quot;messages&quot;: [
     {
@@ -1028,7 +1070,7 @@ print(response.text)
 <p><code>POST /v1/embeddings</code></p>
 <p><em>Create</em></p>
 <pre><code class="language-json">{
-  &quot;provider&quot;: &quot;openai|sagemaker&quot;,
+  &quot;provider&quot;: &quot;openai|sagemaker|anthropic&quot;,
   &quot;model&quot;: &quot;string&quot;, # optional
   &quot;input&quot;: [
     &quot;string&quot;
@@ -1145,7 +1187,7 @@ print(response.text)
 <p><code>POST /v1/images/generations</code></p>
 <p><em>Create</em></p>
 <pre><code class="language-json">{
-  &quot;provider&quot;: &quot;sagemaker|openai&quot;,
+  &quot;provider&quot;: &quot;sagemaker|openai|anthropic&quot;,
   &quot;model&quot;: &quot;string&quot;, # optional
   &quot;prompt&quot;: &quot;string&quot;,
   &quot;n&quot;: 0,
@@ -1178,7 +1220,6 @@ print(response.text)
 <h3 id="upcoming-proprietary-open-source-llms-and-cloud-platforms">Upcoming Proprietary &amp; Open-Source LLMs and Cloud Platforms</h3>
 <ul>
 <li><a href="https://aws.amazon.com/bedrock/">Amazong Bedrock</a></li>
-<li><a href="https://www.anthropic.com/">Anthropic</a></li>
 <li><a href="https://cohere.com/">Cohere</a></li>
 <li><a href="https://docs.mistral.ai/models/">Mistral</a></li>
 <li><a href="https://blog.google/technology/developers/gemma-open-models/">Gemma</a></li>
@@ -1992,5 +2033,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-02-27 17:36:41.270071+00:00
+Build Date UTC : 2024-03-03 06:53:41.425292+00:00
 -->
