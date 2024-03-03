@@ -187,6 +187,13 @@ You need to define the following env variables before you start the LLM Gateway 
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
+### Set up Anthropic
+
+You need to define the following env variables before you start the LLM Gateway server:
+
+- `ANTHROPIC_API_KEY`: Your OpenAI API key. Example: `export ANTHROPIC_API_KEY=...`.
+- `ANTHROPIC_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://docs.anthropic.com/claude/reference/models). Example `export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1`
+
 ### Set up open-source LLMs
 
 First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
@@ -240,7 +247,6 @@ In case of using the OpenAI platform, you need to define the following env varia
 - `OPENAI_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/gpt-3-5-turbo) or [here](https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo).
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
-
 
 In case of using the Anthropic platform, you need to define the following env variables before you start the LLM Gateway server:
 - `ANTHROPIC_API_KEY`: Your Anthropic API key. Example: `export ANTHROPIC_API_KEY=...`.
@@ -315,6 +321,7 @@ Resources:
               Value: "value11"
             - Name: ANTHROPIC_CHAT_COMPLETIONS_MODEL
               Value: "value11"
+              ...
 
   MyFargateService:
     Type: AWS::ECS::Service
@@ -442,7 +449,7 @@ print(response.text)
 
 ```json
 {
-  "provider": "openai|sagemaker",
+  "provider": "openai|sagemaker|anthropic",
   "model": "string", # optional
   "messages": [
     {
@@ -556,7 +563,7 @@ print(response.text)
 
 ```json
 {
-  "provider": "openai|sagemaker",
+  "provider": "openai|sagemaker|anthropic",
   "model": "string", # optional
   "input": [
     "string"
@@ -689,7 +696,7 @@ print(response.text)
 
 ```json
 {
-  "provider": "sagemaker|openai",
+  "provider": "sagemaker|openai|anthropic",
   "model": "string", # optional
   "prompt": "string",
   "n": 0,
@@ -726,7 +733,6 @@ The above example returns a url to the image. If you want to return a base64 val
 ### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
 
 - [Amazong Bedrock](https://aws.amazon.com/bedrock/)
-- [Anthropic](https://www.anthropic.com/)
 - [Cohere](https://cohere.com/)
 - [Mistral](https://docs.mistral.ai/models/)
 - [Gemma](https://blog.google/technology/developers/gemma-open-models/)
