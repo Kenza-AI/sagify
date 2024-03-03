@@ -179,7 +179,8 @@ def platforms():
     Commands to list supported platforms for LLM models
     """
     logger.info("Platforms:")
-    logger.info("  - OpenAI: https://platform.openai.com/docs/overview")
+    logger.info(f"  - OpenAI: {OPENAI_BASE_URL}/{OPENAI_DOCS}/overview")
+    logger.info(f"  - Anthropic: {ANTHROPIC_BASE_URL}")
     logger.info("  - AWS Sagemaker: https://aws.amazon.com/sagemaker")
 
 

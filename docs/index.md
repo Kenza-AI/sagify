@@ -70,6 +70,7 @@ Sagify provides a set of intuitive command-line interface (CLI) commands to simp
 You can run `sagify llm platforms` to get a list of all supported backend LLM platforms:
 
 - [OpenAI](https://platform.openai.com/docs/overview)
+- [Anthropic](https://docs.anthropic.com)
 - [AWS Sagemaker](https://aws.amazon.com/sagemaker). This option enables you to deploy open-source LLMs to AWS and leverage the powerful AWS computing platform.
 
 The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).
