@@ -128,7 +128,7 @@ And for embeddings:
 All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
 
 
-### Anthropic
+#### Anthropic
 
 The following models are offered for chat completions:
 
