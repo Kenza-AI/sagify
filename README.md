@@ -4,8 +4,8 @@
     <em>LLMs and Machine Learning done easily.</em>
 </p>
 <p align="center">
-<a href="https://github.com/cortisolai/cortisol/actions?query=workflow%3ACI" target="_blank">
-    <img src="https://github.com/cortisolai/cortisol/workflows/CI/badge.svg" alt="Test">
+<a href="https://github.com/kenza-ai/sagify/actions?query=workflow%3ACI" target="_blank">
+    <img src="https://github.com/kenza-ai/sagify/workflows/CI/badge.svg" alt="Test">
 </a>
 </p>
 
