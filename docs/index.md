@@ -135,9 +135,11 @@ The following models are offered for chat completions:
 
 | Model Name | URL |
 |:------------:|:-----:|
-|claude-2.1|https://docs.anthropic.com/claude/reference/models|
-|claude-2.0|https://docs.anthropic.com/claude/reference/models|
-|claude-instant-1.2|https://docs.anthropic.com/claude/reference/models|
+|claude-2.1|https://docs.anthropic.com/claude/docs/models-overview|
+|claude-2.0|https://docs.anthropic.com/claude/docs/models-overview|
+|claude-instant-1.2|https://docs.anthropic.com/claude/docs/models-overview|
+|claude-3-opus|https://docs.anthropic.com/claude/docs/models-overview|
+|claude-3-sonnet|https://docs.anthropic.com/claude/docs/models-overview|
 
 
 #### Open-Source
@@ -193,7 +195,7 @@ You need to define the following env variables before you start the LLM Gateway 
 You need to define the following env variables before you start the LLM Gateway server:
 
 - `ANTHROPIC_API_KEY`: Your OpenAI API key. Example: `export ANTHROPIC_API_KEY=...`.
-- `ANTHROPIC_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://docs.anthropic.com/claude/reference/models). Example `export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1`
+- `ANTHROPIC_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://docs.anthropic.com/claude/docs/models-overview). Example `export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1`
 
 ### Set up open-source LLMs
 
