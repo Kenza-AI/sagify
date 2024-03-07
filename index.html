@@ -499,6 +499,7 @@
 <p>You can run <code>sagify llm platforms</code> to get a list of all supported backend LLM platforms:</p>
 <ul>
 <li><a href="https://platform.openai.com/docs/overview">OpenAI</a></li>
+<li><a href="https://docs.anthropic.com">Anthropic</a></li>
 <li><a href="https://aws.amazon.com/sagemaker">AWS Sagemaker</a>. This option enables you to deploy open-source LLMs to AWS and leverage the powerful AWS computing platform.</li>
 </ul>
 <p>The architectural design of the Sagify LLM Gateway is elegantly simple, comprising key components to facilitate seamless interaction with both proprietary and open-source Large Language Models (LLMs).</p>
@@ -608,15 +609,23 @@
 <tbody>
 <tr>
 <td style="text-align: center;">claude-2.1</td>
-<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/docs/models-overview</td>
 </tr>
 <tr>
 <td style="text-align: center;">claude-2.0</td>
-<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/docs/models-overview</td>
 </tr>
 <tr>
 <td style="text-align: center;">claude-instant-1.2</td>
-<td style="text-align: center;">https://docs.anthropic.com/claude/reference/models</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/docs/models-overview</td>
+</tr>
+<tr>
+<td style="text-align: center;">claude-3-opus</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/docs/models-overview</td>
+</tr>
+<tr>
+<td style="text-align: center;">claude-3-sonnet</td>
+<td style="text-align: center;">https://docs.anthropic.com/claude/docs/models-overview</td>
 </tr>
 </tbody>
 </table>
@@ -747,7 +756,7 @@
 <p>You need to define the following env variables before you start the LLM Gateway server:</p>
 <ul>
 <li><code>ANTHROPIC_API_KEY</code>: Your OpenAI API key. Example: <code>export ANTHROPIC_API_KEY=...</code>.</li>
-<li><code>ANTHROPIC_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://docs.anthropic.com/claude/reference/models">here</a>. Example <code>export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1</code></li>
+<li><code>ANTHROPIC_CHAT_COMPLETIONS_MODEL</code>: It should have one of values <a href="https://docs.anthropic.com/claude/docs/models-overview">here</a>. Example <code>export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1</code></li>
 </ul>
 <h3 id="set-up-open-source-llms">Set up open-source LLMs</h3>
 <p>First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. </p>
@@ -2031,5 +2040,5 @@ log_metric(&quot;Accuracy&quot;, accuracy)
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2024-03-03 07:05:32.250732+00:00
+Build Date UTC : 2024-03-07 07:41:05.885603+00:00
 -->
