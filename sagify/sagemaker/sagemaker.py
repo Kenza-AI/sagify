@@ -8,7 +8,7 @@ import sagemaker.tuner
 import sagemaker.huggingface
 import sagemaker.xgboost
 import sagemaker.sklearn.model
-from sagemaker import payloads
+from sagemaker import image_uris, payloads, model_uris
 from sagemaker.jumpstart.model import JumpStartModel
 from six.moves.urllib.parse import urlparse
 
@@ -620,6 +620,107 @@ class SageMakerClient(object):
         )
 
         return model_predictor.endpoint_name, self._generate_foundation_model_query_command(model_id, model_version, model_predictor.endpoint_name)
+
+    def foundation_model_batch_transform(
+            self,
+            model_id,
+            model_version,
+            s3_input_location,
+            s3_output_location,
+            num_instances,
+            ec2_type,
+            max_concurrent_transforms=None,
+            tags=None,
+            wait=True,
+            job_name=None
+    ):
+        """
+        Execute foundation model batch transform on a trained model to SageMaker
+
+        :param model_id: [str], foundation model id
+        :param model_version: [str], foundation model version
+        :param s3_input_location: [str], S3 input data location
+        :param s3_output_location: [str], S3 output data location
+        :param num_instances: [str],  number of ec2 instances
+        :param ec2_type: [str], ec2 instance type
+        :param max_concurrent_transforms: [int, default=None], The maximum number of HTTP requests to be made to
+        :param tags: [optional[list[dict]], default: None], List of tags for labeling a training
+        job. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html. Example:
+
+        [
+            {
+                'Key': 'key_name_1',
+                'Value': key_value_1,
+            },
+            {
+                'Key': 'key_name_2',
+                'Value': key_value_2,
+            },
+            ...
+        ]
+        :param wait: [bool, default=True], wait or not for the batch transform to finish
+        :param job_name: [str, default=None], name for the SageMaker batch transform job
+
+        :return: [str], transform job status if wait=True.
+        Valid values: 'InProgress'|'Completed'|'Failed'|'Stopping'|'Stopped'
+        """
+        # Retrieve the inference docker container uri. This is the base HuggingFace container image for the default model above.
+        deploy_image_uri = image_uris.retrieve(
+            region=self.aws_region,
+            framework=None,  # automatically inferred from model_id
+            image_scope="inference",
+            model_id=model_id,
+            model_version=model_version,
+            instance_type=ec2_type,
+        )
+
+        # Retrieve the model uri.
+        model_uri = model_uris.retrieve(
+            model_id=model_id,
+            model_version=model_version,
+            model_scope="inference",
+            region=self.aws_region
+        )
+
+        model = JumpStartModel(
+            model_id=model_id,
+            model_version=model_version,
+            region=self.aws_region,
+            image_uri=deploy_image_uri,
+            model_data=model_uri,
+            sagemaker_session=self.sagemaker_session,
+            tolerate_deprecated_model=True,
+            tolerate_vulnerable_model=True
+        )
+
+        transformer = model.transformer(
+            instance_count=num_instances,
+            instance_type=ec2_type,
+            output_path=s3_output_location,
+            assemble_with="Line",
+            accept="text/csv",
+            max_concurrent_transforms=max_concurrent_transforms,
+            tags=tags,
+        )
+
+        transformer.transform(
+            s3_input_location,
+            content_type="application/jsonlines",
+            split_type="Line",
+            wait=wait
+        )
+
+        if wait:
+            try:
+                transformer.wait()
+            except Exception:
+                # If there is an error, wait() throws an exception and we're not able to return a Failed status
+                pass
+            finally:
+                job_name = transformer.latest_transform_job.job_name
+                job_description = self.sagemaker_client.describe_transform_job(TransformJobName=job_name)
+
+            return job_description['TransformJobStatus']
 
     def _generate_foundation_model_query_command(self, model_id, model_version, endpoint_name):
         """
