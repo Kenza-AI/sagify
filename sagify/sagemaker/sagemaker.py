@@ -23,9 +23,24 @@ _METRIC_REGEX = "([0-9\\.]+)"
 
 
 class SageMakerClient(object):
-    def __init__(self, aws_profile, aws_region, aws_role=None, external_id=None):
+    def __init__(
+            self,
+            aws_profile,
+            aws_region,
+            aws_role=None,
+            external_id=None,
+            aws_access_key_id=None,
+            aws_secret_access_key=None
+    ):
 
-        if aws_role:
+        if aws_access_key_id and aws_secret_access_key:
+            logger.info("AWS access key and secret access key were provided. Using these credentials...")
+            self.boto_session = boto3.Session(
+                aws_access_key_id=aws_access_key_id,
+                aws_secret_access_key=aws_secret_access_key,
+                region_name=aws_region
+            )
+        elif aws_role:
             logger.info("An IAM role and corresponding external id were provided. Attempting to assume that role...")
 
             sts_client = boto3.client('sts')

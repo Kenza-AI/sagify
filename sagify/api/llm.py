@@ -15,7 +15,9 @@ def batch_inference(
     wait=True,
     job_name=None,
     model_version='1.*',
-    max_concurrent_transforms=None
+    max_concurrent_transforms=None,
+    aws_access_key_id=None,
+    aws_secret_access_key=None,
 ):
     """
     Executes a batch inference job given a foundation model on SageMaker
@@ -49,6 +51,8 @@ def batch_inference(
     :param job_name: [str, default=None], name for the SageMaker batch transform job
     :param model_version: [str, default='1.*'], model version to use
     :param max_concurrent_transforms: [int, default=None], max number of concurrent transforms
+    :param aws_access_key_id: [str, default=None], AWS access key id
+    :param aws_secret_access_key: [str, default=None], AWS secret access key
 
     :return: [str], transform job status if wait=True.
     Valid values: 'InProgress'|'Completed'|'Failed'|'Stopping'|'Stopped'
@@ -57,7 +61,9 @@ def batch_inference(
         aws_profile=aws_profile,
         aws_region=aws_region,
         aws_role=aws_role,
-        external_id=external_id
+        external_id=external_id,
+        aws_access_key_id=aws_access_key_id,
+        aws_secret_access_key=aws_secret_access_key
     )
 
     return sage_maker_client.foundation_model_batch_transform(

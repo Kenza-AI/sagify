@@ -735,7 +735,7 @@ def gateway(image, start_local, platform):
     required=False,
     default=None,
     type=int,
-    help=" The maximum number of HTTP requests to be made to each individual inference container at one time"
+    help="The maximum number of HTTP requests to be made to each individual inference container at one time"
 )
 @click.option(
     u"-a", u"--aws-tags",

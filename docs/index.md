@@ -99,9 +99,11 @@ You can change the values for ec2 type (-e), aws region and aws profile with you
 
 Once the Stable Diffusion model is deployed, you can use the generated code snippet to query it. Enjoy!
 
-### Backend Platforms
+### Restful Inference
 
-#### OpenAI
+#### Backend Platforms
+
+##### OpenAI
 
 The following models are offered for chat completions:
 
@@ -129,7 +131,7 @@ And for embeddings:
 All these lists of supported models on Openai can be retrieved by running the command `sagify llm models --all --provider openai`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider openai`. For image creations and embeddings, `sagify llm models --image-creations --provider openai` and `sagify llm models --embeddings --provider openai`, respectively.
 
 
-#### Anthropic
+##### Anthropic
 
 The following models are offered for chat completions:
 
@@ -140,7 +142,7 @@ The following models are offered for chat completions:
 |claude-instant-1.2|https://docs.anthropic.com/claude/reference/models|
 
 
-#### Open-Source
+##### Open-Source
 
 The following open-source models are offered for chat completions:
 
@@ -179,7 +181,7 @@ And for embeddings:
 
 All these lists of supported open-source models are supported on AWS Sagemaker and can be retrieved by running the command `sagify llm models --all --provider sagemaker`. If you want to focus only on chat completions models, then run `sagify llm models --chat-completions --provider sagemaker`. For image creations and embeddings, `sagify llm models --image-creations --provider sagemaker` and `sagify llm models --embeddings --provider sagemaker`, respectively.
 
-### Set up OpenAI
+#### Set up OpenAI
 
 You need to define the following env variables before you start the LLM Gateway server:
 
@@ -188,14 +190,14 @@ You need to define the following env variables before you start the LLM Gateway 
 - `OPENAI_EMBEDDINGS_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/embeddings).
 - `OPENAI_IMAGE_CREATION_MODEL`: It should have one of values [here](https://platform.openai.com/docs/models/dall-e).
 
-### Set up Anthropic
+#### Set up Anthropic
 
 You need to define the following env variables before you start the LLM Gateway server:
 
 - `ANTHROPIC_API_KEY`: Your OpenAI API key. Example: `export ANTHROPIC_API_KEY=...`.
 - `ANTHROPIC_CHAT_COMPLETIONS_MODEL`: It should have one of values [here](https://docs.anthropic.com/claude/reference/models). Example `export ANTHROPIC_CHAT_COMPLETIONS_MODEL=claude-2.1`
 
-### Set up open-source LLMs
+#### Set up open-source LLMs
 
 First step is to deploy the LLM model(s). You can choose to deploy all backend services (chat completions, image creations, embeddings) or some of them. 
 
@@ -227,7 +229,7 @@ It takes 15 to 30 minutes to deploy all the backend services as Sagemaker endpoi
 
 The deployed model names, which are the Sagemaker endpoint names, are printed out and stored in the hidden file `.sagify_llm_infra.json`. You can also access them from the AWS Sagemaker web console.
 
-### Deploy FastAPI LLM Gateway - Docker
+#### Deploy FastAPI LLM Gateway - Docker
 
 Once you have set up your backend platform, you can deploy the FastAPI LLM Gateway locally. 
 
@@ -273,7 +275,7 @@ sagify llm gateway --image sagify-llm-gateway:v0.1.0 --start-local
 
 If you want to support both platforms (OpenAI and AWS Sagemaker), then pass all the env variables for both platforms.
 
-### Deploy FastAPI LLM Gateway - AWS Fargate
+#### Deploy FastAPI LLM Gateway - AWS Fargate
 
 In case you want to deploy the LLM Gateway to AWS Fargate, then you can follow these general steps:
 
@@ -339,11 +341,11 @@ Resources:
             - <YOUR_SECURITY_GROUP_ID>
 ```
 
-### LLM Gateway API
+#### LLM Gateway API
 
 Once the LLM Gateway is deployed, you can access it on `HOST_NAME/docs`.
 
-#### Completions
+##### Completions
 
 Code samples
 
@@ -488,7 +490,7 @@ print(response.text)
 }
 ```
 
-#### Embeddings
+##### Embeddings
 
 Code samples
 
@@ -614,7 +616,7 @@ print(response.text)
 }
 ```
 
-#### Image Generations
+##### Image Generations
 
 Code samples
 
@@ -731,7 +733,7 @@ print(response.text)
 The above example returns a url to the image. If you want to return a base64 value of the image, then set `response_format` to `base64_json` in the request body params.
 
 
-### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
+#### Upcoming Proprietary & Open-Source LLMs and Cloud Platforms
 
 - [Amazong Bedrock](https://aws.amazon.com/bedrock/)
 - [Cohere](https://cohere.com/)
@@ -739,6 +741,97 @@ The above example returns a url to the image. If you want to return a base64 val
 - [Gemma](https://blog.google/technology/developers/gemma-open-models/)
 - [GCP VertexAI](https://cloud.google.com/vertex-ai)
 
+### Batch Inference
+
+In the realm of AI/ML, real-time inference via RESTful APIs is undeniably crucial for many applications. However, another equally important, yet often overlooked, aspect of inference lies in batch processing.
+
+While real-time inference caters to immediate, on-the-fly predictions, batch inference empowers users with the ability to process large volumes of data efficiently and cost-effectively.
+
+#### Embeddings
+
+Generating embeddings offline in a batch mode is essential for many real world applications. These embeddings can then be stored in some vector database to serve recommender, search/ranking and other ML powered systems.
+
+You have to use Sagemaker as the backend platform and only the following open-source models are supported:
+
+| Model Name | URL |
+|:------------:|:-----:|
+|bge-large-en|https://huggingface.co/BAAI/bge-large-en|
+|bge-base-en|https://huggingface.co/BAAI/bge-base-en|
+|gte-large|https://huggingface.co/thenlper/gte-large|
+|gte-base|https://huggingface.co/thenlper/gte-base|
+|e5-large-v2|https://huggingface.co/intfloat/e5-large-v2|
+|bge-small-en|https://huggingface.co/BAAI/bge-small-en|
+|e5-base-v2|https://huggingface.co/intfloat/e5-base-v2|
+|multilingual-e5-large|https://huggingface.co/intfloat/multilingual-e5-large|
+|e5-large|https://huggingface.co/intfloat/e5-large|
+|gte-small|https://huggingface.co/thenlper/gte-small|
+|e5-base|https://huggingface.co/intfloat/e5-base|
+|e5-small-v2|https://huggingface.co/intfloat/e5-small-v2|
+|multilingual-e5-base|https://huggingface.co/intfloat/multilingual-e5-base|
+|all-MiniLM-L6-v2|https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2|
+
+Also, the following ec2 instance types support batch inference:
+
+| Instance Type | Details |
+|:------------:|:-----:|
+|ml.p3.2xlarge|https://instances.vantage.sh/aws/ec2/p3.2xlarge|
+|ml.p3.8xlarge|https://instances.vantage.sh/aws/ec2/p3.8xlarge|
+|ml.p3.16xlarge|https://instances.vantage.sh/aws/ec2/p3.16xlarge|
+|ml.g4dn.2xlarge|https://instances.vantage.sh/aws/ec2/g4dn.2xlarge|
+|ml.g4dn.4xlarge|https://instances.vantage.sh/aws/ec2/g4dn.4xlarge|
+|ml.g4dn.8xlarge|https://instances.vantage.sh/aws/ec2/g4dn.8xlarge|
+|ml.g4dn.16xlarge|https://instances.vantage.sh/aws/ec2/g4dn.16xlarge|
+
+##### How does it work?
+
+It's quite simple. To begin, prepare the input JSONL file(s). Consider the following example:
+
+```json
+{"id":1,"text_inputs":"what is the recipe of mayonnaise?"}
+{"id":2,"text_inputs":"what is the recipe of fish and chips?"}
+```
+
+Each line contains a unique identifier (id) and the corresponding text input (text_inputs). This identifier is crucial for linking inputs to their respective outputs, as illustrated in the output format below:
+
+```json
+{'id': 1, 'embedding': [-0.029919596, -0.0011845357, ..., 0.08851079, 0.021398442]}
+{'id': 2, 'embedding': [-0.041918136, 0.007127975, ..., 0.060178414, 0.031050885]}
+```
+
+By ensuring consistency in the id field between input and output files, you empower your ML use cases with seamless data coherence.
+
+Once the input JSONL file(s) are saved in an S3 bucket, you can trigger the batch inference programmatically from your Python codebase or via the Sagify CLI.
+
+##### CLI
+
+The following command does all the magic! Here's an example:
+
+```sh
+sagify llm batch-inference --model gte-small --s3-input-location s3://sagify-llm-playground/batch-input-data-example/embeddings/ --s3-output-location s3://sagify-llm-playground/batch-output-data-example/embeddings/1/ --aws-profile sagemaker-dev --aws-region us-east-1 --num-instances 1 --ec2-type ml.p3.2xlarge --wait
+```
+
+The `--s3-input-location` should be the path where the JSONL file(s) are saved.
+
+##### SDK
+
+Magic can happen with the Sagify SDK, too. Here's a code snippet:
+
+```python
+from sagify.api.llm import batch_inference
+
+batch_inference(
+    model='gte-small',
+    s3_input_location='3://sagify-llm-playground/batch-input-data-example/embeddings/',
+    s3_output_location='s3://sagify-llm-playground/batch-output-data-example/embeddings/1/',
+    aws_profile='sagemaker-dev',
+    aws_region='us-east-1',
+    num_instances=1,
+    ec2_type='ml.p3.2xlarge',
+    aws_access_key_id='YOUR_AWS_ACCESS_KEY_ID'
+    aws_secret_access_key='YOUR_AWS_SECRET_ACCESS_KEY',
+    wait=True
+)
+```
 
 ## Machine Learning
 
@@ -1955,3 +2048,69 @@ It builds gateway docker image and starts the gateway locally.
 `--platform PLATFORM`: Operating system. Platform in the format `os[/arch[/variant]]`.
 
 `--start-local`: Flag to indicate if to start the gateway locally.
+
+
+### LLM Batch Inference
+
+#### Name
+
+Command to execute an LLM batch inference job
+
+#### Synopsis
+```sh
+sagify llm batch-inference --model MODEL --s3-input-location S3_INPUT_LOCATION --s3-output-location S3_OUTPUT_LOCATION --aws-profile AWS_PROFILE --aws-region AWS_REGION --num-instances NUMBER_OF_EC2_INSTANCES --ec2-type EC2_TYPE [--aws-tags TAGS] [--iam-role-arn IAM_ROLE] [--external-id EXTERNAL_ID] [--wait] [--job-name JOB_NAME] [--max-concurrent-transforms MAX_CONCURRENT_TRANSFORMS]
+```
+
+#### Description
+
+This command triggers an batch inference job given an LLM model and an batch input.
+
+- The input S3 path should contain a JSONL file or multiple JSONL files. Example of a file:
+```json
+{"id":1,"text_inputs":"what is the recipe of mayonnaise?"}
+{"id":2,"text_inputs":"what is the recipe of fish and chips?"}
+```
+
+Each line contains a unique identifier (id) and the corresponding text input (text_inputs). This identifier is crucial for linking inputs to their respective outputs, as illustrated in the output format below:
+
+```json
+{'id': 1, 'embedding': [-0.029919596, -0.0011845357, ..., 0.08851079, 0.021398442]}
+{'id': 2, 'embedding': [-0.041918136, 0.007127975, ..., 0.060178414, 0.031050885]}
+```
+
+By ensuring consistency in the id field between input and output files, you empower your ML use cases with seamless data coherence.
+
+#### Required Flags
+
+`--model MODEL`: LLM model name
+
+`--s3-input-location S3_INPUT_LOCATION` or `-i S3_INPUT_LOCATION`: s3 input data location
+
+`--s3-output-location S3_OUTPUT_LOCATION` or `-o S3_OUTPUT_LOCATION`: s3 location to save predictions
+
+`--num-instances NUMBER_OF_EC2_INSTANCES` or `n NUMBER_OF_EC2_INSTANCES`: Number of ec2 instances
+
+`--ec2-type EC2_TYPE` or `e EC2_TYPE`: ec2 type. Refer to https://aws.amazon.com/sagemaker/pricing/instance-types/
+
+`--aws-profile AWS_PROFILE`: The AWS profile to use for the lightning deploy command
+
+`--aws-region AWS_REGION`: The AWS region to use for the lightning deploy command
+
+#### Optional Flags
+
+`--aws-tags TAGS` or `-a TAGS`: Tags for labeling an inference job of the form `tag1=value1;tag2=value2`. For more, see https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.
+
+`--iam-role-arn IAM_ROLE` or `-r IAM_ROLE`: AWS IAM role to use for the inference job with *SageMaker*
+
+`--external-id EXTERNAL_ID` or `-x EXTERNAL_ID`: Optional external id used when using an IAM role
+
+`--wait`: Optional flag to wait until Batch Inference is finished. (default: don't wait)
+
+`--job-name JOB_NAME`: Optional name for the SageMaker batch inference job
+
+`--max-concurrent-transforms MAX_CONCURRENT_TRANSFORMS`: Optional maximum number of HTTP requests to be made to each individual inference container at one time. Default value: 1
+
+#### Example
+```sh
+sagify llm batch-inference --model gte-small --s3-input-location s3://sagify-llm-playground/batch-input-data-example/embeddings/ --s3-output-location s3://sagify-llm-playground/batch-output-data-example/embeddings/1/ --aws-profile sagemaker-dev --aws-region us-east-1 --num-instances 1 --ec2-type ml.p3.2xlarge --wait
+```
