@@ -29,8 +29,8 @@ OPENAI_MODELS = 'models'
 OPENAI_URL = f'{OPENAI_BASE_URL}/{OPENAI_DOCS}/{OPENAI_MODELS}'
 
 ANTHROPIC_BASE_URL = 'https://docs.anthropic.com'
-ANTHROPIC_DOCS = 'claude/reference'
-ANTHROPIC_MODELS = 'models'
+ANTHROPIC_DOCS = 'claude/docs'
+ANTHROPIC_MODELS = 'models-overview'
 ANTHROPIC_URL = f'{ANTHROPIC_BASE_URL}/{ANTHROPIC_DOCS}/{ANTHROPIC_MODELS}'
 
 HF_BASE_URL = 'https://huggingface.co'
@@ -59,7 +59,9 @@ _MAPPING_CHAT_COMPLETIONS_MODEL_ID_TO_MODEL_NAME = {
     'anthropic': {
         'claude-2.1': ('claude-2.1', ANTHROPIC_URL),
         'claude-2.0': ('claude-2.0', ANTHROPIC_URL),
-        'claude-instant-1.2': ('claude-instant-1.2', ANTHROPIC_URL)
+        'claude-instant-1.2': ('claude-instant-1.2', ANTHROPIC_URL),
+        'claude-3-opus': ('claude-3-opus-20240229', ANTHROPIC_URL),
+        'claude-3-sonnet': ('claude-3-sonnet-20240229', ANTHROPIC_URL)
     }
 }
 
