@@ -10,6 +10,7 @@ import click
 import docker
 
 from sagify.api import cloud as api_cloud
+from sagify.api import llm as api_llm
 from sagify.commands import ASCII_LOGO
 from sagify.commands.custom_validators.validators import validate_tags
 from sagify.log import logger
@@ -164,6 +165,20 @@ _VALID_EMBEDDINGS_INSTANCE_TYPES = [
     ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
     ('ml.p3.8xlarge', f'{VANTAGE_URL}/p3.8xlarge'),
     ('ml.p3.16xlarge', f'{VANTAGE_URL}/p3.16xlarge'),
+    ('ml.g4dn.2xlarge', f'{VANTAGE_URL}/g4dn.2xlarge'),
+    ('ml.g4dn.4xlarge', f'{VANTAGE_URL}/g4dn.4xlarge'),
+    ('ml.g4dn.8xlarge', f'{VANTAGE_URL}/g4dn.8xlarge'),
+    ('ml.g4dn.16xlarge', f'{VANTAGE_URL}/g4dn.16xlarge'),
+]
+
+_VALID_EMBEDDINGS_BATCH_INFERENCE_INSTANCE_TYPES = [
+    ('ml.p3.2xlarge', f'{VANTAGE_URL}/p3.2xlarge'),
+    ('ml.p3.8xlarge', f'{VANTAGE_URL}/p3.8xlarge'),
+    ('ml.p3.16xlarge', f'{VANTAGE_URL}/p3.16xlarge'),
+    ('ml.g4dn.2xlarge', f'{VANTAGE_URL}/g4dn.2xlarge'),
+    ('ml.g4dn.4xlarge', f'{VANTAGE_URL}/g4dn.4xlarge'),
+    ('ml.g4dn.8xlarge', f'{VANTAGE_URL}/g4dn.8xlarge'),
+    ('ml.g4dn.16xlarge', f'{VANTAGE_URL}/g4dn.16xlarge'),
 ]
 
 
@@ -686,8 +701,148 @@ def gateway(image, start_local, platform):
         logger.info(f"Access service docs: http://localhost:{PORT}/docs")
 
 
+@click.command(name="batch-inference")
+@click.option(
+    u"-m", u"--model",
+    required=True,
+    help="Name of the model to use for batch inference",
+    type=click.Path()
+)
+@click.option(
+    u"-i", u"--s3-input-location",
+    required=True,
+    help="s3 input data location",
+    type=click.Path()
+)
+@click.option(
+    u"-o", u"--s3-output-location",
+    required=True,
+    help="s3 location to save predictions",
+    type=click.Path()
+)
+@click.option(
+    u"--aws-profile",
+    required=True,
+    help="The AWS profile to use for the batch inference job"
+)
+@click.option(
+    u"--aws-region",
+    required=True,
+    help="The AWS region to use for the batch inference job"
+)
+@click.option(u"-n", u"--num-instances", required=True, type=int, help="Number of ec2 instances")
+@click.option(u"-e", u"--ec2-type", required=True, help="ec2 instance type")
+@click.option(
+    u"--max-concurrent-transforms",
+    required=False,
+    default=None,
+    type=int,
+    help="The maximum number of HTTP requests to be made to each individual inference container at one time"
+)
+@click.option(
+    u"-a", u"--aws-tags",
+    callback=validate_tags,
+    required=False,
+    default=None,
+    help='Tags for labeling an inference job of the form "tag1=value1;tag2=value2". For more, see '
+         'https://docs.aws.amazon.com/sagemaker/latest/dg/API_Tag.html.'
+)
+@click.option(
+    u"-r",
+    u"--iam-role-arn",
+    required=False,
+    help="The AWS role to use for this command"
+)
+@click.option(
+    u"-x",
+    u"--external-id",
+    required=False,
+    help="Optional external id used when using an IAM role"
+)
+@click.option(
+    u"-w",
+    u"--wait",
+    default=False,
+    is_flag=True,
+    help="Wait until Batch Inference is finished. "
+         "Default: don't wait!"
+)
+@click.option(
+    u"--job-name",
+    required=False,
+    default=None,
+    help="Optional name for the SageMaker batch inference job."
+)
+def batch_inference(
+    model,
+    s3_input_location,
+    s3_output_location,
+    aws_profile,
+    aws_region,
+    num_instances,
+    ec2_type,
+    max_concurrent_transforms,
+    aws_tags,
+    iam_role_arn,
+    external_id,
+    wait,
+    job_name
+):
+    """
+    Command to execute a batch inference job
+    """
+    logger.info(ASCII_LOGO)
+
+    if model not in _MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker']:
+        raise ValueError(
+            "Invalid embeddings model id. Available model ids: {}".format(
+                list(_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker'].keys())
+            )
+        )
+
+    valid_instance_types = [item[0] for item in _VALID_EMBEDDINGS_BATCH_INFERENCE_INSTANCE_TYPES]
+
+    if ec2_type not in valid_instance_types:
+        raise ValueError(
+            "Invalid instance type for embeddings model. Available instance types: {}".format(
+                _VALID_EMBEDDINGS_INSTANCE_TYPES
+            )
+        )
+
+    logger.info("Starting batch inference job...\n")
+
+    try:
+        status = api_llm.batch_inference(
+            model=_MAPPING_EMBEDDINGS_MODEL_ID_TO_MODEL_NAME['sagemaker'][model][0],
+            s3_input_location=s3_input_location,
+            s3_output_location=s3_output_location,
+            aws_profile=aws_profile,
+            aws_region=aws_region,
+            num_instances=num_instances,
+            ec2_type=ec2_type,
+            max_concurrent_transforms=max_concurrent_transforms,
+            aws_role=iam_role_arn,
+            external_id=external_id,
+            tags=aws_tags,
+            wait=wait,
+            job_name=job_name
+        )
+
+        if wait:
+            logger.info("Batch inference on SageMaker finished with status: {}".format(status))
+            if status == "Failed":
+                sys.exit(1)
+        else:
+            logger.info("Started batch inference on SageMaker successfully")
+
+    except ValueError as e:
+        logger.info("{}".format(e))
+        sys.exit(-1)
+
+
 llm.add_command(platforms)
 llm.add_command(models)
 llm.add_command(start)
 llm.add_command(stop)
 llm.add_command(gateway)
+llm.add_command(batch_inference)
